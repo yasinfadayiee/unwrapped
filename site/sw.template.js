@@ -34,6 +34,7 @@ const CORE = [
   '/assets/js/app/views-common.js',
   '/assets/js/app/views-cross.js',
   '/assets/js/app/views-facebook.js',
+  '/assets/js/app/views-friends.js',
   '/assets/js/app/views-instagram.js',
   '/assets/js/app/views-linkedin.js',
   '/assets/js/app/views-tiktok.js',

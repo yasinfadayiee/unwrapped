@@ -99,12 +99,18 @@ export function demoInstagramFiles(now, rand, { followerCount = 1284, followingC
   const friends = following.slice(0, 40);
   friends.forEach((u, i) => {
     const count = Math.max(4, Math.floor(1800 / (i + 1.4)));
+    // A mix of friendship patterns for the Friendship Radar.
+    const pattern = ['steady', 'steady', 'fading', 'rising', 'you', 'they', 'quiet', 'steady'][i % 8];
+    const mine = pattern === 'you' ? 0.82 : pattern === 'they' ? 0.22 : 0.5;
     const messages = [];
     for (let k = 0; k < count; k++) {
       const hour = Math.floor(rand() < 0.6 ? 18 + rand() * 6 : rand() * 24) % 24;
-      const day = now - Math.floor(rand() * 500) * DAY;
-      const ts = new Date(day).setHours(hour, Math.floor(rand() * 60));
-      messages.push({ sender_name: rand() < 0.52 ? 'Nova Studio' : u, timestamp_ms: ts, content: 'hey' });
+      let ago = Math.floor(rand() * 500);
+      if (pattern === 'fading') ago = 95 + Math.floor(rand() * 300) - (rand() < 0.08 ? 90 : 0);
+      if (pattern === 'rising') ago = Math.floor(Math.pow(rand(), 3) * 300);
+      if (pattern === 'quiet') ago = 200 + Math.floor(rand() * 300);
+      const ts = new Date(now - ago * DAY).setHours(hour, Math.floor(rand() * 60));
+      messages.push({ sender_name: rand() < mine ? 'Nova Studio' : u, timestamp_ms: ts, content: 'hey' });
     }
     files.push([
       `your_instagram_activity/messages/inbox/${u.replace(/\./g, '')}_${1000 + i}/message_1.json`,

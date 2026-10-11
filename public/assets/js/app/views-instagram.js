@@ -5,6 +5,7 @@ import { relationshipStats, networkPanel, relationshipInsights, relationshipView
 import { barChart, rankList, splitBar } from './charts.js';
 import { wrappedView } from './views-wrapped.js';
 import { privacyParts } from './wrapped.js';
+import { friendsView } from './views-friends.js';
 
 function overview(ds, ctx) {
   const { rel, tiles } = relationshipStats(ds, ctx);
@@ -190,6 +191,7 @@ export function instagramViews(ds, ctx) {
     const L = ds.lists;
     if (L.pendingSent.length || L.requestsReceived.length || L.recentRequests.length) views.push({ id: 'requests', label: 'Follow requests', icon: 'inbox', count: L.pendingSent.length, render: () => requestsView(ds, ctx) });
     if (['closeFriends', 'blocked', 'restricted', 'hideStoryFrom', 'youUnfollowed', 'favorites', 'removedSuggestions'].some((k) => L[k]?.length)) views.push({ id: 'lists', label: 'Close friends & more', icon: 'list', render: () => listsView(ds, ctx) });
+    if (ds.activity?.messages) views.push({ id: 'friends', label: 'Friendship Radar', icon: 'orbit', render: () => friendsView(ds, ctx) });
     if (ds.activity) views.push({ id: 'activity', label: 'Activity', icon: 'heart', render: () => activityView(ds, ctx) });
     if (ds.privacy) views.push({ id: 'privacy', label: 'Privacy X-ray', icon: 'fingerprint', render: () => privacyView(ds, ctx) });
   }

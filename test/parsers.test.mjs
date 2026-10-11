@@ -5,7 +5,7 @@ import { buildVfs } from '../public/assets/js/core/vfs.js';
 import { analyze } from '../public/assets/js/core/analyze.js';
 import { buildDemoVfs } from '../public/assets/js/core/demo.js';
 import { fixMeta, parseDate, csvObjects, parseKeyValueBlocks } from '../public/assets/js/core/text.js';
-import { relationships, watchStats, diffSnapshots, crossPlatform, tweetStats, exposureScore } from '../public/assets/js/core/insights.js';
+import { relationships, watchStats, diffSnapshots, crossPlatform, tweetStats, exposureScore, friendshipRadar } from '../public/assets/js/core/insights.js';
 import { relationshipsFromHtml, usernameFromHref } from '../public/assets/js/platforms/meta-common.js';
 
 const asFile = (buffer, name) => new File([buffer], name, { lastModified: Date.UTC(2026, 8, 15) });
@@ -76,6 +76,13 @@ test('the demo export runs through every parser', async () => {
   const cross = crossPlatform(result.datasets);
   assert.equal(cross.pairs.length, 1);
   assert.ok(cross.pairs[0].both.length >= 260);
+
+  const radar = friendshipRadar(ig.activity.messages);
+  assert.equal(radar.innerCircle.length, 5);
+  assert.ok(radar.fading.length + radar.quiet.length > 0, 'fading friendships detected');
+  assert.ok(radar.rising.length > 0, 'rising friendships detected');
+  assert.ok(radar.youChase.length > 0 && radar.theyChase.length > 0, 'one-sided detected');
+  assert.ok(radar.youChase.every((p) => p.share >= 0.68));
 
   const exposure = exposureScore({ advertisers: 214, interests: 36, ips: 20 });
   assert.ok(exposure.score > 40 && ['C', 'D', 'F'].includes(exposure.grade));

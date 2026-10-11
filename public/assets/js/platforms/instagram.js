@@ -152,6 +152,7 @@ async function readMessages(vfs, selfName, progress) {
       t.senders = t.senders || new Map();
       t.senders.set(sender, (t.senders.get(sender) || 0) + 1);
       const ts = toMs(msg.timestamp_ms);
+      (t.log = t.log || []).push([ts, sender]);
       if (ts) {
         t.first = Math.min(t.first, ts);
         t.last = Math.max(t.last, ts);
@@ -170,11 +171,24 @@ async function readMessages(vfs, selfName, progress) {
   let total = 0;
   let sent = 0;
   const list = [];
+  let latest = 0;
+  for (const t of threads.values()) latest = Math.max(latest, t.last);
+  const W = 90 * 86_400_000;
   for (const t of threads.values()) {
     t.sent = t.senders?.get(me) || 0;
     total += t.count;
     sent += t.sent;
     const isGroup = t.participants.length > 2;
+    // Activity in the last 90 days vs the 90 days before, and who carried it.
+    let recent = 0;
+    let previous = 0;
+    let recentMine = 0;
+    for (const [ts, s] of t.log || []) {
+      if (ts > latest - W) {
+        recent++;
+        if (s === me) recentMine++;
+      } else if (ts > latest - 2 * W) previous++;
+    }
     list.push({
       title: t.title,
       isGroup,
@@ -183,10 +197,13 @@ async function readMessages(vfs, selfName, progress) {
       received: t.count - t.sent,
       first: Number.isFinite(t.first) ? t.first : 0,
       last: t.last,
+      recent,
+      previous,
+      recentMine,
     });
   }
   list.sort((a, b) => b.count - a.count);
-  return { me, total, sent, received: total - sent, threads: list.slice(0, 50), threadCount: list.length, byHour };
+  return { me, total, sent, received: total - sent, threads: list.slice(0, 50), all: list.filter((t) => !t.isGroup), latest, threadCount: list.length, byHour };
 }
 
 async function readActivity(vfs, account, progress) {

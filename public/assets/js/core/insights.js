@@ -213,6 +213,42 @@ export function diffSnapshots(previous, current) {
   };
 }
 
+// Friendship Radar: classifies 1:1 DM conversations by balance and momentum.
+export function friendshipRadar(messages) {
+  if (!messages || !messages.all) return null;
+  const DAY = 86_400_000;
+  const people = messages.all
+    .filter((t) => t.count >= 10)
+    .map((t) => {
+      const share = t.count ? t.sent / t.count : 0;
+      const momentum = t.recent - t.previous;
+      // Closeness blends volume, recency and balance (0–100).
+      const balance = 1 - Math.min(1, Math.abs(share - 0.5) * 2);
+      const volume = Math.min(1, Math.log10(1 + t.count) / 3.5);
+      const recency = Math.min(1, t.recent / 60);
+      const score = Math.round(100 * (0.45 * volume + 0.35 * recency + 0.2 * balance));
+      let tag = null;
+      if (t.last < messages.latest - 180 * DAY && t.count >= 40) tag = 'quiet';
+      else if (t.previous >= 10 && t.recent < t.previous * 0.4) tag = 'fading';
+      else if (t.recent >= 10 && t.recent > t.previous * 1.6) tag = 'rising';
+      else if (share >= 0.68) tag = 'you-chase';
+      else if (share <= 0.32) tag = 'they-chase';
+      return { name: t.title, count: t.count, share, recent: t.recent, previous: t.previous, momentum, last: t.last, score, tag };
+    })
+    .sort((a, b) => b.score - a.score);
+  if (!people.length) return null;
+  const by = (tag) => people.filter((p) => p.tag === tag);
+  return {
+    people,
+    innerCircle: people.slice(0, 5),
+    fading: by('fading').sort((a, b) => a.momentum - b.momentum),
+    rising: by('rising').sort((a, b) => b.momentum - a.momentum),
+    youChase: by('you-chase').sort((a, b) => b.share - a.share),
+    theyChase: by('they-chase').sort((a, b) => a.share - b.share),
+    quiet: by('quiet').sort((a, b) => b.count - a.count),
+  };
+}
+
 // People who appear on more than one platform (matched by username).
 export function crossPlatform(datasets) {
   const sets = datasets
