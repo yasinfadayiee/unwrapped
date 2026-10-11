@@ -63,9 +63,16 @@ export function demoInstagramFiles(now, rand, { followerCount = 1284, followingC
   const followers = [...following.slice(0, mutualCount), ...pool.slice(followingCount, followingCount + followerCount - mutualCount)];
   const t = (maxDays) => now - Math.floor(rand() * maxDays * DAY);
   const base = 'connections/followers_and_following';
+  // A follow spree ~14 months ago, and mutuals whose follow-back lands minutes to months after the first move.
+  const followTs = following.map(() => (rand() < 0.12 ? now - (420 + rand() * 28) * DAY : t(1500)));
+  const followBack = (ts) => {
+    const r = rand();
+    const lag = r < 0.3 ? rand() * 36e5 : r < 0.7 ? rand() * 5 * DAY : rand() * 300 * DAY;
+    return Math.min(now - 36e5, rand() < 0.58 ? ts + lag : ts - lag);
+  };
   const files = [
-    [`${base}/followers_1.json`, JSON.stringify(followers.map((u) => rel(u, t(1400))))],
-    [`${base}/following.json`, JSON.stringify({ relationships_following: following.map((u) => rel(u, t(1500), 'new')) })],
+    [`${base}/followers_1.json`, JSON.stringify(followers.map((u, i) => rel(u, i < mutualCount ? followBack(followTs[i]) : t(1400))))],
+    [`${base}/following.json`, JSON.stringify({ relationships_following: following.map((u, i) => rel(u, followTs[i], 'new')) })],
     [`${base}/close_friends.json`, JSON.stringify({ relationships_close_friends: following.slice(0, 23).map((u) => rel(u, t(900))) })],
     [`${base}/pending_follow_requests.json`, JSON.stringify({ relationships_follow_requests_sent: usernames(rand, 9, 1).map((u) => rel(u, t(400))) })],
     [`${base}/recently_unfollowed_profiles.json`, JSON.stringify({ relationships_unfollowed_users: usernames(rand, 12, 2).map((u) => rel(u, t(60))) })],

@@ -4,6 +4,7 @@ import { viewHead, stat, panel, insights, userList, emptyState, dataNote } from 
 import { relationshipStats, networkPanel, relationshipInsights, relationshipViews, exposurePanel, tagCloud, C } from './views-common.js';
 import { barChart, rankList, splitBar } from './charts.js';
 import { wrappedView } from './views-wrapped.js';
+import { timeMachineView } from './views-timemachine.js';
 import { privacyParts } from './wrapped.js';
 
 function overview(ds, ctx) {
@@ -186,6 +187,7 @@ export function instagramViews(ds, ctx) {
   const keepKey = `${ds.platform}:${ds.account?.username || 'me'}`;
   const views = [{ id: 'overview', label: 'Overview', icon: 'home', render: () => overview(ds, ctx) }];
   if (ds.hasRelationships) views.push(...relationshipViews(ds, ctx, { keepKey }));
+  if (ds.hasRelationships) views.push({ id: 'timemachine', label: 'Time Machine', icon: 'clock', badge: 'New', render: () => timeMachineView(ds, ctx) });
   if (ds.platform === 'instagram') {
     const L = ds.lists;
     if (L.pendingSent.length || L.requestsReceived.length || L.recentRequests.length) views.push({ id: 'requests', label: 'Follow requests', icon: 'inbox', count: L.pendingSent.length, render: () => requestsView(ds, ctx) });

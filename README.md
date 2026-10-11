@@ -6,6 +6,7 @@ and sells a Pro tier with fully automatic crypto payments.
 
 - **Relationships** — who doesn't follow you back, fans, mutuals, pending requests, close friends, blocked…
 - **Who unfollowed you** — every analyzed export becomes a private snapshot (IndexedDB); a newer export is diffed automatically.
+- **Time Machine** — replays your account month by month from follow timestamps, detects your "eras", and shows who made the first move with every mutual and how fast each side followed back.
 - **Habits** — TikTok screen time rebuilt from watch history (sessions, binges, heatmap, persona), X posting stats, Instagram DM/likes stats.
 - **Privacy X-ray** — advertisers holding your data, inferred interests, logins/devices, connected apps → exposure score A–F.
 - **Cross-platform map** — who follows you on Instagram but not on TikTok, and vice versa.

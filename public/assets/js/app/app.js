@@ -199,6 +199,7 @@ function mount(result, { pro, demo, config, netStart, onNewFiles }) {
       compactMode ? null : icon(v.icon || 'dot'),
       v.label,
       !compactMode && v.count !== undefined ? h('span', { class: 'count' }, compact(v.count)) : null,
+      !compactMode && v.badge ? h('span', { class: 'nav-new' }, v.badge) : null,
       !compactMode && v.pro && !ctx.pro ? icon('lock', 'lock') : null,
     );
     btn.addEventListener('click', () => {
