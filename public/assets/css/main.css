@@ -594,7 +594,7 @@ ul, ol { margin: 0; padding: 0; }
 .footer-grid ul { list-style: none; display: grid; gap: 9px; }
 .footer-grid a { text-decoration: none; color: var(--text-2); font-size: 14.5px; }
 .footer-grid a:hover { color: var(--text); }
-.wordmark { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.06em; line-height: 0.8; font-size: clamp(64px, 17vw, 240px); margin-top: 56px; color: transparent; -webkit-text-stroke: 1px var(--line-3); user-select: none; text-align: center; white-space: nowrap; overflow: hidden; }
+.wordmark { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.06em; line-height: 0.8; font-size: clamp(56px, 15.5vw, 215px); margin-top: 56px; color: transparent; -webkit-text-stroke: 1px var(--line-3); user-select: none; text-align: center; white-space: nowrap; overflow: hidden; }
 .legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 30px; color: var(--muted); font-size: 13px; }
 
 /* ---------- prose pages ---------- */
@@ -894,3 +894,18 @@ button.stat:hover { border-color: var(--line-3); transform: translateY(-2px); }
   .site-header, .site-footer, .noise, .aurora, .hero-canvas { display: none !important; }
   body { background: #fff; color: #000; }
 }
+
+/* ---------- guide covers ---------- */
+.guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.guide-card { display: flex; flex-direction: column; gap: 12px; padding: 12px 12px 26px; text-decoration: none; color: inherit; transition: transform 0.5s var(--ease), border-color 0.3s; }
+.guide-card:hover { transform: translateY(-6px); border-color: var(--line-3); }
+.guide-card > :not(.gc-cover) { margin-inline: 14px; }
+.gc-cover { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: var(--g, linear-gradient(140deg, #2a1f6b, #0d0d16)); border: 1px solid var(--line); margin-bottom: 6px; }
+.gc-cover::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(80% 80% at 70% 30%, #000, transparent); }
+.gc-cover b { position: absolute; left: 22px; bottom: 14px; font: 800 clamp(48px, 6vw, 72px)/0.9 var(--font-display); letter-spacing: -0.05em; color: var(--c, var(--signal)); transition: transform 0.6s var(--ease-spring); }
+.gc-cover b em { font: italic 400 0.55em var(--font-serif); color: var(--text); letter-spacing: 0; }
+.gc-cover svg { position: absolute; right: 20px; top: 18px; width: 30px; height: 30px; color: rgba(255, 255, 255, 0.85); }
+.gc-cover i { position: absolute; right: -40px; bottom: -60px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, var(--c, var(--signal)), transparent 65%); opacity: 0.35; filter: blur(10px); transition: transform 0.8s var(--ease); }
+.guide-card:hover .gc-cover b { transform: translateY(-4px) scale(1.04); }
+.guide-card:hover .gc-cover i { transform: scale(1.25); }
+@media (min-width: 900px) { .guide-grid { grid-template-columns: repeat(2, 1fr); } }
