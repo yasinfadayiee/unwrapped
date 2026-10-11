@@ -268,11 +268,29 @@ function showcase() {
     ];
     for (const [theme, card] of cards) {
       const canvas = h('canvas', { role: 'img', 'aria-label': `Example card: ${card.titleA} ${card.hero} ${card.heroLabel}` });
+      canvas.style.setProperty('--i', box.children.length);
       drawCard(canvas, card, theme, { watermark: false });
       box.append(canvas);
     }
   });
   io.observe(box);
+}
+
+/* ---------- hero preview: tilt flattens as it scrolls into view ---------- */
+function previewTilt() {
+  const box = $('[data-preview]');
+  if (!box || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const win = box.querySelector('.pv-window');
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const r = box.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * 0.75)));
+    win.style.setProperty('--tilt', `${(1 - p) * 22}deg`);
+    win.style.setProperty('--scale', String(0.92 + p * 0.08));
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
 }
 
 /* ---------- hero orbit ---------- */
@@ -307,6 +325,7 @@ checkoutTriggers();
 misc();
 heroCanvas();
 showcase();
+previewTilt();
 netMonitor();
 getConfig().then(() => {
   pricing();
