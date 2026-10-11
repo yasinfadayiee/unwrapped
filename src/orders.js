@@ -2,6 +2,7 @@ import { SETTINGS, getPlan } from './config.js';
 import { getOrder, getLicense, logEvent } from './db.js';
 import { grantLicense, issueToken, licenseView } from './license.js';
 import { sendLicenseEmail } from './email.js';
+import { creditReferral } from './referrals.js';
 import { MINUTE, randomId, formatUsdt, timingSafeEqual } from './util.js';
 
 export async function insertOrder(env, fields) {
@@ -64,6 +65,11 @@ export async function fulfillOrder(env, order, { providerRef = null, paidUnits =
   });
   await env.DB.prepare('UPDATE orders SET license_key = ? WHERE id = ?').bind(license.key, order.id).run();
   await logEvent(env, 'order.paid', order.id, { method: order.method, plan: order.plan, providerRef });
+  try {
+    await creditReferral(env, order, license.key);
+  } catch (err) {
+    console.error('referral credit failed', err);
+  }
 
   if (order.email) {
     try {

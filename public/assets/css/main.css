@@ -397,6 +397,7 @@ ul, ol { margin: 0; padding: 0; }
 .tile { display: flex; flex-direction: column; gap: 14px; min-height: 340px; padding: clamp(22px, 2.6vw, 30px); }
 .tile-art { flex: 1; position: relative; min-height: 150px; border-radius: var(--r); overflow: hidden; }
 .tile p { color: var(--text-2); font-size: 15px; }
+.tile > .badge, .tile > .link-arrow { align-self: flex-start; }
 .tile .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
 
 /* tile art: list */

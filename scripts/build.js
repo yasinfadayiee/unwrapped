@@ -92,6 +92,20 @@ for (const file of readdirSync(path.join(root, 'site/pages'))) {
       offers: { '@type': 'AggregateOffer', priceCurrency: 'USD', lowPrice: '0', highPrice: '59' },
     });
   }
+  if (meta.article) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: meta.headline || meta.title,
+      description: meta.description,
+      datePublished: meta.article,
+      dateModified: meta.article,
+      mainEntityOfPage: canonical,
+      image: `${origin}/assets/img/og.png`,
+      author: { '@type': 'Organization', name: site.name, url: `${origin}/` },
+      publisher: { '@type': 'Organization', name: site.name, logo: { '@type': 'ImageObject', url: `${origin}/assets/img/icon-512.png` } },
+    });
+  }
   if (meta.faqSchema) {
     const faq = faqSchema(content);
     if (faq) schemas.push(faq);

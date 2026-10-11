@@ -257,6 +257,39 @@ test('admin summary reports revenue', async () => {
   assert.equal(manual.body.license.expires_at, null);
 });
 
+test('referrals give the buyer a discount and the inviter free days', async () => {
+  const pay = async (body, ip) => {
+    const co = (await call('POST', '/api/checkout', body, { 'cf-connecting-ip': ip })).body;
+    transfer(co.order.amountUnits);
+    await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+    await Promise.all(pending.splice(0));
+    return co;
+  };
+  const first = await pay({ plan: 'month', method: 'tron' }, '10.0.0.1');
+  const inviterKey = (await call('GET', `/api/order?id=${first.order.id}&t=${first.token}`)).body.order.license.key;
+  const before = (await call('POST', '/api/license/activate', { key: inviterKey, refresh: true })).body.license.expiresAt;
+
+  const ref = (await call('POST', '/api/referral', { key: inviterKey })).body;
+  assert.equal(ref.ok, true);
+  assert.match(ref.code, /^[2-9A-Z]{7}$/);
+  assert.equal((await call('POST', '/api/referral', { key: inviterKey })).body.code, ref.code, 'code is stable');
+  assert.equal((await call('GET', `/api/referral/check?code=${ref.code.toLowerCase()}`)).body.ok, true);
+  assert.equal((await call('GET', '/api/referral/check?code=NOPE123')).body.ok, false);
+
+  const friend = await pay({ plan: 'year', method: 'tron', ref: ref.code }, '10.0.0.2');
+  assert.equal(friend.order.priceUsd, 26.1);
+  assert.equal(friend.order.listPriceUsd, 29);
+  assert.ok(friend.order.amountUnits < 26_100_000);
+  const after = (await call('POST', '/api/license/activate', { key: inviterKey, refresh: true })).body.license.expiresAt;
+  assert.ok(Math.abs(after - (before + 30 * 86_400_000)) < 5000);
+  assert.equal((await call('POST', '/api/referral', { key: inviterKey })).body.uses, 1);
+
+  // Using your own code when renewing earns nothing and gives no discount.
+  const self = (await call('POST', '/api/checkout', { plan: 'month', method: 'tron', ref: ref.code, renewKey: inviterKey }, { 'cf-connecting-ip': '10.0.0.3' })).body;
+  assert.equal(self.order.referral, false);
+  assert.equal(self.order.priceUsd, 7);
+});
+
 test('checkout is rate limited per visitor and validates input', async () => {
   assert.equal((await call('POST', '/api/checkout', { plan: 'nope', method: 'tron' })).status, 400);
   assert.equal((await call('POST', '/api/checkout', { plan: 'month', method: 'tron', email: 'bad' })).status, 400);

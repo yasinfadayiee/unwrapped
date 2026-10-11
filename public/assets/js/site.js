@@ -312,4 +312,10 @@ getConfig().then(() => {
   pricing();
   licenseBadge();
 });
+import('./lib/referral.js').then(async ({ captureRef }) => {
+  if (await captureRef()) {
+    const { toast } = await import('./lib/ui.js');
+    toast('A friend invited you — 10% off Pro is applied at checkout', { iconName: 'sparkles', timeout: 5000 });
+  }
+});
 window.addEventListener('unw:license', licenseBadge);

@@ -10,6 +10,7 @@ import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './
 import { createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
 import { emailEnabled, sendRenewalReminders } from './email.js';
 import { handleAdmin } from './admin.js';
+import { attachReferral, discounted, getReferralForLicense, validReferral } from './referrals.js';
 import { isEmail, normalizeLicenseKey } from './util.js';
 
 const PRO_FEATURES = [
@@ -43,6 +44,7 @@ async function getConfig(env) {
     methods: await enabledMethods(env),
     publicKey: publicJwk,
     freeListLimit: SETTINGS.freeListLimit,
+    referral: { discount: SETTINGS.referralDiscount, rewardDays: SETTINGS.referralRewardDays },
     support: env.SUPPORT_CONTACT || null,
     email: emailEnabled(env),
     dev: env.DEV_MODE === '1',
@@ -74,11 +76,29 @@ async function checkout(request, env) {
   const methodId = body.method || (methods[0] && methods[0].id);
   if (!methods.some((m) => m.id === methodId)) throw new HttpError(400, 'method_unavailable');
 
-  const args = { plan, email, renewKey, visitor };
+  const referral = body.ref ? await validReferral(env, body.ref, renewKey) : null;
+  const priceUsd = referral ? discounted(plan.priceUsd) : plan.priceUsd;
+
+  const args = { plan, priceUsd, email, renewKey, visitor };
   const order =
     methodId === 'tron' ? await createTronOrder(env, args) : await createNowpaymentsOrder(env, request, args);
-  await logEvent(env, 'order.created', order.id, { plan: plan.id, method: methodId });
-  return json({ ok: true, token: order.token, order: await publicOrder(env, order) });
+  if (referral) await attachReferral(env, order.id, referral.code);
+  await logEvent(env, 'order.created', order.id, { plan: plan.id, method: methodId, ref: referral ? referral.code : null });
+  const view = await publicOrder(env, order);
+  view.listPriceUsd = plan.priceUsd;
+  view.referral = Boolean(referral);
+  return json({ ok: true, token: order.token, order: view });
+}
+
+async function referralInfo(request, env) {
+  await rateLimit(env, 'activate', await visitorId(request, env), SETTINGS.maxActivationsPerHour);
+  const body = await readJson(request);
+  return json(await getReferralForLicense(env, body.key));
+}
+
+async function referralCheck(env, url) {
+  const row = await validReferral(env, url.searchParams.get('code'), null);
+  return json({ ok: Boolean(row), discount: SETTINGS.referralDiscount });
 }
 
 async function orderStatus(env, ctx, url) {
@@ -131,6 +151,10 @@ async function route(request, env, ctx, url) {
       return claim(request, env);
     case 'POST /api/license/activate':
       return activate(request, env);
+    case 'POST /api/referral':
+      return referralInfo(request, env);
+    case 'GET /api/referral/check':
+      return referralCheck(env, url);
     case 'POST /api/webhook/nowpayments':
       return handleNowpaymentsIpn(request, env);
     case 'GET /api/health':

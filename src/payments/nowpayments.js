@@ -28,10 +28,10 @@ export async function signIpnBody(secret, body) {
   return hmacHex('SHA-512', String(secret).trim(), JSON.stringify(sortObject(body)));
 }
 
-export async function createNowpaymentsOrder(env, request, { plan, email, renewKey, visitor }) {
+export async function createNowpaymentsOrder(env, request, { plan, priceUsd = plan.priceUsd, email, renewKey, visitor }) {
   const order = await insertOrder(env, {
     plan: plan.id,
-    price_usd: plan.priceUsd,
+    price_usd: priceUsd,
     method: 'nowpayments',
     email,
     renew_key: renewKey,
@@ -42,7 +42,7 @@ export async function createNowpaymentsOrder(env, request, { plan, email, renewK
     method: 'POST',
     headers: { 'x-api-key': env.NOWPAYMENTS_API_KEY, 'content-type': 'application/json' },
     body: JSON.stringify({
-      price_amount: plan.priceUsd,
+      price_amount: priceUsd,
       price_currency: 'usd',
       order_id: order.id,
       order_description: `${brand(env)} ${plan.name}`,

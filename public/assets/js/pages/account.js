@@ -1,8 +1,9 @@
-import { h, icon, clear, copyText, toast, modal } from '../lib/ui.js';
+import { h, icon, clear, append, copyText, toast, modal } from '../lib/ui.js';
 import { proState, activateKey, clearLicense, storedKey } from '../lib/license.js';
 import { getConfig, api } from '../lib/api.js';
 import { savedOrders, forgetOrder, tronScreen, successScreen } from '../lib/checkout.js';
 import { countAllSnapshots, deleteAllSnapshots } from '../app/snapshots.js';
+import { inviteLink } from '../lib/referral.js';
 
 const root = document.getElementById('account-root');
 
@@ -39,6 +40,47 @@ async function render() {
         : null,
   );
   root.append(status);
+
+  // Invite friends (Pro only)
+  if (state.pro && state.key) {
+    const box = h('div', { class: 'stack', style: { '--stack': '12px' } }, h('div', { class: 'status-line' }, h('span', { class: 'spinner' }), h('span', null, 'Loading your invite link…')));
+    root.append(
+      h(
+        'section',
+        { class: 'panel', id: 'invite' },
+        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Invite friends, earn free Pro'), h('p', null, `Friends get ${Math.round((config.referral?.discount || 0.1) * 100)}% off. You get ${config.referral?.rewardDays || 30} free days for every friend who buys.`))),
+        box,
+      ),
+    );
+    api('/api/referral', { method: 'POST', body: { key: state.key } })
+      .then((ref) => {
+        if (!ref.ok) throw new Error(ref.reason);
+        const link = inviteLink(ref.code);
+        const copy = h('button', { class: 'copy-btn', type: 'button' }, 'Copy');
+        copy.addEventListener('click', () => copyText(link, copy));
+        const share = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('share'), 'Share');
+        share.addEventListener('click', async () => {
+          const text = 'I found out who doesn’t follow me back — without giving my password. Get 10% off Pro:';
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: 'Unwrapped', text, url: link });
+            } catch {
+              /* cancelled */
+            }
+          } else copyText(link, copy);
+        });
+        append(clear(box), [
+          h('div', { class: 'pay-line' }, h('span', { class: 'k' }, 'Link'), h('span', { class: 'v' }, link), copy),
+          h('div', { class: 'stats' }, h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Friends who bought'), h('span', { class: 'value' }, String(ref.uses))), h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Free days earned'), h('span', { class: 'value' }, String(ref.earnedDays)))),
+          h('div', null, share),
+          state.lifetime ? h('p', { class: 'tiny muted' }, 'You already have lifetime access, so invites earn no extra days — but your friends still save.') : null,
+        ]);
+        if (location.hash === '#invite') document.getElementById('invite')?.scrollIntoView({ block: 'start' });
+      })
+      .catch(() => {
+        clear(box).append(h('p', { class: 'small muted' }, 'Your invite link is not available right now. Try again later.'));
+      });
+  }
 
   // Activate
   const input = h('input', { class: 'input mono', placeholder: 'UNW-XXXX-XXXX-XXXX-XXXX', 'aria-label': 'License key', autocomplete: 'off', spellcheck: false });

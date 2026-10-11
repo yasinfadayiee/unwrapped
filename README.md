@@ -14,6 +14,8 @@ and sells a Pro tier with fully automatic crypto payments.
 - **Verifiable privacy** — strict CSP (`connect-src 'self'`), live "0 network requests" monitor, works offline (service worker).
 - **Payments** — direct USDT-TRC20 to your own wallet (unique amounts + blockchain watcher + "paste your tx hash") and optional NOWPayments (150+ coins). Licenses are ECDSA-signed tokens verified in the browser.
 - **Owner dashboard** — revenue, conversion, health checks, orders, manual licenses, event log at `/admin/`.
+- **Referral program** — every Pro license gets an invite link (`/?ref=CODE`): friends get 10% off, the inviter gets 30 free days per paid order (`referralDiscount` / `referralRewardDays` in `src/config.js`).
+- **SEO guides** — article pages under `/guides/` with Article + FAQ structured data.
 
 ## Project layout
 

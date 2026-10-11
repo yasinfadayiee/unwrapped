@@ -11,6 +11,7 @@ const CORE = [
   '/assets/js/lib/license.js',
   '/assets/js/lib/format.js',
   '/assets/js/lib/checkout.js',
+  '/assets/js/lib/referral.js',
   '/assets/js/vendor/qrcode.js',
   '/assets/js/core/zip.js',
   '/assets/js/core/vfs.js',

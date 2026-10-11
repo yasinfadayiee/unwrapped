@@ -4,6 +4,7 @@ import { h, icon, modal, clear, copyText, toast, downloadBlob } from './ui.js';
 import { api, getConfig, ApiError } from './api.js';
 import { proState, storeLicense, storedKey } from './license.js';
 import { qrcode } from '../vendor/qrcode.js';
+import { storedRef, forgetRef } from './referral.js';
 
 const ORDERS = 'unw.orders.v1';
 
@@ -65,6 +66,12 @@ export async function openCheckout({ plan: preselect } = {}) {
     return m;
   }
 
+  const ref = storedRef();
+  const discount = ref ? config.referral?.discount || 0.1 : 0;
+  const priceTag = (p) =>
+    discount
+      ? h('span', { class: 'p' }, h('s', { class: 'muted', style: { fontWeight: '500', fontSize: '14px', marginRight: '6px' } }, money(p.priceUsd)), money(Math.round(p.priceUsd * (1 - discount) * 100) / 100))
+      : h('span', { class: 'p' }, money(p.priceUsd));
   const planBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': 'Plan' });
   for (const p of plans) {
     const input = h('input', { type: 'radio', name: 'plan', value: p.id, checked: p.id === planId });
@@ -76,7 +83,7 @@ export async function openCheckout({ plan: preselect } = {}) {
         input,
         h('span', { class: 'radio' }),
         h('span', { class: 'grow' }, h('span', { class: 't' }, p.short, p.badge ? h('span', { class: 'badge', style: { marginLeft: '8px' } }, p.badge) : null), h('span', { class: 's', style: { display: 'block' } }, p.blurb || p.name)),
-        h('span', { class: 'p' }, money(p.priceUsd)),
+        priceTag(p),
       ),
     );
   }
@@ -111,6 +118,7 @@ export async function openCheckout({ plan: preselect } = {}) {
         ? h('div', { class: 'field' }, h('label', { for: 'co-email' }, 'E-mail for your license & renewal reminder'), email)
         : null,
       renewKey ? h('div', { class: 'note' }, icon('info'), h('span', null, `Time will be added to your existing license ${renewKey.slice(0, 8)}…`)) : null,
+      discount ? h('div', { class: 'note' }, icon('sparkles'), h('span', null, `Friend invite applied — ${Math.round(discount * 100)}% off.`)) : null,
       errorBox,
       go,
       h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, 'No account needed · your social data is never uploaded · prices in USD'),
@@ -124,7 +132,7 @@ export async function openCheckout({ plan: preselect } = {}) {
     try {
       const res = await api('/api/checkout', {
         method: 'POST',
-        body: { plan: planId, method: methodId, email: email.value.trim() || undefined, renewKey: renewKey || undefined },
+        body: { plan: planId, method: methodId, email: email.value.trim() || undefined, renewKey: renewKey || undefined, ref: ref || undefined },
       });
       rememberOrder(res.order, res.token);
       if (res.order.method === 'nowpayments' && res.order.redirectUrl) {
@@ -268,6 +276,7 @@ export function pollOrder(id, token, onUpdate, every = 5000) {
 export function successScreen(m, order) {
   if (order.license && order.token) storeLicense(order.license.key, order.token);
   forgetOrder(order.id);
+  forgetRef();
   m.setTitle('Payment received');
   clear(m.body);
   const key = order.license?.key || '';
@@ -286,6 +295,7 @@ export function successScreen(m, order) {
       h('p', { class: 'small text-2' }, 'Save this key — it unlocks Pro on any browser or phone.'),
       h('div', { style: { display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' } }, copy, save),
       h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: m.close }, 'Continue'),
+      h('p', { class: 'small text-2' }, 'Invite friends and earn 30 free days for every friend who buys — ', h('a', { href: '/account/#invite' }, 'get your invite link'), '.'),
     ),
   );
   toast('Pro unlocked');

@@ -51,6 +51,9 @@ export const SETTINGS = {
   maxClaimsPerHour: 12,
   maxActivationsPerHour: 40,
   licensePrefix: 'UNW',
+  // Referral program: the friend gets a discount, the inviter gets free days.
+  referralDiscount: 0.1,
+  referralRewardDays: 30,
 };
 
 export function getPlan(id) {

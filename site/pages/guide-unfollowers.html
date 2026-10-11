@@ -1,0 +1,72 @@
+<!--page {
+  "route": "/guides/who-unfollowed-me-on-instagram/",
+  "title": "How to see who unfollowed you on Instagram (without your password) · 2026 guide",
+  "headline": "How to see who unfollowed you on Instagram — safely",
+  "description": "Instagram doesn't notify you when someone unfollows. Here's the safe, official way to find out who unfollowed you and who doesn't follow you back — no password, no risky apps.",
+  "article": "2026-10-11",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container">
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Guide · Instagram</span>
+      <h1 class="h1">How to see who unfollowed you on Instagram <span class="serif grad">— safely.</span></h1>
+      <p class="lead">Instagram never tells you when someone unfollows, and it has no “unfollowers” list. But it does let you download your own followers list. With two of those downloads, you can see exactly who left.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>The short answer</h2>
+      <ol>
+        <li>Download your Instagram data (only <strong>Followers and following</strong>, format <strong>JSON</strong>).</li>
+        <li>Drop the ZIP into <a href="/instagram/">Unwrapped</a>. You instantly see who doesn’t follow you back, and your list is saved as a private snapshot on your device.</li>
+        <li>A week or two later, download it again and drop the new ZIP. Everyone who disappeared from your followers in between is shown by name.</li>
+      </ol>
+      <p>That’s the only method that is both accurate and safe. Here’s why.</p>
+
+      <h2>Why most “unfollower apps” are a bad idea</h2>
+      <p>Since Instagram closed its old API to third-party follower trackers, apps that promise live unfollower alerts usually work in one of two ways: they ask for your <strong>username and password</strong> and act inside your account, or they show estimated or invented data. The first kind risks your account being locked, rate-limited or even stolen; it also breaks Instagram’s rules. The second just isn’t reliable.</p>
+      <p>The official data download is different: Instagram generates it for you, it contains your real follower and following lists, and nobody else ever needs access to your account.</p>
+
+      <h2>Step 1 — Request your followers list</h2>
+      <ol>
+        <li>Open Instagram → your profile → <strong>☰</strong> → <strong>Accounts Center</strong>.</li>
+        <li>Tap <strong>Your information and permissions</strong> → <strong>Download your information</strong> → <strong>Download or transfer information</strong>.</li>
+        <li>Choose your Instagram account → <strong>Some of your information</strong> → tick <strong>Followers and following</strong>.</li>
+        <li>Choose <strong>Download to device</strong>, date range <strong>All time</strong>, format <strong>JSON</strong>.</li>
+      </ol>
+      <p>Instagram e-mails you when the file is ready — often within minutes. See our <a href="/guides/download-instagram-data/">full download guide</a> for screenshots-free, step-by-step help.</p>
+
+      <h2>Step 2 — Find who doesn’t follow you back</h2>
+      <p>Drop the ZIP on the <a href="/instagram/">Instagram tool</a>. You’ll immediately see:</p>
+      <ul>
+        <li><strong>Not following back</strong> — accounts you follow that don’t follow you, with the date you followed them.</li>
+        <li><strong>Fans</strong> — people who follow you but you don’t follow back.</li>
+        <li><strong>Mutuals</strong> and your follow-back rate.</li>
+        <li><strong>Pending follow requests</strong> you sent that were never accepted.</li>
+      </ul>
+
+      <h2>Step 3 — See who unfollowed you</h2>
+      <p>Your first upload is stored as a <strong>snapshot</strong> in your own browser (it never leaves your device). Next time you drop a fresh export, Unwrapped compares the two automatically and lists:</p>
+      <ul>
+        <li>who <strong>unfollowed you</strong>,</li>
+        <li>who <strong>newly followed</strong> you,</li>
+        <li>and who <strong>you</strong> unfollowed in between.</li>
+      </ul>
+      <p>Tip: repeat every one or two weeks. The shorter the gap, the more precise your unfollower history.</p>
+
+      <h2>What the results can and can’t tell you</h2>
+      <p>An account that was deactivated or deleted also disappears from your followers, so it can show up as an “unfollow”. And the export reflects Instagram’s data at the moment it was created, which can lag a few hours behind the app. Check a profile before drawing conclusions.</p>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Can Instagram tell someone that I checked who unfollowed me?</summary><div class="answer"><p>No. You are only downloading and reading your own data. Nobody is notified.</p></div></details>
+      <details><summary>Can I see who unfollowed me with just one download?</summary><div class="answer"><p>One download shows who doesn’t follow you back right now. To know who <em>stopped</em> following you, you need a second, later download to compare with.</p></div></details>
+      <details><summary>Is it free?</summary><div class="answer"><p>Yes — analysis is free, including how many people unfollowed you. Pro shows every name, keeps your full history and adds a safe unfollow queue.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
