@@ -31,6 +31,7 @@ const CORE = [
   '/assets/js/app/orbit.js',
   '/assets/js/app/queue.js',
   '/assets/js/app/snapshots.js',
+  '/assets/js/app/story.js',
   '/assets/js/app/views-common.js',
   '/assets/js/app/views-cross.js',
   '/assets/js/app/views-facebook.js',

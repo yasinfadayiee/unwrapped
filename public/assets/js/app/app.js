@@ -15,6 +15,7 @@ import { xViews } from './views-x.js';
 import { facebookViews } from './views-facebook.js';
 import { linkedinViews } from './views-linkedin.js';
 import { crossView } from './views-cross.js';
+import { playStory } from './story.js';
 
 const VIEW_BUILDERS = {
   instagram: instagramViews,
@@ -336,6 +337,9 @@ export async function openApp({ files = [], demo = false } = {}) {
       }
     }
     load.close();
+    if (!openApp.skipStory) {
+      playStory(result.datasets, { onDone: () => active?.root?.querySelector('.app-main')?.focus() });
+    }
     active = mount(result, { pro: demo || state.pro, demo, config, netStart, onNewFiles: (f) => openApp({ files: f }) });
   } catch (err) {
     console.error(err);

@@ -1,6 +1,6 @@
 // Service worker: caches the app shell so the analyzer keeps working offline
 // (yes — you can turn on airplane mode and still unwrap your export).
-const VERSION = 'mv4awjop';
+const VERSION = 'mv4b3kf3';
 const CACHE = `unwrapped-${VERSION}`;
 const CORE = [
   '/',
@@ -31,6 +31,7 @@ const CORE = [
   '/assets/js/app/orbit.js',
   '/assets/js/app/queue.js',
   '/assets/js/app/snapshots.js',
+  '/assets/js/app/story.js',
   '/assets/js/app/views-common.js',
   '/assets/js/app/views-cross.js',
   '/assets/js/app/views-facebook.js',
