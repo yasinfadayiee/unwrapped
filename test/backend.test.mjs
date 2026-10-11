@@ -1,0 +1,267 @@
+import { test, beforeEach } from 'node:test';
+import assert from 'node:assert/strict';
+import worker from '../src/worker.js';
+import { D1Shim } from '../server/d1-shim.js';
+import { isValidTronAddress, USDT_CONTRACT } from '../src/payments/tron.js';
+import { signIpnBody } from '../src/payments/nowpayments.js';
+import { b64urlDecode } from '../src/util.js';
+
+const WALLET = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb';
+let env;
+let pending;
+let chain; // fake TRON transfers
+let npPayments; // fake NOWPayments payment records
+const realFetch = globalThis.fetch;
+
+beforeEach(() => {
+  env = {
+    DB: new D1Shim(':memory:'),
+    ASSETS: { fetch: async () => new Response('static') },
+    SITE_URL: 'https://shop.test',
+    TRON_ADDRESS: WALLET,
+    NOWPAYMENTS_API_KEY: 'np-key',
+    NOWPAYMENTS_IPN_SECRET: 'ipn-secret',
+    ADMIN_TOKEN: 'admin-token-123456',
+  };
+  pending = [];
+  chain = [];
+  npPayments = {};
+  globalThis.fetch = async (input, init = {}) => {
+    const url = new URL(typeof input === 'string' ? input : input.url);
+    if (url.hostname === 'api.trongrid.io') {
+      const min = Number(url.searchParams.get('min_timestamp') || 0);
+      return Response.json({ data: chain.filter((t) => t.block_timestamp >= min), success: true, meta: {} });
+    }
+    if (url.hostname === 'api.nowpayments.io' && url.pathname === '/v1/invoice') {
+      const body = JSON.parse(init.body);
+      return Response.json({ id: `inv_${body.order_id}`, invoice_url: `https://nowpayments.io/payment/?iid=${body.order_id}` }, { status: 201 });
+    }
+    if (url.hostname === 'api.nowpayments.io' && url.pathname.startsWith('/v1/payment/')) {
+      const p = npPayments[url.pathname.split('/').pop()];
+      return p ? Response.json(p) : new Response('nope', { status: 404 });
+    }
+    return realFetch(input, init);
+  };
+});
+
+const ctx = () => ({ waitUntil: (p) => pending.push(p), passThroughOnException() {} });
+
+async function call(method, path, body, headers = {}) {
+  const res = await worker.fetch(
+    new Request(`https://shop.test${path}`, {
+      method,
+      headers: { 'content-type': 'application/json', 'cf-connecting-ip': '203.0.113.7', ...headers },
+      body: body === undefined ? undefined : typeof body === 'string' ? body : JSON.stringify(body),
+    }),
+    env,
+    ctx(),
+  );
+  await Promise.all(pending.splice(0));
+  return { status: res.status, body: await res.json() };
+}
+
+function transfer(units, { to = WALLET, ts = Date.now(), txid } = {}) {
+  const tx = {
+    transaction_id: txid || [...crypto.getRandomValues(new Uint8Array(32))].map((b) => b.toString(16).padStart(2, '0')).join(''),
+    token_info: { symbol: 'USDT', address: USDT_CONTRACT, decimals: 6, name: 'Tether USD' },
+    block_timestamp: ts,
+    from: 'TXyzSenderAddress000000000000000000',
+    to,
+    type: 'Transfer',
+    value: String(units),
+  };
+  chain.push(tx);
+  return tx;
+}
+
+async function verifyToken(token, publicKey) {
+  const [body, sig] = token.split('.');
+  const key = await crypto.subtle.importKey('jwk', publicKey, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['verify']);
+  const ok = await crypto.subtle.verify({ name: 'ECDSA', hash: 'SHA-256' }, key, b64urlDecode(sig), new TextEncoder().encode(body));
+  return ok ? JSON.parse(new TextDecoder().decode(b64urlDecode(body))) : null;
+}
+
+test('TRON addresses are validated with their checksum', async () => {
+  assert.equal(await isValidTronAddress(WALLET), true);
+  assert.equal(await isValidTronAddress(USDT_CONTRACT), true);
+  assert.equal(await isValidTronAddress('T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwc'), false);
+  assert.equal(await isValidTronAddress('0x1234'), false);
+});
+
+test('config exposes plans, enabled methods and a public key', async () => {
+  const { body } = await call('GET', '/api/config');
+  assert.equal(body.ok, true);
+  assert.deepEqual(body.methods.map((m) => m.id), ['tron', 'nowpayments']);
+  assert.equal(body.publicKey.kty, 'EC');
+  assert.equal(body.publicKey.d, undefined, 'private part must never leak');
+  env.TRON_ADDRESS = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwc';
+  const again = await call('GET', '/api/config');
+  assert.deepEqual(again.body.methods.map((m) => m.id), ['nowpayments']);
+});
+
+test('TRON checkout gets unique amounts just below the price', async () => {
+  const amounts = new Set();
+  for (let i = 0; i < 8; i++) {
+    const { body } = await call('POST', '/api/checkout', { plan: 'month', method: 'tron' }, { 'cf-connecting-ip': `198.51.100.${i}` });
+    assert.equal(body.ok, true);
+    const units = body.order.amountUnits;
+    assert.ok(units < 7_000_000 && units >= 6_510_000, `amount ${units}`);
+    amounts.add(units);
+  }
+  assert.equal(amounts.size, 8);
+});
+
+test('an exact TRON transfer activates the order automatically', async () => {
+  const { body: co } = await call('POST', '/api/checkout', { plan: 'year', method: 'tron', email: 'Buyer@Example.com' });
+  const { id } = co.order;
+  let status = await call('GET', `/api/order?id=${id}&t=${co.token}`);
+  assert.equal(status.body.order.status, 'pending');
+  assert.equal(status.body.order.address, WALLET);
+
+  transfer(co.order.amountUnits);
+  transfer(co.order.amountUnits, { to: 'TSomeoneElse0000000000000000000000' }); // ignored: not our wallet
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+
+  status = await call('GET', `/api/order?id=${id}&t=${co.token}`);
+  assert.equal(status.body.order.status, 'paid');
+  assert.match(status.body.order.license.key, /^UNW-[2-9A-Z]{4}-[2-9A-Z]{4}-[2-9A-Z]{4}-[2-9A-Z]{4}$/);
+  const { body: config } = await call('GET', '/api/config');
+  const payload = await verifyToken(status.body.order.token, config.publicKey);
+  assert.equal(payload.p, 'year');
+  assert.ok(payload.e > Date.now() + 360 * 86_400_000);
+
+  // A wrong token reveals nothing.
+  const wrong = await call('GET', `/api/order?id=${id}&t=nope`);
+  assert.equal(wrong.status, 404);
+});
+
+test('exchange fee deductions are tolerated when unambiguous', async () => {
+  const { body: co } = await call('POST', '/api/checkout', { plan: 'month', method: 'tron' });
+  transfer(co.order.amountUnits - 1_000_000); // exchange kept 1 USDT
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+  const status = await call('GET', `/api/order?id=${co.order.id}&t=${co.token}`);
+  assert.equal(status.body.order.status, 'paid');
+});
+
+test('claiming by hash supports top-ups and blocks reuse', async () => {
+  const a = (await call('POST', '/api/checkout', { plan: 'year', method: 'tron' })).body;
+  const b = (await call('POST', '/api/checkout', { plan: 'year', method: 'tron' })).body;
+  const short = transfer(a.order.amountUnits - 10_000_000); // 10 USDT short: no auto-match
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+
+  let res = await call('POST', '/api/order/claim', { id: a.order.id, t: a.token, txid: short.transaction_id });
+  assert.equal(res.body.reason, 'underpaid');
+  assert.equal(res.body.remaining, '10.00');
+
+  const reuse = await call('POST', '/api/order/claim', { id: b.order.id, t: b.token, txid: short.transaction_id });
+  assert.equal(reuse.body.reason, 'already_used');
+
+  const topUp = transfer(10_000_000);
+  res = await call('POST', '/api/order/claim', { id: a.order.id, t: a.token, txid: topUp.transaction_id });
+  assert.equal(res.body.ok, true);
+  assert.equal(res.body.order.status, 'paid');
+
+  const bad = await call('POST', '/api/order/claim', { id: b.order.id, t: b.token, txid: 'xyz' });
+  assert.equal(bad.body.reason, 'invalid_txid');
+});
+
+test('NOWPayments IPN is verified, double-checked and idempotent', async () => {
+  const { body: co } = await call('POST', '/api/checkout', { plan: 'life', method: 'nowpayments' });
+  assert.match(co.order.redirectUrl, /^https:\/\/nowpayments\.io\/payment/);
+  const ipn = {
+    payment_id: 5551,
+    payment_status: 'finished',
+    price_amount: 59,
+    price_currency: 'usd',
+    pay_amount: 0.0009,
+    actually_paid: 0.0009,
+    pay_currency: 'btc',
+    order_id: co.order.id,
+    fee: { currency: 'btc', depositFee: 0, withdrawalFee: 0, serviceFee: 0 },
+  };
+  npPayments['5551'] = { ...ipn };
+
+  const forged = await call('POST', '/api/webhook/nowpayments', ipn, { 'x-nowpayments-sig': 'deadbeef' });
+  assert.equal(forged.status, 401);
+
+  const sig = await signIpnBody(env.NOWPAYMENTS_IPN_SECRET, ipn);
+  const ok = await call('POST', '/api/webhook/nowpayments', JSON.stringify(ipn), { 'x-nowpayments-sig': sig });
+  assert.equal(ok.body.fulfilled, true);
+  const again = await call('POST', '/api/webhook/nowpayments', JSON.stringify(ipn), { 'x-nowpayments-sig': sig });
+  assert.equal(again.body.already, true);
+
+  const status = await call('GET', `/api/order?id=${co.order.id}&t=${co.token}`);
+  assert.equal(status.body.order.status, 'paid');
+  assert.equal(status.body.order.license.lifetime, true);
+});
+
+test('NOWPayments price mismatches and unfinished payments do not activate', async () => {
+  const { body: co } = await call('POST', '/api/checkout', { plan: 'month', method: 'nowpayments' });
+  const base = { payment_id: 77, price_currency: 'usd', order_id: co.order.id };
+  for (const ipn of [
+    { ...base, payment_status: 'finished', price_amount: 1 },
+    { ...base, payment_status: 'waiting', price_amount: 7 },
+    { ...base, payment_status: 'partially_paid', price_amount: 7, actually_paid_at_fiat: 3 },
+  ]) {
+    const sig = await signIpnBody(env.NOWPAYMENTS_IPN_SECRET, ipn);
+    await call('POST', '/api/webhook/nowpayments', JSON.stringify(ipn), { 'x-nowpayments-sig': sig });
+  }
+  const status = await call('GET', `/api/order?id=${co.order.id}&t=${co.token}`);
+  assert.equal(status.body.order.status, 'pending');
+});
+
+test('licenses activate, renew on top of remaining time, and can be revoked', async () => {
+  const first = (await call('POST', '/api/checkout', { plan: 'month', method: 'tron' })).body;
+  transfer(first.order.amountUnits);
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+  const key = (await call('GET', `/api/order?id=${first.order.id}&t=${first.token}`)).body.order.license.key;
+
+  const act = await call('POST', '/api/license/activate', { key: key.toLowerCase() });
+  assert.equal(act.body.ok, true);
+  const firstExpiry = act.body.license.expiresAt;
+
+  const renewal = (await call('POST', '/api/checkout', { plan: 'month', method: 'tron', renewKey: key })).body;
+  transfer(renewal.order.amountUnits);
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+  const renewed = await call('POST', '/api/license/activate', { key, refresh: true });
+  assert.equal(renewed.body.license.key, key);
+  assert.ok(Math.abs(renewed.body.license.expiresAt - (firstExpiry + 30 * 86_400_000)) < 5000);
+
+  const denied = await call('POST', '/api/admin/licenses/revoke', { key }, { authorization: 'Bearer wrong-token-000' });
+  assert.equal(denied.status, 401);
+  await call('POST', '/api/admin/licenses/revoke', { key }, { authorization: `Bearer ${env.ADMIN_TOKEN}` });
+  const revoked = await call('POST', '/api/license/activate', { key });
+  assert.equal(revoked.body.reason, 'revoked');
+  const missing = await call('POST', '/api/license/activate', { key: 'UNW-AAAA-BBBB-CCCC-DDDD' });
+  assert.equal(missing.body.reason, 'not_found');
+});
+
+test('admin summary reports revenue', async () => {
+  const co = (await call('POST', '/api/checkout', { plan: 'year', method: 'tron' })).body;
+  transfer(co.order.amountUnits);
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+  const { body } = await call('GET', '/api/admin/summary', undefined, { authorization: `Bearer ${env.ADMIN_TOKEN}` });
+  assert.equal(body.ok, true);
+  assert.equal(body.revenue.total, 29);
+  assert.equal(body.revenue.today, 29);
+  assert.equal(body.activeLicenses, 1);
+  assert.equal(body.health.tron, true);
+  assert.ok(body.health.cronLastRun > 0);
+  const manual = await call('POST', '/api/admin/licenses', { plan: 'life', note: 'influencer' }, { authorization: `Bearer ${env.ADMIN_TOKEN}` });
+  assert.equal(manual.body.license.expires_at, null);
+});
+
+test('checkout is rate limited per visitor and validates input', async () => {
+  assert.equal((await call('POST', '/api/checkout', { plan: 'nope', method: 'tron' })).status, 400);
+  assert.equal((await call('POST', '/api/checkout', { plan: 'month', method: 'tron', email: 'bad' })).status, 400);
+  assert.equal((await call('POST', '/api/checkout', '{not json')).status, 400);
+  let last;
+  for (let i = 0; i < 9; i++) last = await call('POST', '/api/checkout', { plan: 'month', method: 'tron' }, { 'cf-connecting-ip': '192.0.2.50' });
+  assert.equal(last.status, 429);
+});

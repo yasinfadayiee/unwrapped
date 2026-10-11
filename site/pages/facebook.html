@@ -1,0 +1,56 @@
+<!--page {
+  "route": "/facebook/",
+  "nav": "facebook",
+  "title": "Who unfriended me on Facebook? Free friend tracker from your Facebook data · Unwrapped",
+  "description": "Find out who unfriended you on Facebook, see pending friend requests and which advertisers hold your data — using your official Facebook data download. No login, nothing uploaded.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-facebook"/></svg>Facebook unfriend tracker</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Who unfriended</span></span>
+        <span class="line"><span>you? <span class="serif grad">Now you’ll know.</span></span></span>
+      </h1>
+      <p class="hero-sub">Drop your Facebook data download to see your friends, <b>pending requests</b>, people you removed, and — snapshot to snapshot — <b>exactly who unfriended you</b>. Plus the advertisers and companies sharing your activity. <b>No login. Nothing uploaded.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">What you’ll see</span>
+      <h2 class="h2">Your friend list, with memory.</h2>
+      <p class="lead">Facebook never tells you when someone unfriends you. Two exports a few weeks apart do — and Unwrapped is smart enough to ignore the people <i>you</i> removed.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Who unfriended you</b> between two exports.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Friend requests you sent</b> that are still pending.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Friends added per year</b> and how long you’ve known everyone.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Advertisers holding your data</b> and off-Facebook activity.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How to download your Facebook data</span><h2 class="h2">Two minutes in Accounts Center.</h2></div>
+    <div class="reveal">{{> steps-facebook}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Facebook FAQ</span><h2 class="h2">Unfriends, explained.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>How can I see who unfriended me on Facebook?</summary><div class="answer"><p>Download your Facebook information (Friends and followers, JSON) and drop it here — that becomes your first snapshot. Repeat in a few weeks: Unwrapped compares both and lists everyone who disappeared, excluding people you removed yourself.</p></div></details>
+      <details><summary>Will the person know I checked?</summary><div class="answer"><p>No. Nobody is notified — you are only reading your own data download, on your own device.</p></div></details>
+      <details><summary>Why might someone appear as unfriended by mistake?</summary><div class="answer"><p>Deactivated or deleted accounts also vanish from friend lists, and people who change their display name can look like a new person. Check the profile before drawing conclusions.</p></div></details>
+    </div>
+  </div>
+</section>

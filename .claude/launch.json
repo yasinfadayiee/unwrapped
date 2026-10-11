@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "unwrapped-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["node_modules/wrangler/bin/wrangler.js", "dev", "--port", "8787", "--ip", "127.0.0.1", "--persist-to", "C:/Users/PC YAS/AppData/Local/Temp/unw-state"],
+      "port": 8787
+    },
+    {
+      "name": "unwrapped-node",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server/node-server.js"],
+      "port": 8787
+    }
+  ]
+}

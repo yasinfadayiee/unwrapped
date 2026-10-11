@@ -1,0 +1,234 @@
+<!--page {
+  "route": "/",
+  "title": "Unwrapped — See who doesn't follow you back, privately. Instagram, TikTok, X & more",
+  "description": "Find who doesn't follow you back and who unfollowed you on Instagram, see your real TikTok screen time and what advertisers know about you — from your official data export. No password, nothing uploaded.",
+  "faqSchema": true,
+  "bodyClass": "home"
+}-->
+<div class="aurora" aria-hidden="true"></div>
+
+<section class="hero">
+  <canvas class="hero-canvas" data-hero-orbit aria-hidden="true"></canvas>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><span class="dot"></span>Instagram · TikTok · X · Facebook · Threads · LinkedIn</span>
+      <h1 class="display hero-title">
+        <span class="line"><span>Your socials,</span></span>
+        <span class="line"><span><span class="serif grad">unwrapped.</span></span></span>
+      </h1>
+      <p class="hero-sub">See who <b>doesn’t follow you back</b>, who <b>quietly unfollowed you</b>, how many hours TikTok <b>really</b> takes — and what advertisers know about you. All from your official data export. <b>No password. Nothing uploaded. Ever.</b></p>
+    </div>
+    <div style="margin-top:40px">
+{{> dropzone}}
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>followers_1.json</span><span>following.json</span><span>user_data_tiktok.json</span><span>tweets.js</span><span>your_friends.json</span><span>Connections.csv</span><span>pending_follow_requests.json</span><span>advertisers_using_your_activity_or_information.json</span><span>login_activity.json</span><span>personalization.js</span><span>Watch History</span><span>message_1.json</span>
+    <span>followers_1.json</span><span>following.json</span><span>user_data_tiktok.json</span><span>tweets.js</span><span>your_friends.json</span><span>Connections.csv</span><span>pending_follow_requests.json</span><span>advertisers_using_your_activity_or_information.json</span><span>login_activity.json</span><span>personalization.js</span><span>Watch History</span><span>message_1.json</span>
+  </div>
+</div>
+
+<section class="section" id="promise">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">01 — The no-password promise</span>
+      <h2 class="h2">Other apps want your password.<br><span class="serif" style="color:var(--text-2)">We don’t even want your data.</span></h2>
+      <p class="lead">Unfollower apps that log in as you get accounts hacked, rate-limited or banned — and many quietly sell what they collect. Unwrapped reads the file the platform itself gives you, right here in your browser. The same answers, none of the risk.</p>
+    </div>
+    <div class="promise">
+      <div class="card card--pad reveal">
+        <div class="vs" role="table" aria-label="Unwrapped compared with login-based apps">
+          <div class="vs-row vs-head" role="row"><span role="columnheader">What happens to you</span><span class="vs-col" role="columnheader">Login apps</span><span class="vs-col" role="columnheader">Unwrapped</span></div>
+          <div class="vs-row" role="row"><span role="cell">Asks for your password</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Yes</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Never</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Uploads your data to a server</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Yes</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Never</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Risk of action blocks or bans</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>High</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>None</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Works offline</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>No</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Yes</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Covers 6 platforms in one place</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Rarely</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Yes</span></span></div>
+        </div>
+      </div>
+      <div class="card card--pad monitor reveal" style="--d:.1s" data-netmon>
+        <span class="eyebrow">Live privacy monitor</span>
+        <div class="monitor-big"><span class="value" data-netmon-during>0</span><span class="text-2">requests made while analyzing your file</span></div>
+        <div class="monitor-screen" aria-live="polite">
+          <div class="monitor-line"><span>Requests since this page loaded</span><b data-netmon-total>–</b></div>
+          <div class="monitor-line"><span>Your export sent to a server</span><b>never</b></div>
+          <div class="monitor-line"><span>Connection</span><b data-netmon-online>Online</b></div>
+        </div>
+        <div class="note"><svg aria-hidden="true"><use href="#i-plane"/></svg><span>Don’t take our word for it: turn on airplane mode now, then drop your export. It still works — because everything happens on your device.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">02 — Six tools, one drop</span>
+      <h2 class="h2">Everything your export knows, <span class="serif">finally readable.</span></h2>
+      <p class="lead">Drop one file — or the exports of every platform at once. Unwrapped detects what’s inside and builds your dashboard in seconds.</p>
+    </div>
+    <div class="bento">
+      <article class="card tile b-1 reveal">
+        <div class="tile-art">
+          <div class="art-list" aria-hidden="true"><div class="rows">
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><span class="nm">@milo.design</span><span class="st">doesn’t follow back</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><span class="nm">@luna_eats</span><span class="st">doesn’t follow back</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span class="nm">@theo.films</span><span class="st">doesn’t follow back</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span class="nm">@ivy.codes</span><span class="st">doesn’t follow back</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><span class="nm">@sage.outdoors</span><span class="st">doesn’t follow back</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><span class="nm">@milo.design</span><span class="st">doesn’t follow back</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><span class="nm">@luna_eats</span><span class="st">doesn’t follow back</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span class="nm">@theo.films</span><span class="st">doesn’t follow back</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span class="nm">@ivy.codes</span><span class="st">doesn’t follow back</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><span class="nm">@sage.outdoors</span><span class="st">doesn’t follow back</span></div>
+          </div></div>
+        </div>
+        <h3 class="h3">Who doesn’t follow you back</h3>
+        <p>Mutuals, fans and the accounts that never followed back — on Instagram, Threads, TikTok and X. Then clean up with a safely paced unfollow queue.</p>
+      </article>
+      <article class="card tile b-2 reveal" style="--d:.08s">
+        <div class="tile-art">
+          <div class="art-diff" aria-hidden="true">
+            <div class="col"><span class="pill">@kai.makes</span><span class="pill gone">@nia.film</span><span class="pill">@remy</span><span class="pill gone" style="animation-delay:1.2s">@zara.art</span></div>
+            <span class="arrow">Sep → Oct</span>
+            <div class="col"><span class="pill">@kai.makes</span><span class="pill">@remy</span><span class="pill" style="border-color:rgba(26,158,142,.5);color:#7fe0d2">@felix_fit</span></div>
+          </div>
+        </div>
+        <h3 class="h3">Who unfollowed you</h3>
+        <p>Every export becomes a private snapshot on your device. Drop a newer one and see exactly who left — and who joined.</p>
+      </article>
+      <article class="card tile b-3 reveal">
+        <div class="tile-art">
+          <div class="art-number" aria-hidden="true">
+            <div class="value">412<span class="unit">hours</span></div>
+            <div class="mini-heat">
+              <i style="opacity:.15"></i><i style="opacity:.1"></i><i style="opacity:.08"></i><i style="opacity:.05"></i><i style="opacity:.05"></i><i style="opacity:.06"></i><i style="opacity:.2"></i><i style="opacity:.35"></i><i style="opacity:.3"></i><i style="opacity:.25"></i><i style="opacity:.25"></i><i style="opacity:.3"></i><i style="opacity:.45"></i><i style="opacity:.35"></i><i style="opacity:.3"></i><i style="opacity:.3"></i><i style="opacity:.35"></i><i style="opacity:.45"></i><i style="opacity:.55"></i><i style="opacity:.65"></i><i style="opacity:.8"></i><i style="opacity:1"></i><i style="opacity:.95"></i><i style="opacity:.6"></i>
+            </div>
+          </div>
+        </div>
+        <h3 class="h3">Your real screen time</h3>
+        <p>TikTok’s watch history turned into hours, binges, streaks and your scrolling persona.</p>
+      </article>
+      <article class="card tile b-4 reveal" style="--d:.08s">
+        <div class="tile-art">
+          <div class="art-radar" aria-hidden="true">
+            <div class="radar"><i style="left:62%;top:26%"></i><i style="left:30%;top:58%"></i><i style="left:70%;top:66%"></i></div>
+            <div class="radar-labels"><span style="left:6%;top:12%">214 advertisers</span><span style="right:4%;top:44%">36 interests</span><span style="left:12%;bottom:10%">7 devices</span></div>
+          </div>
+        </div>
+        <h3 class="h3">Privacy X-ray</h3>
+        <p>Which advertisers hold your data, what you’ve been profiled as, every device that logged in — scored A to F.</p>
+      </article>
+      <article class="card tile b-5 reveal" style="--d:.16s">
+        <div class="tile-art">
+          <div class="art-cards" aria-hidden="true">
+            <div class="mc"><small>Privacy</small><b>Grade<br>D</b></div>
+            <div class="mc"><small>TikTok</small><b>412h</b></div>
+            <div class="mc"><small>Instagram</small><b>74%<br>follow back</b></div>
+          </div>
+        </div>
+        <h3 class="h3">Wrapped, any day</h3>
+        <p>Story-ready cards of your stats in four themes. Numbers only — never your friends’ names.</p>
+      </article>
+      <article class="card tile b-6 reveal">
+        <div class="tile-art" style="min-height:200px">
+          <div class="art-venn" aria-hidden="true">
+            <div class="venn"><div class="ring a"></div><div class="ring b"></div><span class="lab a">Instagram</span><span class="lab b">TikTok</span><div class="mid">260<div class="tiny muted" style="font-weight:500;letter-spacing:0">on both</div></div></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between">
+          <div class="stack" style="--stack:8px;max-width:620px">
+            <h3 class="h3">Cross-platform map <span class="badge badge--uv" style="vertical-align:middle">New</span></h3>
+            <p>Drop two exports and compare platforms side by side: who follows you on Instagram but ignores you on TikTok, and who’s loyal everywhere.</p>
+          </div>
+          <button class="btn btn--ghost" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>See it in the demo</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">03 — How it works</span>
+      <h2 class="h2">Three minutes of your time. <span class="serif">Zero risk.</span></h2>
+      <p class="lead">Every major platform lets you download a copy of your own data — in many countries it’s your legal right. Here’s exactly where to tap.</p>
+    </div>
+    <div class="reveal" data-tabs>
+      <div class="tabs" role="tablist" aria-label="Platform">
+        <button class="tab" role="tab" id="tab-ig" aria-controls="panel-ig" aria-selected="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</button>
+        <button class="tab" role="tab" id="tab-tt" aria-controls="panel-tt" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</button>
+        <button class="tab" role="tab" id="tab-x" aria-controls="panel-x" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-x"/></svg>X</button>
+        <button class="tab" role="tab" id="tab-fb" aria-controls="panel-fb" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-facebook"/></svg>Facebook</button>
+        <button class="tab" role="tab" id="tab-li" aria-controls="panel-li" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</button>
+      </div>
+      <div id="panel-ig" role="tabpanel" aria-labelledby="tab-ig">{{> steps-instagram}}</div>
+      <div id="panel-tt" role="tabpanel" aria-labelledby="tab-tt" hidden>{{> steps-tiktok}}</div>
+      <div id="panel-x" role="tabpanel" aria-labelledby="tab-x" hidden>{{> steps-x}}</div>
+      <div id="panel-fb" role="tabpanel" aria-labelledby="tab-fb" hidden>{{> steps-facebook}}</div>
+      <div id="panel-li" role="tabpanel" aria-labelledby="tab-li" hidden>{{> steps-linkedin}}</div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="wrapped">
+  <div class="container">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">04 — Wrapped, whenever you want</span>
+      <h2 class="h2">Made to be <span class="serif grad">shared.</span></h2>
+      <p class="lead">Your year doesn’t have to end in December. Turn your stats into story cards in one tap.</p>
+    </div>
+    <div class="showcase reveal" data-showcase aria-label="Example Wrapped cards"></div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">05 — Pricing</span>
+      <h2 class="h2">Free to look. <span class="serif">Pro to know everything.</span></h2>
+      <p class="lead">Pay with crypto in about a minute. Pro unlocks automatically — no account, no waiting for anyone.</p>
+    </div>
+    <div class="reveal">{{> pricing}}</div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">06 — Questions</span>
+      <h2 class="h2">Good questions, <span class="serif">straight answers.</span></h2>
+    </div>
+    <div class="faq reveal">
+      <details open><summary>Is it really private?</summary><div class="answer"><p>Yes. Your export is opened and analyzed entirely inside your browser — it is never uploaded, and our servers never see it. Check it yourself: open your browser’s developer tools (Network tab) or turn on airplane mode after the page loads. The analysis still works.</p><p>The only time this site talks to its own server is for licenses and payments — never with your social data.</p></div></details>
+      <details><summary>Why don’t you ask for my password like other apps?</summary><div class="answer"><p>Because giving your password to a third-party app is the most common way accounts get hacked, restricted or banned — and the platforms forbid it. The official data export contains the same information, with none of that risk.</p></div></details>
+      <details><summary>Can one export show who unfollowed me?</summary><div class="answer"><p>One export is a snapshot: it shows who doesn’t follow you back, your fans, pending requests and much more. Drop a newer export later and Unwrapped compares the two automatically — that’s how you see exactly who unfollowed you, by name.</p></div></details>
+      <details><summary>How long does the export take?</summary><div class="answer"><p>Instagram and Facebook: usually minutes, at most about 48 hours. TikTok: a few hours to a few days. X: around 24 hours. LinkedIn: about 10 minutes for connections.</p></div></details>
+      <details><summary>Which file do I upload?</summary><div class="answer"><p>The ZIP the platform sends you, exactly as it is. Split into several ZIP files? Select them all at once. Already unzipped? Choose the folder. JSON, HTML and TikTok’s TXT format all work.</p></div></details>
+      <details><summary>Will this get my account banned?</summary><div class="answer"><p>No — we never touch your account. You download your own data with the platform’s official tool. The unfollow queue only opens profiles for you; you tap unfollow yourself, at a pace platforms are comfortable with.</p></div></details>
+      <details><summary>How do crypto payments work?</summary><div class="answer"><p>Choose a plan and pay with USDT on the TRON network — or with 150+ other coins when available. Your payment is detected on the blockchain and Pro activates automatically, usually within a minute. You get a license key that works on any device.</p></div></details>
+      <details><summary>I don’t own crypto. Can I still buy?</summary><div class="answer"><p>Most wallet apps and exchanges let you buy USDT with a bank card in a few minutes, then send it to the address shown at checkout. Make sure you choose the TRON (TRC20) network.</p></div></details>
+      <details><summary>What do I get for free?</summary><div class="answer"><p>Every platform, every overview and chart, the first 20 rows of every list, how many people unfollowed you, and Wrapped cards with a small watermark. Pro unlocks full lists, the names of who unfollowed you, the unfollow queue, deep insights, CSV export and every Wrapped theme.</p></div></details>
+      <details><summary>Does it work on my phone?</summary><div class="answer"><p>Yes. Download the ZIP on your phone, open this site and tap “Choose my export”. It works in Safari on iPhone and Chrome on Android.</p></div></details>
+      <details><summary>What is stored, and where?</summary><div class="answer"><p>Only snapshots of follower lists, inside your own browser (IndexedDB), so we can tell you who unfollowed you next time. Delete them any time from <a href="/account/">My license → Local data</a>.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <span class="eyebrow">Ready?</span>
+      <h2 class="h1" style="max-width:14ch">Your data has a story. <span class="serif grad">Read it.</span></h2>
+      <div class="drop-actions">
+        <a class="btn btn--primary btn--lg" href="#start"><svg aria-hidden="true"><use href="#i-upload"/></svg>Unwrap my export</a>
+        <button class="btn btn--ghost btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Watch the demo</button>
+      </div>
+    </div>
+  </div>
+</section>

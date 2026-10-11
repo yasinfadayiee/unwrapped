@@ -1,0 +1,56 @@
+<!--page {
+  "route": "/linkedin/",
+  "nav": "linkedin",
+  "title": "LinkedIn connections analyzer — map your network by company & role · Unwrapped",
+  "description": "Turn your LinkedIn data export into a network map: top companies, roles, recruiters and founders in your network, and how it grew year by year. Private — runs in your browser.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-linkedin"/></svg>LinkedIn network map</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Who’s really in</span></span>
+        <span class="line"><span>your <span class="serif grad">network?</span></span></span>
+      </h1>
+      <p class="hero-sub">Drop your LinkedIn export and see <b>which companies</b> your connections work at, <b>how many recruiters and founders</b> you know, and how your network grew — in seconds, <b>without uploading a thing</b>.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">What you’ll see</span>
+      <h2 class="h2">Your next job is already in this file.</h2>
+      <p class="lead">Connections.csv lists every connection with company, title and date. We turn it into a map you can act on.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Top companies</b> in your network.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Roles</b> — recruiters, founders, engineers, designers, investors…</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Network growth</b> year by year, and new connections lately.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Searchable list</b> with CSV export (Pro).</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How to download your LinkedIn data</span><h2 class="h2">Ten minutes, start to finish.</h2></div>
+    <div class="reveal">{{> steps-linkedin}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">LinkedIn FAQ</span><h2 class="h2">LinkedIn exports, explained.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>How do I export my LinkedIn connections?</summary><div class="answer"><p>Me → Settings &amp; Privacy → Data privacy → Get a copy of your data → choose Connections → Request archive. LinkedIn e-mails you a download link, usually within about ten minutes.</p></div></details>
+      <details><summary>Why are most e-mail addresses missing?</summary><div class="answer"><p>LinkedIn only includes the e-mail of connections who allowed it in their own privacy settings.</p></div></details>
+      <details><summary>Is my professional data uploaded?</summary><div class="answer"><p>No. The CSV is parsed in your browser and never leaves your device.</p></div></details>
+    </div>
+  </div>
+</section>

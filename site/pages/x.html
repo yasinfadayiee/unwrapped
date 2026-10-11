@@ -1,0 +1,68 @@
+<!--page {
+  "route": "/x/",
+  "nav": "x",
+  "title": "X (Twitter) archive viewer — best tweets, unfollowers & what X knows about you · Unwrapped",
+  "description": "Open your X / Twitter archive in seconds: your best posts ever, posting habits, accounts that don't follow back, the interests and advertisers X attached to you, and connected apps. Private, in your browser.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-x"/></svg>X (Twitter) archive explorer</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Your X archive,</span></span>
+        <span class="line"><span class="serif grad">finally readable.</span></span>
+      </h1>
+      <p class="hero-sub">Years of posts, likes and ads in one ZIP. See your <b>best posts ever</b>, when you post, who <b>doesn’t follow back</b>, the <b>interests and advertisers</b> X attached to you, and which <b>apps can still act for you</b>. <b>Processed on your device.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">What you’ll see</span>
+      <h2 class="h2">A decade of posting, measured.</h2>
+      <p class="lead">The archive X gives you is a folder of cryptic JavaScript files. Unwrapped reads them all — without uploading a byte.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Best posts ever</b>, ranked by likes and reposts.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Posting habits</b> — by month, weekday and hour, streaks, top hashtags and words.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Followers vs following</b> — mutuals, fans and accounts that don’t follow back.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>What X thinks you are</b> — inferred age, gender, languages and interests.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Advertisers &amp; targeting</b> — who targeted you, and how.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Connected apps</b> — and which ones can still post or read DMs.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How to download your X archive</span><h2 class="h2">Ask X once. Explore forever.</h2></div>
+    <div class="reveal">{{> steps-x}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">X FAQ</span><h2 class="h2">X archives, explained.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>How do I view my Twitter / X archive?</summary><div class="answer"><p>Request it in Settings and privacy → Your account → Download an archive of your data. When it’s ready, download the ZIP and drop it here — no unzipping needed.</p></div></details>
+      <details><summary>Why do followers show as account numbers?</summary><div class="answer"><p>X’s archive lists followers by account ID, not by username. Tap “Open” next to any entry and X shows you who it is.</p></div></details>
+      <details><summary>My archive is several gigabytes. Will it work?</summary><div class="answer"><p>Yes. Unwrapped reads only the small data files inside the ZIP and skips your photos and videos, so even huge archives open in seconds.</p></div></details>
+      <details><summary>Can I see who unfollowed me on X?</summary><div class="answer"><p>Yes, by comparing a newer archive with an older one you analyzed before — the snapshot is kept privately in your browser.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:16ch">Every post you ever made, <span class="serif grad">in one view.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Open my archive</a><button class="btn btn--ghost btn--lg" type="button" data-demo>See the demo</button></div>
+    </div>
+  </div>
+</section>

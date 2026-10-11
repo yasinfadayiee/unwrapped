@@ -1,0 +1,75 @@
+<!--page {
+  "route": "/instagram/",
+  "nav": "instagram",
+  "title": "Who doesn't follow you back on Instagram? Check unfollowers without your password · Unwrapped",
+  "description": "See who doesn't follow you back on Instagram, who unfollowed you, pending follow requests and what advertisers know — from your official Instagram data download. No login, nothing uploaded.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-instagram"/></svg>Instagram tool · free to start</span>
+      <h1 class="h1 hero-title" style="max-width:17ch">
+        <span class="line"><span>Who doesn’t follow</span></span>
+        <span class="line"><span>you back? <span class="serif grad">Find out.</span></span></span>
+      </h1>
+      <p class="hero-sub">Your official Instagram data download, decoded in seconds: <b>not following back</b>, <b>who unfollowed you</b>, fans, mutuals, pending requests, close friends, DM stats and the advertisers holding your data. <b>No password, no login, nothing uploaded.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">What you’ll see</span>
+      <h2 class="h2">Every list Instagram keeps about your account.</h2>
+      <p class="lead">Instagram doesn’t show you who doesn’t follow back or who unfollowed you. Its official data export contains the raw lists — Unwrapped turns them into answers.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Not following you back</b> — with the date you followed each account, so you can start with the oldest.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Who unfollowed you</b> — compare a new export with your last one and see the names.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Fans &amp; mutuals</b> — who follows you without a follow back, and your longest-standing mutuals.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Pending follow requests you sent</b> — private accounts that never accepted, ready to cancel.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Close friends, blocked, restricted &amp; hidden-story lists</b> — all in one place.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>DM besties &amp; likes</b> — who you message and like the most (full export).</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Privacy X-ray</b> — advertisers that uploaded your info, topics you’re profiled with, every device that logged in.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">How to download your Instagram data</span>
+      <h2 class="h2">Get your export in under a minute of tapping.</h2>
+    </div>
+    <div class="reveal">{{> steps-instagram}}</div>
+    <div class="note reveal" style="margin-top:18px"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Tip: request <b>Followers and following</b> only — it’s small and usually ready fastest. Come back with a fresh export every couple of weeks to keep an exact unfollower history.</span></div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Instagram FAQ</span><h2 class="h2">Instagram unfollowers, explained.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>How can I see who doesn’t follow me back on Instagram?</summary><div class="answer"><p>Download your Instagram information (Accounts Center → Your information and permissions → Download your information → Followers and following), then drop the ZIP on this page. Unwrapped compares your followers and following lists and shows everyone you follow who doesn’t follow you back.</p></div></details>
+      <details><summary>Can I see who unfollowed me on Instagram?</summary><div class="answer"><p>Yes — by comparing two exports. Your first export is saved as a private snapshot in your browser. When you drop a newer one, Unwrapped shows exactly which followers disappeared in between. Accounts that were deactivated also disappear, so the list can include those.</p></div></details>
+      <details><summary>Is it safe? Do you need my Instagram password?</summary><div class="answer"><p>We never ask for your password and never log in to Instagram. Everything is computed from the file Instagram gives you, inside your own browser. Nothing is uploaded.</p></div></details>
+      <details><summary>JSON or HTML — which format should I pick?</summary><div class="answer"><p>Both work. JSON is a little more reliable and faster to process, so choose JSON if you can.</p></div></details>
+      <details><summary>Why are some accounts missing or listed twice?</summary><div class="answer"><p>The export reflects Instagram’s data at the moment it was created and can lag a few hours behind the app. Deactivated accounts can still appear. Duplicates are merged automatically.</p></div></details>
+      <details><summary>Does it work with Threads?</summary><div class="answer"><p>Yes. If your Instagram export contains Threads followers and following, Unwrapped shows a separate Threads dashboard — and the cross-platform map compares both.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Clean up your following list <span class="serif grad">today.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Analyze my Instagram</a><a class="btn btn--ghost btn--lg" href="/pricing/">See Pro</a></div>
+    </div>
+  </div>
+</section>

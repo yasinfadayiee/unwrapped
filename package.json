@@ -1,0 +1,27 @@
+{
+  "name": "unwrapped",
+  "version": "1.0.0",
+  "description": "Unwrapped — decode your Instagram, TikTok, X, Facebook & LinkedIn data exports on-device, with automatic crypto payments.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "node scripts/build.js && wrangler dev",
+    "deploy": "node scripts/build.js && wrangler deploy",
+    "db:create": "wrangler d1 create unwrapped",
+    "start:node": "node server/node-server.js",
+    "test": "node --test --test-reporter=spec test/*.test.mjs",
+    "vendor": "node scripts/vendor.js"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "devDependencies": {
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource/instrument-serif": "5.3.0",
+    "qrcode-generator": "2.0.4",
+    "wrangler": "4.149.0"
+  }
+}

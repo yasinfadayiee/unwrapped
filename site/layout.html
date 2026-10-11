@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{title}}</title>
+<meta name="description" content="{{description}}">
+<meta name="robots" content="{{robots}}">
+<link rel="canonical" href="{{canonical}}">
+<meta name="theme-color" content="#07070b">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{siteName}}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:url" content="{{canonical}}">
+<meta property="og:image" content="{{origin}}/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{title}}">
+<meta name="twitter:description" content="{{description}}">
+<meta name="twitter:image" content="{{origin}}/assets/img/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" href="/assets/fonts/bricolage-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/jetbrains-mono-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/main.css?v={{version}}">
+<link rel="modulepreload" href="/assets/js/site.js?v={{version}}">
+{{jsonld}}
+</head>
+<body class="{{bodyClass}}">
+<a class="skip-link" href="#main">Skip to content</a>
+{{icons}}
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/" aria-label="{{siteName}} — home"><svg aria-hidden="true"><use href="#i-logo"/></svg>{{siteName}}</a>
+    <nav class="nav" aria-label="Main">
+      <a href="/instagram/" data-nav="instagram">Instagram</a>
+      <a href="/tiktok/" data-nav="tiktok">TikTok</a>
+      <a href="/x/" data-nav="x">X</a>
+      <a href="/facebook/" data-nav="facebook">Facebook</a>
+      <a href="/linkedin/" data-nav="linkedin">LinkedIn</a>
+      <a href="/pricing/" data-nav="pricing">Pricing</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn--ghost btn--sm get-pro" href="/pricing/">Get Pro</a>
+      <a class="badge pro-pill" href="/account/" style="text-decoration:none"><svg aria-hidden="true" style="width:14px;height:14px"><use href="#i-check"/></svg>Pro</a>
+      <a class="btn btn--primary btn--sm" href="/#start">Open the app</a>
+      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-nav" aria-label="Mobile">
+  <a href="/instagram/">Instagram</a>
+  <a href="/tiktok/">TikTok</a>
+  <a href="/x/">X (Twitter)</a>
+  <a href="/facebook/">Facebook</a>
+  <a href="/linkedin/">LinkedIn</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/account/">My license</a>
+</nav>
+<main id="main" class="page">
+{{content}}
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="stack" style="--stack:14px">
+        <a class="logo" href="/"><svg aria-hidden="true"><use href="#i-logo"/></svg>{{siteName}}</a>
+        <p class="small text-2" style="max-width:36ch">Decode your social media data exports — privately, on your own device. No passwords. No uploads. Ever.</p>
+        <span class="chip"><span class="dot"></span>Works offline once loaded</span>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="/instagram/">Instagram unfollowers</a></li>
+          <li><a href="/tiktok/">TikTok screen time</a></li>
+          <li><a href="/x/">X archive explorer</a></li>
+          <li><a href="/facebook/">Facebook unfriend tracker</a></li>
+          <li><a href="/linkedin/">LinkedIn network map</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#how">How it works</a></li>
+          <li><a href="/#demo" data-demo>Live demo</a></li>
+          <li><a href="/account/">My license</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trust</h4>
+        <ul>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms &amp; refunds</a></li>
+          <li><a href="/#promise">The no-password promise</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">unwrapped</div>
+    <div class="legal">
+      <span>© <span data-year></span> {{siteName}}. Not affiliated with Instagram, Meta, TikTok, X, or LinkedIn. All trademarks belong to their owners.</span>
+      <span>Made for people, not for data brokers.</span>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/assets/js/site.js?v={{version}}"></script>
+</body>
+</html>
