@@ -2,6 +2,31 @@ import { h, icon, toast, downloadBlob } from '../lib/ui.js';
 import { viewHead, panel, emptyState } from './components.js';
 import { THEMES, cardsFor, drawCard, fontsReady, canvasBlob } from './wrapped.js';
 
+// "Share" (native share sheet with the PNG, or a download) and "Save" buttons for a card.
+export function cardButtons(canvas, filename, title = 'My socials, unwrapped') {
+  const save = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('download'), 'Save');
+  const share = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('share'), 'Share');
+  save.addEventListener('click', async () => {
+    downloadBlob(await canvasBlob(canvas), filename);
+    toast('Image saved');
+  });
+  share.addEventListener('click', async () => {
+    const blob = await canvasBlob(canvas);
+    const file = new File([blob], filename, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title });
+      } catch {
+        /* cancelled */
+      }
+    } else {
+      downloadBlob(blob, file.name);
+      toast('Saved — share it from your gallery');
+    }
+  });
+  return h('div', { style: { display: 'flex', gap: '8px' } }, share, save);
+}
+
 export function wrappedView(ds, ctx) {
   const root = h('div', { class: 'app-content' });
   const cards = cardsFor(ds);
@@ -31,27 +56,7 @@ export function wrappedView(ds, ctx) {
   for (const card of cards) {
     const canvas = h('canvas', { width: 1080, height: 1920, role: 'img', 'aria-label': `${card.titleA} ${card.titleB} ${card.hero} ${card.heroLabel}` });
     canvases.push({ canvas, card });
-    const save = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('download'), 'Save');
-    const share = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('share'), 'Share');
-    save.addEventListener('click', async () => {
-      downloadBlob(await canvasBlob(canvas), `unwrapped-${ds.platform}-${card.id}.png`);
-      toast('Image saved');
-    });
-    share.addEventListener('click', async () => {
-      const blob = await canvasBlob(canvas);
-      const file = new File([blob], `unwrapped-${ds.platform}-${card.id}.png`, { type: 'image/png' });
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({ files: [file], title: 'My socials, unwrapped' });
-        } catch {
-          /* cancelled */
-        }
-      } else {
-        downloadBlob(blob, file.name);
-        toast('Saved — share it from your gallery');
-      }
-    });
-    grid.append(h('div', { class: 'wrapped-item' }, canvas, h('div', { style: { display: 'flex', gap: '8px' } }, share, save)));
+    grid.append(h('div', { class: 'wrapped-item' }, canvas, cardButtons(canvas, `unwrapped-${ds.platform}-${card.id}.png`)));
   }
 
   async function draw() {

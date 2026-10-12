@@ -5,8 +5,10 @@ import { h, icon, avatarStyle, append } from '../lib/ui.js';
 import { fmtInt, pct, relTime, dateShort, duration, monthLabel, hourLabel } from '../lib/format.js';
 import { TIER_NAME, tierFor } from '../lib/tiers.js';
 import { relationships } from '../core/insights.js';
-import { ghostReport, engagementAudit, growthTimeline, audienceQuality, bestTimesFor } from '../core/lab.js';
-import { viewHead, stat, panel, insights, emptyState, lockCard, personRow, userList, dataNote } from './components.js';
+import { ghostReport, engagementAudit, growthTimeline, audienceQuality, bestTimesFor, accountHealth } from '../core/lab.js';
+import { viewHead, stat, panel, insights, emptyState, lockCard, personRow, userList, dataNote, reminderButton } from './components.js';
+import { drawCard, fontsReady } from './wrapped.js';
+import { cardButtons } from './views-wrapped.js';
 import { barChart, heatmapChart, rankList } from './charts.js';
 import { openQueue } from './queue.js';
 import { reportView, windowLabel } from './report.js';
@@ -185,7 +187,7 @@ function growthView(ds, ctx) {
       panel(
         { title: 'Every snapshot, compared', text: rows.length > 1 ? `${rows.length} exports analyzed on this device` : 'Analyze a newer export later to see the changes' },
         rows.length < 2
-          ? emptyState('Only one snapshot so far. Download a fresh export in a week or two and drop it here.', 'calendar')
+          ? h('div', { class: 'stack', style: { '--stack': '12px', justifyItems: 'center' } }, emptyState('Only one snapshot so far. Download a fresh export in a week or two and drop it here.', 'calendar'), reminderButton(ds))
           : can
             ? h('div', { class: 'rows' }, rows.map((s) => h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, dateShort(s.takenAt)), h('span', null, `${fmtInt(s.followers)} followers · ${fmtInt(s.following)} following`)), s.gained == null ? h('span', { class: 'badge badge--muted' }, 'first') : h('span', { class: 'delta' }, h('b', { class: 'up' }, `+${fmtInt(s.gained)}`), ' ', h('b', { class: 'down' }, `−${fmtInt(s.lost)}`)))))
             : lockedBlock(ctx, 'growth', { count: rows.length, what: 'snapshots' }),
@@ -300,6 +302,96 @@ function bestTimeView(ds, ctx) {
       ),
     );
   }
+  return root;
+}
+
+/* ---------- Account Health (free) ---------- */
+
+const HEALTH = {
+  A: ['Thriving', 'An account in great shape.'],
+  B: ['Healthy', 'Strong, with a few quick wins left.'],
+  C: ['Room to grow', 'A few fixes will make a big difference.'],
+  D: ['Needs attention', 'Some clean-up will pay off fast.'],
+  F: ['Time for a clean-up', 'Start with the weakest factor below.'],
+};
+const GRADE_COLOR = { A: 'var(--good)', B: 'var(--signal)', C: 'var(--warning)', D: 'var(--serious)', F: 'var(--critical)' };
+const scoreColor = (s) => (s >= 0.8 ? 'var(--signal)' : s >= 0.6 ? 'var(--c3)' : s >= 0.4 ? 'var(--warning)' : 'var(--c2)');
+// Factors that point at a paid tool show its tier when it is locked.
+const PAID_FIX = new Set(['audience', 'audit', 'growth']);
+
+export function healthView(ds, ctx) {
+  const health = accountHealth(ds, { snapshots: ctx.snapshots || [] });
+  const root = h('div', { class: 'app-content' }, viewHead('Account health', 'One score for how healthy your account is, and exactly what to fix first.'));
+  if (!health) return root.appendChild(panel(null, emptyState('Not enough data in this export to score the account yet.', 'pulse'))) && root;
+  const [headline, line] = HEALTH[health.grade];
+  const weakest = health.factors[0];
+  const fixBtn = (f, primary = false) => {
+    const locked = PAID_FIX.has(f.fix) && !ctx.can(f.fix);
+    return h('button', { class: `btn ${primary ? 'btn--primary' : 'btn--ghost'} btn--sm`, type: 'button', onClick: () => ctx.go(f.fix) }, primary ? `Fix ${f.label.toLowerCase()}` : 'Improve', icon('arrow'), locked ? tierPill(tierFor(f.fix)) : null);
+  };
+
+  const canvas = h('canvas', { width: 1080, height: 1920, role: 'img', 'aria-label': `Account health card: ${health.score} out of 100` });
+  const best = [...health.factors].sort((a, b) => b.weight - a.weight).slice(0, 4);
+  fontsReady().then(() =>
+    drawCard(
+      canvas,
+      {
+        kicker: `${ds.label} · health`,
+        titleA: `My ${ds.label},`,
+        titleB: 'checked up.',
+        hero: String(health.score),
+        heroLabel: `account health score · grade ${health.grade}`,
+        rows: best.map((f) => [f.label, `${Math.round(f.score * 100)}/100`]),
+        persona: headline,
+        personaLine: line,
+        period: `EXPORT · ${dateShort(ds.exportedAt).toUpperCase()}`,
+      },
+      'aurora',
+      { watermark: !ctx.pro, site: ctx.site },
+    ),
+  );
+
+  add(
+    root,
+    h(
+      'div',
+      { class: 'panels panels--3-2' },
+      panel(
+        null,
+        h(
+          'div',
+          { class: 'health-hero' },
+          h('div', { class: 'gauge gauge--lg', style: { '--v': health.score, '--g': GRADE_COLOR[health.grade] } }, h('div', { class: 'gauge-in' }, h('b', null, health.grade), h('span', null, `${health.score}/100`))),
+          h(
+            'div',
+            { class: 'health-copy' },
+            h('span', { class: 'eyebrow' }, 'Your account'),
+            h('h3', null, headline),
+            h('p', null, `${line} Your weakest area is ${weakest.label.toLowerCase()}: ${weakest.detail}.`),
+            fixBtn(weakest, true),
+          ),
+        ),
+      ),
+      panel({ title: 'Share your score', text: 'Numbers only, never anyone’s name.' }, h('div', { class: 'health-card' }, canvas, cardButtons(canvas, `unwrapped-${ds.platform}-health.png`, 'My account health, unwrapped'))),
+    ),
+    panel(
+      { title: 'What makes up your score', text: 'Weakest first. Each factor links to the tool that helps you improve it.' },
+      h(
+        'div',
+        { class: 'health-factors' },
+        health.factors.map((f) =>
+          h(
+            'div',
+            { class: 'hf' },
+            h('div', { class: 'hf-top' }, h('b', null, f.label), h('span', { class: 'hf-score', style: { color: scoreColor(f.score) } }, `${Math.round(f.score * 100)}`, h('small', null, '/100'))),
+            h('div', { class: 'track' }, h('i', { style: { width: `${Math.max(2, f.score * 100)}%`, background: scoreColor(f.score) } })),
+            h('div', { class: 'hf-bottom' }, h('span', null, f.detail), fixBtn(f)),
+          ),
+        ),
+      ),
+    ),
+    dataNote(ds),
+  );
   return root;
 }
 

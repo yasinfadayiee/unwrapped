@@ -89,7 +89,7 @@ for (const file of readdirSync(path.join(root, 'site/pages'))) {
       applicationCategory: 'UtilitiesApplication',
       operatingSystem: 'Any (runs in the browser)',
       description: meta.description,
-      offers: { '@type': 'AggregateOffer', priceCurrency: 'USD', lowPrice: '0', highPrice: '59' },
+      offers: { '@type': 'AggregateOffer', priceCurrency: 'USD', lowPrice: '0', highPrice: '119' },
     });
   }
   if (meta.article) {

@@ -5,6 +5,7 @@ import { h, s, icon } from '../lib/ui.js';
 import { fmtInt, pct, relTime } from '../lib/format.js';
 import { friendshipRadar } from '../core/insights.js';
 import { viewHead, stat, panel, insights, emptyState, lockCard } from './components.js';
+import { friendCardPanel } from './friend-card.js';
 
 const GROUPS = [
   { key: 'steady', label: 'Steady', color: 'var(--c1)' },
@@ -121,5 +122,7 @@ export function friendsView(ds, ctx) {
       ]),
     ),
   );
+  const card = friendCardPanel(ds, ctx);
+  if (card) root.append(card);
   return root;
 }

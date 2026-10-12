@@ -273,6 +273,29 @@ function checkoutTriggers() {
 async function licenseBadge() {
   const state = await proState().catch(() => ({ pro: false }));
   document.body.classList.toggle('is-pro', Boolean(state.pro));
+  const names = { plus: 'Plus', pro: 'Pro', creator: 'Creator' };
+  $$('[data-tier-name]').forEach((el) => (el.textContent = names[state.tier] || 'Pro'));
+}
+
+/* ---------- sticky mobile CTA ---------- */
+// Shows once the hero's drop zone has scrolled away, hides near the bottom CTA.
+function stickyCta() {
+  const bar = $('[data-sticky-cta]');
+  const drop = $('.hero .drop, .hero [data-drop]');
+  if (!bar || !drop || !('IntersectionObserver' in window)) return;
+  const seen = new Map();
+  const update = () => bar.classList.toggle('is-on', !seen.get('drop') && !seen.get('cta') && !seen.get('foot'));
+  const watch = (el, key) => {
+    if (!el) return;
+    new IntersectionObserver(([e]) => {
+      seen.set(key, e.isIntersecting);
+      update();
+    }).observe(el);
+  };
+  seen.set('drop', true);
+  watch(drop, 'drop');
+  watch($('.cta-band'), 'cta');
+  watch($('.site-footer'), 'foot');
 }
 
 /* ---------- privacy monitor ---------- */
@@ -350,6 +373,7 @@ misc();
 heroCanvas();
 showcase();
 netMonitor();
+stickyCta();
 getConfig().then(() => {
   pricing();
   licenseBadge();

@@ -1,0 +1,87 @@
+<!--page {
+  "route": "/instagram-dm-analyzer/",
+  "nav": "tools",
+  "title": "Instagram DM analyzer: who leaves you on read, reply times & who texts first · Unwrapped",
+  "description": "Analyze your Instagram DMs privately: see who leaves you on read, how fast each person really replies, who always texts first and which friendships are fading — from your official data export. No login, nothing uploaded.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-ghost"/></svg>Ghost Detector · Instagram DMs</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Who leaves you</span></span>
+        <span class="line"><span><span class="serif grad">on read?</span></span></span>
+      </h1>
+      <p class="hero-sub">Your Instagram messages, measured: <b>reply times</b> for every friend, who <b>leaves you on read</b>, who <b>always texts first</b> and which friendships are <b>fading</b>. Private by design — <b>nobody is notified and nothing is uploaded.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">What you’ll see</span>
+      <h2 class="h2">The patterns behind your chats.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Reply times</b> — how long each person usually takes to answer you, and how fast you answer them.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Who leaves you on read</b> — times you wrote, heard nothing for a day or more, and had to write again.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Never answered</b> — chats where the last word is yours and they haven’t written since.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Who texts first</b> — the conversations only you ever start.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Friendship Radar</b> — your inner circle and the friendships that are fading or rising.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Friendship Wrapped</b> — a story card for you and a friend: streaks, reply speed, your friendship type.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="lab-art art-reply">
+        <div class="rr"><span class="nm">@milo.design</span><i style="--w:8%"></i><b>2 min</b></div>
+        <div class="rr"><span class="nm">@luna_eats</span><i style="--w:34%"></i><b>47 min</b></div>
+        <div class="rr hot"><span class="nm">@theo.films</span><i style="--w:92%"></i><b>3 h 12 min</b></div>
+        <span class="read-tag">left you on read ×4</span>
+      </div>
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><b>You start 71% of chats</b><em>with 6 friends</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><b>Your last message: 3 weeks ago</b><em>still unanswered</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2 class="h2">Your messages never leave your phone or laptop.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Request your messages</b><span>Instagram → Accounts Center → Your information and permissions → Download your information → choose <b>Messages</b> (JSON). It’s usually ready within hours.</span></li>
+      <li><b>Drop the ZIP here</b><span>It’s analyzed inside your browser. Message texts are never read for content — only who wrote and when.</span></li>
+      <li><b>See the numbers, then the names</b><span>Your reply times and counts are free. Names, lists and Friendship Wrapped cards are part of <a href="/pricing/">Pro</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Instagram DMs, decoded.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Can I see who leaves me on read on Instagram?</summary><div class="answer"><p>Instagram doesn’t show it, but your message history does. Unwrapped counts the times you wrote, got no answer for a day or more and wrote again, and lists chats where your last message is still unanswered after a week.</p></div></details>
+      <details><summary>Will the other person know?</summary><div class="answer"><p>No. Nobody is notified and nothing is sent anywhere — the analysis runs on your own device from the file Instagram gives you.</p></div></details>
+      <details><summary>Do you read my messages?</summary><div class="answer"><p>No. Only who sent each message and when is used. The text itself is never analyzed, stored or uploaded.</p></div></details>
+      <details><summary>Which data do I need to download?</summary><div class="answer"><p>Choose “Messages” (or “All available information”) in Instagram’s Download your information, in JSON format.</p></div></details>
+      <details><summary>Does it include group chats?</summary><div class="answer"><p>Reply times and “left on read” are measured in 1:1 chats only, where they’re meaningful. Group chats still count toward your message totals.</p></div></details>
+      <details><summary>Is it free?</summary><div class="answer"><p>Your own reply time, their average reply time and the counts are free. The names behind each list, Friendship Radar and Friendship Wrapped cards are part of Pro.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Find out who’s <span class="serif grad">really there.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Analyze my DMs</a><button class="btn btn--ghost btn--lg" type="button" data-demo>See it in the demo</button></div>
+    </div>
+  </div>
+</section>

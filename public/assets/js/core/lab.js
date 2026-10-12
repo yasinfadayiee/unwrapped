@@ -2,7 +2,7 @@
 // Growth Time Machine, Audience Quality and Best Time to Post.
 // Pure functions over parsed exports — unit-tested in test/lab.test.mjs.
 
-import { personKey, byMonth } from './insights.js';
+import { personKey, byMonth, relationships, longestStreak } from './insights.js';
 
 const HOUR = 3_600_000;
 const DAY = 24 * HOUR;
@@ -59,6 +59,26 @@ export function conversationDynamics(log, me, latest = Infinity) {
     waitingOnThem: stale && last.mine ? last.end : 0,
     waitingOnMe: stale && !last.mine ? last.end : 0,
   };
+}
+
+const localDay = (ts) => {
+  const d = new Date(ts);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
+
+// Shareable facts about one chat: longest daily streak, late-night share.
+export function chatStats(log) {
+  const days = new Set();
+  const hours = new Array(24).fill(0);
+  let n = 0;
+  for (const [ts] of log || []) {
+    if (!ts) continue;
+    days.add(localDay(ts));
+    hours[new Date(ts).getHours()]++;
+    n++;
+  }
+  const night = hours.slice(0, 5).reduce((a, b) => a + b, 0);
+  return { activeDays: days.size, streak: longestStreak(days), nightShare: n ? night / n : 0, topHour: n ? hours.indexOf(Math.max(...hours)) : null };
 }
 
 export function ghostReport(messages, { minTurns = 6 } = {}) {
@@ -359,6 +379,47 @@ export function bestTimes({ tweets = null, followers = [], inbound = null } = {}
   const scale = sum(raw, (row) => sum(row, (v) => v)) || 1;
   const combined = raw.map((row) => row.map((v) => v / scale));
   return { mode: 'audience', grid: combined, top: topWindows(combined), ...totals(combined), samples: nFollows + nInbound, sources: { follows: nFollows, messages: nInbound } };
+}
+
+/* ---------- Account Health ---------- */
+
+const clamp01 = (v) => Math.max(0, Math.min(1, v));
+const pctText = (x) => `${Math.round(x * 100)}%`;
+
+// One 0–100 score from the factors this export can measure. Each factor
+// points at the Pro Lab view (`fix`) that helps improve it.
+export function accountHealth(ds, { snapshots = [] } = {}) {
+  if (!ds.hasRelationships) return null;
+  const factors = [];
+  const rel = relationships(ds);
+  if (rel.following >= 20) {
+    factors.push({ id: 'balance', label: 'Follow-back balance', weight: 30, score: clamp01(rel.followBackRate / 0.75), detail: `${pctText(rel.followBackRate)} of the accounts you follow follow you back`, fix: 'notBack' });
+  }
+  const quality = ds.platform === 'x' ? null : audienceQuality(ds.lists.followers);
+  if (quality) {
+    factors.push({ id: 'authentic', label: 'Audience authenticity', weight: 30, score: quality.score / 100, detail: `${quality.likely.length} likely bot or spam followers`, fix: 'audience' });
+  }
+  const audit = ds.platform === 'instagram' ? engagementAudit(ds) : null;
+  if (audit) {
+    factors.push({ id: 'reciprocity', label: 'Two-way engagement', weight: 20, score: clamp01(1 - audit.oneWayShare), detail: `${pctText(audit.oneWayShare)} of your likes and comments go unreturned`, fix: 'audit' });
+    factors.push({ id: 'active', label: 'Active following', weight: 20, score: clamp01(1 - audit.deadShare), detail: `${audit.dead.length} follows you never interact with`, fix: 'audit' });
+  }
+  const growth = growthTimeline(ds, snapshots);
+  const dated = (ds.lists.followers || []).filter((f) => f.ts);
+  if (growth.hasDates && dated.length >= 50) {
+    const first = Math.min(...dated.map((f) => f.ts));
+    const spanDays = Math.max(90, ((ds.exportedAt || Date.now()) - first) / DAY);
+    const usual = (dated.length / spanDays) * 90; // typical new followers per 90 days
+    factors.push({ id: 'momentum', label: 'Growth momentum', weight: 20, score: clamp01(growth.last90 / usual), detail: `${growth.last90} new followers in 90 days vs ${Math.round(usual)} usually`, fix: 'growth' });
+  }
+  if (growth.churn30 != null) {
+    factors.push({ id: 'retention', label: 'Follower retention', weight: 15, score: clamp01(1 - growth.churn30 / 0.1), detail: `${pctText(growth.churn30)} of followers lost per month`, fix: 'growth' });
+  }
+  if (factors.length < 2) return null;
+  const weight = sum(factors, (f) => f.weight);
+  const score = Math.round((100 * sum(factors, (f) => f.score * f.weight)) / weight);
+  const grade = score >= 85 ? 'A' : score >= 70 ? 'B' : score >= 55 ? 'C' : score >= 40 ? 'D' : 'F';
+  return { score, grade, factors: factors.sort((a, b) => a.score - b.score) };
 }
 
 // The right inputs for each platform's export.

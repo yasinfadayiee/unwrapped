@@ -1,6 +1,7 @@
 import { h, icon, clear, avatarStyle, csvFile, downloadBlob, toast } from '../lib/ui.js';
 import { fmtInt, relTime, dateShort } from '../lib/format.js';
 import { TIER_NAME } from '../lib/tiers.js';
+import { icsReminder } from '../lib/calendar.js';
 
 export function viewHead(title, text, ...actions) {
   return h('div', { class: 'view-head' }, h('div', null, h('h2', null, title), text ? h('p', null, text) : null), actions.length ? h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } }, actions) : null);
@@ -209,6 +210,23 @@ export function userList({ platform, items, ctx, subFor, exportName = 'list', ke
   });
   render();
   return root;
+}
+
+// Saves a calendar reminder to download a fresh export, so the next one can be
+// compared with today's snapshot.
+export function reminderButton(ds, { days = 14, label = 'Remind me in 2 weeks' } = {}) {
+  const btn = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('calendar'), label);
+  btn.addEventListener('click', () => {
+    const ics = icsReminder({
+      title: `Download a fresh ${ds.label} export`,
+      description: `Request your ${ds.label} data again and drop it on ${location.origin}. Unwrapped compares it with your snapshot from ${dateShort(ds.exportedAt)} and shows exactly who unfollowed you.`,
+      url: `${location.origin}/#how`,
+      days,
+    });
+    downloadBlob(new Blob([ics], { type: 'text/calendar' }), 'unwrapped-reminder.ics');
+    toast('Reminder saved — open it to add it to your calendar', { iconName: 'calendar', timeout: 4200 });
+  });
+  return btn;
 }
 
 export function dataNote(ds) {

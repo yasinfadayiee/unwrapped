@@ -3,7 +3,7 @@
 import { h, icon, clear } from '../lib/ui.js';
 import { fmtInt, pct, dateShort, relTime, plural } from '../lib/format.js';
 import { relationships, diffSnapshots, exposureScore } from '../core/insights.js';
-import { viewHead, stat, panel, insights, userList, emptyState, lockCard, personRow, dataNote } from './components.js';
+import { viewHead, stat, panel, insights, userList, emptyState, lockCard, personRow, dataNote, reminderButton } from './components.js';
 import { relationshipOrbit } from './orbit.js';
 import { barChart, splitBar } from './charts.js';
 import { deleteSnapshot } from './snapshots.js';
@@ -145,7 +145,7 @@ export function unfollowersView(ds, ctx) {
   const root = h('div', { class: 'app-content' });
   const snaps = ctx.snapshots || [];
   const word = ds.platform === 'facebook' ? 'unfriended' : 'unfollowed';
-  root.append(viewHead(`Who ${word} you`, `Every export you analyze is saved as a private snapshot in this browser. Comparing snapshots shows exactly who left — no login, no tracking.`));
+  root.append(viewHead(`Who ${word} you`, `Every export you analyze is saved as a private snapshot in this browser. Comparing snapshots shows exactly who left — no login, no tracking.`, reminderButton(ds)));
 
   if (snaps.length < 2) {
     root.append(

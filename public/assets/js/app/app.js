@@ -9,7 +9,7 @@ import { crossPlatform } from '../core/insights.js';
 import { proState } from '../lib/license.js';
 import { getConfig } from '../lib/api.js';
 import { TIER_NAME, TIER_RANK, atLeast, tierFor } from '../lib/tiers.js';
-import { labViews, tierPill } from './views-lab.js';
+import { labViews, tierPill, healthView } from './views-lab.js';
 import { saveSnapshot, listSnapshots, snapshotFromDataset } from './snapshots.js';
 import { instagramViews } from './views-instagram.js';
 import { tiktokViews } from './views-tiktok.js';
@@ -190,6 +190,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
     go: (id) => {
       viewId = id;
       render();
+      main.scrollTo({ top: 0 });
     },
     reloadSnapshots: async () => {
       const ds = tabs[tabIndex].ds;
@@ -209,7 +210,12 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         const lab = [...base.filter((v) => v.group === 'lab'), ...labViews(ds, ctx, { keepKey: `${ds.platform}:${ds.account?.username || 'me'}` })];
         const rest = base.filter((v) => v.group !== 'lab');
         const wrapped = rest.filter((v) => v.id === 'wrapped');
-        viewCache.set(tab.key, [...rest.filter((v) => v.id !== 'wrapped'), ...lab, ...wrapped]);
+        const primary = rest.filter((v) => v.id !== 'wrapped');
+        // Account health (free) sits right after the overview.
+        if (ds.hasRelationships && ['instagram', 'threads', 'tiktok', 'x'].includes(ds.platform)) {
+          primary.splice(1, 0, { id: 'health', label: 'Account health', icon: 'pulse', render: () => healthView(ds, ctx) });
+        }
+        viewCache.set(tab.key, [...primary, ...lab, ...wrapped]);
       }
     }
     return viewCache.get(tab.key);

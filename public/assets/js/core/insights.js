@@ -57,7 +57,7 @@ const dayKey = (ts) => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 };
 
-function longestStreak(days) {
+export function longestStreak(days) {
   const sorted = [...days].sort();
   let best = 0;
   let run = 0;

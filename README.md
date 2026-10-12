@@ -18,6 +18,10 @@ and sells three paid tiers — **Plus**, **Pro** and **Creator** — with fully 
 - **SEO guides** — article pages under `/guides/` with Article + FAQ structured data.
 - **Pro Lab** (Pro) — Ghost Detector (reply times, left on read, who texts first), Engagement Audit (one-way support, dead follows), Growth Time Machine (audience curve, churn, follow-back speed), Friendship Radar.
 - **Creator tools** — Audience Quality (bot/spam follower detector with a grade), Best Time to Post (real X engagement, or audience activity), white-label PDF client report.
+- **Account health** (free) — one 0–100 score from the factors an export can measure, weakest first, each linking to the tool that fixes it; shareable card.
+- **Friendship Wrapped** (Pro) — a story card for you and one friend (streak, reply speed, friendship type), showing only a nickname you type.
+- **Re-export reminders** — a calendar file (.ics) built on the device, so users come back with a fresh export.
+- **SEO landing pages** — `/tools/`, `/fake-follower-checker/`, `/instagram-dm-analyzer/`, `/best-time-to-post/`, `/instagram-audit/` (FAQ structured data, shared `related-tools` partial).
 - **Tiers & upgrades** — prices in `src/config.js` (`TIERS`, `PLANS`), tool → tier mapping in `public/assets/js/lib/tiers.js`. Upgrading converts the remaining time at fair value (yearly prices); a lifetime Pro license can add Creator time and falls back to lifetime Pro afterwards. Old plan ids (`month`/`year`/`life`) keep working as Pro.
 
 ## Project layout

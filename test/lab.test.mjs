@@ -2,10 +2,13 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { analyze } from '../public/assets/js/core/analyze.js';
 import { buildDemoVfs } from '../public/assets/js/core/demo.js';
+import { icsReminder } from '../public/assets/js/lib/calendar.js';
 import {
+  accountHealth,
   audienceQuality,
   bestTimes,
   botScore,
+  chatStats,
   conversationDynamics,
   engagementAudit,
   ghostReport,
@@ -141,6 +144,39 @@ test('best times prefer real engagement and fall back to audience activity', () 
   assert.deepEqual([windows[0].day, windows[0].hour], [2, 18]);
 });
 
+test('chat stats: longest daily streak and late-night share', () => {
+  const day = (n, hour) => new Date(2026, 0, 1 + n, hour).getTime();
+  const log = [[day(0, 23), 'a'], [day(1, 2), 'b'], [day(1, 14), 'a'], [day(2, 9), 'b'], [day(5, 3), 'a']];
+  const s = chatStats(log);
+  assert.equal(s.streak, 3);
+  assert.equal(s.activeDays, 4);
+  assert.equal(s.nightShare, 2 / 5);
+  assert.deepEqual(chatStats([]), { activeDays: 0, streak: 0, nightShare: 0, topHour: null });
+});
+
+test('account health combines the measurable factors, weakest first', () => {
+  const followers = Array.from({ length: 60 }, (_, i) => ({ u: `friend.${i}`, ts: T0 - i * 5 * D }));
+  const following = followers.slice(0, 30).map((f) => ({ ...f }));
+  const ds = { platform: 'tiktok', hasRelationships: true, exportedAt: T0, lists: { followers, following } };
+  const health = accountHealth(ds);
+  assert.ok(health.score > 0 && health.score <= 100);
+  assert.ok(['A', 'B', 'C', 'D', 'F'].includes(health.grade));
+  assert.deepEqual(health.factors.map((f) => f.id).sort(), ['authentic', 'balance', 'momentum']);
+  for (let i = 1; i < health.factors.length; i++) assert.ok(health.factors[i - 1].score <= health.factors[i].score);
+  assert.equal(health.factors.find((f) => f.id === 'balance').score, 1, 'everyone you follow follows you back');
+  assert.equal(accountHealth({ ...ds, lists: { followers: followers.slice(0, 5), following: [] } }), null, 'too little data');
+});
+
+test('calendar reminders are valid, folded .ics files', () => {
+  const ics = icsReminder({ title: 'Download a fresh Instagram export', description: 'Drop it on https://example.com, then compare; it shows who unfollowed you since your last snapshot — a long line that must be folded.', url: 'https://example.com/#how', days: 14, now: new Date(2026, 9, 13, 12) });
+  assert.match(ics, /^BEGIN:VCALENDAR\r\n/);
+  assert.match(ics, /DTSTART;VALUE=DATE:20261027\r\n/);
+  assert.match(ics, /SUMMARY:Download a fresh Instagram export\r\n/);
+  assert.match(ics, /https:\/\/example\.com\\, then compare\\;/, 'commas and semicolons are escaped');
+  for (const line of ics.split('\r\n')) assert.ok(new TextEncoder().encode(line).length <= 75, line);
+  assert.match(ics, /END:VCALENDAR\r\n$/);
+});
+
 test('the demo export exercises every Pro Lab tool', async () => {
   const { vfs } = buildDemoVfs(Date.UTC(2026, 9, 1));
   const { datasets } = await analyze(vfs);
@@ -163,4 +199,9 @@ test('the demo export exercises every Pro Lab tool', async () => {
   assert.equal(bestTimes({ tweets: x.tweets }).mode, 'engagement');
   assert.equal(bestTimes({ followers: ig.lists.followers, inbound: ig.activity.messages.inHeat }).mode, 'audience');
   assert.ok(growthTimeline(ig).cumulative.length > 12);
+
+  const health = accountHealth(ig);
+  assert.equal(health.factors.length, 5, 'Instagram measures balance, authenticity, reciprocity, active following and momentum');
+  const friend = ig.activity.messages.all[0];
+  assert.ok(friend.chat.streak >= 1 && friend.chat.activeDays >= friend.chat.streak);
 });

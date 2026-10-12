@@ -1,7 +1,7 @@
 // Instagram (and Threads) "Download your information" exports — JSON or HTML.
 
 import { describeUserAgent, fixMeta, parseDate, toMs } from '../core/text.js';
-import { conversationDynamics } from '../core/lab.js';
+import { chatStats, conversationDynamics } from '../core/lab.js';
 import {
   dedupeUsers,
   firstArray,
@@ -215,6 +215,7 @@ async function readMessages(vfs, selfName, progress) {
       previous,
       recentMine,
       dynamics: isGroup ? null : conversationDynamics(t.log, me, latest),
+      chat: isGroup ? null : chatStats(t.log),
     });
   }
   list.sort((a, b) => b.count - a.count);
