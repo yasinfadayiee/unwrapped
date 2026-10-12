@@ -1,7 +1,8 @@
 // Cinematic "unwrapping" story shown right after analysis: full-screen slides
 // with animated numbers, tap/arrow navigation and auto-advance.
 
-import { h, icon } from '../lib/ui.js';
+import { h, icon, downloadBlob } from '../lib/ui.js';
+import { recordStory, videoSupported } from './story-video.js';
 import { fmtInt, compact, hourLabel, duration, pct } from '../lib/format.js';
 import { relationships, watchStats, tweetStats, exposureScore, friendshipRadar, diffSnapshots } from '../core/insights.js';
 import { privacyParts } from './wrapped.js';
@@ -116,12 +117,44 @@ export function playStory(datasets, { onDone }) {
       sl.big ? h('div', { class: 'story-number', style: sl.accent ? { color: sl.accent } : null }, sl.big) : null,
       h('div', { class: 'story-title' }, sl.title, sl.serif ? h('span', { class: 'serif grad' }, ` ${sl.serif}`) : null),
       sl.text ? h('p', { class: 'story-text' }, sl.text) : null,
-      sl.final ? h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: (e) => { e.stopPropagation(); finish(); } }, 'Open my dashboard', icon('arrow')) : null,
+      sl.final
+        ? h(
+            'div',
+            { style: { display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' } },
+            h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: (e) => { e.stopPropagation(); finish(); } }, 'Open my dashboard', icon('arrow')),
+            videoSupported() ? videoButton() : null,
+          )
+        : null,
     );
     stage.replaceChildren(slide);
     if (numberEl) countUp(numberEl, sl.number, sl.suffix || '');
     clearTimeout(timer);
     if (!sl.final && !paused) timer = setTimeout(() => show(index + 1), DURATION);
+  }
+
+  function videoButton() {
+    const btn = h('button', { class: 'btn btn--ghost btn--lg', type: 'button', style: { background: 'rgba(0,0,0,.35)' } }, icon('film'), 'Save as story video');
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      btn.disabled = true;
+      try {
+        const blob = await recordStory(slides, { site: location.host, onProgress: (p) => (btn.textContent = `Rendering… ${Math.round(p * 100)}%`) });
+        const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
+        const file = new File([blob], `my-unwrapped-story.${ext}`, { type: blob.type });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({ files: [file], title: 'My socials, unwrapped' });
+          } catch {
+            /* cancelled */
+          }
+        } else downloadBlob(blob, file.name);
+        btn.textContent = 'Saved ✓';
+      } catch (err) {
+        console.error(err);
+        btn.textContent = 'Video not supported here';
+      }
+    });
+    return btn;
   }
 
   function onKey(e) {
