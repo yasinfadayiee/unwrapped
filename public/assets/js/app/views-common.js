@@ -85,7 +85,7 @@ export function relationshipViews(ds, ctx, { keepKey }) {
       count: rel.notFollowingBack.length,
       render: () => {
         const queueBtn = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('bolt'), 'Start unfollow queue');
-        queueBtn.addEventListener('click', () => (ctx.pro ? openQueue(ds, rel.notFollowingBack, ctx, keepKey) : ctx.upgrade('queue')));
+        queueBtn.addEventListener('click', () => (ctx.can('queue') ? openQueue(ds, rel.notFollowingBack, ctx, keepKey) : ctx.upgrade('queue')));
         return h(
           'div',
           { class: 'app-content' },
@@ -155,7 +155,7 @@ export function unfollowersView(ds, ctx) {
           { icon: 'calendar', title: 'Download a fresh export in a week or two', text: 'Request the same data again and drop it here — we’ll compare it with this snapshot automatically.' },
           { icon: 'ghost', title: 'You’ll see who left, by name', text: 'Plus new followers, and who you unfollowed in between.' },
           { icon: 'shield', title: 'Stored only on this device', text: 'Snapshots live in your browser’s storage. Clearing site data deletes them.' },
-          !ctx.pro && { icon: 'bolt', title: 'Seeing the names needs Pro', text: 'Free shows how many unfollowed you; Pro reveals who.' },
+          !ctx.pro && { icon: 'bolt', title: 'Seeing the names needs Plus', text: 'Free shows how many unfollowed you; Plus reveals who.' },
         ]),
       ),
     );
@@ -195,7 +195,7 @@ export function unfollowersView(ds, ctx) {
           'div',
           { class: 'locked', style: { minHeight: '260px' } },
           h('div', { class: 'locked-rows' }, items.slice(0, 5).map((i) => personRow(ds.platform, { ...i, u: i.u && 'hidden.account', name: i.name && 'Hidden name', id: i.id && '•••' }, { sub: 'Locked' }))),
-          lockCard({ count: items.length, what: 'names', title: `See all ${fmtInt(items.length)} names`, text: 'Pro shows exactly who it was — and keeps your full unfollower history.', onUpgrade: () => ctx.upgrade('unfollowers') }),
+          lockCard({ count: items.length, what: 'names', title: `See all ${fmtInt(items.length)} names`, text: 'Plus shows exactly who it was — and keeps your full unfollower history.', onUpgrade: () => ctx.upgrade('unfollowers') }),
         ),
       );
     }
@@ -287,7 +287,7 @@ export function tagCloud(items, { limit = 60, locked = false, ctx } = {}) {
     null,
     h('div', { class: 'tags' }, shown.map((t) => h('span', { class: 'tag' }, t))),
     locked && items.length > 12
-      ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('privacy') }, icon('lock'), `See all ${fmtInt(items.length)} with Pro`))
+      ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('privacy') }, icon('lock'), `See all ${fmtInt(items.length)} with Plus`))
       : items.length > limit
         ? h('p', { class: 'tiny muted', style: { marginTop: '10px' } }, `+ ${fmtInt(items.length - limit)} more`)
         : null,

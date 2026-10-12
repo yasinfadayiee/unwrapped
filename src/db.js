@@ -34,7 +34,8 @@ export const SCHEMA = [
     expires_at INTEGER,
     last_order_id TEXT,
     activations INTEGER NOT NULL DEFAULT 0,
-    reminded_at INTEGER
+    reminded_at INTEGER,
+    base_plan TEXT
   )`,
   `CREATE INDEX IF NOT EXISTS licenses_expiry ON licenses (status, expires_at)`,
   `CREATE TABLE IF NOT EXISTS tron_txs (
@@ -64,12 +65,27 @@ export const SCHEMA = [
   )`,
 ];
 
+// Columns added after the first release. SQLite has no "ADD COLUMN IF NOT
+// EXISTS", so each one is tried once per isolate and "duplicate column" errors
+// are ignored.
+const MIGRATIONS = [
+  // A lifetime license that bought time on a higher tier falls back to this plan.
+  'ALTER TABLE licenses ADD COLUMN base_plan TEXT',
+];
+
 const ready = new WeakMap();
 
 export async function ensureSchema(env) {
   if (!env.DB) throw new Error('D1 binding "DB" is missing — check wrangler.jsonc');
   if (ready.get(env.DB)) return;
   await env.DB.batch(SCHEMA.map((sql) => env.DB.prepare(sql)));
+  for (const sql of MIGRATIONS) {
+    try {
+      await env.DB.prepare(sql).run();
+    } catch {
+      /* already applied */
+    }
+  }
   ready.set(env.DB, true);
 }
 
@@ -98,5 +114,7 @@ export async function cleanup(env) {
     env.DB.prepare("UPDATE orders SET status = 'expired' WHERE status = 'pending' AND expires_at < ?").bind(now),
     env.DB.prepare('DELETE FROM rate_limits WHERE reset_at < ?').bind(now),
     env.DB.prepare('DELETE FROM events WHERE ts < ?').bind(now - 90 * 86_400_000),
+    // Higher-tier time on a lifetime license ran out: back to the lifetime plan.
+    env.DB.prepare('UPDATE licenses SET plan = base_plan, expires_at = NULL, base_plan = NULL, reminded_at = NULL WHERE base_plan IS NOT NULL AND expires_at < ?').bind(now),
   ]);
 }

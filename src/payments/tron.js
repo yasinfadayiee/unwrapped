@@ -56,7 +56,7 @@ export async function tronEnabled(env) {
   return validity.get(address);
 }
 
-const toleranceUnits = () => Math.round(SETTINGS.tronToleranceUsdt * 1e6);
+const toleranceUnits = (amountUnits) => Math.round(Math.min(SETTINGS.tronToleranceUsdt * 1e6, amountUnits * SETTINGS.tronToleranceShare));
 const reserveWindow = () => (SETTINGS.orderTtlMinutes + SETTINGS.tronGraceMinutes) * MINUTE;
 
 export async function allocateAmountUnits(env, priceUsd) {
@@ -154,8 +154,7 @@ export function matchTransfer(openOrders, units, blockTs) {
   );
   const exact = live.filter((o) => o.amount_units === units).sort((a, b) => a.created_at - b.created_at);
   if (exact.length) return exact[0];
-  const tol = toleranceUnits();
-  const near = live.filter((o) => units >= o.amount_units - tol && units <= o.amount_units * 3);
+  const near = live.filter((o) => units >= o.amount_units - toleranceUnits(o.amount_units) && units <= o.amount_units * 3);
   return near.length === 1 ? near[0] : null;
 }
 
@@ -259,7 +258,7 @@ export async function claimTronTx(env, order, rawTxid) {
     .bind(current.id)
     .first();
   const total = Number(sum.total);
-  if (total >= current.amount_units - toleranceUnits()) {
+  if (total >= current.amount_units - toleranceUnits(current.amount_units)) {
     await fulfillOrder(env, current, { providerRef: txid, paidUnits: total });
     return { ok: true, status: 'paid' };
   }

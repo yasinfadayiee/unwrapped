@@ -1,10 +1,10 @@
 // Cloudflare Worker entry. Static files in /public are served by Workers
 // Static Assets; everything under /api/* is handled here.
 
-import { PLANS, SETTINGS, brand, getPlan } from './config.js';
+import { PLANS, SETTINGS, TIERS, brand, getPlan, tierRank } from './config.js';
 import { cleanup, ensureSchema, getLicense, getOrder, logEvent } from './db.js';
 import { HttpError, fail, json, rateLimit, readJson, visitorId } from './http.js';
-import { activateLicense, getSigningKeys } from './license.js';
+import { activateLicense, getSigningKeys, lifetimeTier } from './license.js';
 import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
 import { createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
@@ -12,16 +12,6 @@ import { emailEnabled, sendRenewalReminders } from './email.js';
 import { handleAdmin } from './admin.js';
 import { attachReferral, discounted, getReferralForLicense, validReferral } from './referrals.js';
 import { isEmail, normalizeLicenseKey } from './util.js';
-
-const PRO_FEATURES = [
-  'Full lists — every account, no limits',
-  'Who unfollowed you, snapshot after snapshot',
-  'Unfollow queue with safe daily pacing',
-  'Deep insights for TikTok, X, Facebook & LinkedIn',
-  'Cross-platform overlap map',
-  'Wrapped cards without watermark + all themes',
-  'CSV export of any list',
-];
 
 async function enabledMethods(env) {
   const methods = [];
@@ -40,7 +30,7 @@ async function getConfig(env) {
     ok: true,
     brand: brand(env),
     plans: PLANS,
-    features: PRO_FEATURES,
+    tiers: TIERS,
     methods: await enabledMethods(env),
     publicKey: publicJwk,
     freeListLimit: SETTINGS.freeListLimit,
@@ -69,7 +59,11 @@ async function checkout(request, env) {
   if (renewKey) {
     const current = await getLicense(env, renewKey);
     if (!current || current.status !== 'active') renewKey = null;
-    else if (!current.expires_at) throw new HttpError(400, 'already_lifetime');
+    else {
+      // A lifetime license can only buy time on a higher tier.
+      const keeps = lifetimeTier(current);
+      if (keeps && (!plan.days || tierRank(plan.tier) <= tierRank(keeps))) throw new HttpError(400, 'already_lifetime');
+    }
   }
 
   const methods = await enabledMethods(env);

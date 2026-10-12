@@ -1,6 +1,6 @@
 // Service worker: caches the app shell so the analyzer keeps working offline
 // (yes — you can turn on airplane mode and still unwrap your export).
-const VERSION = 'mv4yw84n';
+const VERSION = 'mv5pyjt9';
 const CACHE = `unwrapped-${VERSION}`;
 const CORE = [
   '/',
@@ -12,12 +12,14 @@ const CORE = [
   '/assets/js/lib/format.js',
   '/assets/js/lib/checkout.js',
   '/assets/js/lib/referral.js',
+  '/assets/js/lib/tiers.js',
   '/assets/js/vendor/qrcode.js',
   '/assets/js/core/zip.js',
   '/assets/js/core/vfs.js',
   '/assets/js/core/text.js',
   '/assets/js/core/analyze.js',
   '/assets/js/core/insights.js',
+  '/assets/js/core/lab.js',
   '/assets/js/core/demo.js',
   '/assets/js/platforms/meta-common.js',
   '/assets/js/platforms/instagram.js',
@@ -30,6 +32,7 @@ const CORE = [
   '/assets/js/app/components.js',
   '/assets/js/app/orbit.js',
   '/assets/js/app/queue.js',
+  '/assets/js/app/report.js',
   '/assets/js/app/snapshots.js',
   '/assets/js/app/story.js',
   '/assets/js/app/story-video.js',
@@ -38,6 +41,7 @@ const CORE = [
   '/assets/js/app/views-facebook.js',
   '/assets/js/app/views-friends.js',
   '/assets/js/app/views-instagram.js',
+  '/assets/js/app/views-lab.js',
   '/assets/js/app/views-linkedin.js',
   '/assets/js/app/views-tiktok.js',
   '/assets/js/app/views-wrapped.js',

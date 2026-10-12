@@ -139,7 +139,7 @@ export function barChart(data, { height = 220, color = 'var(--c1)', valueLabel =
 }
 
 /** 7×24 heatmap (Monday first) with a sequential ramp. */
-export function heatmapChart(grid, { unit = 'videos', ariaLabel = 'Activity by weekday and hour' } = {}) {
+export function heatmapChart(grid, { unit = 'videos', ariaLabel = 'Activity by weekday and hour', valueLabel = (v) => `${fmtInt(v)} ${unit}` } = {}) {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const max = Math.max(...grid.flat(), 0);
   const wrapper = h('div', { class: 'chart' });
@@ -153,7 +153,7 @@ export function heatmapChart(grid, { unit = 'videos', ariaLabel = 'Activity by w
       cell.addEventListener('pointerenter', () => {
         const r = cell.getBoundingClientRect();
         const p = plot.getBoundingClientRect();
-        tip.show(r.left - p.left + r.width / 2, r.top - p.top, `${fmtInt(v)} ${unit}`, `${days[d]} · ${String(hour).padStart(2, '0')}:00`);
+        tip.show(r.left - p.left + r.width / 2, r.top - p.top, valueLabel(v), `${days[d]} · ${String(hour).padStart(2, '0')}:00`);
       });
       cell.addEventListener('pointerleave', tip.hide);
       heat.append(cell);
@@ -171,7 +171,7 @@ export function heatmapChart(grid, { unit = 'videos', ariaLabel = 'Activity by w
     h('span', null, 'More'),
   );
   const rows = [];
-  grid.forEach((row, d) => row.forEach((v, hour) => v && rows.push([`${days[d]} ${String(hour).padStart(2, '0')}:00`, fmtInt(v)])));
+  grid.forEach((row, d) => row.forEach((v, hour) => v && rows.push([`${days[d]} ${String(hour).padStart(2, '0')}:00`, valueLabel(v)])));
   return withTable(wrapper, ['Weekday & hour', unit[0].toUpperCase() + unit.slice(1)], rows, legend);
 }
 

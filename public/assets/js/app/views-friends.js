@@ -49,7 +49,7 @@ function radarSvg(radar, { hideNames }) {
 
 function personList(items, describe, { ctx, limit = 8 }) {
   if (!items.length) return emptyState('Nobody here right now.', 'check');
-  const locked = !ctx.pro && !ctx.demo;
+  const locked = !ctx.can('friends');
   const rows = items.slice(0, locked ? 1 : limit).map((p) =>
     h('div', { class: 'row' }, h('span', { class: 'count-pill' }, `${p.score}`), h('div', { class: 'who' }, h('b', null, p.name), h('span', null, describe(p)))),
   );
@@ -62,7 +62,7 @@ function personList(items, describe, { ctx, limit = 8 }) {
         'div',
         { class: 'locked', style: { minHeight: '220px', marginTop: '6px' } },
         h('div', { class: 'locked-rows' }, items.slice(1, 4).map(() => h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, 'Hidden friend'), h('span', null, 'Locked'))))),
-        lockCard({ count: items.length - 1, what: 'people', onUpgrade: () => ctx.upgrade('friends') }),
+        lockCard({ count: items.length - 1, what: 'people', tier: 'pro', text: 'Friendship Radar is part of Pro — with Ghost Detector, Engagement Audit and Growth Time Machine.', onUpgrade: () => ctx.upgrade('friends') }),
       ),
     );
   }
@@ -77,7 +77,7 @@ export function friendsView(ds, ctx) {
     root.append(panel(null, emptyState('Your export has no messages. Request “All available information” to unlock the Friendship Radar.', 'message')));
     return root;
   }
-  const locked = !ctx.pro && !ctx.demo;
+  const locked = !ctx.can('friends');
   const describe = {
     fading: (p) => `${fmtInt(p.previous)} → ${fmtInt(p.recent)} messages · last ${relTime(p.last)}`,
     rising: (p) => `${fmtInt(p.previous)} → ${fmtInt(p.recent)} messages in 90 days`,

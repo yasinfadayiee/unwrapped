@@ -128,11 +128,12 @@ async function listOrders(env, url) {
 }
 
 async function createLicense(env, body) {
-  const plan = getPlan(body.plan) || getPlan('month');
+  const plan = getPlan(body.plan) || getPlan('pro-month');
   const days = body.days === null || body.days === 'lifetime' ? null : Number(body.days) || plan.days;
   const email = body.email && isEmail(String(body.email)) ? String(body.email).toLowerCase() : null;
   const license = await grantLicense(env, {
-    plan: days ? plan.id : 'life',
+    // The plan id carries the tier; expires_at alone decides lifetime.
+    plan: plan.id,
     days,
     email,
     note: String(body.note || 'manual').slice(0, 200),

@@ -5,6 +5,7 @@ import { api, getConfig, ApiError } from './api.js';
 import { proState, storeLicense, storedKey } from './license.js';
 import { qrcode } from '../vendor/qrcode.js';
 import { storedRef, forgetRef } from './referral.js';
+import { TIER_NAME, TIER_RANK, tierFor } from './tiers.js';
 
 const ORDERS = 'unw.orders.v1';
 
@@ -37,7 +38,7 @@ const ERRORS = {
   method_unavailable: 'This payment method is not available right now.',
   payment_provider_unavailable: 'The payment provider did not respond. Please try again or pick another method.',
   invalid_email: 'That e-mail address doesn’t look right.',
-  already_lifetime: 'Your license is already lifetime — nothing to renew!',
+  already_lifetime: 'You already own this tier for life — pick a higher tier to upgrade.',
   busy_try_again: 'Lots of checkouts right now — try again in a minute.',
 };
 const errText = (err) => ERRORS[err?.code] || 'Something went wrong. Please try again.';
@@ -46,13 +47,43 @@ function money(n) {
   return `$${Number(n).toFixed(Number.isInteger(n) ? 0 : 2)}`;
 }
 
-export async function openCheckout({ plan: preselect } = {}) {
+const DAY = 86_400_000;
+
+// What one day of a tier is worth, from its yearly plan (same rule as the server).
+function dailyValue(plans, tier) {
+  const yearly = plans.find((p) => p.tier === tier && p.cycle === 'year');
+  return yearly ? yearly.priceUsd / yearly.days : 0;
+}
+
+// Explains what happens to the time the buyer already has.
+function creditText(state, tierId, plans) {
+  if (!state.pro) return null;
+  const left = state.expiresAt ? state.expiresAt - Date.now() : 0;
+  const days = Math.round(left / DAY);
+  if (left > 0 && state.tier === tierId) return `New time is added on top of the ${days} days you have left. Your key stays the same.`;
+  if (state.lifetimeTier) return `Your lifetime ${TIER_NAME[state.lifetimeTier]} stays. ${TIER_NAME[tierId]} runs on top for the time you buy, then you’re back on lifetime ${TIER_NAME[state.lifetimeTier]}.`;
+  if (left <= 0) return null;
+  const from = dailyValue(plans, state.tier);
+  const to = dailyValue(plans, tierId);
+  if (!from || !to) return null;
+  const converted = Math.round((left * from) / to / DAY);
+  return `Upgrade credit: your ${days} days of ${TIER_NAME[state.tier]} become ${converted} days of ${TIER_NAME[tierId]}, added on top. Nothing you paid is lost.`;
+}
+
+export async function openCheckout({ plan: preselect, tier: wantTier, reason } = {}) {
   const [config, state] = await Promise.all([getConfig(), proState()]);
-  const m = modal({ title: state.pro ? 'Extend your Pro' : 'Unlock Unwrapped Pro' });
   const plans = config.plans || [];
-  let planId = preselect && plans.some((p) => p.id === preselect) ? preselect : (plans.find((p) => p.badge === 'Most popular') || plans[0])?.id;
+  const tiers = config.tiers || [];
+  const keeps = state.lifetimeTier || null;
+  const buyable = (t) => !keeps || TIER_RANK[t.id] > TIER_RANK[keeps];
+  // Start on the tier that unlocks what the user clicked, never below what they own.
+  let tierId = plans.find((p) => p.id === preselect)?.tier || wantTier || (reason ? tierFor(reason) : 'pro');
+  if (state.pro && TIER_RANK[state.tier] > TIER_RANK[tierId]) tierId = state.tier;
+  if (!tiers.some((t) => t.id === tierId && buyable(t))) tierId = tiers.find(buyable)?.id;
+  const m = modal({ title: state.pro ? 'Upgrade or extend' : 'Choose your plan' });
+  let planId = null;
   let methodId = config.methods?.[0]?.id;
-  const renewKey = state.pro && !state.lifetime ? state.key : storedKey();
+  const renewKey = state.key || storedKey();
 
   if (!config.methods || !config.methods.length) {
     m.body.append(
@@ -72,20 +103,70 @@ export async function openCheckout({ plan: preselect } = {}) {
     discount
       ? h('span', { class: 'p' }, h('s', { class: 'muted', style: { fontWeight: '500', fontSize: '14px', marginRight: '6px' } }, money(p.priceUsd)), money(Math.round(p.priceUsd * (1 - discount) * 100) / 100))
       : h('span', { class: 'p' }, money(p.priceUsd));
-  const planBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': 'Plan' });
-  for (const p of plans) {
-    const input = h('input', { type: 'radio', name: 'plan', value: p.id, checked: p.id === planId });
-    input.addEventListener('change', () => (planId = p.id));
-    planBox.append(
+  const tierBox = h('div', { class: 'tier-switch', role: 'radiogroup', 'aria-label': 'Tier' });
+  const featureBox = h('div');
+  const planBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': 'Billing' });
+  const creditBox = h('div');
+
+  const monthly = (t) => plans.find((p) => p.tier === t && p.cycle === 'month');
+  const planSub = (p) => {
+    if (p.cycle === 'life') return `Pay once, keep ${TIER_NAME[p.tier]} forever`;
+    if (p.cycle === 'year') {
+      const m1 = monthly(p.tier);
+      const save = m1 ? Math.round((1 - p.priceUsd / (m1.priceUsd * 12)) * 100) : 0;
+      return `${money(Math.round((p.priceUsd / 12) * 100) / 100)}/month${save > 0 ? ` · save ${save}%` : ''}`;
+    }
+    return `${p.days} days · no auto-renewal`;
+  };
+
+  function drawTier() {
+    const tier = tiers.find((t) => t.id === tierId);
+    const options = plans.filter((p) => p.tier === tierId && (!keeps || p.days));
+    if (!options.some((p) => p.id === planId)) {
+      planId = (options.find((p) => p.id === preselect) || options.find((p) => p.badge === 'Most popular') || options.find((p) => p.cycle === 'year') || options[0])?.id;
+    }
+    clear(tierBox);
+    for (const t of tiers) {
+      // Cheapest monthly equivalent, computed like the pricing cards (yearly ÷ 12).
+      const from = plans.filter((p) => p.tier === t.id && p.days).map((p) => (p.cycle === 'year' ? p.priceUsd / 12 : p.priceUsd)).sort((a, b) => a - b)[0];
+      const b = h(
+        'button',
+        { class: 'tier-opt', type: 'button', role: 'radio', 'aria-checked': String(t.id === tierId), disabled: !buyable(t) },
+        h('span', { class: 'n' }, t.name),
+        h('span', { class: 's' }, buyable(t) ? `from ${money(Math.round(from * 100) / 100)}/mo` : 'Owned for life'),
+      );
+      b.addEventListener('click', () => {
+        tierId = t.id;
+        drawTier();
+      });
+      tierBox.append(b);
+    }
+    const rank = TIER_RANK[tierId];
+    clear(featureBox).append(
       h(
-        'label',
-        { class: 'choice' },
-        input,
-        h('span', { class: 'radio' }),
-        h('span', { class: 'grow' }, h('span', { class: 't' }, p.short, p.badge ? h('span', { class: 'badge', style: { marginLeft: '8px' } }, p.badge) : null), h('span', { class: 's', style: { display: 'block' } }, p.blurb || p.name)),
-        priceTag(p),
+        'div',
+        { class: 'tier-detail' },
+        h('div', { class: 'small' }, h('b', null, tier?.tagline || ''), rank > 1 ? h('span', { class: 'muted' }, ` · everything in ${TIER_NAME[tiers.find((t) => t.rank === rank - 1)?.id]}, plus:`) : null),
+        h('ul', { class: 'checklist small text-2' }, (tier?.features || []).map((f) => h('li', null, icon('check'), f))),
       ),
     );
+    clear(planBox);
+    for (const p of options) {
+      const input = h('input', { type: 'radio', name: 'plan', value: p.id, checked: p.id === planId });
+      input.addEventListener('change', () => (planId = p.id));
+      planBox.append(
+        h(
+          'label',
+          { class: 'choice' },
+          input,
+          h('span', { class: 'radio' }),
+          h('span', { class: 'grow' }, h('span', { class: 't' }, p.short, p.badge ? h('span', { class: 'badge', style: { marginLeft: '8px' } }, p.badge) : null), h('span', { class: 's', style: { display: 'block' } }, planSub(p))),
+          priceTag(p),
+        ),
+      );
+    }
+    const credit = creditText(state, tierId, plans);
+    clear(creditBox).append(credit ? h('div', { class: 'note' }, icon('info'), h('span', null, credit)) : '');
   }
   const methodBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': 'Payment method' });
   for (const meth of config.methods) {
@@ -110,20 +191,22 @@ export async function openCheckout({ plan: preselect } = {}) {
     h(
       'div',
       { class: 'stack', style: { '--stack': '18px' } },
-      h('p', { class: 'small text-2' }, 'Full lists, unfollower history, unfollow queue, deep insights for every platform and premium Wrapped cards. Activation is instant and automatic.'),
+      tierBox,
+      featureBox,
       planBox,
+      creditBox,
       h('div', { class: 'eyebrow' }, 'Pay with'),
       methodBox,
       config.email
         ? h('div', { class: 'field' }, h('label', { for: 'co-email' }, 'E-mail for your license & renewal reminder'), email)
         : null,
-      renewKey ? h('div', { class: 'note' }, icon('info'), h('span', null, `Time will be added to your existing license ${renewKey.slice(0, 8)}…`)) : null,
       discount ? h('div', { class: 'note' }, icon('sparkles'), h('span', null, `Friend invite applied — ${Math.round(discount * 100)}% off.`)) : null,
       errorBox,
       go,
-      h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, 'No account needed · your social data is never uploaded · prices in USD'),
+      h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, 'Activates in about a minute · no account · no auto-renewal · your social data is never uploaded'),
     ),
   );
+  drawTier();
 
   go.addEventListener('click', async () => {
     go.disabled = true;
@@ -283,20 +366,21 @@ export function successScreen(m, order) {
   const copy = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('copy'), 'Copy key');
   copy.addEventListener('click', () => copyText(key, copy));
   const save = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('download'), 'Save as file');
-  save.addEventListener('click', () => downloadBlob(new Blob([`Unwrapped Pro license\n\n${key}\n\nActivate on any device: ${location.origin}/account/\n`], { type: 'text/plain' }), 'unwrapped-license.txt'));
+  const tierName = TIER_NAME[order.license?.tier] || 'Pro';
+  save.addEventListener('click', () => downloadBlob(new Blob([`Unwrapped ${tierName} license\n\n${key}\n\nActivate on any device: ${location.origin}/account/\n`], { type: 'text/plain' }), 'unwrapped-license.txt'));
   m.body.append(
     h(
       'div',
       { class: 'stack', style: { '--stack': '16px', textAlign: 'center' } },
       h('div', { class: 'success-burst' }, icon('check')),
-      h('div', { class: 'h3' }, 'You’re Pro. Enjoy!'),
+      h('div', { class: 'h3' }, `You’re ${tierName}. Enjoy!`),
       h('p', { class: 'text-2' }, order.license?.lifetime ? 'Lifetime access is active on this device.' : `Active until ${new Date(order.license?.expiresAt).toLocaleDateString('en-US', { dateStyle: 'long' })}.`),
       h('div', { class: 'license-key' }, key),
-      h('p', { class: 'small text-2' }, 'Save this key — it unlocks Pro on any browser or phone.'),
+      h('p', { class: 'small text-2' }, `Save this key — it unlocks ${tierName} on any browser or phone.`),
       h('div', { style: { display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' } }, copy, save),
       h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: m.close }, 'Continue'),
       h('p', { class: 'small text-2' }, 'Invite friends and earn 30 free days for every friend who buys — ', h('a', { href: '/account/#invite' }, 'get your invite link'), '.'),
     ),
   );
-  toast('Pro unlocked');
+  toast(`${tierName} unlocked`);
 }

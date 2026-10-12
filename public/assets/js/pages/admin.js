@@ -122,7 +122,7 @@ async function load() {
   root.append(h('section', { class: 'panel' }, h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Orders'), h('p', null, Object.entries(s.statuses).map(([k, v]) => `${k}: ${v}`).join(' · '))), statusSel), tableBox));
 
   // License tools
-  const planSel = h('select', { class: 'select', 'aria-label': 'Plan' }, s.plans.map((p) => h('option', { value: p.id }, `${p.short} (${p.days ? `${p.days} days` : 'lifetime'})`)));
+  const planSel = h('select', { class: 'select', 'aria-label': 'Plan' }, s.plans.map((p) => h('option', { value: p.id }, `${p.name} — $${p.priceUsd}`)));
   const note = h('input', { class: 'input', placeholder: 'Note (e.g. influencer giveaway)', 'aria-label': 'Note' });
   const email = h('input', { class: 'input', type: 'email', placeholder: 'E-mail (optional)', 'aria-label': 'E-mail' });
   const create = h('button', { class: 'btn btn--primary', type: 'button' }, 'Create license');

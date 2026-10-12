@@ -128,7 +128,7 @@ function activityView(ds, ctx) {
 
 function lockedMore(ctx, n) {
   if (n <= 0) return null;
-  return h('div', { style: { marginTop: '14px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('activity') }, icon('lock'), `${fmtInt(n)} more with Pro`));
+  return h('div', { style: { marginTop: '14px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('activity') }, icon('lock'), `${fmtInt(n)} more with Plus`));
 }
 
 function privacyView(ds, ctx) {
@@ -191,7 +191,7 @@ export function instagramViews(ds, ctx) {
     const L = ds.lists;
     if (L.pendingSent.length || L.requestsReceived.length || L.recentRequests.length) views.push({ id: 'requests', label: 'Follow requests', icon: 'inbox', count: L.pendingSent.length, render: () => requestsView(ds, ctx) });
     if (['closeFriends', 'blocked', 'restricted', 'hideStoryFrom', 'youUnfollowed', 'favorites', 'removedSuggestions'].some((k) => L[k]?.length)) views.push({ id: 'lists', label: 'Close friends & more', icon: 'list', render: () => listsView(ds, ctx) });
-    if (ds.activity?.messages) views.push({ id: 'friends', label: 'Friendship Radar', icon: 'orbit', render: () => friendsView(ds, ctx) });
+    if (ds.activity?.messages) views.push({ id: 'friends', label: 'Friendship Radar', icon: 'orbit', group: 'lab', feature: 'friends', render: () => friendsView(ds, ctx) });
     if (ds.activity) views.push({ id: 'activity', label: 'Activity', icon: 'heart', render: () => activityView(ds, ctx) });
     if (ds.privacy) views.push({ id: 'privacy', label: 'Privacy X-ray', icon: 'fingerprint', render: () => privacyView(ds, ctx) });
   }

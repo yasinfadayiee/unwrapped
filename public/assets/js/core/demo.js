@@ -31,6 +31,33 @@ function usernames(rand, count, salt) {
   return [...out];
 }
 
+// Bot- and spam-looking follower names for the Audience Quality demo.
+// Deterministic, so the rest of the demo's random data stays the same.
+function botNames(n) {
+  const consonants = 'xkqzvbtwrmnplhgfdcsj';
+  const out = [];
+  for (let i = 0; out.length < n; i++) {
+    const num = String(((i * 7919 + 104_729) % 9_000_000) + 1_000_000);
+    switch (i % 5) {
+      case 0:
+        out.push(`user${num}`);
+        break;
+      case 1:
+        out.push(`${['crypto', 'forex', 'nft', 'giveaway', 'promo'][i % 5]}.${['gains', 'signals', 'daily', 'drop', 'deals'][(i >> 1) % 5]}${i}`);
+        break;
+      case 2:
+        out.push(`${Array.from({ length: 7 }, (_, k) => consonants[(i * 13 + k * 7) % consonants.length]).join('')}_${(i % 90) + 10}`);
+        break;
+      case 3:
+        out.push(`insta_${num.slice(0, 5)}`);
+        break;
+      default:
+        out.push(`f4f.likes.boost.${i}`);
+    }
+  }
+  return out;
+}
+
 const sec = (ms) => Math.floor(ms / 1000);
 const DAY = 86_400_000;
 
@@ -60,11 +87,23 @@ export function demoInstagramFiles(now, rand, { followerCount = 1284, followingC
   const pool = usernames(rand, followerCount + followingCount, 3);
   const following = pool.slice(0, followingCount);
   const mutualCount = Math.round(followingCount * mutual);
-  const followers = [...following.slice(0, mutualCount), ...pool.slice(followingCount, followingCount + followerCount - mutualCount)];
+  // ~5% of the fans are bots that arrived in two waves (a bought-followers spike).
+  const bots = botNames(Math.round((followerCount - mutualCount) * 0.135));
+  const botSet = new Set(bots);
+  const followers = [...following.slice(0, mutualCount), ...pool.slice(followingCount, followingCount + followerCount - mutualCount - bots.length), ...bots];
   const t = (maxDays) => now - Math.floor(rand() * maxDays * DAY);
+  const waveTs = (i) => now - (i % 2 ? 210 : 95) * DAY - ((i * 37) % 20) * 3_600_000;
   const base = 'connections/followers_and_following';
   const files = [
-    [`${base}/followers_1.json`, JSON.stringify(followers.map((u) => rel(u, t(1400))))],
+    [
+      `${base}/followers_1.json`,
+      JSON.stringify(
+        followers.map((u, i) => {
+          const ts = t(1400); // always drawn, so the random sequence doesn't shift
+          return rel(u, botSet.has(u) ? waveTs(i) : ts);
+        }),
+      ),
+    ],
     [`${base}/following.json`, JSON.stringify({ relationships_following: following.map((u) => rel(u, t(1500), 'new')) })],
     [`${base}/close_friends.json`, JSON.stringify({ relationships_close_friends: following.slice(0, 23).map((u) => rel(u, t(900))) })],
     [`${base}/pending_follow_requests.json`, JSON.stringify({ relationships_follow_requests_sent: usernames(rand, 9, 1).map((u) => rel(u, t(400))) })],
@@ -102,15 +141,22 @@ export function demoInstagramFiles(now, rand, { followerCount = 1284, followingC
     // A mix of friendship patterns for the Friendship Radar.
     const pattern = ['steady', 'steady', 'fading', 'rising', 'you', 'they', 'quiet', 'steady'][i % 8];
     const mine = pattern === 'you' ? 0.82 : pattern === 'they' ? 0.22 : 0.5;
+    // Typical minutes between messages: some friends answer fast, some slowly.
+    const pace = [2, 6, 25, 90][i % 4];
     const messages = [];
-    for (let k = 0; k < count; k++) {
+    while (messages.length < count) {
+      // One conversation: a burst of messages on one day.
       const hour = Math.floor(rand() < 0.6 ? 18 + rand() * 6 : rand() * 24) % 24;
       let ago = Math.floor(rand() * 500);
       if (pattern === 'fading') ago = 95 + Math.floor(rand() * 300) - (rand() < 0.08 ? 90 : 0);
       if (pattern === 'rising') ago = Math.floor(Math.pow(rand(), 3) * 300);
       if (pattern === 'quiet') ago = 200 + Math.floor(rand() * 300);
-      const ts = new Date(now - ago * DAY).setHours(hour, Math.floor(rand() * 60));
-      messages.push({ sender_name: rand() < mine ? 'Nova Studio' : u, timestamp_ms: ts, content: 'hey' });
+      let ts = new Date(now - ago * DAY).setHours(hour, Math.floor(rand() * 60));
+      const length = Math.min(count - messages.length, 2 + Math.floor(rand() * 9));
+      for (let k = 0; k < length; k++) {
+        messages.push({ sender_name: rand() < mine ? 'Nova Studio' : u, timestamp_ms: ts, content: 'hey' });
+        ts += Math.floor((0.2 + rand() * 1.6) * pace * 60_000);
+      }
     }
     files.push([
       `your_instagram_activity/messages/inbox/${u.replace(/\./g, '')}_${1000 + i}/message_1.json`,

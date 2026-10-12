@@ -1,4 +1,4 @@
-import { SETTINGS } from './config.js';
+import { SETTINGS, dailyValue, tierOf, tierRank } from './config.js';
 import { getLicense } from './db.js';
 import { DAY, b64url, sha256Hex, newLicenseKey, normalizeLicenseKey } from './util.js';
 
@@ -38,6 +38,13 @@ export async function getSigningKeys(env) {
   return keys;
 }
 
+// The tier this license keeps forever, if any: its own plan when it is
+// lifetime, or the lifetime plan it falls back to after higher-tier time.
+export function lifetimeTier(license) {
+  if (!license.expires_at) return tierOf(license.plan);
+  return license.base_plan ? tierOf(license.base_plan) : null;
+}
+
 export async function issueToken(env, license) {
   const { privateKey } = await getSigningKeys(env);
   const iat = Date.now();
@@ -46,6 +53,8 @@ export async function issueToken(env, license) {
     v: 1,
     k: (await sha256Hex(license.key)).slice(0, 16),
     p: license.plan,
+    t: tierOf(license.plan),
+    lt: lifetimeTier(license),
     e: license.expires_at ?? null,
     iat,
     x: license.expires_at ? Math.min(license.expires_at, cap) : cap,
@@ -59,6 +68,8 @@ export function licenseView(license) {
   return {
     key: license.key,
     plan: license.plan,
+    tier: tierOf(license.plan),
+    lifetimeTier: lifetimeTier(license),
     status: license.status,
     expiresAt: license.expires_at ?? null,
     lifetime: !license.expires_at,
@@ -68,9 +79,14 @@ export function licenseView(license) {
 export async function activateLicense(env, rawKey, { count = true } = {}) {
   const key = normalizeLicenseKey(rawKey);
   if (!key) return { ok: false, reason: 'missing_key' };
-  const license = await getLicense(env, key);
+  let license = await getLicense(env, key);
   if (!license) return { ok: false, reason: 'not_found' };
   if (license.status !== 'active') return { ok: false, reason: 'revoked' };
+  if (license.base_plan && license.expires_at && license.expires_at < Date.now()) {
+    // Higher-tier time ran out before the cron got to it.
+    await env.DB.prepare('UPDATE licenses SET plan = base_plan, expires_at = NULL, base_plan = NULL, reminded_at = NULL WHERE key = ?').bind(key).run();
+    license = await getLicense(env, key);
+  }
   if (license.expires_at && license.expires_at < Date.now()) {
     return { ok: false, reason: 'expired', license: licenseView(license) };
   }
@@ -80,20 +96,42 @@ export async function activateLicense(env, rawKey, { count = true } = {}) {
   return { ok: true, license: licenseView(license), token: await issueToken(env, license) };
 }
 
-// Creates a license, or extends `renewKey` when it is a valid time-limited one.
+// Time left on a license, re-valued for another tier: 100 days of Plus become
+// fewer days of Pro (and more days on a downgrade), so nothing paid is lost.
+export function carriedMs(current, toTier, now = Date.now()) {
+  const remaining = Math.max(0, (current.expires_at || 0) - now);
+  const from = tierOf(current.plan);
+  if (from === toTier || !dailyValue(from) || !dailyValue(toTier)) return remaining;
+  return Math.round((remaining * dailyValue(from)) / dailyValue(toTier));
+}
+
+// Creates a license, or extends/upgrades `renewKey` when it is still active.
 export async function grantLicense(env, { plan, days, email, orderId, renewKey, note }) {
   const now = Date.now();
+  const tier = tierOf(plan);
   if (renewKey) {
     const current = await getLicense(env, normalizeLicenseKey(renewKey));
-    if (current && current.status === 'active' && current.expires_at) {
-      const base = Math.max(now, current.expires_at);
-      const expiresAt = days ? base + days * DAY : null;
+    const keeps = current ? lifetimeTier(current) : null;
+    const upgradesLifetime = keeps && days && tierRank(tier) > tierRank(keeps);
+    if (current && current.status === 'active' && (current.expires_at || upgradesLifetime)) {
+      let expiresAt = null;
+      let basePlan = current.base_plan ?? null;
+      if (!current.expires_at) {
+        // Lifetime license buying time on a higher tier: it runs on top and
+        // then falls back to the lifetime plan.
+        basePlan = current.plan;
+        expiresAt = now + days * DAY;
+      } else if (days) {
+        expiresAt = now + carriedMs(current, tier, now) + days * DAY;
+      } else {
+        basePlan = null; // bought lifetime
+      }
       await env.DB.prepare(
-        'UPDATE licenses SET plan = ?, expires_at = ?, last_order_id = ?, reminded_at = NULL, email = COALESCE(email, ?) WHERE key = ?',
+        'UPDATE licenses SET plan = ?, expires_at = ?, base_plan = ?, last_order_id = ?, reminded_at = NULL, email = COALESCE(email, ?) WHERE key = ?',
       )
-        .bind(plan, expiresAt, orderId ?? null, email ?? null, current.key)
+        .bind(plan, expiresAt, basePlan, orderId ?? null, email ?? null, current.key)
         .run();
-      return { ...current, plan, expires_at: expiresAt, last_order_id: orderId ?? null };
+      return { ...current, plan, expires_at: expiresAt, base_plan: basePlan, last_order_id: orderId ?? null };
     }
   }
   const license = {

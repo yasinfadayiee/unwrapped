@@ -2,7 +2,7 @@
 
 **Your socials, unwrapped.** A privacy-first web app that decodes the official data exports of
 Instagram, Threads, TikTok, X (Twitter), Facebook and LinkedIn — entirely in the visitor's browser —
-and sells a Pro tier with fully automatic crypto payments.
+and sells three paid tiers — **Plus**, **Pro** and **Creator** — with fully automatic crypto payments.
 
 - **Relationships** — who doesn't follow you back, fans, mutuals, pending requests, close friends, blocked…
 - **Who unfollowed you** — every analyzed export becomes a private snapshot (IndexedDB); a newer export is diffed automatically.
@@ -16,6 +16,9 @@ and sells a Pro tier with fully automatic crypto payments.
 - **Owner dashboard** — revenue, conversion, health checks, orders, manual licenses, event log at `/admin/`.
 - **Referral program** — every Pro license gets an invite link (`/?ref=CODE`): friends get 10% off, the inviter gets 30 free days per paid order (`referralDiscount` / `referralRewardDays` in `src/config.js`).
 - **SEO guides** — article pages under `/guides/` with Article + FAQ structured data.
+- **Pro Lab** (Pro) — Ghost Detector (reply times, left on read, who texts first), Engagement Audit (one-way support, dead follows), Growth Time Machine (audience curve, churn, follow-back speed), Friendship Radar.
+- **Creator tools** — Audience Quality (bot/spam follower detector with a grade), Best Time to Post (real X engagement, or audience activity), white-label PDF client report.
+- **Tiers & upgrades** — prices in `src/config.js` (`TIERS`, `PLANS`), tool → tier mapping in `public/assets/js/lib/tiers.js`. Upgrading converts the remaining time at fair value (yearly prices); a lifetime Pro license can add Creator time and falls back to lifetime Pro afterwards. Old plan ids (`month`/`year`/`life`) keep working as Pro.
 
 ## Project layout
 

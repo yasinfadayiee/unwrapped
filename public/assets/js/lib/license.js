@@ -64,7 +64,7 @@ let refreshing = null;
 export async function proState(allowRefresh = true) {
   if (stateCache) return stateCache;
   const stored = readStore();
-  const free = { pro: false, key: stored?.key || null };
+  const free = { pro: false, tier: 'free', key: stored?.key || null };
   if (!stored?.key) return (stateCache = free);
   const config = await getConfig();
   const payload = stored.token ? await verify(stored.token, config.publicKey) : null;
@@ -80,6 +80,9 @@ export async function proState(allowRefresh = true) {
   if (payload.x - now < 3 * DAY && !config.offline) refresh(stored.key).catch(() => {});
   return (stateCache = {
     pro: true,
+    // Tokens issued before the tiers existed were all Pro.
+    tier: payload.t || 'pro',
+    lifetimeTier: payload.lt === undefined ? (payload.e === null ? 'pro' : null) : payload.lt,
     key: stored.key,
     plan: payload.p,
     expiresAt: payload.e,

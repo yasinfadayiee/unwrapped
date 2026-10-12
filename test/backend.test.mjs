@@ -104,8 +104,9 @@ test('TRON checkout gets unique amounts just below the price', async () => {
   for (let i = 0; i < 8; i++) {
     const { body } = await call('POST', '/api/checkout', { plan: 'month', method: 'tron' }, { 'cf-connecting-ip': `198.51.100.${i}` });
     assert.equal(body.ok, true);
+    assert.equal(body.order.plan, 'pro-month', 'legacy plan ids buy today’s Pro plans');
     const units = body.order.amountUnits;
-    assert.ok(units < 7_000_000 && units >= 6_510_000, `amount ${units}`);
+    assert.ok(units < 9_000_000 && units >= 8_510_000, `amount ${units}`);
     amounts.add(units);
   }
   assert.equal(amounts.size, 8);
@@ -128,7 +129,9 @@ test('an exact TRON transfer activates the order automatically', async () => {
   assert.match(status.body.order.license.key, /^UNW-[2-9A-Z]{4}-[2-9A-Z]{4}-[2-9A-Z]{4}-[2-9A-Z]{4}$/);
   const { body: config } = await call('GET', '/api/config');
   const payload = await verifyToken(status.body.order.token, config.publicKey);
-  assert.equal(payload.p, 'year');
+  assert.equal(payload.p, 'pro-year');
+  assert.equal(payload.t, 'pro');
+  assert.equal(payload.lt, null);
   assert.ok(payload.e > Date.now() + 360 * 86_400_000);
 
   // A wrong token reveals nothing.
@@ -174,7 +177,7 @@ test('NOWPayments IPN is verified, double-checked and idempotent', async () => {
   const ipn = {
     payment_id: 5551,
     payment_status: 'finished',
-    price_amount: 59,
+    price_amount: 99,
     price_currency: 'usd',
     pay_amount: 0.0009,
     actually_paid: 0.0009,
@@ -203,8 +206,8 @@ test('NOWPayments price mismatches and unfinished payments do not activate', asy
   const base = { payment_id: 77, price_currency: 'usd', order_id: co.order.id };
   for (const ipn of [
     { ...base, payment_status: 'finished', price_amount: 1 },
-    { ...base, payment_status: 'waiting', price_amount: 7 },
-    { ...base, payment_status: 'partially_paid', price_amount: 7, actually_paid_at_fiat: 3 },
+    { ...base, payment_status: 'waiting', price_amount: 9 },
+    { ...base, payment_status: 'partially_paid', price_amount: 9, actually_paid_at_fiat: 3 },
   ]) {
     const sig = await signIpnBody(env.NOWPAYMENTS_IPN_SECRET, ipn);
     await call('POST', '/api/webhook/nowpayments', JSON.stringify(ipn), { 'x-nowpayments-sig': sig });
@@ -248,8 +251,8 @@ test('admin summary reports revenue', async () => {
   await Promise.all(pending.splice(0));
   const { body } = await call('GET', '/api/admin/summary', undefined, { authorization: `Bearer ${env.ADMIN_TOKEN}` });
   assert.equal(body.ok, true);
-  assert.equal(body.revenue.total, 29);
-  assert.equal(body.revenue.today, 29);
+  assert.equal(body.revenue.total, 49);
+  assert.equal(body.revenue.today, 49);
   assert.equal(body.activeLicenses, 1);
   assert.equal(body.health.tron, true);
   assert.ok(body.health.cronLastRun > 0);
@@ -277,9 +280,9 @@ test('referrals give the buyer a discount and the inviter free days', async () =
   assert.equal((await call('GET', '/api/referral/check?code=NOPE123')).body.ok, false);
 
   const friend = await pay({ plan: 'year', method: 'tron', ref: ref.code }, '10.0.0.2');
-  assert.equal(friend.order.priceUsd, 26.1);
-  assert.equal(friend.order.listPriceUsd, 29);
-  assert.ok(friend.order.amountUnits < 26_100_000);
+  assert.equal(friend.order.priceUsd, 44.1);
+  assert.equal(friend.order.listPriceUsd, 49);
+  assert.ok(friend.order.amountUnits < 44_100_000);
   const after = (await call('POST', '/api/license/activate', { key: inviterKey, refresh: true })).body.license.expiresAt;
   assert.ok(Math.abs(after - (before + 30 * 86_400_000)) < 5000);
   assert.equal((await call('POST', '/api/referral', { key: inviterKey })).body.uses, 1);
@@ -287,7 +290,72 @@ test('referrals give the buyer a discount and the inviter free days', async () =
   // Using your own code when renewing earns nothing and gives no discount.
   const self = (await call('POST', '/api/checkout', { plan: 'month', method: 'tron', ref: ref.code, renewKey: inviterKey }, { 'cf-connecting-ip': '10.0.0.3' })).body;
   assert.equal(self.order.referral, false);
-  assert.equal(self.order.priceUsd, 7);
+  assert.equal(self.order.priceUsd, 9);
+});
+
+async function buy(body, ip = '10.1.0.1') {
+  const co = (await call('POST', '/api/checkout', body, { 'cf-connecting-ip': ip })).body;
+  assert.equal(co.ok, true, JSON.stringify(co));
+  transfer(co.order.amountUnits);
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+  return (await call('GET', `/api/order?id=${co.order.id}&t=${co.token}`)).body.order;
+}
+
+test('config lists the three paid tiers and their plans', async () => {
+  const { body } = await call('GET', '/api/config');
+  assert.deepEqual(body.tiers.map((t) => t.id), ['plus', 'pro', 'creator']);
+  for (const p of body.plans) assert.ok(body.tiers.some((t) => t.id === p.tier), p.id);
+  assert.equal(body.plans.filter((p) => p.days === null).length, 1, 'only Pro has a lifetime plan');
+});
+
+test('upgrading converts the time left at fair value', async () => {
+  const plus = await buy({ plan: 'plus-year', method: 'tron' });
+  const key = plus.license.key;
+  assert.equal(plus.license.tier, 'plus');
+  const plusExpiry = plus.license.expiresAt;
+
+  const pro = await buy({ plan: 'pro-month', method: 'tron', renewKey: key }, '10.1.0.2');
+  assert.equal(pro.license.key, key, 'the key stays the same');
+  assert.equal(pro.license.tier, 'pro');
+  const left = plusExpiry - Date.now();
+  const expected = Date.now() + (left * 29) / 49 + 30 * 86_400_000;
+  assert.ok(Math.abs(pro.license.expiresAt - expected) < 60_000, 'remaining Plus time becomes fewer, fairly valued Pro days');
+
+  const { body: config } = await call('GET', '/api/config');
+  const payload = await verifyToken(pro.token, config.publicKey);
+  assert.equal(payload.t, 'pro');
+});
+
+test('lifetime Pro can add Creator time and falls back to lifetime afterwards', async () => {
+  const life = await buy({ plan: 'pro-life', method: 'tron' });
+  const key = life.license.key;
+  assert.equal(life.license.lifetime, true);
+
+  const same = await call('POST', '/api/checkout', { plan: 'pro-month', method: 'tron', renewKey: key }, { 'cf-connecting-ip': '10.1.0.3' });
+  assert.equal(same.status, 400);
+  assert.equal(same.body.error, 'already_lifetime');
+
+  const creator = await buy({ plan: 'creator-month', method: 'tron', renewKey: key }, '10.1.0.4');
+  assert.equal(creator.license.tier, 'creator');
+  assert.equal(creator.license.lifetimeTier, 'pro');
+  assert.ok(Math.abs(creator.license.expiresAt - (Date.now() + 30 * 86_400_000)) < 60_000);
+
+  // The Creator month runs out: the license is lifetime Pro again.
+  await env.DB.prepare('UPDATE licenses SET expires_at = ? WHERE key = ?').bind(Date.now() - 1000, key).run();
+  const after = await call('POST', '/api/license/activate', { key, refresh: true });
+  assert.equal(after.body.ok, true);
+  assert.equal(after.body.license.tier, 'pro');
+  assert.equal(after.body.license.lifetime, true);
+});
+
+test('cheap plans only tolerate a small shortfall', async () => {
+  const { body: co } = await call('POST', '/api/checkout', { plan: 'plus-month', method: 'tron' });
+  transfer(co.order.amountUnits - 1_000_000); // 1 USDT short on a $5 plan is 20%
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+  const status = await call('GET', `/api/order?id=${co.order.id}&t=${co.token}`);
+  assert.equal(status.body.order.status, 'pending');
 });
 
 test('checkout is rate limited per visitor and validates input', async () => {

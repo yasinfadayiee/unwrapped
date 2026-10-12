@@ -4,6 +4,7 @@ import { getConfig, api } from '../lib/api.js';
 import { savedOrders, forgetOrder, tronScreen, successScreen } from '../lib/checkout.js';
 import { countAllSnapshots, deleteAllSnapshots } from '../app/snapshots.js';
 import { inviteLink } from '../lib/referral.js';
+import { TIER_NAME, TIER_RANK } from '../lib/tiers.js';
 
 const root = document.getElementById('account-root');
 
@@ -27,12 +28,23 @@ async function render() {
   const status = h(
     'section',
     { class: 'panel' },
-    h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Status'), h('p', null, state.pro ? 'Pro is active in this browser.' : 'You are on the free plan in this browser.')), state.pro ? h('span', { class: 'badge' }, icon('check'), 'Pro') : h('span', { class: 'badge badge--muted' }, 'Free')),
+    h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Status'), h('p', null, state.pro ? `${TIER_NAME[state.tier]} is active in this browser.` : 'You are on the free plan in this browser.')), state.pro ? h('span', { class: 'badge' }, icon('check'), TIER_NAME[state.tier]) : h('span', { class: 'badge badge--muted' }, 'Free')),
     state.pro
       ? h(
           'div',
           { class: 'stack', style: { '--stack': '12px' } },
-          h('div', { class: 'stats' }, h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Plan'), h('span', { class: 'value', style: { fontSize: '24px' } }, state.lifetime ? 'Lifetime' : state.plan === 'year' ? 'Yearly' : 'Monthly')), h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Valid until'), h('span', { class: 'value', style: { fontSize: '24px' } }, state.lifetime ? 'Forever' : new Date(state.expiresAt).toLocaleDateString('en-US', { dateStyle: 'medium' })))),
+          h(
+            'div',
+            { class: 'stats' },
+            h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Plan'), h('span', { class: 'value', style: { fontSize: '24px' } }, config.plans.find((p) => p.id === state.plan)?.name || `${TIER_NAME[state.tier]}${state.lifetime ? ' · Lifetime' : ''}`)),
+            h(
+              'div',
+              { class: 'stat' },
+              h('span', { class: 'label' }, 'Valid until'),
+              h('span', { class: 'value', style: { fontSize: '24px' } }, state.lifetime ? 'Forever' : new Date(state.expiresAt).toLocaleDateString('en-US', { dateStyle: 'medium' })),
+              !state.lifetime && state.lifetimeTier ? h('span', { class: 'sub' }, `then lifetime ${TIER_NAME[state.lifetimeTier]}`) : null,
+            ),
+          ),
           keyRow(keyText),
         )
       : keyText
@@ -94,7 +106,7 @@ async function render() {
     try {
       const res = await activateKey(input.value);
       if (res.ok) {
-        toast('Pro activated on this device');
+        toast('License activated on this device');
         history.replaceState(null, '', location.pathname);
         return; // the license event re-renders the page
       }
@@ -109,7 +121,7 @@ async function render() {
     h(
       'section',
       { class: 'panel' },
-      h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Activate a license key'), h('p', null, 'Bought Pro on another device? Paste your key here.'))),
+      h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Activate a license key'), h('p', null, 'Bought a plan on another device? Paste your key here.'))),
       h('div', { style: { display: 'flex', gap: '10px', flexWrap: 'wrap' } }, h('div', { style: { flex: '1', minWidth: '240px' } }, input), btn),
       msg,
     ),
@@ -121,8 +133,23 @@ async function render() {
     h(
       'section',
       { class: 'panel', id: 'renew' },
-      h('div', { class: 'panel-head' }, h('div', null, h('h3', null, state.pro && !state.lifetime ? 'Renew or extend' : 'Get Pro'), h('p', null, state.pro && !state.lifetime ? 'New time is added on top of what you have left. Your key stays the same.' : 'Pay with crypto, activation is automatic.'))),
-      h('div', { style: { display: 'flex', gap: '10px', flexWrap: 'wrap' } }, config.plans.filter((p) => !(state.lifetime && p.days !== null)).map((p) => h('button', { class: `btn ${p.badge === 'Most popular' ? 'btn--primary' : 'btn--ghost'}`, type: 'button', dataset: { plan: p.id } }, `${p.short} · $${p.priceUsd}`))),
+      h(
+        'div',
+        { class: 'panel-head' },
+        h(
+          'div',
+          null,
+          h('h3', null, state.pro ? 'Upgrade, renew or extend' : 'Choose a plan'),
+          h('p', null, state.pro ? 'Same tier: new time is added on top. Higher tier: the time you have left is converted at fair value. Your key stays the same.' : 'Pay with crypto, activation is automatic.'),
+        ),
+      ),
+      h(
+        'div',
+        { style: { display: 'flex', gap: '10px', flexWrap: 'wrap' } },
+        (config.tiers || [])
+          .filter((t) => !state.lifetimeTier || TIER_RANK[t.id] > TIER_RANK[state.lifetimeTier])
+          .map((t) => h('button', { class: `btn ${t.id === 'pro' ? 'btn--primary' : 'btn--ghost'}`, type: 'button', dataset: { checkout: '', tier: t.id } }, state.pro && t.id === state.tier ? `Extend ${t.name}` : t.name)),
+      ),
     ),
   );
 

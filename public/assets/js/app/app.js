@@ -8,6 +8,8 @@ import { buildDemoVfs, demoPreviousSnapshot } from '../core/demo.js';
 import { crossPlatform } from '../core/insights.js';
 import { proState } from '../lib/license.js';
 import { getConfig } from '../lib/api.js';
+import { TIER_NAME, TIER_RANK, atLeast, tierFor } from '../lib/tiers.js';
+import { labViews, tierPill } from './views-lab.js';
 import { saveSnapshot, listSnapshots, snapshotFromDataset } from './snapshots.js';
 import { instagramViews } from './views-instagram.js';
 import { tiktokViews } from './views-tiktok.js';
@@ -119,7 +121,15 @@ function keepStore() {
   };
 }
 
-function mount(result, { pro, demo, config, netStart, onNewFiles }) {
+// What the sidebar offers next, depending on the tier the user has.
+const NEXT_UP = {
+  free: { tier: 'plus', title: 'Unlock everything', text: 'Full lists, who unfollowed you, search & CSV, every Wrapped theme.' },
+  plus: { tier: 'pro', title: 'Open the Pro Lab', text: 'Ghost Detector, Engagement Audit, Growth Time Machine and Friendship Radar.' },
+  pro: { tier: 'creator', title: 'Grow like a pro', text: 'Bot detector, Best Time to Post and white-label client reports.' },
+};
+
+function mount(result, { tier, demo, config, netStart, onNewFiles }) {
+  const pro = atLeast(tier, 'plus');
   const datasets = result.datasets;
   const cross = crossPlatform(datasets);
   const tabs = datasets.map((ds, i) => ({ key: `ds${i}`, label: ds.label, icon: ds.platform, ds }));
@@ -135,8 +145,8 @@ function mount(result, { pro, demo, config, netStart, onNewFiles }) {
   const main = h('main', { class: 'app-main', id: 'app-main', tabindex: '-1' });
   const dsSwitch = h('div', { class: 'ds-switch', role: 'group', 'aria-label': 'Platform' });
 
-  const upgradeBtn = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('bolt'), 'Get Pro');
-  upgradeBtn.addEventListener('click', () => ctx.upgrade('header'));
+  const upgradeBtn = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('bolt'), 'Upgrade');
+  upgradeBtn.addEventListener('click', () => ctx.upgrade(NEXT_UP[tier] ? NEXT_UP[tier].tier : 'header'));
   const newBtn = h('button', { class: 'btn btn--ghost btn--sm', type: 'button', title: 'Analyze another export' }, icon('upload'), h('span', { class: 'hide-sm' }, 'New file'));
   const fileInput = h('input', { type: 'file', multiple: true, accept: '.zip,.json,.html,.htm,.js,.txt,.csv', class: 'drop-file', tabindex: '-1', 'aria-hidden': 'true' });
   newBtn.addEventListener('click', () => fileInput.click());
@@ -150,7 +160,8 @@ function mount(result, { pro, demo, config, netStart, onNewFiles }) {
     dsSwitch,
     h('span', { class: 'spacer' }),
     networkMonitor(netStart),
-    demo ? h('span', { class: 'badge badge--uv' }, 'Live demo') : pro ? h('span', { class: 'badge' }, icon('check'), 'Pro') : upgradeBtn,
+    demo ? h('span', { class: 'badge badge--uv' }, 'Live demo') : pro ? h('span', { class: 'badge' }, icon('check'), TIER_NAME[tier]) : null,
+    !demo && NEXT_UP[tier] ? upgradeBtn : null,
     newBtn,
     fileInput,
     closeBtn,
@@ -158,18 +169,21 @@ function mount(result, { pro, demo, config, netStart, onNewFiles }) {
   root.append(bar, h('div', { class: 'app-body' }, nav, h('div', { class: 'app-mainwrap' }, mobileTabs, main)));
 
   const ctx = {
+    // `pro` means any paid tier (what used to be "Pro"); `can` checks one tool.
     pro,
+    tier,
+    can: (feature) => demo || atLeast(tier, tierFor(feature)),
     demo,
     freeLimit: config.freeListLimit || 20,
     site: location.host,
     snapshots: [],
     upgrade: async (reason) => {
       if (demo) {
-        toast('This is the demo — everything is unlocked. Get Pro to unlock your own data.', { iconName: 'sparkles', timeout: 4200 });
+        toast('This is the demo — everything is unlocked. Upgrade to unlock your own data.', { iconName: 'sparkles', timeout: 4200 });
         return;
       }
       const { openCheckout } = await import('../lib/checkout.js');
-      openCheckout({ reason });
+      openCheckout(TIER_RANK[reason] ? { tier: reason } : { reason });
     },
     keepSet: (key) => keeps.get(key),
     toggleKeep: (key, value) => keeps.toggle(key, value),
@@ -188,7 +202,15 @@ function mount(result, { pro, demo, config, netStart, onNewFiles }) {
   function viewsFor(tab) {
     if (!viewCache.has(tab.key)) {
       if (tab.cross) viewCache.set(tab.key, [{ id: 'overview', label: 'Cross-platform map', icon: 'orbit', render: () => crossView(tab.cross, ctx) }]);
-      else viewCache.set(tab.key, VIEW_BUILDERS[tab.ds.platform](tab.ds, ctx));
+      else {
+        // Platform views first, then the Pro Lab, then Wrapped cards last.
+        const ds = tab.ds;
+        const base = VIEW_BUILDERS[ds.platform](ds, ctx);
+        const lab = [...base.filter((v) => v.group === 'lab'), ...labViews(ds, ctx, { keepKey: `${ds.platform}:${ds.account?.username || 'me'}` })];
+        const rest = base.filter((v) => v.group !== 'lab');
+        const wrapped = rest.filter((v) => v.id === 'wrapped');
+        viewCache.set(tab.key, [...rest.filter((v) => v.id !== 'wrapped'), ...lab, ...wrapped]);
+      }
     }
     return viewCache.get(tab.key);
   }
@@ -201,6 +223,7 @@ function mount(result, { pro, demo, config, netStart, onNewFiles }) {
       v.label,
       !compactMode && v.count !== undefined ? h('span', { class: 'count' }, compact(v.count)) : null,
       !compactMode && v.pro && !ctx.pro ? icon('lock', 'lock') : null,
+      !compactMode && v.feature && !ctx.can(v.feature) ? tierPill(tierFor(v.feature)) : null,
     );
     btn.addEventListener('click', () => {
       viewId = v.id;
@@ -228,15 +251,20 @@ function mount(result, { pro, demo, config, netStart, onNewFiles }) {
         dsSwitch.append(b);
       });
     }
-    append(clear(nav), [h('div', { class: 'group' }, tab.label), views.map((v) => navButton(v, false))]);
-    if (!ctx.pro && !demo) {
+    const firstLab = views.find((v) => v.group === 'lab');
+    append(clear(nav), [
+      h('div', { class: 'group' }, tab.label),
+      views.map((v) => [v === firstLab ? h('div', { class: 'group group--lab' }, icon('sparkles'), 'Pro Lab') : null, navButton(v, false)]),
+    ]);
+    const next = NEXT_UP[tier];
+    if (next && !demo) {
       nav.append(
         h(
           'div',
-          { class: 'panel', style: { marginTop: '18px', padding: '18px', display: 'grid', gap: '10px' } },
-          h('b', null, 'Unlock everything'),
-          h('span', { class: 'small text-2' }, 'Full lists, unfollower history, unfollow queue, all Wrapped themes.'),
-          h('button', { class: 'btn btn--primary btn--sm', type: 'button', onClick: () => ctx.upgrade('sidebar') }, icon('bolt'), 'Get Pro'),
+          { class: 'panel nav-upsell', style: { marginTop: '18px', padding: '18px', display: 'grid', gap: '10px' } },
+          h('div', { style: { display: 'flex', alignItems: 'center', gap: '8px' } }, tierPill(next.tier), h('b', null, next.title)),
+          h('span', { class: 'small text-2' }, next.text),
+          h('button', { class: 'btn btn--primary btn--sm', type: 'button', onClick: () => ctx.upgrade(next.tier) }, icon('bolt'), `Get ${TIER_NAME[next.tier]}`),
         ),
       );
     }
@@ -295,22 +323,23 @@ function mount(result, { pro, demo, config, netStart, onNewFiles }) {
 }
 
 let lastInput = null;
-let activePro = false;
+let activeTier = 'free';
 
 // After a purchase inside the dashboard, re-render the same files unlocked.
 window.addEventListener('unw:license', async () => {
-  const state = await proState().catch(() => ({ pro: false }));
-  if (active && lastInput && !lastInput.demo && !activePro && state.pro) openApp(lastInput);
+  const state = await proState().catch(() => ({ tier: 'free' }));
+  if (active && lastInput && !lastInput.demo && TIER_RANK[state.tier] > TIER_RANK[activeTier]) openApp(lastInput);
 });
 
 export async function openApp({ files = [], demo = false } = {}) {
   if (active) active.close({ replacing: true });
   lastInput = { files, demo };
-  const [state, config] = await Promise.all([proState().catch(() => ({ pro: false })), getConfig()]);
+  const [state, config] = await Promise.all([proState().catch(() => ({ pro: false, tier: 'free' })), getConfig()]);
   const load = loader();
   const netStart = performance.now();
   window.__unwAnalysisStart = netStart;
-  activePro = Boolean(demo || state.pro);
+  // The demo shows every tool unlocked.
+  activeTier = demo ? 'creator' : state.tier || 'free';
   try {
     let vfs;
     let rand;
@@ -340,7 +369,7 @@ export async function openApp({ files = [], demo = false } = {}) {
     if (!openApp.skipStory) {
       playStory(result.datasets, { onDone: () => active?.root?.querySelector('.app-main')?.focus() });
     }
-    active = mount(result, { pro: demo || state.pro, demo, config, netStart, onNewFiles: (f) => openApp({ files: f }) });
+    active = mount(result, { tier: activeTier, demo, config, netStart, onNewFiles: (f) => openApp({ files: f }) });
   } catch (err) {
     console.error(err);
     load.close();

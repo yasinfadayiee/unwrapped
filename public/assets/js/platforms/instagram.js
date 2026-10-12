@@ -1,6 +1,7 @@
 // Instagram (and Threads) "Download your information" exports — JSON or HTML.
 
 import { describeUserAgent, fixMeta, parseDate, toMs } from '../core/text.js';
+import { conversationDynamics } from '../core/lab.js';
 import {
   dedupeUsers,
   firstArray,
@@ -108,15 +109,22 @@ function monthKey(ts) {
 
 function tally(records, authorOf) {
   const byAuthor = new Map();
+  const lastBy = new Map();
   const byMonth = new Map();
   for (const r of records) {
     const a = authorOf(r);
-    if (a) byAuthor.set(a, (byAuthor.get(a) || 0) + 1);
+    if (a) {
+      byAuthor.set(a, (byAuthor.get(a) || 0) + 1);
+      if (r.ts) lastBy.set(a, Math.max(lastBy.get(a) || 0, r.ts));
+    }
     if (r.ts) byMonth.set(monthKey(r.ts), (byMonth.get(monthKey(r.ts)) || 0) + 1);
   }
+  const ranked = [...byAuthor.entries()].sort((a, b) => b[1] - a[1]);
   return {
     total: records.length,
-    top: [...byAuthor.entries()].sort((a, b) => b[1] - a[1]).slice(0, 25).map(([key, count]) => ({ key, count })),
+    top: ranked.slice(0, 25).map(([key, count]) => ({ key, count })),
+    // Every account, for the Engagement Audit.
+    authors: ranked.map(([key, count]) => ({ key, count, last: lastBy.get(key) || 0 })),
     byMonth: [...byMonth.entries()].sort().map(([month, count]) => ({ month, count })),
   };
 }
@@ -174,6 +182,8 @@ async function readMessages(vfs, selfName, progress) {
   let latest = 0;
   for (const t of threads.values()) latest = Math.max(latest, t.last);
   const W = 90 * 86_400_000;
+  // When people message you, by weekday (Monday first) and hour — for Best Time to Post.
+  const inHeat = Array.from({ length: 7 }, () => new Array(24).fill(0));
   for (const t of threads.values()) {
     t.sent = t.senders?.get(me) || 0;
     total += t.count;
@@ -188,6 +198,10 @@ async function readMessages(vfs, selfName, progress) {
         recent++;
         if (s === me) recentMine++;
       } else if (ts > latest - 2 * W) previous++;
+      if (ts && s !== me) {
+        const d = new Date(ts);
+        inHeat[(d.getDay() + 6) % 7][d.getHours()]++;
+      }
     }
     list.push({
       title: t.title,
@@ -200,10 +214,11 @@ async function readMessages(vfs, selfName, progress) {
       recent,
       previous,
       recentMine,
+      dynamics: isGroup ? null : conversationDynamics(t.log, me, latest),
     });
   }
   list.sort((a, b) => b.count - a.count);
-  return { me, total, sent, received: total - sent, threads: list.slice(0, 50), all: list.filter((t) => !t.isGroup), latest, threadCount: list.length, byHour };
+  return { me, total, sent, received: total - sent, threads: list.slice(0, 50), all: list.filter((t) => !t.isGroup), latest, threadCount: list.length, byHour, inHeat };
 }
 
 async function readActivity(vfs, account, progress) {

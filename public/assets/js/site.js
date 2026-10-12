@@ -184,7 +184,40 @@ function tabs() {
 }
 
 /* ---------- pricing ---------- */
-const PER = (p) => (p.days === null ? 'one-time' : p.days >= 360 ? '/ year' : `/ ${p.days} days`);
+const money = (n) => `$${Number.isInteger(n) ? n : n.toFixed(2)}`;
+let billing = 'year';
+
+function tierCard(config, tier, cycle) {
+  const plans = config.plans.filter((p) => p.tier === tier.id);
+  const plan = plans.find((p) => p.cycle === cycle) || plans[0];
+  const monthly = plans.find((p) => p.cycle === 'month');
+  const lifetime = plans.find((p) => p.cycle === 'life');
+  const featured = tier.id === 'pro';
+  const below = config.tiers.find((t) => t.rank === tier.rank - 1);
+  const save = plan.cycle === 'year' && monthly ? Math.round((1 - plan.priceUsd / (monthly.priceUsd * 12)) * 100) : 0;
+  return h(
+    'div',
+    { class: `card plan plan--${tier.id}${featured ? ' is-featured' : ''}` },
+    h('div', { class: 'plan-top' }, h('span', { class: 'plan-name' }, tier.name), featured ? h('span', { class: 'badge' }, 'Most popular') : tier.id === 'creator' ? h('span', { class: 'badge badge--uv' }, 'For creators') : null),
+    h('p', { class: 'plan-tagline' }, tier.tagline),
+    h(
+      'div',
+      { class: 'plan-price' },
+      h('span', { class: 'amt' }, money(plan.cycle === 'year' ? Math.round((plan.priceUsd / 12) * 100) / 100 : plan.priceUsd)),
+      h('span', { class: 'per' }, '/ month'),
+    ),
+    h('p', { class: 'plan-sub' }, plan.cycle === 'year' ? [`${money(plan.priceUsd)} billed once a year`, save > 0 ? h('span', { class: 'save' }, `save ${save}%`) : null] : `${plan.days} days · no auto-renewal`),
+    h('p', { class: 'plan-for' }, icon('target'), tier.bestFor),
+    h(
+      'ul',
+      null,
+      below ? h('li', { class: 'plan-inherit' }, icon('arrow'), `Everything in ${below.name}`) : null,
+      tier.features.map((f) => h('li', null, icon('check'), f)),
+    ),
+    h('button', { class: `btn ${featured ? 'btn--primary' : 'btn--ghost'} btn--block btn--lg`, type: 'button', dataset: { plan: plan.id } }, `Get ${tier.name}`),
+    lifetime ? h('button', { class: 'plan-alt', type: 'button', dataset: { plan: lifetime.id } }, `or ${money(lifetime.priceUsd)} once — ${tier.name} for life`) : null,
+  );
+}
 
 async function pricing() {
   const boxes = $$('[data-pricing]');
@@ -197,23 +230,32 @@ async function pricing() {
       clear(coins).append(h('span', { class: 'coin' }, h('i', { style: { background: '#26a17b' } }), 'USDT · TRC20'));
     }
   }
+  if (!config.tiers?.length) return; // offline: keep the static fallback
+  const bestSave = Math.max(
+    ...config.tiers.map((t) => {
+      const m = config.plans.find((p) => p.tier === t.id && p.cycle === 'month');
+      const y = config.plans.find((p) => p.tier === t.id && p.cycle === 'year');
+      return m && y ? Math.round((1 - y.priceUsd / (m.priceUsd * 12)) * 100) : 0;
+    }),
+  );
   for (const box of boxes) {
-    clear(box);
-    for (const p of config.plans) {
-      const featured = p.badge === 'Most popular';
-      const btn = h('button', { class: `btn ${featured ? 'btn--primary' : 'btn--ghost'} btn--block btn--lg`, type: 'button', dataset: { plan: p.id } }, `Get ${p.short}`);
-      box.append(
-        h(
-          'div',
-          { class: `card plan${featured ? ' is-featured' : ''}` },
-          h('div', { class: 'plan-top' }, h('span', { class: 'plan-name' }, p.short), p.badge ? h('span', { class: featured ? 'badge' : 'badge badge--muted' }, p.badge) : null),
-          h('div', { class: 'plan-price' }, h('span', { class: 'amt' }, `$${p.priceUsd}`), h('span', { class: 'per' }, PER(p))),
-          h('p', { class: 'small text-2' }, p.blurb || ''),
-          h('ul', null, config.features.map((f) => h('li', null, icon('check'), f))),
-          btn,
-        ),
-      );
-    }
+    const cards = h('div', { class: 'pricing pricing--tiers' });
+    const toggle = h('div', { class: 'billing', role: 'radiogroup', 'aria-label': 'Billing period' });
+    const draw = () => {
+      clear(toggle);
+      for (const [cycle, label] of [['month', 'Monthly'], ['year', 'Yearly']]) {
+        const b = h('button', { type: 'button', role: 'radio', 'aria-checked': String(billing === cycle) }, label, cycle === 'year' && bestSave > 0 ? h('span', { class: 'save' }, `−${bestSave}%`) : null);
+        b.addEventListener('click', () => {
+          billing = cycle;
+          boxes.forEach((x) => x._draw?.());
+        });
+        toggle.append(b);
+      }
+      clear(cards).append(...config.tiers.map((t) => tierCard(config, t, billing)));
+    };
+    box._draw = draw;
+    clear(box).append(toggle, cards);
+    draw();
   }
 }
 
@@ -223,7 +265,7 @@ function checkoutTriggers() {
     if (!trigger) return;
     e.preventDefault();
     const { openCheckout } = await import('./lib/checkout.js');
-    openCheckout({ plan: trigger.dataset.plan });
+    openCheckout({ plan: trigger.dataset.plan, tier: trigger.dataset.tier });
   });
 }
 
@@ -315,7 +357,7 @@ getConfig().then(() => {
 import('./lib/referral.js').then(async ({ captureRef }) => {
   if (await captureRef()) {
     const { toast } = await import('./lib/ui.js');
-    toast('A friend invited you — 10% off Pro is applied at checkout', { iconName: 'sparkles', timeout: 5000 });
+    toast('A friend invited you — 10% off any plan is applied at checkout', { iconName: 'sparkles', timeout: 5000 });
   }
 });
 window.addEventListener('unw:license', licenseBadge);

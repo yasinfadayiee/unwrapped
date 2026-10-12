@@ -73,7 +73,7 @@ export async function sendRenewalReminders(env) {
       env,
       `Your Pro access ends in ${days} day${days === 1 ? '' : 's'}`,
       `<p style="color:#b9b9c6;line-height:1.6">Renew now to keep your unfollower history, full lists and premium Wrapped cards. Your key stays the same and the new time is added on top.</p>
-       <a href="${escapeHtml(siteUrl(env))}/account/#renew" style="display:inline-block;background:#d7ff3a;color:#0b0b10;text-decoration:none;font-weight:700;padding:12px 20px;border-radius:999px">Renew ${escapeHtml(plan ? plan.short : 'Pro')}</a>`,
+       <a href="${escapeHtml(siteUrl(env))}/account/#renew" style="display:inline-block;background:#d7ff3a;color:#0b0b10;text-decoration:none;font-weight:700;padding:12px 20px;border-radius:999px">Renew ${escapeHtml(plan ? plan.name : 'Pro')}</a>`,
     );
     try {
       await send(env, { to: license.email, subject: `${brand(env)} Pro ends in ${days} day${days === 1 ? '' : 's'}`, html });

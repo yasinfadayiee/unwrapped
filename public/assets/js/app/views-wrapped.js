@@ -61,7 +61,7 @@ export function wrappedView(ds, ctx) {
 
   root.append(
     panel(
-      { title: 'Theme', text: ctx.pro ? 'All themes unlocked · no watermark' : 'Free cards include a small watermark. Pro unlocks every theme without it.' },
+      { title: 'Theme', text: ctx.pro ? 'All themes unlocked · no watermark' : 'Free cards include a small watermark. Plus unlocks every theme without it.' },
       themeRow,
     ),
     grid,

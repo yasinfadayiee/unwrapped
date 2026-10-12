@@ -89,7 +89,7 @@ function habitsView(ds, ctx) {
           ),
         ),
       ),
-      !ctx.pro && !ctx.demo ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('habits') }, icon('lock'), 'See your top 10 with Pro')) : null,
+      !ctx.pro && !ctx.demo ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('habits') }, icon('lock'), 'See your top 10 with Plus')) : null,
     ),
   );
   if (ds.likes.length) {

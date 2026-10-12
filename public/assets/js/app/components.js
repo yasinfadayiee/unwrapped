@@ -1,5 +1,6 @@
 import { h, icon, clear, avatarStyle, csvFile, downloadBlob, toast } from '../lib/ui.js';
 import { fmtInt, relTime, dateShort } from '../lib/format.js';
+import { TIER_NAME } from '../lib/tiers.js';
 
 export function viewHead(title, text, ...actions) {
   return h('div', { class: 'view-head' }, h('div', null, h('h2', null, title), text ? h('p', null, text) : null), actions.length ? h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } }, actions) : null);
@@ -38,7 +39,7 @@ export function emptyState(text, iconName = 'inbox') {
   return h('div', { class: 'empty' }, icon(iconName), h('div', null, text));
 }
 
-export function lockCard({ count, what = 'accounts', onUpgrade, title, text }) {
+export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tier = 'plus' }) {
   return h(
     'div',
     { class: 'lock-card' },
@@ -46,9 +47,9 @@ export function lockCard({ count, what = 'accounts', onUpgrade, title, text }) {
       'div',
       { class: 'lock-inner' },
       h('span', { class: 'ico' }, icon('lock')),
-      h('h4', null, title || `${fmtInt(count)} more ${what}`),
-      h('p', null, text || 'Unlock the full list, search, CSV export and your unfollower history with Pro.'),
-      h('button', { class: 'btn btn--primary', type: 'button', onClick: onUpgrade }, icon('bolt'), 'Unlock with Pro'),
+      h('h4', null, title || (count ? `${fmtInt(count)} more ${what}` : `Unlock with ${TIER_NAME[tier]}`)),
+      h('p', null, text || `Unlock the full list, search, CSV export and your unfollower history with ${TIER_NAME[tier]}.`),
+      h('button', { class: 'btn btn--primary', type: 'button', onClick: onUpgrade }, icon('bolt'), `Unlock with ${TIER_NAME[tier]}`),
     ),
   );
 }

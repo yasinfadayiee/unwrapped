@@ -59,7 +59,7 @@ function postsView(ds, ctx) {
             ),
           ),
         ),
-        !ctx.pro && !ctx.demo ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('posts') }, icon('lock'), 'See your top 10 with Pro')) : null,
+        !ctx.pro && !ctx.demo ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('posts') }, icon('lock'), 'See your top 10 with Plus')) : null,
       ),
       panel(
         { title: 'Your mix' },
