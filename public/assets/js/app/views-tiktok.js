@@ -9,6 +9,7 @@ import { wrappedView } from './views-wrapped.js';
 import { privacyParts } from './wrapped.js';
 import { t as tl } from '../lib/i18n.js';
 import { videosView } from './views-videos.js';
+import { lookupView } from './views-lookup.js';
 
 function overview(ds, ctx) {
   const w = watchStats(ds.watch);
@@ -152,6 +153,7 @@ export function tiktokViews(ds, ctx) {
   const views = [{ id: 'overview', label: tl('Screen time'), icon: 'clock', render: () => overview(ds, ctx) }];
   if (ds.watch.length) views.push({ id: 'habits', label: tl('Habits & binges'), icon: 'flame', render: () => habitsView(ds, ctx) });
   if (ds.hasRelationships) views.push(...relationshipViews(ds, ctx, { keepKey }));
+  if (ds.hasRelationships) views.push({ id: 'lookup', label: tl('Look up anyone'), icon: 'search', render: () => lookupView(ds, ctx) });
   if (ds.history && Object.values(ds.history).some((l) => l.length)) views.push({ id: 'videos', label: tl('Video finder'), icon: 'play', render: () => videosView(ds, ctx) });
   if (ds.searches.length) views.push({ id: 'searches', label: tl('Searches'), icon: 'search', count: ds.searches.length, render: () => searchesView(ds, ctx) });
   if (ds.logins.length || ds.adInterests.length || ds.offTiktok) views.push({ id: 'privacy', label: tl('Privacy X-ray'), icon: 'fingerprint', render: () => privacyView(ds, ctx) });

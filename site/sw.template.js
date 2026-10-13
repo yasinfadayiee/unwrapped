@@ -52,6 +52,8 @@ const CORE = [
   '/assets/js/app/views-videos.js',
   '/assets/js/app/views-archive.js',
   '/assets/js/app/views-finders.js',
+  '/assets/js/app/views-lookup.js',
+  '/assets/js/core/people.js',
   '/assets/js/lib/media.js',
   '/assets/js/app/views-linkedin.js',
   '/assets/js/app/views-tiktok.js',

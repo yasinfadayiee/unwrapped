@@ -9,6 +9,7 @@ import { friendsView } from './views-friends.js';
 import { messagesView } from './views-messages.js';
 import { archiveView } from './views-archive.js';
 import { likesView } from './views-finders.js';
+import { lookupView } from './views-lookup.js';
 import { t as tl } from '../lib/i18n.js';
 
 function overview(ds, ctx) {
@@ -191,6 +192,7 @@ export function instagramViews(ds, ctx) {
   const keepKey = `${ds.platform}:${ds.account?.username || 'me'}`;
   const views = [{ id: 'overview', label: tl('Overview'), icon: 'home', render: () => overview(ds, ctx) }];
   if (ds.hasRelationships) views.push(...relationshipViews(ds, ctx, { keepKey }));
+  if (ds.hasRelationships) views.push({ id: 'lookup', label: tl('Look up anyone'), icon: 'search', render: () => lookupView(ds, ctx) });
   if (ds.platform === 'instagram') {
     const L = ds.lists;
     if (L.pendingSent.length || L.requestsReceived.length || L.recentRequests.length) views.push({ id: 'requests', label: tl('Follow requests'), icon: 'inbox', count: L.pendingSent.length, render: () => requestsView(ds, ctx) });

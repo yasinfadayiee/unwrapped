@@ -7,6 +7,7 @@ import { barChart } from './charts.js';
 import { wrappedView } from './views-wrapped.js';
 import { privacyParts } from './wrapped.js';
 import { messagesView } from './views-messages.js';
+import { lookupView } from './views-lookup.js';
 import { t as tl } from '../lib/i18n.js';
 
 function overview(ds, ctx) {
@@ -70,6 +71,7 @@ export function facebookViews(ds, ctx) {
         ),
     },
   ];
+  if (L.friends.length) views.push({ id: 'lookup', label: tl('Look up anyone'), icon: 'search', render: () => lookupView(ds, ctx) });
   if (ds.activity?.messages) views.push({ id: 'messages', label: tl('Message viewer'), icon: 'message', render: () => messagesView(ds, ctx) });
   if (ds.advertisers.length || ds.offFacebook.companies) {
     views.push({

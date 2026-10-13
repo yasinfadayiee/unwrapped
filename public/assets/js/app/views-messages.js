@@ -200,7 +200,9 @@ export function messagesView(ds, ctx) {
 
   filter.addEventListener('input', renderList);
   renderList();
-  open(threads[0]);
+  const wanted = ctx.pendingChat && threads.includes(ctx.pendingChat) ? ctx.pendingChat : null;
+  ctx.pendingChat = null;
+  open(wanted || threads[0]);
   if (!canSearchAll) root.append(lockCard({ tier: 'plus', title: tl('Search every chat and save conversations with Plus'), text: tl('Find any message across all your chats in seconds, and save a chat as a readable text file.'), onUpgrade: () => ctx.upgrade('messages') }));
   return root;
 }

@@ -321,3 +321,21 @@ test('the clean-up check finds swearing, party posts and personal info in any la
   assert.equal(ig.activity.items.saved.length, 64);
   assert.ok(ig.activity.items.comments[0].text && ig.activity.items.liked[0].href.startsWith('https://www.instagram.com/p/'));
 });
+
+test('look up anyone joins follows, lists, likes, chats and snapshot history', async () => {
+  const { buildPeopleIndex, searchPeople, interestingPeople, relationOf } = await import('../public/assets/js/core/people.js');
+  const { vfs } = buildDemoVfs(Date.UTC(2026, 9, 1));
+  const ig = ds(await analyze(vfs), 'instagram');
+  const people = buildPeopleIndex(ig, []);
+  assert.ok(people.size >= 1284);
+  const top = interestingPeople(people);
+  assert.ok(top.engaged.length > 0 && top.chats.length > 0, 'suggestions');
+  const chatter = top.chats[0];
+  assert.ok(chatter.thread.count > 0);
+  assert.ok(['mutual', 'notBack', 'fan'].includes(relationOf(chatter)));
+  assert.equal(searchPeople(people, '@' + chatter.name.slice(0, 4))[0].name.slice(0, 4), chatter.name.slice(0, 4));
+  // Snapshot history: someone in an older snapshot who is gone now.
+  const snap = (followers, takenAt) => ({ followers, following: [], takenAt, labels: { 'old.friend': 'old.friend' } });
+  const withHistory = buildPeopleIndex(ig, [snap(['old.friend'], 1), snap([], 2)]);
+  assert.deepEqual(withHistory.get('old.friend').history, [{ type: 'unfollowedYou', from: 1, to: 2 }]);
+});

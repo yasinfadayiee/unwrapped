@@ -194,7 +194,8 @@ export async function readMessages(vfs, selfName, progress, { facebook = false }
   const W = 90 * 86_400_000;
   // When people message you, by weekday (Monday first) and hour — for Best Time to Post.
   const inHeat = Array.from({ length: 7 }, () => new Array(24).fill(0));
-  for (const t of threads.values()) {
+  for (const [folder, t] of threads) {
+    t.folder = folder;
     t.sent = t.senders?.get(me) || 0;
     total += t.count;
     sent += t.sent;
@@ -215,6 +216,7 @@ export async function readMessages(vfs, selfName, progress, { facebook = false }
     }
     list.push({
       title: t.title,
+      folder: t.folder,
       isGroup,
       count: t.count,
       sent: t.sent,

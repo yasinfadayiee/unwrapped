@@ -210,6 +210,11 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
       render();
       main.scrollTo({ top: 0 });
     },
+    // Jump from anywhere (e.g. Look up anyone) straight to one conversation.
+    openChat: (thread) => {
+      ctx.pendingChat = thread;
+      ctx.go('messages');
+    },
     reloadSnapshots: async () => {
       const ds = tabs[tabIndex].ds;
       if (ds?._snapshots && ds._acct) ds._snapshots = await listSnapshots(ds._acct);
