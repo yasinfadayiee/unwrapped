@@ -5,4 +5,4 @@ Disallow: /account/
 Disallow: /success/
 Disallow: /api/
 
-Sitemap: https://your-domain.com/sitemap.xml
+Sitemap: https://unwrapped.unwrapped.workers.dev/sitemap.xml
