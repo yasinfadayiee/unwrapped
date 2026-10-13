@@ -14,7 +14,7 @@
       "binding": "DB",
       "database_name": "unwrapped",
       // Paste the database_id printed by `npm run db:create` here.
-      "database_id": "00000000-0000-0000-0000-000000000000"
+      "database_id": "cfa4e657-3f8f-4bbb-a6d6-96d1c3001977"
     }
   ],
   "triggers": {
@@ -22,7 +22,7 @@
     "crons": ["* * * * *", "0 9 * * *"]
   },
   "vars": {
-    "SITE_URL": "https://your-domain.com",
+    "SITE_URL": "https://unwrapped.unwrapped.workers.dev",
     "BRAND": "Unwrapped",
     // Your own USDT (TRC20) receiving address. Leave empty to disable direct USDT.
     "TRON_ADDRESS": "",
