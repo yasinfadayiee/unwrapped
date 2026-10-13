@@ -3,11 +3,10 @@
   <div class="drop-inner" data-drop aria-label="Veri dışa aktarımını analiz et">
     <div class="drop-icon"><svg aria-hidden="true"><use href="#i-package"/></svg></div>
     <div class="drop-title">Dışa aktarım ZIP'ini buraya bırak</div>
-    <p class="drop-hint">Tek bir ZIP, birkaç ZIP parçası, açılmış bir klasör ya da JSON / HTML / TXT dosyaları. Bu cihazdan asla çıkmaz.</p>
-    <p class="drop-tip"><svg aria-hidden="true"><use href="#i-ghost"/></svg>Eski bir dışa aktarımın da mı var? Aradaki sürede kimin seni takipten çıktığını görmek için ikisini birlikte bırak.</p>
+    <p class="drop-hint">Bu cihazda okunur — hiçbir şey yüklenmez.</p>
     <div class="drop-actions">
       <button class="btn btn--primary btn--lg" type="button" data-pick><svg aria-hidden="true"><use href="#i-upload"/></svg>Dosyamı seç</button>
-      <button class="btn btn--ghost btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Canlı demoyu dene</button>
+      <a class="btn btn--ghost btn--lg" href="#how"><svg aria-hidden="true"><use href="#i-download"/></svg>Henüz yok</a>
     </div>
     <div class="drop-platforms" aria-label="Desteklenen platformlar">
       <span class="pf"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</span>
@@ -17,8 +16,7 @@
       <span class="pf"><svg aria-hidden="true"><use href="#i-threads"/></svg>Threads</span>
       <span class="pf"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</span>
     </div>
-    <button class="link-arrow small" type="button" data-pick-folder>ya da açılmış bir klasör seç</button>
-    <a class="link-arrow small" href="#how">Dışa aktarımın henüz yok mu? 3 dakikada iste</a>
+    <div class="drop-links"><button class="link-arrow small" type="button" data-demo>Canlı demoyu dene</button><span aria-hidden="true">·</span><button class="link-arrow small" type="button" data-pick-folder>Açılmış bir klasör seç</button></div>
     <input class="drop-file" type="file" multiple accept=".zip,.json,.html,.htm,.js,.txt,.csv,application/zip" tabindex="-1" aria-hidden="true">
     <input class="drop-file" type="file" webkitdirectory multiple tabindex="-1" aria-hidden="true">
   </div>

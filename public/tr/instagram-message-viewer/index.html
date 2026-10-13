@@ -33,8 +33,8 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="preload" href="/assets/fonts/bricolage-wght.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-wght.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/css/main.css?v=mv75yzp4">
-<link rel="modulepreload" href="/assets/js/site.js?v=mv75yzp4">
+<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/css/main.css?v=mv768l6j">
+<link rel="modulepreload" href="/assets/js/site.js?v=mv768l6j">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Instagram mesaj görüntüleyici: veri indirmendeki DM’leri… — Unwrapped","url":"https://unwrapped.unwrapped.workers.dev/tr/instagram-message-viewer/","inLanguage":"tr","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (runs in the browser)","description":"Instagram veri indirmendeki mesajları gerçek bir sohbet uygulaması gibi aç: eski konuşmaları fotoğraflarıyla oku, tüm sohbetlerde aynı anda ara ve bir sohbeti…","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Unwrapped","item":"https://unwrapped.unwrapped.workers.dev/tr/"},{"@type":"ListItem","position":2,"name":"Instagram mesaj görüntüleyici: veri indirmendeki DM’leri…","item":"https://unwrapped.unwrapped.workers.dev/tr/instagram-message-viewer/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Instagram veri indirmemdeki mesajları nasıl okurum?","acceptedAnswer":{"@type":"Answer","text":"İndirme her sohbeti, konuşma başına bir klasörde JSON veya HTML dosyaları olarak saklar. ZIP’in tamamını Unwrapped’a bırak ve “Mesaj görüntüleyici”yi aç — tüm sohbetler listelenir ve bir mesajlaşma uygulaması gibi açılır."}},{"@type":"Question","name":"Silinen Instagram mesajlarını kurtarabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"İndirmen, Instagram’ın hesabın için hâlâ sakladığı mesajları içerir. Sildiğin veya geri aldığın mesajlar genellikle dahil değildir, bu yüzden görüntüleyici onları geri getiremez — ama uygulamada artık bulamadığın sohbetler çoğu zaman oradadır. Silinen mesajlar hakkında daha fazlası ."}},{"@type":"Question","name":"Mesajlarım bir yere yükleniyor mu?","acceptedAnswer":{"@type":"Answer","text":"Hayır. Arşiv tarayıcının içinde açılır ve gösterilir. Hiçbir şey sunucuya gönderilmez ve kimse — biz dahil — sohbetlerini göremez."}},{"@type":"Question","name":"Neden fotoğrafları göremiyorum?","acceptedAnswer":{"@type":"Answer","text":"Fotoğraf ve videolar yalnızca medyayı dahil ettiysen indirmede bulunur. İndirmeyi medyayla ve daha yüksek kaliteyle yeniden iste."}},{"@type":"Question","name":"Facebook Messenger ile çalışır mı?","acceptedAnswer":{"@type":"Answer","text":"Evet. Facebook’un “Bilgilerini indir” ZIP’ini (Mesajlar dahil) bırak ve Facebook sekmesinde Mesaj görüntüleyici’yi aç — Messenger sohbetlerin aynı şekilde açılır."}},{"@type":"Question","name":"Ücretsiz mi?","acceptedAnswer":{"@type":"Answer","text":"Evet — tüm konuşmaları okumak ücretsizdir. Plus, tüm sohbetlerde aramayı ve sohbetleri metin olarak kaydetmeyi ekler."}}]}</script>
@@ -162,11 +162,10 @@
   <div class="drop-inner" data-drop aria-label="Veri dışa aktarımını analiz et">
     <div class="drop-icon"><svg aria-hidden="true"><use href="#i-package"/></svg></div>
     <div class="drop-title">Dışa aktarım ZIP'ini buraya bırak</div>
-    <p class="drop-hint">Tek bir ZIP, birkaç ZIP parçası, açılmış bir klasör ya da JSON / HTML / TXT dosyaları. Bu cihazdan asla çıkmaz.</p>
-    <p class="drop-tip"><svg aria-hidden="true"><use href="#i-ghost"/></svg>Eski bir dışa aktarımın da mı var? Aradaki sürede kimin seni takipten çıktığını görmek için ikisini birlikte bırak.</p>
+    <p class="drop-hint">Bu cihazda okunur — hiçbir şey yüklenmez.</p>
     <div class="drop-actions">
       <button class="btn btn--primary btn--lg" type="button" data-pick><svg aria-hidden="true"><use href="#i-upload"/></svg>Dosyamı seç</button>
-      <button class="btn btn--ghost btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Canlı demoyu dene</button>
+      <a class="btn btn--ghost btn--lg" href="#how"><svg aria-hidden="true"><use href="#i-download"/></svg>Henüz yok</a>
     </div>
     <div class="drop-platforms" aria-label="Desteklenen platformlar">
       <span class="pf"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</span>
@@ -176,8 +175,7 @@
       <span class="pf"><svg aria-hidden="true"><use href="#i-threads"/></svg>Threads</span>
       <span class="pf"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</span>
     </div>
-    <button class="link-arrow small" type="button" data-pick-folder>ya da açılmış bir klasör seç</button>
-    <a class="link-arrow small" href="#how">Dışa aktarımın henüz yok mu? 3 dakikada iste</a>
+    <div class="drop-links"><button class="link-arrow small" type="button" data-demo>Canlı demoyu dene</button><span aria-hidden="true">·</span><button class="link-arrow small" type="button" data-pick-folder>Açılmış bir klasör seç</button></div>
     <input class="drop-file" type="file" multiple accept=".zip,.json,.html,.htm,.js,.txt,.csv,application/zip" tabindex="-1" aria-hidden="true">
     <input class="drop-file" type="file" webkitdirectory multiple tabindex="-1" aria-hidden="true">
   </div>
@@ -323,6 +321,6 @@
     </div>
   </div>
 </footer>
-<script type="module" src="/assets/js/site.js?v=mv75yzp4"></script>
+<script type="module" src="/assets/js/site.js?v=mv768l6j"></script>
 </body>
 </html>

@@ -41,6 +41,30 @@
   </div>
 </section>
 
+<section class="section" id="how">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">01 — Cómo funciona</span>
+      <h2 class="h2">Tres minutos de tu tiempo. <span class="serif">Cero riesgo.</span></h2>
+      <p class="lead">Todas las grandes plataformas te permiten descargar una copia de tus datos; en muchos países es tu derecho legal. Aquí tienes exactamente dónde tocar.</p>
+    </div>
+    <div class="reveal" data-tabs>
+      <div class="tabs" role="tablist" aria-label="Plataforma">
+        <button class="tab" role="tab" id="tab-ig" aria-controls="panel-ig" aria-selected="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</button>
+        <button class="tab" role="tab" id="tab-tt" aria-controls="panel-tt" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</button>
+        <button class="tab" role="tab" id="tab-x" aria-controls="panel-x" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-x"/></svg>X</button>
+        <button class="tab" role="tab" id="tab-fb" aria-controls="panel-fb" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-facebook"/></svg>Facebook</button>
+        <button class="tab" role="tab" id="tab-li" aria-controls="panel-li" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</button>
+      </div>
+      <div id="panel-ig" role="tabpanel" aria-labelledby="tab-ig">{{> steps-instagram}}</div>
+      <div id="panel-tt" role="tabpanel" aria-labelledby="tab-tt" hidden>{{> steps-tiktok}}</div>
+      <div id="panel-x" role="tabpanel" aria-labelledby="tab-x" hidden>{{> steps-x}}</div>
+      <div id="panel-fb" role="tabpanel" aria-labelledby="tab-fb" hidden>{{> steps-facebook}}</div>
+      <div id="panel-li" role="tabpanel" aria-labelledby="tab-li" hidden>{{> steps-linkedin}}</div>
+    </div>
+  </div>
+</section>
+
 <section class="section section--tight" id="preview">
   <div class="container">
     <div class="sec-head sec-head--center reveal">
@@ -89,7 +113,7 @@
 <section class="section" id="promise">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">01 — La promesa sin contraseña</span>
+      <span class="eyebrow">02 — La promesa sin contraseña</span>
       <h2 class="h2">Otras apps quieren tu contraseña.<br><span class="serif" style="color:var(--text-2)">Nosotros ni siquiera queremos tus datos.</span></h2>
       <p class="lead">Las apps de “unfollowers” que inician sesión por ti provocan cuentas hackeadas, limitadas o bloqueadas, y muchas venden en silencio lo que recogen. Unwrapped lee el archivo que te da la propia plataforma, aquí mismo, en tu navegador. Las mismas respuestas, ninguno de los riesgos.</p>
     </div>
@@ -121,7 +145,7 @@
 <section class="section" id="tools">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">02 — Seis herramientas, un solo archivo</span>
+      <span class="eyebrow">03 — Seis herramientas, un solo archivo</span>
       <h2 class="h2">Todo lo que sabe tu exportación, <span class="serif">por fin legible.</span></h2>
       <p class="lead">Suelta un archivo, o las exportaciones de todas tus plataformas a la vez. Unwrapped detecta qué hay dentro y arma tu panel en segundos.</p>
     </div>
@@ -210,7 +234,7 @@
 <section class="section lab-section" id="lab">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">03 — El Pro Lab</span>
+      <span class="eyebrow">04 — El Pro Lab</span>
       <h2 class="h2">No solo números. <span class="serif grad">Respuestas reales.</span></h2>
       <p class="lead">Las apps de “unfollowers” se quedan en los números. El Pro Lab lee lo que solo contiene tu propia exportación (tus mensajes, tus “me gusta” y tu historial de follows) para mostrarte quién te ignora, dónde tu atención no es correspondida, qué tan real es tu audiencia y cuándo publicar.</p>
     </div>
@@ -279,29 +303,6 @@
   </div>
 </section>
 
-<section class="section" id="how">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="eyebrow">04 — Cómo funciona</span>
-      <h2 class="h2">Tres minutos de tu tiempo. <span class="serif">Cero riesgo.</span></h2>
-      <p class="lead">Todas las grandes plataformas te permiten descargar una copia de tus datos; en muchos países es tu derecho legal. Aquí tienes exactamente dónde tocar.</p>
-    </div>
-    <div class="reveal" data-tabs>
-      <div class="tabs" role="tablist" aria-label="Plataforma">
-        <button class="tab" role="tab" id="tab-ig" aria-controls="panel-ig" aria-selected="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</button>
-        <button class="tab" role="tab" id="tab-tt" aria-controls="panel-tt" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</button>
-        <button class="tab" role="tab" id="tab-x" aria-controls="panel-x" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-x"/></svg>X</button>
-        <button class="tab" role="tab" id="tab-fb" aria-controls="panel-fb" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-facebook"/></svg>Facebook</button>
-        <button class="tab" role="tab" id="tab-li" aria-controls="panel-li" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</button>
-      </div>
-      <div id="panel-ig" role="tabpanel" aria-labelledby="tab-ig">{{> steps-instagram}}</div>
-      <div id="panel-tt" role="tabpanel" aria-labelledby="tab-tt" hidden>{{> steps-tiktok}}</div>
-      <div id="panel-x" role="tabpanel" aria-labelledby="tab-x" hidden>{{> steps-x}}</div>
-      <div id="panel-fb" role="tabpanel" aria-labelledby="tab-fb" hidden>{{> steps-facebook}}</div>
-      <div id="panel-li" role="tabpanel" aria-labelledby="tab-li" hidden>{{> steps-linkedin}}</div>
-    </div>
-  </div>
-</section>
 
 <section class="section section--tight" id="wrapped">
   <div class="container">

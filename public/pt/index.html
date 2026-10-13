@@ -33,8 +33,8 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="preload" href="/assets/fonts/bricolage-wght.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-wght.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/css/main.css?v=mv75yzp4">
-<link rel="modulepreload" href="/assets/js/site.js?v=mv75yzp4">
+<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/css/main.css?v=mv768l6j">
+<link rel="modulepreload" href="/assets/js/site.js?v=mv768l6j">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Unwrapped","url":"https://unwrapped.unwrapped.workers.dev/pt/","inLanguage":"pt-BR","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (runs in the browser)","description":"Descubra quem não te segue de volta e quem deixou de te seguir no Instagram, seu tempo real no TikTok e o que os anunciantes sabem sobre você, a partir da sua exportação oficial de dados. Sem senha, sem upload.","offers":{"@type":"AggregateOffer","priceCurrency":"USD","lowPrice":"0","highPrice":"119"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Unwrapped","url":"https://unwrapped.unwrapped.workers.dev/","logo":"https://unwrapped.unwrapped.workers.dev/assets/img/icon-512.png"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Unwrapped","url":"https://unwrapped.unwrapped.workers.dev/pt/","inLanguage":"pt-BR"}</script>
@@ -166,11 +166,10 @@
   <div class="drop-inner" data-drop aria-label="Analise sua exportação de dados">
     <div class="drop-icon"><svg aria-hidden="true"><use href="#i-package"/></svg></div>
     <div class="drop-title">Solte aqui o ZIP da sua exportação</div>
-    <p class="drop-hint">Um ZIP, várias partes ZIP, uma pasta descompactada ou arquivos JSON / HTML / TXT. Nunca sai deste aparelho.</p>
-    <p class="drop-tip"><svg aria-hidden="true"><use href="#i-ghost"/></svg>Tem também uma exportação antiga? Solte as duas de uma vez para ver quem deixou de te seguir nesse meio-tempo.</p>
+    <p class="drop-hint">É lido neste aparelho — nada é enviado.</p>
     <div class="drop-actions">
       <button class="btn btn--primary btn--lg" type="button" data-pick><svg aria-hidden="true"><use href="#i-upload"/></svg>Escolher minha exportação</button>
-      <button class="btn btn--ghost btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Ver a demo ao vivo</button>
+      <a class="btn btn--ghost btn--lg" href="#how"><svg aria-hidden="true"><use href="#i-download"/></svg>Ainda não tenho</a>
     </div>
     <div class="drop-platforms" aria-label="Plataformas compatíveis">
       <span class="pf"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</span>
@@ -180,8 +179,7 @@
       <span class="pf"><svg aria-hidden="true"><use href="#i-threads"/></svg>Threads</span>
       <span class="pf"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</span>
     </div>
-    <button class="link-arrow small" type="button" data-pick-folder>ou escolha uma pasta descompactada</button>
-    <a class="link-arrow small" href="#how">Ainda não tem sua exportação? Peça em 3 minutos</a>
+    <div class="drop-links"><button class="link-arrow small" type="button" data-demo>Ver a demo ao vivo</button><span aria-hidden="true">·</span><button class="link-arrow small" type="button" data-pick-folder>Escolha uma pasta descompactada</button></div>
     <input class="drop-file" type="file" multiple accept=".zip,.json,.html,.htm,.js,.txt,.csv,application/zip" tabindex="-1" aria-hidden="true">
     <input class="drop-file" type="file" webkitdirectory multiple tabindex="-1" aria-hidden="true">
   </div>
@@ -214,248 +212,10 @@
   </div>
 </section>
 
-<section class="section section--tight" id="preview">
-  <div class="container">
-    <div class="sec-head sec-head--center reveal">
-      <span class="eyebrow">Seu painel</span>
-      <h2 class="h2">Um lugar tranquilo para <span class="serif grad">tudo.</span></h2>
-      <p class="lead">Solte sua exportação e é isto que você recebe: cada lista, cada insight e a saúde da sua conta, em segundos e sem que nada saia do seu aparelho.</p>
-    </div>
-    <div class="browser reveal" aria-hidden="true">
-      <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url"><svg><use href="#i-shield"/></svg>unwrapped · resultados</span></div>
-      <div class="mock">
-        <aside class="mock-nav">
-          <span class="mock-group">Instagram</span>
-          <span class="mock-item"><svg><use href="#i-home"/></svg>Resumo</span>
-          <span class="mock-item is-on"><svg><use href="#i-pulse"/></svg>Saúde da conta</span>
-          <span class="mock-item"><svg><use href="#i-user-minus"/></svg>Não te seguem de volta<em>268</em></span>
-          <span class="mock-item"><svg><use href="#i-ghost"/></svg>Quem deixou de te seguir</span>
-          <span class="mock-group mock-group--lab">✦ Pro Lab</span>
-          <span class="mock-item"><svg><use href="#i-ghost"/></svg>Detector de Vácuo</span>
-          <span class="mock-item"><svg><use href="#i-heart"/></svg>Auditoria de engajamento</span>
-          <span class="mock-item"><svg><use href="#i-bot"/></svg>Qualidade do público</span>
-          <span class="mock-item"><svg><use href="#i-target"/></svg>Melhor horário para postar</span>
-        </aside>
-        <div class="mock-main">
-          <div class="mock-head"><b>Saúde da conta</b><span>Exportação do Instagram · @nova.studio</span></div>
-          <div class="mock-hero">
-            <div class="gauge" style="--v:82"><div class="gauge-in"><b>B</b><span>82/100</span></div></div>
-            <div class="mock-copy"><small>SUA CONTA</small><b>Saudável</b><span>Seu ponto mais fraco é o seguir ativo: 412 contas que você segue e com quem nunca interage.</span><i class="mock-btn">Melhorar o seguir ativo →</i></div>
-          </div>
-          <div class="mock-factors">
-            <div class="mf"><span>Seguir ativo</span><i style="--w:58%;--c:var(--warning)"></i><b>58</b></div>
-            <div class="mf"><span>Engajamento recíproco</span><i style="--w:71%;--c:var(--c3)"></i><b>71</b></div>
-            <div class="mf"><span>Equilíbrio de follow de volta</span><i style="--w:88%;--c:var(--signal)"></i><b>88</b></div>
-            <div class="mf"><span>Autenticidade do público</span><i style="--w:96%;--c:var(--signal)"></i><b>96</b></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="also-strip also-strip--center reveal"><span class="eyebrow">Novo no seu painel</span><button type="button" data-demo><svg aria-hidden="true"><use href="#i-check"/></svg>Seu plano de ação</button><button type="button" data-demo><svg aria-hidden="true"><use href="#i-calendar"/></svg>Linha do tempo da sua vida digital</button><button type="button" data-demo><svg aria-hidden="true"><use href="#i-search"/></svg>Procure qualquer pessoa</button><button type="button" data-demo><svg aria-hidden="true"><use href="#i-ghost"/></svg>Exportação antiga vs. nova, na hora</button></div>
-    <div class="lab-cta reveal">
-      <button class="btn btn--primary btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Abrir a demo ao vivo</button>
-      <a class="btn btn--ghost btn--lg" href="#how">Como obter minha exportação</a>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="promise">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="eyebrow">01 — A promessa sem senha</span>
-      <h2 class="h2">Outros apps querem sua senha.<br><span class="serif" style="color:var(--text-2)">Nós nem queremos seus dados.</span></h2>
-      <p class="lead">Apps de “unfollow” que fazem login por você deixam contas hackeadas, limitadas ou banidas, e muitos vendem em silêncio o que coletam. O Unwrapped lê o arquivo que a própria plataforma te dá, aqui mesmo, no seu navegador. As mesmas respostas, nenhum dos riscos.</p>
-    </div>
-    <div class="promise">
-      <div class="card card--pad reveal">
-        <div class="vs" role="table" aria-label="Unwrapped comparado com apps que pedem login">
-          <div class="vs-row vs-head" role="row"><span role="columnheader">O que acontece com você</span><span class="vs-col" role="columnheader">Apps com login</span><span class="vs-col" role="columnheader">Unwrapped</span></div>
-          <div class="vs-row" role="row"><span role="cell">Pedem sua senha</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Sim</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Nunca</span></span></div>
-          <div class="vs-row" role="row"><span role="cell">Enviam seus dados para um servidor</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Sim</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Nunca</span></span></div>
-          <div class="vs-row" role="row"><span role="cell">Risco de bloqueio ou banimento</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Alto</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Nenhum</span></span></div>
-          <div class="vs-row" role="row"><span role="cell">Funciona offline</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Não</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Sim</span></span></div>
-          <div class="vs-row" role="row"><span role="cell">6 plataformas em um só lugar</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Raramente</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Sim</span></span></div>
-        </div>
-      </div>
-      <div class="card card--pad monitor reveal" style="--d:.1s" data-netmon>
-        <span class="eyebrow">Monitor de privacidade ao vivo</span>
-        <div class="monitor-big"><span class="value" data-netmon-during>0</span><span class="text-2">requisições feitas enquanto seu arquivo é analisado</span></div>
-        <div class="monitor-screen" aria-live="polite">
-          <div class="monitor-line"><span>Requisições desde que a página carregou</span><b data-netmon-total>–</b></div>
-          <div class="monitor-line"><span>Sua exportação enviada a um servidor</span><b>nunca</b></div>
-          <div class="monitor-line"><span>Conexão</span><b data-netmon-online>Online</b></div>
-        </div>
-        <div class="note"><svg aria-hidden="true"><use href="#i-plane"/></svg><span>Não acredite só na nossa palavra: ligue o modo avião agora e solte sua exportação. Continua funcionando, porque tudo acontece no seu aparelho.</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="tools">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="eyebrow">02 — Seis ferramentas, um só arquivo</span>
-      <h2 class="h2">Tudo o que sua exportação sabe, <span class="serif">finalmente legível.</span></h2>
-      <p class="lead">Solte um arquivo, ou as exportações de todas as plataformas de uma vez. O Unwrapped detecta o que tem dentro e monta seu painel em segundos.</p>
-    </div>
-    <div class="bento">
-      <article class="card tile b-1 reveal">
-        <div class="tile-art">
-          <div class="art-list" aria-hidden="true"><div class="rows">
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><span class="nm">@milo.design</span><span class="st">não te segue de volta</span></div>
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><span class="nm">@luna_eats</span><span class="st">não te segue de volta</span></div>
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span class="nm">@theo.films</span><span class="st">não te segue de volta</span></div>
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span class="nm">@ivy.codes</span><span class="st">não te segue de volta</span></div>
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><span class="nm">@sage.outdoors</span><span class="st">não te segue de volta</span></div>
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><span class="nm">@milo.design</span><span class="st">não te segue de volta</span></div>
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><span class="nm">@luna_eats</span><span class="st">não te segue de volta</span></div>
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span class="nm">@theo.films</span><span class="st">não te segue de volta</span></div>
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span class="nm">@ivy.codes</span><span class="st">não te segue de volta</span></div>
-            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><span class="nm">@sage.outdoors</span><span class="st">não te segue de volta</span></div>
-          </div></div>
-        </div>
-        <h3 class="h3">Quem não te segue de volta</h3>
-        <p>Mútuos, fãs e as contas que nunca te seguiram de volta, no Instagram, Threads, TikTok e X. Depois, faça a faxina com uma fila para deixar de seguir em ritmo seguro.</p>
-      </article>
-      <article class="card tile b-2 reveal" style="--d:.08s">
-        <div class="tile-art">
-          <div class="art-diff" aria-hidden="true">
-            <div class="col"><span class="pill">@kai.makes</span><span class="pill gone">@nia.film</span><span class="pill">@remy</span><span class="pill gone" style="animation-delay:1.2s">@zara.art</span></div>
-            <span class="arrow">set → out</span>
-            <div class="col"><span class="pill">@kai.makes</span><span class="pill">@remy</span><span class="pill" style="border-color:rgba(26,158,142,.5);color:#7fe0d2">@felix_fit</span></div>
-          </div>
-        </div>
-        <h3 class="h3">Quem deixou de te seguir</h3>
-        <p>Cada exportação vira um retrato privado no seu aparelho. Solte uma mais nova e veja exatamente quem saiu e quem chegou.</p>
-      </article>
-      <article class="card tile b-3 reveal">
-        <div class="tile-art">
-          <div class="art-number" aria-hidden="true">
-            <div class="value">412<span class="unit">horas</span></div>
-            <div class="mini-heat">
-              <i style="opacity:.15"></i><i style="opacity:.1"></i><i style="opacity:.08"></i><i style="opacity:.05"></i><i style="opacity:.05"></i><i style="opacity:.06"></i><i style="opacity:.2"></i><i style="opacity:.35"></i><i style="opacity:.3"></i><i style="opacity:.25"></i><i style="opacity:.25"></i><i style="opacity:.3"></i><i style="opacity:.45"></i><i style="opacity:.35"></i><i style="opacity:.3"></i><i style="opacity:.3"></i><i style="opacity:.35"></i><i style="opacity:.45"></i><i style="opacity:.55"></i><i style="opacity:.65"></i><i style="opacity:.8"></i><i style="opacity:1"></i><i style="opacity:.95"></i><i style="opacity:.6"></i>
-            </div>
-          </div>
-        </div>
-        <h3 class="h3">Seu tempo de tela real</h3>
-        <p>O histórico de exibição do TikTok transformado em horas, maratonas, sequências e sua personalidade de rolagem.</p>
-      </article>
-      <article class="card tile b-4 reveal" style="--d:.08s">
-        <div class="tile-art">
-          <div class="art-radar" aria-hidden="true">
-            <div class="radar"><i style="left:62%;top:26%"></i><i style="left:30%;top:58%"></i><i style="left:70%;top:66%"></i></div>
-            <div class="radar-labels"><span style="left:6%;top:12%">214 anunciantes</span><span style="right:4%;top:44%">36 interesses</span><span style="left:12%;bottom:10%">7 aparelhos</span></div>
-          </div>
-        </div>
-        <h3 class="h3">Raio-X da privacidade</h3>
-        <p>Quais anunciantes têm seus dados, como você foi perfilado e cada aparelho que fez login, com nota de A a F.</p>
-      </article>
-      <article class="card tile b-5 reveal" style="--d:.16s">
-        <div class="tile-art">
-          <div class="art-cards" aria-hidden="true">
-            <div class="mc"><small>Privacidade</small><b>Nota<br>D</b></div>
-            <div class="mc"><small>TikTok</small><b>412h</b></div>
-            <div class="mc"><small>Instagram</small><b>74%<br>te seguem</b></div>
-          </div>
-        </div>
-        <h3 class="h3">Seu Wrapped, qualquer dia</h3>
-        <p>Cards prontos para os stories com suas estatísticas, em quatro temas. Só números, nunca o nome dos seus amigos.</p>
-      </article>
-      <article class="card tile b-6 reveal">
-        <div class="tile-art" style="min-height:200px">
-          <div class="art-venn" aria-hidden="true">
-            <div class="venn"><div class="ring a"></div><div class="ring b"></div><span class="lab a">Instagram</span><span class="lab b">TikTok</span><div class="mid">260<div class="tiny muted" style="font-weight:500;letter-spacing:0">nos dois</div></div></div>
-          </div>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between">
-          <div class="stack" style="--stack:8px;max-width:620px">
-            <h3 class="h3">Radar da amizade e mapa entre plataformas <span class="badge badge--uv" style="vertical-align:middle">Novo</span></h3>
-            <p>Veja seu círculo íntimo de verdade, as amizades que estão esfriando em silêncio e quem sempre chama primeiro, a partir das suas próprias DMs. Solte duas exportações para ver quem te segue no Instagram mas te ignora no TikTok.</p>
-          </div>
-          <button class="btn btn--ghost" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Ver na demo</button>
-        </div>
-      </article>
-    </div>
-    <div class="also-strip reveal"><span class="eyebrow">Também tem</span><a href="/pt/instagram-message-viewer/"><svg aria-hidden="true"><use href="#i-message"/></svg>Leitor de mensagens — leia e busque DMs antigas</a><a href="/pt/instagram-story-archive/"><svg aria-hidden="true"><use href="#i-image"/></svg>Stories antigos</a><a href="/pt/tiktok-watch-history/"><svg aria-hidden="true"><use href="#i-play"/></svg>Localizador de vídeos do TikTok</a><a href="/pt/search-old-tweets/"><svg aria-hidden="true"><use href="#i-search"/></svg>Limpeza de tweets</a><a href="/pt/fake-follower-checker/"><svg aria-hidden="true"><use href="#i-bot"/></svg>Detector de seguidores falsos</a><a href="/pt/instagram-account-age/"><svg aria-hidden="true"><use href="#i-calendar"/></svg>Idade da conta e vida digital</a><a href="/pt/instagram-audit/"><svg aria-hidden="true"><use href="#i-pulse"/></svg>Auditoria de conta grátis</a></div>
-  </div>
-</section>
-
-<section class="section lab-section" id="lab">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="eyebrow">03 — O Pro Lab</span>
-      <h2 class="h2">Não só números. <span class="serif grad">Respostas de verdade.</span></h2>
-      <p class="lead">Os apps de “unfollow” param nos números. O Pro Lab lê o que só a sua exportação tem (suas DMs, curtidas e histórico de follows) para mostrar quem te ignora, onde sua atenção não é retribuída, o quanto seu público é real e quando postar.</p>
-    </div>
-    <div class="lab-grid">
-      <article class="card lab-card reveal">
-        <div class="lab-top"><span class="tier-pill tier-pill--pro">Pro</span><svg aria-hidden="true"><use href="#i-ghost"/></svg></div>
-        <div class="lab-art art-reply" aria-hidden="true">
-          <div class="rr"><span class="nm">@milo.design</span><i style="--w:8%"></i><b>2 min</b></div>
-          <div class="rr"><span class="nm">@luna_eats</span><i style="--w:34%"></i><b>47 min</b></div>
-          <div class="rr hot"><span class="nm">@theo.films</span><i style="--w:92%"></i><b>3 h 12 min</b></div>
-          <span class="read-tag">te deixou no vácuo ×4</span>
-        </div>
-        <h3 class="h4">Detector de Vácuo</h3>
-        <p>Com que rapidez cada pessoa realmente te responde, quem te deixa no vácuo, quem nunca puxa conversa e quem ainda não respondeu sua última mensagem.</p>
-      </article>
-      <article class="card lab-card reveal" style="--d:.06s">
-        <div class="lab-top"><span class="tier-pill tier-pill--pro">Pro</span><svg aria-hidden="true"><use href="#i-heart"/></svg></div>
-        <div class="lab-art art-audit" aria-hidden="true">
-          <div class="audit-big"><b>38%</b><span>das suas curtidas vão para contas que não te seguem</span></div>
-          <div class="audit-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span>@celebrity.chef</span><em>48 curtidas · não te segue</em></div>
-          <div class="audit-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span>412 follows mortos</span><em>nenhuma curtida</em></div>
-        </div>
-        <h3 class="h4">Auditoria de engajamento</h3>
-        <p>As contas que você continua apoiando e te ignoram, os follows com quem você nunca interage e seu círculo real, e o quanto sua taxa de follow de volta sobe depois de uma faxina.</p>
-      </article>
-      <article class="card lab-card reveal" style="--d:.12s">
-        <div class="lab-top"><span class="tier-pill tier-pill--pro">Pro</span><svg aria-hidden="true"><use href="#i-trend"/></svg></div>
-        <div class="lab-art art-curve" aria-hidden="true">
-          <svg viewBox="0 0 240 90" preserveAspectRatio="none"><defs><linearGradient id="lab-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1a9e8e" stop-opacity=".45"/><stop offset="1" stop-color="#1a9e8e" stop-opacity="0"/></linearGradient></defs><path d="M0 82 C40 78 60 70 90 60 S150 38 180 30 S220 12 240 8 V90 H0z" fill="url(#lab-g)"/><path d="M0 82 C40 78 60 70 90 60 S150 38 180 30 S220 12 240 8" fill="none" stroke="#1a9e8e" stroke-width="2.5"/><circle cx="90" cy="60" r="4" fill="#d7ff3a"/><circle cx="180" cy="30" r="4" fill="#d7ff3a"/></svg>
-          <div class="curve-tags"><span class="up">+124</span><span class="down">−37</span><span>perda 2,1%/mês</span></div>
-        </div>
-        <h3 class="h4">Máquina do tempo do crescimento</h3>
-        <p>Seu público mês a mês, a variação líquida entre cada exportação, a perda mensal, quem te encontrou primeiro e com que rapidez te seguem de volta.</p>
-      </article>
-      <article class="card lab-card reveal">
-        <div class="lab-top"><span class="tier-pill tier-pill--creator">Creator</span><svg aria-hidden="true"><use href="#i-bot"/></svg></div>
-        <div class="lab-art art-gauge" aria-hidden="true">
-          <div class="gauge" style="--v:86"><div class="gauge-in"><b>B</b><span>86/100</span></div></div>
-          <div class="gauge-side"><span><i class="dot-r"></i>71 prováveis bots</span><span><i class="dot-y"></i>58 suspeitos</span><span><i class="dot-g"></i>2 picos de seguidores</span></div>
-        </div>
-        <h3 class="h4">Qualidade do público</h3>
-        <p>Um detector de bots e spam para seus seguidores: uma nota de qualidade, os prováveis falsos com o motivo e os dias em que chegaram ondas suspeitas de seguidores.</p>
-      </article>
-      <article class="card lab-card reveal" style="--d:.06s">
-        <div class="lab-top"><span class="tier-pill tier-pill--creator">Creator</span><svg aria-hidden="true"><use href="#i-target"/></svg></div>
-        <div class="lab-art art-best" aria-hidden="true">
-          <div class="best-heat"><i></i><i></i><i class="m"></i><i></i><i class="m"></i><i class="h"></i><i></i><i></i><i></i><i class="m"></i><i></i><i></i><i class="m"></i><i class="h"></i><i class="x"></i><i class="h"></i><i></i><i></i><i></i><i></i><i class="m"></i><i></i><i class="m"></i><i></i><i></i><i class="m"></i><i class="h"></i><i class="m"></i><i></i><i></i><i></i><i></i><i></i><i class="m"></i><i></i><i></i></div>
-          <div class="best-tag"><b>ter 19h–21h</b><span>2,3× seu engajamento médio</span></div>
-        </div>
-        <h3 class="h4">Melhor horário para postar</h3>
-        <p>Suas melhores janelas de duas horas, pelo engajamento real dos seus posts ou por quando seu público te segue e te manda mensagem.</p>
-      </article>
-      <article class="card lab-card reveal" style="--d:.12s">
-        <div class="lab-top"><span class="tier-pill tier-pill--creator">Creator</span><svg aria-hidden="true"><use href="#i-report"/></svg></div>
-        <div class="lab-art art-paper" aria-hidden="true">
-          <div class="paper"><b>SUA MARCA</b><span class="ln w70"></span><span class="ln w40"></span><div class="bars"><i style="height:40%"></i><i style="height:65%"></i><i style="height:52%"></i><i style="height:88%"></i></div><span class="ln w60"></span></div>
-        </div>
-        <h3 class="h4">Relatório white-label</h3>
-        <p>Uma auditoria de uma página com a sua marca: público, crescimento, qualidade, melhores horários e recomendações. Baixe em PDF para clientes ou patrocinadores.</p>
-      </article>
-    </div>
-    <div class="lab-cta reveal">
-      <button class="btn btn--primary btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Testar todas as ferramentas na demo</button>
-      <a class="btn btn--ghost btn--lg" href="/pt/pricing/#compare">Comparar planos</a>
-    </div>
-  </div>
-</section>
-
 <section class="section" id="how">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">04 — Como funciona</span>
+      <span class="eyebrow">01 — Como funciona</span>
       <h2 class="h2">Três minutos do seu tempo. <span class="serif">Zero risco.</span></h2>
       <p class="lead">Todas as grandes plataformas deixam você baixar uma cópia dos seus dados; no Brasil, a LGPD garante esse direito. Veja exatamente onde tocar.</p>
     </div>
@@ -593,6 +353,245 @@
     </div>
   </div>
 </section>
+
+<section class="section section--tight" id="preview">
+  <div class="container">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">Seu painel</span>
+      <h2 class="h2">Um lugar tranquilo para <span class="serif grad">tudo.</span></h2>
+      <p class="lead">Solte sua exportação e é isto que você recebe: cada lista, cada insight e a saúde da sua conta, em segundos e sem que nada saia do seu aparelho.</p>
+    </div>
+    <div class="browser reveal" aria-hidden="true">
+      <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url"><svg><use href="#i-shield"/></svg>unwrapped · resultados</span></div>
+      <div class="mock">
+        <aside class="mock-nav">
+          <span class="mock-group">Instagram</span>
+          <span class="mock-item"><svg><use href="#i-home"/></svg>Resumo</span>
+          <span class="mock-item is-on"><svg><use href="#i-pulse"/></svg>Saúde da conta</span>
+          <span class="mock-item"><svg><use href="#i-user-minus"/></svg>Não te seguem de volta<em>268</em></span>
+          <span class="mock-item"><svg><use href="#i-ghost"/></svg>Quem deixou de te seguir</span>
+          <span class="mock-group mock-group--lab">✦ Pro Lab</span>
+          <span class="mock-item"><svg><use href="#i-ghost"/></svg>Detector de Vácuo</span>
+          <span class="mock-item"><svg><use href="#i-heart"/></svg>Auditoria de engajamento</span>
+          <span class="mock-item"><svg><use href="#i-bot"/></svg>Qualidade do público</span>
+          <span class="mock-item"><svg><use href="#i-target"/></svg>Melhor horário para postar</span>
+        </aside>
+        <div class="mock-main">
+          <div class="mock-head"><b>Saúde da conta</b><span>Exportação do Instagram · @nova.studio</span></div>
+          <div class="mock-hero">
+            <div class="gauge" style="--v:82"><div class="gauge-in"><b>B</b><span>82/100</span></div></div>
+            <div class="mock-copy"><small>SUA CONTA</small><b>Saudável</b><span>Seu ponto mais fraco é o seguir ativo: 412 contas que você segue e com quem nunca interage.</span><i class="mock-btn">Melhorar o seguir ativo →</i></div>
+          </div>
+          <div class="mock-factors">
+            <div class="mf"><span>Seguir ativo</span><i style="--w:58%;--c:var(--warning)"></i><b>58</b></div>
+            <div class="mf"><span>Engajamento recíproco</span><i style="--w:71%;--c:var(--c3)"></i><b>71</b></div>
+            <div class="mf"><span>Equilíbrio de follow de volta</span><i style="--w:88%;--c:var(--signal)"></i><b>88</b></div>
+            <div class="mf"><span>Autenticidade do público</span><i style="--w:96%;--c:var(--signal)"></i><b>96</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="also-strip also-strip--center reveal"><span class="eyebrow">Novo no seu painel</span><button type="button" data-demo><svg aria-hidden="true"><use href="#i-check"/></svg>Seu plano de ação</button><button type="button" data-demo><svg aria-hidden="true"><use href="#i-calendar"/></svg>Linha do tempo da sua vida digital</button><button type="button" data-demo><svg aria-hidden="true"><use href="#i-search"/></svg>Procure qualquer pessoa</button><button type="button" data-demo><svg aria-hidden="true"><use href="#i-ghost"/></svg>Exportação antiga vs. nova, na hora</button></div>
+    <div class="lab-cta reveal">
+      <button class="btn btn--primary btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Abrir a demo ao vivo</button>
+      <a class="btn btn--ghost btn--lg" href="#how">Como obter minha exportação</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="promise">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">02 — A promessa sem senha</span>
+      <h2 class="h2">Outros apps querem sua senha.<br><span class="serif" style="color:var(--text-2)">Nós nem queremos seus dados.</span></h2>
+      <p class="lead">Apps de “unfollow” que fazem login por você deixam contas hackeadas, limitadas ou banidas, e muitos vendem em silêncio o que coletam. O Unwrapped lê o arquivo que a própria plataforma te dá, aqui mesmo, no seu navegador. As mesmas respostas, nenhum dos riscos.</p>
+    </div>
+    <div class="promise">
+      <div class="card card--pad reveal">
+        <div class="vs" role="table" aria-label="Unwrapped comparado com apps que pedem login">
+          <div class="vs-row vs-head" role="row"><span role="columnheader">O que acontece com você</span><span class="vs-col" role="columnheader">Apps com login</span><span class="vs-col" role="columnheader">Unwrapped</span></div>
+          <div class="vs-row" role="row"><span role="cell">Pedem sua senha</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Sim</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Nunca</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Enviam seus dados para um servidor</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Sim</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Nunca</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Risco de bloqueio ou banimento</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Alto</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Nenhum</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Funciona offline</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Não</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Sim</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">6 plataformas em um só lugar</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Raramente</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Sim</span></span></div>
+        </div>
+      </div>
+      <div class="card card--pad monitor reveal" style="--d:.1s" data-netmon>
+        <span class="eyebrow">Monitor de privacidade ao vivo</span>
+        <div class="monitor-big"><span class="value" data-netmon-during>0</span><span class="text-2">requisições feitas enquanto seu arquivo é analisado</span></div>
+        <div class="monitor-screen" aria-live="polite">
+          <div class="monitor-line"><span>Requisições desde que a página carregou</span><b data-netmon-total>–</b></div>
+          <div class="monitor-line"><span>Sua exportação enviada a um servidor</span><b>nunca</b></div>
+          <div class="monitor-line"><span>Conexão</span><b data-netmon-online>Online</b></div>
+        </div>
+        <div class="note"><svg aria-hidden="true"><use href="#i-plane"/></svg><span>Não acredite só na nossa palavra: ligue o modo avião agora e solte sua exportação. Continua funcionando, porque tudo acontece no seu aparelho.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">03 — Seis ferramentas, um só arquivo</span>
+      <h2 class="h2">Tudo o que sua exportação sabe, <span class="serif">finalmente legível.</span></h2>
+      <p class="lead">Solte um arquivo, ou as exportações de todas as plataformas de uma vez. O Unwrapped detecta o que tem dentro e monta seu painel em segundos.</p>
+    </div>
+    <div class="bento">
+      <article class="card tile b-1 reveal">
+        <div class="tile-art">
+          <div class="art-list" aria-hidden="true"><div class="rows">
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><span class="nm">@milo.design</span><span class="st">não te segue de volta</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><span class="nm">@luna_eats</span><span class="st">não te segue de volta</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span class="nm">@theo.films</span><span class="st">não te segue de volta</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span class="nm">@ivy.codes</span><span class="st">não te segue de volta</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><span class="nm">@sage.outdoors</span><span class="st">não te segue de volta</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><span class="nm">@milo.design</span><span class="st">não te segue de volta</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><span class="nm">@luna_eats</span><span class="st">não te segue de volta</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span class="nm">@theo.films</span><span class="st">não te segue de volta</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span class="nm">@ivy.codes</span><span class="st">não te segue de volta</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><span class="nm">@sage.outdoors</span><span class="st">não te segue de volta</span></div>
+          </div></div>
+        </div>
+        <h3 class="h3">Quem não te segue de volta</h3>
+        <p>Mútuos, fãs e as contas que nunca te seguiram de volta, no Instagram, Threads, TikTok e X. Depois, faça a faxina com uma fila para deixar de seguir em ritmo seguro.</p>
+      </article>
+      <article class="card tile b-2 reveal" style="--d:.08s">
+        <div class="tile-art">
+          <div class="art-diff" aria-hidden="true">
+            <div class="col"><span class="pill">@kai.makes</span><span class="pill gone">@nia.film</span><span class="pill">@remy</span><span class="pill gone" style="animation-delay:1.2s">@zara.art</span></div>
+            <span class="arrow">set → out</span>
+            <div class="col"><span class="pill">@kai.makes</span><span class="pill">@remy</span><span class="pill" style="border-color:rgba(26,158,142,.5);color:#7fe0d2">@felix_fit</span></div>
+          </div>
+        </div>
+        <h3 class="h3">Quem deixou de te seguir</h3>
+        <p>Cada exportação vira um retrato privado no seu aparelho. Solte uma mais nova e veja exatamente quem saiu e quem chegou.</p>
+      </article>
+      <article class="card tile b-3 reveal">
+        <div class="tile-art">
+          <div class="art-number" aria-hidden="true">
+            <div class="value">412<span class="unit">horas</span></div>
+            <div class="mini-heat">
+              <i style="opacity:.15"></i><i style="opacity:.1"></i><i style="opacity:.08"></i><i style="opacity:.05"></i><i style="opacity:.05"></i><i style="opacity:.06"></i><i style="opacity:.2"></i><i style="opacity:.35"></i><i style="opacity:.3"></i><i style="opacity:.25"></i><i style="opacity:.25"></i><i style="opacity:.3"></i><i style="opacity:.45"></i><i style="opacity:.35"></i><i style="opacity:.3"></i><i style="opacity:.3"></i><i style="opacity:.35"></i><i style="opacity:.45"></i><i style="opacity:.55"></i><i style="opacity:.65"></i><i style="opacity:.8"></i><i style="opacity:1"></i><i style="opacity:.95"></i><i style="opacity:.6"></i>
+            </div>
+          </div>
+        </div>
+        <h3 class="h3">Seu tempo de tela real</h3>
+        <p>O histórico de exibição do TikTok transformado em horas, maratonas, sequências e sua personalidade de rolagem.</p>
+      </article>
+      <article class="card tile b-4 reveal" style="--d:.08s">
+        <div class="tile-art">
+          <div class="art-radar" aria-hidden="true">
+            <div class="radar"><i style="left:62%;top:26%"></i><i style="left:30%;top:58%"></i><i style="left:70%;top:66%"></i></div>
+            <div class="radar-labels"><span style="left:6%;top:12%">214 anunciantes</span><span style="right:4%;top:44%">36 interesses</span><span style="left:12%;bottom:10%">7 aparelhos</span></div>
+          </div>
+        </div>
+        <h3 class="h3">Raio-X da privacidade</h3>
+        <p>Quais anunciantes têm seus dados, como você foi perfilado e cada aparelho que fez login, com nota de A a F.</p>
+      </article>
+      <article class="card tile b-5 reveal" style="--d:.16s">
+        <div class="tile-art">
+          <div class="art-cards" aria-hidden="true">
+            <div class="mc"><small>Privacidade</small><b>Nota<br>D</b></div>
+            <div class="mc"><small>TikTok</small><b>412h</b></div>
+            <div class="mc"><small>Instagram</small><b>74%<br>te seguem</b></div>
+          </div>
+        </div>
+        <h3 class="h3">Seu Wrapped, qualquer dia</h3>
+        <p>Cards prontos para os stories com suas estatísticas, em quatro temas. Só números, nunca o nome dos seus amigos.</p>
+      </article>
+      <article class="card tile b-6 reveal">
+        <div class="tile-art" style="min-height:200px">
+          <div class="art-venn" aria-hidden="true">
+            <div class="venn"><div class="ring a"></div><div class="ring b"></div><span class="lab a">Instagram</span><span class="lab b">TikTok</span><div class="mid">260<div class="tiny muted" style="font-weight:500;letter-spacing:0">nos dois</div></div></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between">
+          <div class="stack" style="--stack:8px;max-width:620px">
+            <h3 class="h3">Radar da amizade e mapa entre plataformas <span class="badge badge--uv" style="vertical-align:middle">Novo</span></h3>
+            <p>Veja seu círculo íntimo de verdade, as amizades que estão esfriando em silêncio e quem sempre chama primeiro, a partir das suas próprias DMs. Solte duas exportações para ver quem te segue no Instagram mas te ignora no TikTok.</p>
+          </div>
+          <button class="btn btn--ghost" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Ver na demo</button>
+        </div>
+      </article>
+    </div>
+    <div class="also-strip reveal"><span class="eyebrow">Também tem</span><a href="/pt/instagram-message-viewer/"><svg aria-hidden="true"><use href="#i-message"/></svg>Leitor de mensagens — leia e busque DMs antigas</a><a href="/pt/instagram-story-archive/"><svg aria-hidden="true"><use href="#i-image"/></svg>Stories antigos</a><a href="/pt/tiktok-watch-history/"><svg aria-hidden="true"><use href="#i-play"/></svg>Localizador de vídeos do TikTok</a><a href="/pt/search-old-tweets/"><svg aria-hidden="true"><use href="#i-search"/></svg>Limpeza de tweets</a><a href="/pt/fake-follower-checker/"><svg aria-hidden="true"><use href="#i-bot"/></svg>Detector de seguidores falsos</a><a href="/pt/instagram-account-age/"><svg aria-hidden="true"><use href="#i-calendar"/></svg>Idade da conta e vida digital</a><a href="/pt/instagram-audit/"><svg aria-hidden="true"><use href="#i-pulse"/></svg>Auditoria de conta grátis</a></div>
+  </div>
+</section>
+
+<section class="section lab-section" id="lab">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">04 — O Pro Lab</span>
+      <h2 class="h2">Não só números. <span class="serif grad">Respostas de verdade.</span></h2>
+      <p class="lead">Os apps de “unfollow” param nos números. O Pro Lab lê o que só a sua exportação tem (suas DMs, curtidas e histórico de follows) para mostrar quem te ignora, onde sua atenção não é retribuída, o quanto seu público é real e quando postar.</p>
+    </div>
+    <div class="lab-grid">
+      <article class="card lab-card reveal">
+        <div class="lab-top"><span class="tier-pill tier-pill--pro">Pro</span><svg aria-hidden="true"><use href="#i-ghost"/></svg></div>
+        <div class="lab-art art-reply" aria-hidden="true">
+          <div class="rr"><span class="nm">@milo.design</span><i style="--w:8%"></i><b>2 min</b></div>
+          <div class="rr"><span class="nm">@luna_eats</span><i style="--w:34%"></i><b>47 min</b></div>
+          <div class="rr hot"><span class="nm">@theo.films</span><i style="--w:92%"></i><b>3 h 12 min</b></div>
+          <span class="read-tag">te deixou no vácuo ×4</span>
+        </div>
+        <h3 class="h4">Detector de Vácuo</h3>
+        <p>Com que rapidez cada pessoa realmente te responde, quem te deixa no vácuo, quem nunca puxa conversa e quem ainda não respondeu sua última mensagem.</p>
+      </article>
+      <article class="card lab-card reveal" style="--d:.06s">
+        <div class="lab-top"><span class="tier-pill tier-pill--pro">Pro</span><svg aria-hidden="true"><use href="#i-heart"/></svg></div>
+        <div class="lab-art art-audit" aria-hidden="true">
+          <div class="audit-big"><b>38%</b><span>das suas curtidas vão para contas que não te seguem</span></div>
+          <div class="audit-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span>@celebrity.chef</span><em>48 curtidas · não te segue</em></div>
+          <div class="audit-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span>412 follows mortos</span><em>nenhuma curtida</em></div>
+        </div>
+        <h3 class="h4">Auditoria de engajamento</h3>
+        <p>As contas que você continua apoiando e te ignoram, os follows com quem você nunca interage e seu círculo real, e o quanto sua taxa de follow de volta sobe depois de uma faxina.</p>
+      </article>
+      <article class="card lab-card reveal" style="--d:.12s">
+        <div class="lab-top"><span class="tier-pill tier-pill--pro">Pro</span><svg aria-hidden="true"><use href="#i-trend"/></svg></div>
+        <div class="lab-art art-curve" aria-hidden="true">
+          <svg viewBox="0 0 240 90" preserveAspectRatio="none"><defs><linearGradient id="lab-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1a9e8e" stop-opacity=".45"/><stop offset="1" stop-color="#1a9e8e" stop-opacity="0"/></linearGradient></defs><path d="M0 82 C40 78 60 70 90 60 S150 38 180 30 S220 12 240 8 V90 H0z" fill="url(#lab-g)"/><path d="M0 82 C40 78 60 70 90 60 S150 38 180 30 S220 12 240 8" fill="none" stroke="#1a9e8e" stroke-width="2.5"/><circle cx="90" cy="60" r="4" fill="#d7ff3a"/><circle cx="180" cy="30" r="4" fill="#d7ff3a"/></svg>
+          <div class="curve-tags"><span class="up">+124</span><span class="down">−37</span><span>perda 2,1%/mês</span></div>
+        </div>
+        <h3 class="h4">Máquina do tempo do crescimento</h3>
+        <p>Seu público mês a mês, a variação líquida entre cada exportação, a perda mensal, quem te encontrou primeiro e com que rapidez te seguem de volta.</p>
+      </article>
+      <article class="card lab-card reveal">
+        <div class="lab-top"><span class="tier-pill tier-pill--creator">Creator</span><svg aria-hidden="true"><use href="#i-bot"/></svg></div>
+        <div class="lab-art art-gauge" aria-hidden="true">
+          <div class="gauge" style="--v:86"><div class="gauge-in"><b>B</b><span>86/100</span></div></div>
+          <div class="gauge-side"><span><i class="dot-r"></i>71 prováveis bots</span><span><i class="dot-y"></i>58 suspeitos</span><span><i class="dot-g"></i>2 picos de seguidores</span></div>
+        </div>
+        <h3 class="h4">Qualidade do público</h3>
+        <p>Um detector de bots e spam para seus seguidores: uma nota de qualidade, os prováveis falsos com o motivo e os dias em que chegaram ondas suspeitas de seguidores.</p>
+      </article>
+      <article class="card lab-card reveal" style="--d:.06s">
+        <div class="lab-top"><span class="tier-pill tier-pill--creator">Creator</span><svg aria-hidden="true"><use href="#i-target"/></svg></div>
+        <div class="lab-art art-best" aria-hidden="true">
+          <div class="best-heat"><i></i><i></i><i class="m"></i><i></i><i class="m"></i><i class="h"></i><i></i><i></i><i></i><i class="m"></i><i></i><i></i><i class="m"></i><i class="h"></i><i class="x"></i><i class="h"></i><i></i><i></i><i></i><i></i><i class="m"></i><i></i><i class="m"></i><i></i><i></i><i class="m"></i><i class="h"></i><i class="m"></i><i></i><i></i><i></i><i></i><i></i><i class="m"></i><i></i><i></i></div>
+          <div class="best-tag"><b>ter 19h–21h</b><span>2,3× seu engajamento médio</span></div>
+        </div>
+        <h3 class="h4">Melhor horário para postar</h3>
+        <p>Suas melhores janelas de duas horas, pelo engajamento real dos seus posts ou por quando seu público te segue e te manda mensagem.</p>
+      </article>
+      <article class="card lab-card reveal" style="--d:.12s">
+        <div class="lab-top"><span class="tier-pill tier-pill--creator">Creator</span><svg aria-hidden="true"><use href="#i-report"/></svg></div>
+        <div class="lab-art art-paper" aria-hidden="true">
+          <div class="paper"><b>SUA MARCA</b><span class="ln w70"></span><span class="ln w40"></span><div class="bars"><i style="height:40%"></i><i style="height:65%"></i><i style="height:52%"></i><i style="height:88%"></i></div><span class="ln w60"></span></div>
+        </div>
+        <h3 class="h4">Relatório white-label</h3>
+        <p>Uma auditoria de uma página com a sua marca: público, crescimento, qualidade, melhores horários e recomendações. Baixe em PDF para clientes ou patrocinadores.</p>
+      </article>
+    </div>
+    <div class="lab-cta reveal">
+      <button class="btn btn--primary btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Testar todas as ferramentas na demo</button>
+      <a class="btn btn--ghost btn--lg" href="/pt/pricing/#compare">Comparar planos</a>
+    </div>
+  </div>
+</section>
+
 
 <section class="section section--tight" id="wrapped">
   <div class="container">
@@ -757,6 +756,6 @@
     </div>
   </div>
 </footer>
-<script type="module" src="/assets/js/site.js?v=mv75yzp4"></script>
+<script type="module" src="/assets/js/site.js?v=mv768l6j"></script>
 </body>
 </html>

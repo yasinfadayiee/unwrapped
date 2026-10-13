@@ -41,6 +41,30 @@
   </div>
 </section>
 
+<section class="section" id="how">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">01 — Como funciona</span>
+      <h2 class="h2">Três minutos do seu tempo. <span class="serif">Zero risco.</span></h2>
+      <p class="lead">Todas as grandes plataformas deixam você baixar uma cópia dos seus dados; no Brasil, a LGPD garante esse direito. Veja exatamente onde tocar.</p>
+    </div>
+    <div class="reveal" data-tabs>
+      <div class="tabs" role="tablist" aria-label="Plataforma">
+        <button class="tab" role="tab" id="tab-ig" aria-controls="panel-ig" aria-selected="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</button>
+        <button class="tab" role="tab" id="tab-tt" aria-controls="panel-tt" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</button>
+        <button class="tab" role="tab" id="tab-x" aria-controls="panel-x" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-x"/></svg>X</button>
+        <button class="tab" role="tab" id="tab-fb" aria-controls="panel-fb" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-facebook"/></svg>Facebook</button>
+        <button class="tab" role="tab" id="tab-li" aria-controls="panel-li" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</button>
+      </div>
+      <div id="panel-ig" role="tabpanel" aria-labelledby="tab-ig">{{> steps-instagram}}</div>
+      <div id="panel-tt" role="tabpanel" aria-labelledby="tab-tt" hidden>{{> steps-tiktok}}</div>
+      <div id="panel-x" role="tabpanel" aria-labelledby="tab-x" hidden>{{> steps-x}}</div>
+      <div id="panel-fb" role="tabpanel" aria-labelledby="tab-fb" hidden>{{> steps-facebook}}</div>
+      <div id="panel-li" role="tabpanel" aria-labelledby="tab-li" hidden>{{> steps-linkedin}}</div>
+    </div>
+  </div>
+</section>
+
 <section class="section section--tight" id="preview">
   <div class="container">
     <div class="sec-head sec-head--center reveal">
@@ -89,7 +113,7 @@
 <section class="section" id="promise">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">01 — A promessa sem senha</span>
+      <span class="eyebrow">02 — A promessa sem senha</span>
       <h2 class="h2">Outros apps querem sua senha.<br><span class="serif" style="color:var(--text-2)">Nós nem queremos seus dados.</span></h2>
       <p class="lead">Apps de “unfollow” que fazem login por você deixam contas hackeadas, limitadas ou banidas, e muitos vendem em silêncio o que coletam. O Unwrapped lê o arquivo que a própria plataforma te dá, aqui mesmo, no seu navegador. As mesmas respostas, nenhum dos riscos.</p>
     </div>
@@ -121,7 +145,7 @@
 <section class="section" id="tools">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">02 — Seis ferramentas, um só arquivo</span>
+      <span class="eyebrow">03 — Seis ferramentas, um só arquivo</span>
       <h2 class="h2">Tudo o que sua exportação sabe, <span class="serif">finalmente legível.</span></h2>
       <p class="lead">Solte um arquivo, ou as exportações de todas as plataformas de uma vez. O Unwrapped detecta o que tem dentro e monta seu painel em segundos.</p>
     </div>
@@ -210,7 +234,7 @@
 <section class="section lab-section" id="lab">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">03 — O Pro Lab</span>
+      <span class="eyebrow">04 — O Pro Lab</span>
       <h2 class="h2">Não só números. <span class="serif grad">Respostas de verdade.</span></h2>
       <p class="lead">Os apps de “unfollow” param nos números. O Pro Lab lê o que só a sua exportação tem (suas DMs, curtidas e histórico de follows) para mostrar quem te ignora, onde sua atenção não é retribuída, o quanto seu público é real e quando postar.</p>
     </div>
@@ -279,29 +303,6 @@
   </div>
 </section>
 
-<section class="section" id="how">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="eyebrow">04 — Como funciona</span>
-      <h2 class="h2">Três minutos do seu tempo. <span class="serif">Zero risco.</span></h2>
-      <p class="lead">Todas as grandes plataformas deixam você baixar uma cópia dos seus dados; no Brasil, a LGPD garante esse direito. Veja exatamente onde tocar.</p>
-    </div>
-    <div class="reveal" data-tabs>
-      <div class="tabs" role="tablist" aria-label="Plataforma">
-        <button class="tab" role="tab" id="tab-ig" aria-controls="panel-ig" aria-selected="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</button>
-        <button class="tab" role="tab" id="tab-tt" aria-controls="panel-tt" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</button>
-        <button class="tab" role="tab" id="tab-x" aria-controls="panel-x" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-x"/></svg>X</button>
-        <button class="tab" role="tab" id="tab-fb" aria-controls="panel-fb" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-facebook"/></svg>Facebook</button>
-        <button class="tab" role="tab" id="tab-li" aria-controls="panel-li" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</button>
-      </div>
-      <div id="panel-ig" role="tabpanel" aria-labelledby="tab-ig">{{> steps-instagram}}</div>
-      <div id="panel-tt" role="tabpanel" aria-labelledby="tab-tt" hidden>{{> steps-tiktok}}</div>
-      <div id="panel-x" role="tabpanel" aria-labelledby="tab-x" hidden>{{> steps-x}}</div>
-      <div id="panel-fb" role="tabpanel" aria-labelledby="tab-fb" hidden>{{> steps-facebook}}</div>
-      <div id="panel-li" role="tabpanel" aria-labelledby="tab-li" hidden>{{> steps-linkedin}}</div>
-    </div>
-  </div>
-</section>
 
 <section class="section section--tight" id="wrapped">
   <div class="container">

@@ -3,11 +3,10 @@
   <div class="drop-inner" data-drop aria-label="Analise sua exportação de dados">
     <div class="drop-icon"><svg aria-hidden="true"><use href="#i-package"/></svg></div>
     <div class="drop-title">Solte aqui o ZIP da sua exportação</div>
-    <p class="drop-hint">Um ZIP, várias partes ZIP, uma pasta descompactada ou arquivos JSON / HTML / TXT. Nunca sai deste aparelho.</p>
-    <p class="drop-tip"><svg aria-hidden="true"><use href="#i-ghost"/></svg>Tem também uma exportação antiga? Solte as duas de uma vez para ver quem deixou de te seguir nesse meio-tempo.</p>
+    <p class="drop-hint">É lido neste aparelho — nada é enviado.</p>
     <div class="drop-actions">
       <button class="btn btn--primary btn--lg" type="button" data-pick><svg aria-hidden="true"><use href="#i-upload"/></svg>Escolher minha exportação</button>
-      <button class="btn btn--ghost btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Ver a demo ao vivo</button>
+      <a class="btn btn--ghost btn--lg" href="#how"><svg aria-hidden="true"><use href="#i-download"/></svg>Ainda não tenho</a>
     </div>
     <div class="drop-platforms" aria-label="Plataformas compatíveis">
       <span class="pf"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</span>
@@ -17,8 +16,7 @@
       <span class="pf"><svg aria-hidden="true"><use href="#i-threads"/></svg>Threads</span>
       <span class="pf"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</span>
     </div>
-    <button class="link-arrow small" type="button" data-pick-folder>ou escolha uma pasta descompactada</button>
-    <a class="link-arrow small" href="#how">Ainda não tem sua exportação? Peça em 3 minutos</a>
+    <div class="drop-links"><button class="link-arrow small" type="button" data-demo>Ver a demo ao vivo</button><span aria-hidden="true">·</span><button class="link-arrow small" type="button" data-pick-folder>Escolha uma pasta descompactada</button></div>
     <input class="drop-file" type="file" multiple accept=".zip,.json,.html,.htm,.js,.txt,.csv,application/zip" tabindex="-1" aria-hidden="true">
     <input class="drop-file" type="file" webkitdirectory multiple tabindex="-1" aria-hidden="true">
   </div>

@@ -41,6 +41,30 @@
   </div>
 </section>
 
+<section class="section" id="how">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">01 — How it works</span>
+      <h2 class="h2">Three minutes of your time. <span class="serif">Zero risk.</span></h2>
+      <p class="lead">Every major platform lets you download a copy of your own data — in many countries it’s your legal right. Here’s exactly where to tap.</p>
+    </div>
+    <div class="reveal" data-tabs>
+      <div class="tabs" role="tablist" aria-label="Platform">
+        <button class="tab" role="tab" id="tab-ig" aria-controls="panel-ig" aria-selected="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</button>
+        <button class="tab" role="tab" id="tab-tt" aria-controls="panel-tt" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</button>
+        <button class="tab" role="tab" id="tab-x" aria-controls="panel-x" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-x"/></svg>X</button>
+        <button class="tab" role="tab" id="tab-fb" aria-controls="panel-fb" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-facebook"/></svg>Facebook</button>
+        <button class="tab" role="tab" id="tab-li" aria-controls="panel-li" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</button>
+      </div>
+      <div id="panel-ig" role="tabpanel" aria-labelledby="tab-ig">{{> steps-instagram}}</div>
+      <div id="panel-tt" role="tabpanel" aria-labelledby="tab-tt" hidden>{{> steps-tiktok}}</div>
+      <div id="panel-x" role="tabpanel" aria-labelledby="tab-x" hidden>{{> steps-x}}</div>
+      <div id="panel-fb" role="tabpanel" aria-labelledby="tab-fb" hidden>{{> steps-facebook}}</div>
+      <div id="panel-li" role="tabpanel" aria-labelledby="tab-li" hidden>{{> steps-linkedin}}</div>
+    </div>
+  </div>
+</section>
+
 <section class="section section--tight" id="preview">
   <div class="container">
     <div class="sec-head sec-head--center reveal">
@@ -89,7 +113,7 @@
 <section class="section" id="promise">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">01 — The no-password promise</span>
+      <span class="eyebrow">02 — The no-password promise</span>
       <h2 class="h2">Other apps want your password.<br><span class="serif" style="color:var(--text-2)">We don’t even want your data.</span></h2>
       <p class="lead">Unfollower apps that log in as you get accounts hacked, rate-limited or banned — and many quietly sell what they collect. Unwrapped reads the file the platform itself gives you, right here in your browser. The same answers, none of the risk.</p>
     </div>
@@ -121,7 +145,7 @@
 <section class="section" id="tools">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">02 — Six tools, one drop</span>
+      <span class="eyebrow">03 — Six tools, one drop</span>
       <h2 class="h2">Everything your export knows, <span class="serif">finally readable.</span></h2>
       <p class="lead">Drop one file — or the exports of every platform at once. Unwrapped detects what’s inside and builds your dashboard in seconds.</p>
     </div>
@@ -210,7 +234,7 @@
 <section class="section lab-section" id="lab">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">03 — The Pro Lab</span>
+      <span class="eyebrow">04 — The Pro Lab</span>
       <h2 class="h2">Not just counts. <span class="serif grad">Real answers.</span></h2>
       <p class="lead">Unfollower apps stop at numbers. The Pro Lab reads what only your own export contains — your DMs, likes and follow history — to show who ignores you, where your attention goes unreturned, how real your audience is and when to post.</p>
     </div>
@@ -279,29 +303,6 @@
   </div>
 </section>
 
-<section class="section" id="how">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="eyebrow">04 — How it works</span>
-      <h2 class="h2">Three minutes of your time. <span class="serif">Zero risk.</span></h2>
-      <p class="lead">Every major platform lets you download a copy of your own data — in many countries it’s your legal right. Here’s exactly where to tap.</p>
-    </div>
-    <div class="reveal" data-tabs>
-      <div class="tabs" role="tablist" aria-label="Platform">
-        <button class="tab" role="tab" id="tab-ig" aria-controls="panel-ig" aria-selected="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</button>
-        <button class="tab" role="tab" id="tab-tt" aria-controls="panel-tt" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-tiktok"/></svg>TikTok</button>
-        <button class="tab" role="tab" id="tab-x" aria-controls="panel-x" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-x"/></svg>X</button>
-        <button class="tab" role="tab" id="tab-fb" aria-controls="panel-fb" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-facebook"/></svg>Facebook</button>
-        <button class="tab" role="tab" id="tab-li" aria-controls="panel-li" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</button>
-      </div>
-      <div id="panel-ig" role="tabpanel" aria-labelledby="tab-ig">{{> steps-instagram}}</div>
-      <div id="panel-tt" role="tabpanel" aria-labelledby="tab-tt" hidden>{{> steps-tiktok}}</div>
-      <div id="panel-x" role="tabpanel" aria-labelledby="tab-x" hidden>{{> steps-x}}</div>
-      <div id="panel-fb" role="tabpanel" aria-labelledby="tab-fb" hidden>{{> steps-facebook}}</div>
-      <div id="panel-li" role="tabpanel" aria-labelledby="tab-li" hidden>{{> steps-linkedin}}</div>
-    </div>
-  </div>
-</section>
 
 <section class="section section--tight" id="wrapped">
   <div class="container">
