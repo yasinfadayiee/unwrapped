@@ -78,6 +78,7 @@ const DEMO_RISKY = {
 const DEMO_COMMENTS = [
   'love this 😍', 'this is so good', 'where is this?!', 'the colors 🔥', 'need this poster', 'congrats!! 🎉', 'obsessed', 'what font is that?',
   'so proud of you', 'take me there', 'iconic', 'how did you shoot this?', 'saving this for later', 'the vibe ✨', 'haha same', 'drop the link pls',
+  'we were so drunk at this party lol', 'this font is shit-hot 🔥',
 ];
 
 const DEMO_LINES = [

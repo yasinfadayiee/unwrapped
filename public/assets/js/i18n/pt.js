@@ -1141,5 +1141,11 @@ export default {
   "Mutuals the longest": "Mútuos há mais tempo",
   "See who recently unfollowed you": "Veja quem deixou de te seguir recentemente",
   "Plus shows their names here and when they left.": "O Plus mostra aqui os nomes e quando saíram.",
-  "Nobody with that name in this export.": "Ninguém com esse nome nesta exportação."
+  "Nobody with that name in this export.": "Ninguém com esse nome nesta exportação.",
+  "Close Friends check": "Checagem de Amigos próximos",
+  "Who is on your list but quiet, and who you’re closest to but left off — from likes, comments and chats.": "Quem está na sua lista mas some, e com quem você é mais próximo mas ficou de fora — por curtidas, comentários e conversas.",
+  "On your list, but you never interact": "Na sua lista, mas vocês nunca interagem",
+  "Maybe they don’t need to see your close-friends stories.": "Talvez não precisem ver seus stories para amigos próximos.",
+  "You interact a lot — not on your list": "Vocês interagem muito — mas não está na lista",
+  "Mutuals you like, comment on and message most.": "Mútuos que você mais curte, comenta e conversa."
 };

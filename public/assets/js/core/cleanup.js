@@ -27,9 +27,12 @@ export function matches(re, text) {
   return re.test(text);
 }
 
-// How many of your own posts (not reposts) each check finds.
-export function scanCounts(tweets) {
+// How many texts each check finds.
+export function countMatches(texts) {
   const out = {};
-  for (const [id, re] of Object.entries(SCAN_RES)) out[id] = tweets.filter((tw) => !tw.isRT && matches(re, tw.text)).length;
+  for (const [id, re] of Object.entries(SCAN_RES)) out[id] = texts.filter((text) => text && matches(re, text)).length;
   return out;
 }
+
+// How many of your own posts (not reposts) each check finds.
+export const scanCounts = (tweets) => countMatches(tweets.filter((tw) => !tw.isRT).map((tw) => tw.text));

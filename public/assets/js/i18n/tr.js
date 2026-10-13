@@ -1141,5 +1141,11 @@ export default {
   "Mutuals the longest": "En uzun süredir karşılıklı takipleştiklerin",
   "See who recently unfollowed you": "Seni yakın zamanda kimin takipten çıktığını gör",
   "Plus shows their names here and when they left.": "Plus burada isimlerini ve ne zaman ayrıldıklarını gösterir.",
-  "Nobody with that name in this export.": "Bu dışa aktarımda bu adla kimse yok."
+  "Nobody with that name in this export.": "Bu dışa aktarımda bu adla kimse yok.",
+  "Close Friends check": "Yakın Arkadaşlar kontrolü",
+  "Who is on your list but quiet, and who you’re closest to but left off — from likes, comments and chats.": "Listende olup sessiz kalanlar ve en yakın olduğun ama listeye almadıkların — beğenilere, yorumlara ve sohbetlere göre.",
+  "On your list, but you never interact": "Listende ama hiç etkileşim yok",
+  "Maybe they don’t need to see your close-friends stories.": "Belki yakın arkadaş hikâyelerini görmeleri gerekmiyor.",
+  "You interact a lot — not on your list": "Çok etkileşim var — ama listende değil",
+  "Mutuals you like, comment on and message most.": "En çok beğendiğin, yorum yaptığın ve mesajlaştığın karşılıklılar."
 };

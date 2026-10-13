@@ -1346,3 +1346,9 @@ audio.msg-media { min-height: 0; }
 .lk-ico { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--surface-3); flex: none; }
 .lk-ico svg { width: 16px; height: 16px; color: var(--signal); }
 @media (max-width: 560px) { .lk-suggest { left: 0; } .lk-acts { width: 100%; } }
+
+/* Close Friends check */
+.cf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px; }
+.cf-col { padding: 14px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); display: grid; gap: 8px; align-content: start; }
+.cf-col h4 { margin: 0; font-size: 14.5px; }
+.cf-col .tiny { margin: 0; }

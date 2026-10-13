@@ -1,4 +1,4 @@
-import { h, icon } from '../lib/ui.js';
+import { h, icon, avatarStyle } from '../lib/ui.js';
 import { fmtInt, dateShort, compact, hourLabel, monthLabel, relTime, yearsSince, pct } from '../lib/format.js';
 import { viewHead, stat, panel, insights, userList, emptyState, dataNote } from './components.js';
 import { relationshipStats, networkPanel, relationshipInsights, relationshipViews, exposurePanel, tagCloud, C } from './views-common.js';
@@ -10,6 +10,7 @@ import { messagesView } from './views-messages.js';
 import { archiveView } from './views-archive.js';
 import { likesView } from './views-finders.js';
 import { lookupView } from './views-lookup.js';
+import { buildPeopleIndex, engagementScore, relationOf } from '../core/people.js';
 import { t as tl } from '../lib/i18n.js';
 
 function overview(ds, ctx) {
@@ -58,6 +59,51 @@ function requestsView(ds, ctx) {
   );
 }
 
+// Close Friends check: who is on the list but quiet, and who you are closest
+// to but left off — from likes, comments, story likes and chats.
+function closeFriendsCheck(ds, ctx) {
+  const L = ds.lists;
+  if (!L.closeFriends?.length || !ds.activity) return null;
+  const people = buildPeopleIndex(ds, []);
+  const closeness = (p) => engagementScore(p) + (p.thread ? p.thread.count / 10 : 0);
+  const onList = new Set(L.closeFriends.map((i) => i.u.toLowerCase()));
+  const quiet = [...onList].map((k) => people.get(k)).filter((p) => p && closeness(p) === 0);
+  const missing = [...people.values()].filter((p) => !onList.has(p.key) && relationOf(p) === 'mutual' && closeness(p) > 0).sort((a, b) => closeness(b) - closeness(a)).slice(0, 12);
+  if (!quiet.length && !missing.length) return null;
+  const FREE = 6;
+  const column = (title, text, list, sub) =>
+    h(
+      'div',
+      { class: 'cf-col' },
+      h('h4', null, `${title} · ${fmtInt(list.length)}`),
+      h('p', { class: 'tiny muted' }, text),
+      list.length
+        ? h(
+            'div',
+            { class: 'lk-chips' },
+            list.slice(0, ctx.pro ? 12 : FREE).map((p) => {
+              const b = h('button', { class: 'lk-chip', type: 'button' }, h('span', { class: 'lk-mini', style: avatarStyle(p.key) }, (p.name[0] || '?').toUpperCase()), p.name, sub ? h('em', null, sub(p)) : null);
+              b.addEventListener('click', () => {
+                ctx.pendingLookup = p.key;
+                ctx.go('lookup');
+              });
+              return b;
+            }),
+            !ctx.pro && list.length > FREE ? h('button', { class: 'lk-chip', type: 'button', onClick: () => ctx.upgrade('lists') }, icon('lock'), tl('{v0} more with Plus', { v0: fmtInt(list.length - FREE) })) : null,
+          )
+        : h('p', { class: 'small text-2' }, tl('Nobody here — nice.')),
+    );
+  return panel(
+    { title: tl('Close Friends check'), text: tl('Who is on your list but quiet, and who you’re closest to but left off — from likes, comments and chats.') },
+    h(
+      'div',
+      { class: 'cf-grid' },
+      column(tl('On your list, but you never interact'), tl('Maybe they don’t need to see your close-friends stories.'), quiet),
+      column(tl('You interact a lot — not on your list'), tl('Mutuals you like, comment on and message most.'), missing, (p) => fmtInt(Math.round(closeness(p)))),
+    ),
+  );
+}
+
 function listsView(ds, ctx) {
   const L = ds.lists;
   const sections = [
@@ -73,6 +119,7 @@ function listsView(ds, ctx) {
     'div',
     { class: 'app-content' },
     viewHead(tl('Close friends & more'), tl('Every other list inside your export.')),
+    closeFriendsCheck(ds, ctx),
     sections.length
       ? sections.map(([key, title, text]) => panel({ title: `${title} · ${fmtInt(L[key].length)}`, text }, userList({ platform: ds.platform, items: L[key], ctx, exportName: key })))
       : panel(null, emptyState(tl('Your export doesn’t include these lists.'), 'inbox')),

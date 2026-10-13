@@ -167,6 +167,10 @@ export function lookupView(ds, ctx) {
       (opts[active] || opts[0])?.click();
     } else if (e.key === 'Escape') clear(suggest);
   });
-  home();
+  // Opened from another view with a person in mind (e.g. the Close Friends check).
+  const wanted = ctx.pendingLookup && people.get(ctx.pendingLookup);
+  ctx.pendingLookup = null;
+  if (wanted) show(wanted);
+  else home();
   return root;
 }

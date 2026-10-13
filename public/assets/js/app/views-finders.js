@@ -5,7 +5,7 @@ import { h, icon, clear, csvFile, downloadBlob, toast } from '../lib/ui.js';
 import { fmtInt, compact } from '../lib/format.js';
 import { viewHead, emptyState } from './components.js';
 import { locale, t as tl } from '../lib/i18n.js';
-import { SCAN_RES, wordRe, matches, scanCounts } from '../core/cleanup.js';
+import { SCAN_RES, wordRe, matches, countMatches } from '../core/cleanup.js';
 
 const PAGE = 100;
 const dateFmt = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', year: 'numeric' });
@@ -37,6 +37,42 @@ function combine(regexes) {
   const list = regexes.filter(Boolean);
   if (!list.length) return null;
   return new RegExp(list.map((r) => r.source).join('|'), 'giu');
+}
+
+// The "Clean-up check" box: one toggle per check with its hit count, plus a
+// field for your own words. `active()` returns the regexes switched on.
+function cleanupBox(texts, onChange) {
+  const hits = countMatches(texts);
+  const scans = new Set();
+  let custom = null;
+  const chips = h('div', { class: 'scan-chips' });
+  const customInput = h('input', { class: 'input input--sm', type: 'text', placeholder: tl('Your own words, comma separated'), 'aria-label': tl('Your own words') });
+  const el = h('div', { class: 'scan-box' }, h('div', { class: 'scan-head' }, icon('shield'), h('b', null, tl('Clean-up check')), h('span', { class: 'tiny muted' }, tl('Posts a recruiter, client or new employer might stumble on.'))), chips, customInput);
+  function drawChips() {
+    clear(chips);
+    for (const [id, s] of Object.entries(SCANS)) {
+      const on = scans.has(id);
+      const b = h('button', { class: `scan-chip${on ? ' is-on' : ''}${hits[id] ? '' : ' is-zero'}`, type: 'button', 'aria-pressed': String(on) }, s.label(), h('span', { class: 'scan-n' }, fmtInt(hits[id])));
+      b.addEventListener('click', () => {
+        if (on) scans.delete(id);
+        else scans.add(id);
+        drawChips();
+        onChange();
+      });
+      chips.append(b);
+    }
+  }
+  let timer;
+  customInput.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      const words = customInput.value.split(',').map((w) => w.trim()).filter((w) => w.length > 1);
+      custom = words.length ? wordRe(words) : null;
+      onChange();
+    }, 250);
+  });
+  drawChips();
+  return { el, active: () => [...[...scans].map((id) => SCANS[id].re), ...(custom ? [custom] : [])] };
 }
 
 function finderShell({ title, text, searchLabel }) {
@@ -92,8 +128,6 @@ export function tweetsView(ds, ctx) {
   }
   let kind = 'all';
   let shown = PAGE;
-  const scans = new Set();
-  let custom = null;
   const counts = { all: all.length, posts: 0, replies: 0, reposts: 0 };
   for (const tw of all) counts[typeOf(tw)]++;
   const kinds = [
@@ -105,42 +139,14 @@ export function tweetsView(ds, ctx) {
   fillYears(ui.year, all);
   ui.sort.append(h('option', { value: 'new' }, tl('Newest first')), h('option', { value: 'old' }, tl('Oldest first')), h('option', { value: 'liked' }, tl('Most liked')));
 
-  // Clean-up check: how many posts each scan finds, as toggles.
-  const scanHits = scanCounts(all);
-  const chips = h('div', { class: 'scan-chips' });
-  const customInput = h('input', { class: 'input input--sm', type: 'text', placeholder: tl('Your own words, comma separated'), 'aria-label': tl('Your own words') });
-  ui.extra.append(h('div', { class: 'scan-box' }, h('div', { class: 'scan-head' }, icon('shield'), h('b', null, tl('Clean-up check')), h('span', { class: 'tiny muted' }, tl('Posts a recruiter, client or new employer might stumble on.'))), chips, customInput));
-  function drawChips() {
-    clear(chips);
-    for (const [id, s] of Object.entries(SCANS)) {
-      const on = scans.has(id);
-      const b = h('button', { class: `scan-chip${on ? ' is-on' : ''}${scanHits[id] ? '' : ' is-zero'}`, type: 'button', 'aria-pressed': String(on) }, s.label(), h('span', { class: 'scan-n' }, fmtInt(scanHits[id])));
-      b.addEventListener('click', () => {
-        if (on) scans.delete(id);
-        else scans.add(id);
-        shown = PAGE;
-        drawChips();
-        draw();
-      });
-      chips.append(b);
-    }
-  }
-  let timer;
-  customInput.addEventListener('input', () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      const words = customInput.value.split(',').map((w) => w.trim()).filter((w) => w.length > 1);
-      custom = words.length ? wordRe(words) : null;
-      shown = PAGE;
-      draw();
-    }, 250);
-  });
+  // Clean-up check over your own words (reposts are other people's).
+  const check = cleanupBox(all.filter((tw) => !tw.isRT).map((tw) => tw.text), () => ((shown = PAGE), draw()));
+  ui.extra.append(check.el);
 
   function filtered() {
     const q = ui.search.value.trim().toLowerCase();
     const y = Number(ui.year.value) || 0;
-    const active = [...scans].map((id) => SCANS[id].re);
-    if (custom) active.push(custom);
+    const active = check.active();
     let items = all.filter((tw) => {
       if (kind !== 'all' && typeOf(tw) !== kind) return false;
       if (y && yearOf(tw.ts) !== y) return false;
@@ -198,7 +204,6 @@ export function tweetsView(ds, ctx) {
   };
   ui.root.append(h('p', { class: 'tiny muted' }, icon('info'), ' ', tl('X has no bulk delete without logging in, so nothing here touches your account — open a post on X and delete it there.')));
   drawTabs(ui.tabs, kinds, kind, pick);
-  drawChips();
   draw();
   return ui.root;
 }
@@ -224,18 +229,25 @@ export function likesView(ds, ctx) {
   let kind = kinds[0].id;
   let shown = PAGE;
   ui.sort.append(h('option', { value: 'new' }, tl('Newest first')), h('option', { value: 'old' }, tl('Oldest first')));
+  // The clean-up check only makes sense for the comments you wrote.
+  const check = items.comments.length ? cleanupBox(items.comments.map((c) => c.text), () => ((shown = PAGE), draw())) : null;
+  const showCheck = () => {
+    clear(ui.extra);
+    if (check && kind === 'comments') ui.extra.append(check.el);
+  };
 
   function filtered() {
     const q = ui.search.value.trim().toLowerCase().replace(/^@/, '');
     const y = Number(ui.year.value) || 0;
-    const list = items[kind].filter((it) => (!y || yearOf(it.ts) === y) && (!q || it.owner.toLowerCase().includes(q) || (it.text || '').toLowerCase().includes(q)));
+    const active = check && kind === 'comments' ? check.active() : [];
+    const list = items[kind].filter((it) => (!y || yearOf(it.ts) === y) && (!q || it.owner.toLowerCase().includes(q) || (it.text || '').toLowerCase().includes(q)) && (!active.length || active.some((re) => matches(re, it.text || ''))));
     return list.sort((a, b) => (ui.sort.value === 'old' ? (a.ts || 0) - (b.ts || 0) : (b.ts || 0) - (a.ts || 0)));
   }
 
   function draw() {
     const list = filtered();
     const q = ui.search.value.trim().replace(/^@/, '');
-    const mark = q ? new RegExp(escRe(q), 'giu') : null;
+    const mark = combine([q ? new RegExp(escRe(q), 'giu') : null, ...(check && kind === 'comments' ? check.active() : [])]);
     ui.count.textContent = tl('{v0} items', { v0: fmtInt(list.length) });
     clear(ui.list);
     if (!list.length) ui.list.append(emptyState(tl('No matches.'), 'search'));
@@ -276,10 +288,12 @@ export function likesView(ds, ctx) {
     kind = id;
     fillYears(ui.year, items[kind]);
     drawTabs(ui.tabs, kinds, kind, pick);
+    showCheck();
     redraw();
   };
   fillYears(ui.year, items[kind]);
   drawTabs(ui.tabs, kinds, kind, pick);
+  showCheck();
   draw();
   return ui.root;
 }
