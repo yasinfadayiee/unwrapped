@@ -1,0 +1,70 @@
+<!--page {
+  "route": "/instagram-message-viewer/",
+  "nav": "tools",
+  "title": "Instagram mesaj görüntüleyici: veri indirmendeki DM’leri oku ve ara · Unwrapped",
+  "description": "Instagram veri indirmendeki mesajları gerçek bir sohbet uygulaması gibi aç: eski konuşmaları fotoğraflarıyla oku, tüm sohbetlerde aynı anda ara ve bir sohbeti metin olarak kaydet. Gizli — her şey tarayıcında çalışır.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-message"/></svg>Mesaj görüntüleyici · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Eski Instagram</span></span>
+        <span class="line"><span><span class="serif grad">mesajlarını oku.</span></span></span>
+      </h1>
+      <p class="hero-sub">Instagram’ın veri indirmesi sohbetlerini kimsenin okuyamadığı ham dosyalarda saklar. ZIP’i buraya bırak; her konuşma bir mesajlaşma uygulaması gibi açılır — <b>fotoğraflar, sesli mesajlar ve bağlantılarla</b>, <b>tüm sohbetlerde arama</b> ve tek tıkla <b>metin olarak kaydetme</b>. Hiçbir şey yüklenmez.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Neler yapabilirsin</span><h2 class="h2">Tüm DM geçmişin, <span class="serif">yeniden okunabilir.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Her sohbeti oku</b> — eskiden yeniye, tarih, saat, tepkiler ve geri alınan mesaj işaretleriyle.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Fotoğraflar, videolar ve sesli mesajlar</b> — indirmende varsa doğrudan sohbetin içinde gösterilir.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tüm sohbetlerde aynı anda ara</b> — yıllar önce biri sana gönderdiği o adresi, bağlantıyı veya tarihi bul.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Bir sohbeti kaydet</b> — temiz bir metin dosyası olarak; saklaması kolay kişisel bir yedek.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Grup sohbetleri de</b> — her gönderenin adı mesajlarının üstünde.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Nasıl çalışır</span><h2 class="h2">Üç adım, hepsi cihazında.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Mesajlarını iste</b><span>Instagram → Hesaplar Merkezi → Bilgilerin ve izinlerin → Bilgilerini indir → <b>Mesajlar</b>’ı seç (JSON). Sohbetlerinde fotoğraf görmek istiyorsan daha yüksek medya kalitesi seç.</span></li>
+      <li><b>ZIP’i buraya bırak</b><span>Tarayıcın arşivi yerel olarak açar. Önce uçak modunu bile açabilirsin — yine çalışır.</span></li>
+      <li><b>“Mesaj görüntüleyici”yi aç</b><span>Tüm sohbetleri okumak ücretsizdir. Tüm sohbetlerde aynı anda arama ve sohbet kaydetme <a href="/pricing/">Plus</a>’a dahildir.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Sık sorulan sorular</span><h2 class="h2">Instagram mesajları, açıldı.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Instagram veri indirmemdeki mesajları nasıl okurum?</summary><div class="answer"><p>İndirme her sohbeti, konuşma başına bir klasörde JSON veya HTML dosyaları olarak saklar. ZIP’in tamamını Unwrapped’a bırak ve “Mesaj görüntüleyici”yi aç — tüm sohbetler listelenir ve bir mesajlaşma uygulaması gibi açılır.</p></div></details>
+      <details><summary>Silinen Instagram mesajlarını kurtarabilir miyim?</summary><div class="answer"><p>İndirmen, Instagram’ın hesabın için hâlâ sakladığı mesajları içerir. Sildiğin veya geri aldığın mesajlar genellikle dahil değildir, bu yüzden görüntüleyici onları geri getiremez — ama uygulamada artık bulamadığın sohbetler çoğu zaman oradadır.</p></div></details>
+      <details><summary>Mesajlarım bir yere yükleniyor mu?</summary><div class="answer"><p>Hayır. Arşiv tarayıcının içinde açılır ve gösterilir. Hiçbir şey sunucuya gönderilmez ve kimse — biz dahil — sohbetlerini göremez.</p></div></details>
+      <details><summary>Neden fotoğrafları göremiyorum?</summary><div class="answer"><p>Fotoğraf ve videolar yalnızca medyayı dahil ettiysen indirmede bulunur. İndirmeyi medyayla ve daha yüksek kaliteyle yeniden iste.</p></div></details>
+      <details><summary>Ücretsiz mi?</summary><div class="answer"><p>Evet — tüm konuşmaları okumak ücretsizdir. Plus, tüm sohbetlerde aramayı ve sohbetleri metin olarak kaydetmeyi ekler.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Sohbetlerini aç. <span class="serif grad">Gizlice.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Mesajlarımı aç</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Demoda gör</button></div>
+    </div>
+  </div>
+</section>

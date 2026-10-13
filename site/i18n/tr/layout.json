@@ -31,12 +31,16 @@
   "fBest": "En iyi paylaşım saati",
   "fPricing": "Fiyatlar",
   "fHow": "Nasıl çalışır",
-  "fGuides": "Rehberler (İngilizce)",
+  "fGuides": "Rehberler",
   "fInvite": "Arkadaşlarını davet et",
   "fDemo": "Canlı demo",
   "fPrivacy": "Gizlilik (İngilizce)",
   "fTerms": "Şartlar ve iadeler (İngilizce)",
   "fPromise": "Şifresiz çalışma sözü",
   "legalCopy": "Instagram, Meta, TikTok, X veya LinkedIn ile bağlantılı değildir. Tüm markalar sahiplerine aittir.",
-  "legalMade": "Veri simsarları için değil, insanlar için yapıldı."
+  "legalMade": "Veri simsarları için değil, insanlar için yapıldı.",
+  "fMsg": "Instagram mesaj görüntüleyici",
+  "fAbout": "Hakkımızda",
+  "fBlog": "Blog",
+  "fCompare": "Takipçi uygulamalarıyla karşılaştırma"
 }

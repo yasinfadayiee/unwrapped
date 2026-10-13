@@ -1,0 +1,70 @@
+<!--page {
+  "route": "/instagram-message-viewer/",
+  "nav": "tools",
+  "title": "Leitor de mensagens do Instagram: leia e busque suas DMs do download de dados · Unwrapped",
+  "description": "Abra as mensagens do seu download de dados do Instagram como num app de chat: leia conversas antigas com fotos, busque em todas as conversas de uma vez e salve uma conversa como texto. Privado — tudo roda no seu navegador.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-message"/></svg>Leitor de mensagens · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Leia suas mensagens</span></span>
+        <span class="line"><span><span class="serif grad">antigas do Instagram.</span></span></span>
+      </h1>
+      <p class="hero-sub">O download de dados do Instagram guarda suas conversas em arquivos brutos que ninguém consegue ler. Solte o ZIP aqui e cada conversa abre como num app de mensagens — <b>com fotos, áudios e links</b>, <b>busca em todas as conversas</b> e a opção de <b>salvar como texto</b> com um clique. Nada é enviado.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">O que você pode fazer</span><h2 class="h2">Todo o seu histórico de DMs, <span class="serif">legível de novo.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Leia qualquer conversa</b> — da mais antiga à mais recente, com datas, horários, reações e mensagens canceladas.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Fotos, vídeos e áudios</b> — exibidos dentro da conversa quando estão incluídos no download.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Busque em todas as conversas de uma vez</b> — ache aquele endereço, link ou data que alguém te mandou anos atrás.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Salve uma conversa</b> como arquivo de texto limpo — um backup pessoal fácil de guardar.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Grupos também</b> — com o nome de cada remetente acima das mensagens.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Como funciona</span><h2 class="h2">Três passos, tudo no seu dispositivo.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Peça suas mensagens</b><span>Instagram → Central de contas → Suas informações e permissões → Baixar suas informações → escolha <b>Mensagens</b> (JSON). Escolha uma qualidade de mídia maior se quiser fotos nas conversas.</span></li>
+      <li><b>Solte o ZIP aqui</b><span>Seu navegador abre o arquivo localmente. Dá até para ativar o modo avião antes — continua funcionando.</span></li>
+      <li><b>Abra o “Leitor de mensagens”</b><span>Ler todas as conversas é grátis. Buscar em todas de uma vez e salvar conversas faz parte do <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Perguntas frequentes</span><h2 class="h2">Mensagens do Instagram, abertas.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Como leio as mensagens do meu download de dados do Instagram?</summary><div class="answer"><p>O download guarda cada conversa como arquivos JSON ou HTML, numa pasta por conversa. Solte o ZIP inteiro no Unwrapped e abra o “Leitor de mensagens” — todas as conversas aparecem e abrem como num app de mensagens.</p></div></details>
+      <details><summary>Dá para recuperar mensagens apagadas do Instagram?</summary><div class="answer"><p>Seu download contém as mensagens que o Instagram ainda guarda da sua conta. Mensagens que você apagou ou cancelou geralmente não vêm, então o leitor não consegue recuperá-las — mas conversas que você não acha mais no app muitas vezes estão lá.</p></div></details>
+      <details><summary>Minhas mensagens são enviadas para algum lugar?</summary><div class="answer"><p>Não. O arquivo é aberto e exibido dentro do seu navegador. Nada vai para um servidor e ninguém — nem nós — consegue ver suas conversas.</p></div></details>
+      <details><summary>Por que não aparecem fotos?</summary><div class="answer"><p>Fotos e vídeos só vêm no download se você incluiu mídia. Peça o download de novo com mídia e qualidade maior.</p></div></details>
+      <details><summary>É grátis?</summary><div class="answer"><p>Sim — ler todas as conversas é grátis. O Plus adiciona busca em todas as conversas e a opção de salvá-las como texto.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Abra suas conversas. <span class="serif grad">Com privacidade.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Abrir minhas mensagens</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Ver na demo</button></div>
+    </div>
+  </div>
+</section>

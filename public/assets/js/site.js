@@ -364,7 +364,18 @@ function misc() {
   }
 }
 
+/* ---------- support contact (set by the site owner in SUPPORT_CONTACT) ---------- */
+async function supportContact() {
+  const box = document.querySelector('[data-support]');
+  if (!box) return;
+  const config = await getConfig().catch(() => null);
+  if (!config?.support) return;
+  box.querySelector('[data-support-value]').textContent = config.support;
+  box.hidden = false;
+}
+
 header();
+supportContact();
 reveals();
 spotlight();
 dropZones();

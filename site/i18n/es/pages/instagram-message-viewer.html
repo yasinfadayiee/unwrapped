@@ -1,0 +1,70 @@
+<!--page {
+  "route": "/instagram-message-viewer/",
+  "nav": "tools",
+  "title": "Visor de mensajes de Instagram: lee y busca tus DM de la descarga de datos · Unwrapped",
+  "description": "Abre los mensajes de tu descarga de datos de Instagram como en una app de chat: lee conversaciones antiguas con fotos, busca en todos los chats a la vez y guarda un chat como texto. Privado: todo ocurre en tu navegador.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-message"/></svg>Visor de mensajes · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Lee tus mensajes</span></span>
+        <span class="line"><span><span class="serif grad">antiguos de Instagram.</span></span></span>
+      </h1>
+      <p class="hero-sub">La descarga de datos de Instagram guarda tus chats en archivos en bruto que nadie puede leer. Suelta el ZIP aquí y cada conversación se abre como en una app de mensajería, <b>con fotos, notas de voz y enlaces</b>, una <b>búsqueda en todos los chats</b> y la opción de <b>guardar como texto</b> con un clic. No se sube nada.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Qué puedes hacer</span><h2 class="h2">Todo tu historial de mensajes, <span class="serif">legible otra vez.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Lee cualquier chat</b>, del más antiguo al más reciente, con fechas, horas, reacciones y mensajes anulados.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Fotos, videos y notas de voz</b> dentro del chat, cuando están incluidos en tu descarga.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Busca en todos los chats a la vez</b>: encuentra esa dirección, enlace o fecha que alguien te envió hace años.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Guarda un chat</b> como archivo de texto limpio: una copia personal fácil de conservar.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>También chats grupales</b>, con el nombre de cada remitente sobre sus mensajes.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Cómo funciona</span><h2 class="h2">Tres pasos, todo en tu dispositivo.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Pide tus mensajes</b><span>Instagram → Centro de cuentas → Tu información y permisos → Descargar tu información → elige <b>Mensajes</b> (JSON). Elige una calidad multimedia mayor si quieres ver fotos en tus chats.</span></li>
+      <li><b>Suelta el ZIP aquí</b><span>Tu navegador abre el archivo localmente. Puedes activar antes el modo avión: seguirá funcionando.</span></li>
+      <li><b>Abre “Visor de mensajes”</b><span>Leer todos los chats es gratis. Buscar en todos a la vez y guardar chats es parte de <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Preguntas frecuentes</span><h2 class="h2">Mensajes de Instagram, abiertos.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>¿Cómo leo los mensajes de mi descarga de datos de Instagram?</summary><div class="answer"><p>La descarga guarda cada chat como archivos JSON o HTML dentro de una carpeta por conversación. Suelta el ZIP completo en Unwrapped y abre “Visor de mensajes”: aparecen todos los chats y se abren como en una app de mensajería.</p></div></details>
+      <details><summary>¿Puedo recuperar mensajes eliminados de Instagram?</summary><div class="answer"><p>Tu descarga contiene los mensajes que Instagram aún conserva de tu cuenta. Los mensajes que eliminaste o anulaste normalmente no se incluyen, así que el visor no puede recuperarlos; pero los chats que ya no encuentras en la app a menudo sí están.</p></div></details>
+      <details><summary>¿Se suben mis mensajes a algún sitio?</summary><div class="answer"><p>No. El archivo se abre y se muestra dentro de tu navegador. No se envía nada a ningún servidor y nadie, ni siquiera nosotros, puede ver tus chats.</p></div></details>
+      <details><summary>¿Por qué no veo fotos?</summary><div class="answer"><p>Las fotos y videos solo están en la descarga si incluiste los archivos multimedia. Vuelve a pedirla con multimedia y una calidad más alta.</p></div></details>
+      <details><summary>¿Es gratis?</summary><div class="answer"><p>Sí: leer todas las conversaciones es gratis. Plus añade la búsqueda en todos los chats y la opción de guardarlos como texto.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Abre tus chats. <span class="serif grad">En privado.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Abrir mis mensajes</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Verlo en la demo</button></div>
+    </div>
+  </div>
+</section>
