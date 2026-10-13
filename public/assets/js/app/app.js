@@ -241,7 +241,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
           primary.splice(1, 0, { id: 'health', label: tl('Account health'), icon: 'pulse', render: () => healthView(ds, ctx) });
         }
         // One timeline across every dropped export, shown in each tab.
-        primary.push({ id: 'timeline', label: tl('Your digital life'), icon: 'calendar', render: () => timelineView(datasets) });
+        primary.push({ id: 'timeline', label: tl('Your digital life'), icon: 'calendar', render: () => timelineView(datasets, ctx) });
         viewCache.set(tab.key, [...primary, ...lab, ...wrapped]);
       }
     }

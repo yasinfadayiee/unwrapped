@@ -1211,5 +1211,20 @@ export default {
   "Years of history": "Anos de história",
   "Platforms": "Plataformas",
   "Moments": "Momentos",
-  "Based only on what is in your exports: follower dates cover the people who follow you today, and some platforms keep only recent activity.": "Baseado só no que está nas suas exportações: as datas de seguidores cobrem quem te segue hoje, e algumas plataformas guardam só a atividade recente."
+  "Based only on what is in your exports: follower dates cover the people who follow you today, and some platforms keep only recent activity.": "Baseado só no que está nas suas exportações: as datas de seguidores cobrem quem te segue hoje, e algumas plataformas guardam só a atividade recente.",
+  "The Pioneer": "O Pioneiro",
+  "You were here before it was cool.": "Você estava aqui antes de virar moda.",
+  "The Multi-Platformer": "O Multiplataforma",
+  "Everywhere at once, on your own terms.": "Em todo lugar ao mesmo tempo, do seu jeito.",
+  "The Rising Star": "A Estrela em Ascensão",
+  "Your story online is just getting started.": "Sua história online está só começando.",
+  "Digital life": "Vida digital",
+  "My digital life,": "Minha vida digital,",
+  "{v0} yrs": "{v0} anos",
+  "online since {v0}": "online desde {v0}",
+  "First account": "Primeira conta",
+  "Biggest milestone": "Maior marco",
+  "{v0} followers": "{v0} seguidores",
+  "Share your timeline": "Compartilhe sua linha do tempo",
+  "A story-sized card with your numbers only — never other people’s names.": "Um card no tamanho de story, só com os seus números — nunca nomes de outras pessoas."
 };

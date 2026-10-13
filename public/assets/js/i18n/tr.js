@@ -1211,5 +1211,20 @@ export default {
   "Years of history": "Yıllık geçmiş",
   "Platforms": "Platformlar",
   "Moments": "Anlar",
-  "Based only on what is in your exports: follower dates cover the people who follow you today, and some platforms keep only recent activity.": "Yalnızca dışa aktarımlarındakilere dayanır: takipçi tarihleri bugün seni takip edenleri kapsar ve bazı platformlar yalnızca yakın tarihli etkinliği saklar."
+  "Based only on what is in your exports: follower dates cover the people who follow you today, and some platforms keep only recent activity.": "Yalnızca dışa aktarımlarındakilere dayanır: takipçi tarihleri bugün seni takip edenleri kapsar ve bazı platformlar yalnızca yakın tarihli etkinliği saklar.",
+  "The Pioneer": "Öncü",
+  "You were here before it was cool.": "Moda olmadan önce buradaydın.",
+  "The Multi-Platformer": "Çok Platformlu",
+  "Everywhere at once, on your own terms.": "Her yerde aynı anda, kendi kurallarınla.",
+  "The Rising Star": "Yükselen Yıldız",
+  "Your story online is just getting started.": "İnternetteki hikâyen daha yeni başlıyor.",
+  "Digital life": "Dijital hayat",
+  "My digital life,": "Dijital hayatım,",
+  "{v0} yrs": "{v0} yıl",
+  "online since {v0}": "{v0} yılından beri çevrimiçi",
+  "First account": "İlk hesap",
+  "Biggest milestone": "En büyük dönüm noktası",
+  "{v0} followers": "{v0} takipçi",
+  "Share your timeline": "Zaman çizelgeni paylaş",
+  "A story-sized card with your numbers only — never other people’s names.": "Yalnızca senin sayılarınla hikâye boyutunda bir kart — asla başkalarının isimleri yok."
 };
