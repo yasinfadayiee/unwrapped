@@ -129,8 +129,11 @@ function tally(records, authorOf) {
   };
 }
 
-async function readMessages(vfs, selfName, progress) {
-  const files = vfs.all((e) => /messages\/inbox\/[^/]+\/message_\d+\.json$/.test(e.lower) && !isFacebookPath(e.lower));
+// Instagram and Facebook (Messenger) store DMs in the same format; only the folders differ.
+export async function readMessages(vfs, selfName, progress, { facebook = false } = {}) {
+  const files = facebook
+    ? vfs.all((e) => /messages\/(inbox|archived_threads|e2ee_cutover|filtered_threads)\/[^/]+\/message_\d+\.json$/.test(e.lower) && isFacebookPath(e.lower))
+    : vfs.all((e) => /messages\/inbox\/[^/]+\/message_\d+\.json$/.test(e.lower) && !isFacebookPath(e.lower));
   if (!files.length) return null;
   const threads = new Map();
   const senders = new Map();

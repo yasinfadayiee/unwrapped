@@ -224,3 +224,35 @@ test('sessions, snapshots and helpers', () => {
   ]);
   assert.deepEqual(csvObjects('a,b\n"1,5","say ""hi"""\n'), [{ a: '1,5', b: 'say "hi"' }]);
 });
+
+test('Messenger chats from a Facebook download open in the message viewer, with media', async () => {
+  const msg = (sender, ts, extra = {}) => ({ sender_name: sender, timestamp_ms: ts, ...extra });
+  const zip = makeZip([
+    { path: 'your_facebook_activity/connections/friends/your_friends.json', content: JSON.stringify({ friends_v2: [{ name: 'Ana Ruiz', timestamp: 1600000000 }] }) },
+    { path: 'personal_information/profile_information/profile_information.json', content: JSON.stringify({ profile_v2: { name: { full_name: 'Sam Lee' } } }) },
+    {
+      path: 'your_facebook_activity/messages/inbox/anaruiz_123/message_1.json',
+      content: JSON.stringify({
+        participants: [{ name: 'Ana Ruiz' }, { name: 'Sam Lee' }],
+        title: 'Ana Ruiz',
+        messages: [
+          msg('Ana Ruiz', 1700000300000, { content: 'Caf\u00c3\u00a9 tomorrow?', reactions: [{ reaction: '\u00e2\u009d\u00a4', actor: 'Sam Lee' }] }),
+          msg('Sam Lee', 1700000100000, { content: 'Hi!', photos: [{ uri: 'your_facebook_activity/messages/inbox/anaruiz_123/photos/1.jpg' }] }),
+        ],
+      }),
+    },
+    { path: 'your_facebook_activity/messages/inbox/anaruiz_123/photos/1.jpg', content: 'JPEGDATA' },
+  ]);
+  const result = await analyze(await buildVfs([asFile(zip, 'facebook-samlee.zip')]));
+  const fb = ds(result, 'facebook');
+  assert.equal(fb.activity.messages.threadCount, 1);
+  const thread = fb.activity.messages.every[0];
+  const messages = await thread.load();
+  assert.deepEqual(messages.map((m) => m.text), ['Hi!', 'Café tomorrow?']);
+  assert.equal(messages[0].sender, 'Sam Lee');
+  assert.equal(messages[0].media[0].kind, 'photo');
+  assert.equal(new TextDecoder().decode(await messages[0].media[0].entry.bytes()), 'JPEGDATA');
+  assert.equal(messages[1].reactions.length, 1);
+  // Instagram must not pick up Facebook chats.
+  assert.equal(ds(result, 'instagram'), undefined);
+});

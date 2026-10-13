@@ -974,5 +974,6 @@ export default {
   "Results for “{v0}”": "Resultados para “{v0}”",
   "{v0} matches · {v1} of {v2} chats searched": "{v0} coincidencias · {v1} de {v2} chats revisados",
   "Search every chat and save conversations with Plus": "Busca en todos los chats y guarda conversaciones con Plus",
-  "Find any message across all your chats in seconds, and save a chat as a readable text file.": "Encuentra cualquier mensaje en todos tus chats en segundos y guarda un chat como archivo de texto legible."
+  "Find any message across all your chats in seconds, and save a chat as a readable text file.": "Encuentra cualquier mensaje en todos tus chats en segundos y guarda un chat como archivo de texto legible.",
+  "Search every chat and save conversations": "Busca en todos tus chats y guarda conversaciones"
 };

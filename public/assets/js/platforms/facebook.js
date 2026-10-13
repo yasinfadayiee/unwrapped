@@ -2,6 +2,7 @@
 
 import { fixMeta, toMs } from '../core/text.js';
 import { firstArray, metaRecords } from './meta-common.js';
+import { readMessages } from './instagram.js';
 
 const FILES = [
   ['friends', /(^|\/)(your_)?friends\.json$/],
@@ -62,12 +63,16 @@ export async function parseFacebook(vfs, progress) {
     offEvents += Array.isArray(item.events) ? item.events.length : 1;
   }
 
+  progress?.('Reading your Messenger chats…', 0.85);
+  const messages = await readMessages(vfs, name, null, { facebook: true });
+
   return {
     platform: 'facebook',
     label: 'Facebook',
     account: { name, createdAt },
     lists,
     advertisers,
+    activity: messages ? { messages } : null,
     offFacebook: { companies: offCompanies, events: offEvents },
     hasRelationships: lists.friends.length > 0,
   };

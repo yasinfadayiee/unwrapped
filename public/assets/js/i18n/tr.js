@@ -974,5 +974,6 @@ export default {
   "Results for “{v0}”": "“{v0}” için sonuçlar",
   "{v0} matches · {v1} of {v2} chats searched": "{v0} eşleşme · {v2} sohbetten {v1} tarandı",
   "Search every chat and save conversations with Plus": "Plus ile tüm sohbetlerde ara ve sohbetleri kaydet",
-  "Find any message across all your chats in seconds, and save a chat as a readable text file.": "Tüm sohbetlerindeki herhangi bir mesajı saniyeler içinde bul ve bir sohbeti okunabilir metin dosyası olarak kaydet."
+  "Find any message across all your chats in seconds, and save a chat as a readable text file.": "Tüm sohbetlerindeki herhangi bir mesajı saniyeler içinde bul ve bir sohbeti okunabilir metin dosyası olarak kaydet.",
+  "Search every chat and save conversations": "Tüm sohbetlerde arama ve sohbet kaydetme"
 };

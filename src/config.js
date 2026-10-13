@@ -15,6 +15,7 @@ export const TIERS = [
       'Full lists on every platform — no 20-row limit',
       'The names of everyone who unfollowed you',
       'Search and CSV export of any list',
+      'Search every chat and save conversations',
       'Deep insights for TikTok, X, Facebook & LinkedIn',
       'Every Wrapped theme, no watermark, story video',
     ],
