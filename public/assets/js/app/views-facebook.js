@@ -1,4 +1,5 @@
-import { h } from '../lib/ui.js';
+import { h, icon } from '../lib/ui.js';
+import { openQueue } from './queue.js';
 import { fmtInt, dateShort, monthLabel, relTime, yearsSince } from '../lib/format.js';
 import { byMonth } from '../core/insights.js';
 import { viewHead, stat, panel, insights, userList, emptyState, dataNote } from './components.js';
@@ -66,7 +67,13 @@ export function facebookViews(ds, ctx) {
         h(
           'div',
           { class: 'app-content' },
-          viewHead(tl('Friend requests'), tl('Requests you sent that are still pending, and requests you received.')),
+          viewHead(
+            tl('Friend requests'),
+            tl('Requests you sent that are still pending, and requests you received.'),
+            L.sentRequests.length
+              ? h('button', { class: 'btn btn--primary btn--sm', type: 'button', onClick: () => (ctx.can('queue') ? openQueue(ds, L.sentRequests, ctx, `facebook:${ds.account?.name || 'me'}`, { mode: 'cancel' }) : ctx.upgrade('queue')) }, icon('bolt'), tl('Cancel them one by one'))
+              : null,
+          ),
           panel({ title: tl('Sent · {v0}', { v0: fmtInt(L.sentRequests.length) }) }, userList({ platform: 'facebook', items: L.sentRequests, ctx, subFor: (i) => (i.ts ? tl('Sent {v0}', { v0: relTime(i.ts) }) : ''), exportName: 'sent-requests', emptyText: tl('No pending requests.') })),
           panel({ title: tl('Received · {v0}', { v0: fmtInt(L.receivedRequests.length) }) }, userList({ platform: 'facebook', items: L.receivedRequests, ctx, exportName: 'received-requests', emptyText: tl('No requests waiting.') })),
           L.removed.length ? panel({ title: tl('Removed by you · {v0}', { v0: fmtInt(L.removed.length) }) }, userList({ platform: 'facebook', items: L.removed, ctx, exportName: 'removed-friends' })) : null,
