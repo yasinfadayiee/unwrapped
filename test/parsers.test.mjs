@@ -295,3 +295,29 @@ test('your own Instagram posts and stories become a gallery with captions and fi
   assert.equal(new TextDecoder().decode(await post.entry.bytes()), 'B');
   assert.equal(ig.media.filter((m) => !m.entry).length, 1);
 });
+
+test('the clean-up check finds swearing, party posts and personal info in any language', async () => {
+  const { scanCounts, SCAN_RES, matches } = await import('../public/assets/js/core/cleanup.js');
+  const tw = (text, extra = {}) => ({ text, isRT: false, ...extra });
+  const counts = scanCounts([
+    tw('this is shit'),
+    tw('que mierda de día'),
+    tw('Shitake mushrooms are great'), // whole words only
+    tw('so hungover today'),
+    tw('call me +1 415 555 0134'),
+    tw('mail: me@example.com'),
+    tw('RT @a: fuck', { isRT: true }), // reposts are not yours
+    tw('the year 2024 and 12 cats'),
+  ]);
+  assert.deepEqual(counts, { swearing: 2, party: 1, personal: 2 });
+  assert.equal(matches(SCAN_RES.swearing, 'Siktir git'), true);
+  assert.equal(matches(SCAN_RES.party, 'kafam güzel bu akşam'), true);
+  const { vfs } = buildDemoVfs(Date.UTC(2026, 9, 1));
+  const x = ds(await analyze(vfs), 'x');
+  const demo = scanCounts(x.tweets);
+  assert.ok(demo.swearing >= 2 && demo.party >= 2 && demo.personal >= 2, JSON.stringify(demo));
+  const ig = ds(await analyze(buildDemoVfs(Date.UTC(2026, 9, 1)).vfs), 'instagram');
+  assert.equal(ig.activity.items.liked.length, 3400);
+  assert.equal(ig.activity.items.saved.length, 64);
+  assert.ok(ig.activity.items.comments[0].text && ig.activity.items.liked[0].href.startsWith('https://www.instagram.com/p/'));
+});

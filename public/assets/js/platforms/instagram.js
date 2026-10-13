@@ -287,16 +287,24 @@ async function readActivity(vfs, account, progress) {
       /* skip unreadable file */
     }
   }
+  const likeRecs = likes ? metaRecords(likes) : [];
+  const savedRecs = saved ? metaRecords(saved) : [];
+  const ownerOfComment = (r) => r.values['Media Owner'] || r.values['Media owner'] || r.title;
   const activity = {
-    likes: likes ? tally(metaRecords(likes), (r) => r.title) : null,
-    comments: commentRecs.length
-      ? tally(commentRecs, (r) => r.values['Media Owner'] || r.values['Media owner'] || r.title)
-      : null,
+    likes: likes ? tally(likeRecs, (r) => r.title) : null,
+    comments: commentRecs.length ? tally(commentRecs, ownerOfComment) : null,
     storyLikes: storyLikes ? tally(metaRecords(storyLikes), (r) => r.title) : null,
-    saved: saved ? tally(metaRecords(saved), (r) => r.title) : null,
+    saved: saved ? tally(savedRecs, (r) => r.title) : null,
     messages: await readMessages(vfs, account.name, progress),
+    // Every item with its link, for the Likes & comments finder.
+    items: {
+      liked: likeRecs.map((r) => ({ ts: r.ts, owner: r.title, href: r.href })),
+      saved: savedRecs.map((r) => ({ ts: r.ts, owner: r.title, href: r.href })),
+      comments: commentRecs.map((r) => ({ ts: r.ts, owner: ownerOfComment(r), text: r.values.Comment || r.values.comment || '', href: r.href })),
+    },
   };
-  return Object.values(activity).some(Boolean) ? activity : null;
+  const { items, ...rest } = activity;
+  return Object.values(rest).some(Boolean) ? activity : null;
 }
 
 async function readPrivacy(vfs) {

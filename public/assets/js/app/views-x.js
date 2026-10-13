@@ -7,6 +7,7 @@ import { barChart, heatmapChart, rankList, splitBar } from './charts.js';
 import { wrappedView } from './views-wrapped.js';
 import { privacyParts } from './wrapped.js';
 import { t as tl } from '../lib/i18n.js';
+import { tweetsView } from './views-finders.js';
 
 function overview(ds, ctx) {
   const st = tweetStats(ds.tweets);
@@ -142,6 +143,7 @@ export function xViews(ds, ctx) {
   const keepKey = `x:${ds.account?.username || 'me'}`;
   const views = [{ id: 'overview', label: tl('Overview'), icon: 'home', render: () => overview(ds, ctx) }];
   if (ds.tweets.length) views.push({ id: 'posts', label: tl('Your posts'), icon: 'message', count: ds.tweets.length, render: () => postsView(ds, ctx) });
+  if (ds.tweets.length) views.push({ id: 'search', label: tl('Search & clean up'), icon: 'search', render: () => tweetsView(ds, ctx) });
   if (ds.hasRelationships) views.push(...relationshipViews(ds, ctx, { keepKey }));
   views.push({ id: 'privacy', label: tl('Privacy X-ray'), icon: 'fingerprint', render: () => privacyView(ds, ctx) });
   views.push({ id: 'wrapped', label: tl('Wrapped cards'), icon: 'sparkles', render: () => wrappedView(ds, ctx) });

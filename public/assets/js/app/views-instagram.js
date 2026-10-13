@@ -8,6 +8,7 @@ import { privacyParts } from './wrapped.js';
 import { friendsView } from './views-friends.js';
 import { messagesView } from './views-messages.js';
 import { archiveView } from './views-archive.js';
+import { likesView } from './views-finders.js';
 import { t as tl } from '../lib/i18n.js';
 
 function overview(ds, ctx) {
@@ -196,6 +197,7 @@ export function instagramViews(ds, ctx) {
     if (['closeFriends', 'blocked', 'restricted', 'hideStoryFrom', 'youUnfollowed', 'favorites', 'removedSuggestions'].some((k) => L[k]?.length)) views.push({ id: 'lists', label: tl('Close friends & more'), icon: 'list', render: () => listsView(ds, ctx) });
     if (ds.activity?.messages) views.push({ id: 'friends', label: tl('Friendship Radar'), icon: 'orbit', group: 'lab', feature: 'friends', render: () => friendsView(ds, ctx) });
     if (ds.media?.length) views.push({ id: 'archive', label: tl('Your posts & stories'), icon: 'image', count: ds.media.length, render: () => archiveView(ds, ctx) });
+    if (ds.activity?.items && Object.values(ds.activity.items).some((l) => l.length)) views.push({ id: 'finder', label: tl('Likes & comments finder'), icon: 'search', render: () => likesView(ds, ctx) });
     if (ds.activity?.messages) views.push({ id: 'messages', label: tl('Message viewer'), icon: 'message', render: () => messagesView(ds, ctx) });
     if (ds.activity) views.push({ id: 'activity', label: tl('Activity'), icon: 'heart', render: () => activityView(ds, ctx) });
     if (ds.privacy) views.push({ id: 'privacy', label: tl('Privacy X-ray'), icon: 'fingerprint', render: () => privacyView(ds, ctx) });

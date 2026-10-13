@@ -1252,3 +1252,27 @@ audio.msg-media { min-height: 0; }
 
 .related-platforms { margin: 18px 0 0; text-align: center; }
 .related-platforms a { color: var(--text); }
+
+/* Finders (X posts search & clean-up, Instagram likes & comments) */
+.finder-search { display: flex; align-items: center; gap: 10px; }
+.finder-search svg { width: 18px; height: 18px; color: var(--text-2); flex: none; }
+.finder-extra:empty { display: none; }
+.scan-box { margin-top: 14px; padding: 14px; border-radius: 14px; border: 1px dashed var(--line-2); background: var(--surface-2); display: grid; gap: 10px; }
+.scan-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.scan-head svg { width: 16px; height: 16px; color: var(--signal); }
+.scan-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.scan-chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); color: var(--text); font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.scan-chip .scan-n { min-width: 22px; padding: 1px 7px; border-radius: 999px; background: rgba(224, 87, 74, .18); color: #ff9a8f; font-size: 12px; text-align: center; }
+.scan-chip.is-zero .scan-n { background: rgba(26, 158, 142, .18); color: #7fe0d2; }
+.scan-chip.is-on { border-color: var(--signal); background: rgba(215, 255, 58, .08); }
+.finder-list { display: grid; gap: 8px; margin-top: 10px; }
+.finder-row { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); display: grid; gap: 8px; }
+.finder-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 12.5px; color: var(--text-2); }
+.finder-owner { color: var(--text); font-weight: 600; text-decoration: none; }
+.finder-owner:hover { text-decoration: underline; }
+.finder-type { padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 600; background: var(--surface-3); color: var(--text); }
+.finder-type--replies { color: var(--uv); }
+.finder-type--reposts { color: #7fe0d2; }
+.finder-text { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14.5px; line-height: 1.5; }
+.finder-text mark { background: var(--signal); color: #0a0a0e; border-radius: 3px; padding: 0 2px; }
+.finder-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; }

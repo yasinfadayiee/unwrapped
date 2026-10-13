@@ -66,6 +66,20 @@ function demoArt(hue, label, i, tall = false) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${hgt}" viewBox="0 0 ${w} ${hgt}"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(${hue},70%,62%)"/><stop offset="1" stop-color="hsl(${(hue + 60) % 360},60%,22%)"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><circle cx="${w * 0.7}" cy="${hgt * 0.3}" r="${80 + (i % 5) * 20}" fill="rgba(255,255,255,.18)"/><text x="40" y="${hgt - 60}" font-family="sans-serif" font-size="44" font-weight="700" fill="#fff">${label.replace(/[<&]/g, '')}</text></svg>`;
 }
 
+const DEMO_RISKY = {
+  11: 'so hungover after the launch party lol, never again',
+  287: 'this deadline is absolute shit',
+  512: 'new studio number for bookings: +1 415 555 0134',
+  777: 'wtf is wrong with this font renderer',
+  1033: 'drunk designing is a real genre and I am its king',
+  1499: 'send briefs to hello@novastudio.design',
+};
+
+const DEMO_COMMENTS = [
+  'love this 😍', 'this is so good', 'where is this?!', 'the colors 🔥', 'need this poster', 'congrats!! 🎉', 'obsessed', 'what font is that?',
+  'so proud of you', 'take me there', 'iconic', 'how did you shoot this?', 'saving this for later', 'the vibe ✨', 'haha same', 'drop the link pls',
+];
+
 const DEMO_LINES = [
   'hey! how was the weekend?', 'omg did you see that reel 😂', 'coffee tomorrow?', 'sure, 10am works', 'sending you the photos now',
   'that typography is so good', 'haha yes', 'can’t wait for the trip ✈️', 'are you coming to the launch on friday?', 'love this',
@@ -136,16 +150,23 @@ export function demoInstagramFiles(now, rand, { followerCount = 1284, followingC
   const likes = [];
   for (let i = 0; i < 3400; i++) {
     const author = following[Math.floor(Math.pow(rand(), 2.2) * following.length)];
-    likes.push({ title: author, string_list_data: [{ href: 'https://www.instagram.com/p/demo/', value: 'ð\u009f\u0091\u008d', timestamp: sec(t(720)) }] });
+    likes.push({ title: author, string_list_data: [{ href: `https://www.instagram.com/p/Cd${(1e6 + i * 7919).toString(36)}/`, value: 'ð\u009f\u0091\u008d', timestamp: sec(t(720)) }] });
   }
   files.push(['your_instagram_activity/likes/liked_posts.json', JSON.stringify({ likes_media_likes: likes })]);
 
   const comments = [];
   for (let i = 0; i < 420; i++) {
     const author = following[Math.floor(Math.pow(rand(), 2.6) * following.length)];
-    comments.push({ string_map_data: { Comment: { value: 'love this' }, 'Media Owner': { value: author }, Time: { timestamp: sec(t(700)) } } });
+    comments.push({ string_map_data: { Comment: { value: DEMO_COMMENTS[i % DEMO_COMMENTS.length] }, 'Media Owner': { value: author }, Time: { timestamp: sec(t(700)) } } });
   }
   files.push(['your_instagram_activity/comments/post_comments_1.json', JSON.stringify(comments)]);
+
+  // Saved posts (deterministic — no rand(), so the other demo numbers stay put).
+  const savedPosts = Array.from({ length: 64 }, (_, i) => ({
+    title: following[(i * 37) % following.length],
+    string_map_data: { 'Saved on': { href: `https://www.instagram.com/p/Sv${(2e6 + i * 104729).toString(36)}/`, timestamp: sec(now - (i * 9 + 3) * DAY) } },
+  }));
+  files.push(['your_instagram_activity/saved/saved_posts.json', JSON.stringify({ saved_saved_media: savedPosts })]);
 
   const friends = following.slice(0, 40);
   friends.forEach((u, i) => {
@@ -292,10 +313,12 @@ function demoXFiles(now, rand) {
     const reply = !rt && rand() < 0.3;
     const w = () => words[Math.floor(rand() * words.length)];
     const tags = rand() < 0.2 ? [{ text: ['buildinpublic', 'design', 'ux', 'indiedev'][Math.floor(rand() * 4)] }] : [];
+    const text = `${rt ? 'RT @someone: ' : ''}Today I'm ${w()} and ${w()}, more ${w()} soon`;
     tweets.push({
       tweet: {
         id_str: String(1_600_000_000_000_000_000n + BigInt(i)),
-        full_text: `${rt ? 'RT @someone: ' : ''}Today I'm ${w()} and ${w()}, more ${w()} soon`,
+        // A few posts the Clean-up check should catch (same rand() sequence either way).
+        full_text: DEMO_RISKY[i] || text,
         created_at: new Date(ts).toUTCString().replace(/^(\w{3}), (\d{2}) (\w{3}) (\d{4}) (\S+) GMT$/, '$1 $3 $2 $5 +0000 $4'),
         favorite_count: String(Math.floor(Math.pow(rand(), 3) * 900)),
         retweet_count: String(Math.floor(Math.pow(rand(), 4) * 120)),
