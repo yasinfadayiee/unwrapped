@@ -331,5 +331,37 @@ export function actionPlan(ds, ctx) {
     ]);
   }
   draw();
-  return panel({ title: tl('Your action plan'), text: tl('The few things worth doing next. Tick them off as you go — saved on this device.'), actions: count }, body);
+  const pdf = h('button', { class: 'btn btn--ghost btn--sm', type: 'button', title: tl('Download a one-page summary as PDF') }, icon('download'), 'PDF');
+  pdf.addEventListener('click', async () => {
+    const [{ printSheet }, { toast }] = await Promise.all([import('./report.js'), import('../lib/ui.js')]);
+    toast(tl('Choose “Save as PDF” in the print dialog'), { iconName: 'report', timeout: 4000 });
+    printSheet(summarySheet(ds, ctx, steps, ticks.read()));
+  });
+  return panel({ title: tl('Your action plan'), text: tl('The few things worth doing next. Tick them off as you go — saved on this device.'), actions: h('div', { style: { display: 'flex', gap: '8px', alignItems: 'center' } }, count, pdf) }, body);
+}
+
+// Free one-page summary: the key numbers, this plan and a few milestones.
+function summarySheet(ds, ctx, steps, done) {
+  const kpi = (label, value) => h('div', { class: 'rs-kpi' }, h('span', null, label), h('b', null, value));
+  const section = (title, ...children) => h('section', null, h('h2', null, title), children);
+  const handle = ds.account?.username ? `@${ds.account.username}` : ds.account?.name || ds.label;
+  const follows = ds.hasRelationships && ['instagram', 'threads', 'tiktok', 'x'].includes(ds.platform);
+  const rel = follows ? relationships(ds) : null;
+  const last = lastDiff(ds, ctx.snapshots || []);
+  const kpis = rel
+    ? [kpi(tl('Followers'), fmtInt(rel.followers)), kpi(tl('Following'), fmtInt(rel.following)), kpi(tl('Mutuals'), fmtInt(rel.mutuals.length)), kpi(tl('Not following back'), fmtInt(rel.notFollowingBack.length))]
+    : ds.platform === 'facebook'
+      ? [kpi(tl('Friends'), fmtInt(ds.lists.friends.length)), kpi(tl('Requests you sent'), fmtInt(ds.lists.sentRequests.length))]
+      : ds.platform === 'linkedin'
+        ? [kpi(tl('Connections'), fmtInt(ds.connections.length)), kpi(tl('Share their e-mail'), fmtInt(ds.emailsShared))]
+        : [];
+  if (last) kpis.push(kpi(ds.platform === 'facebook' ? tl('Unfriended you') : tl('Unfollowed you'), `${fmtInt(last.diff.unfollowedYou.length)} · ${dateShort(last.from.takenAt)} → ${dateShort(last.to.takenAt)}`));
+  return h(
+    'article',
+    { class: 'report-sheet' },
+    h('header', { class: 'rs-head' }, h('div', null, h('div', { class: 'rs-brand' }, tl('Unwrapped')), h('h1', null, tl('My {v0} summary', { v0: ds.label })), h('p', null, `${handle} · ${dateShort(Date.now())}`))),
+    kpis.length ? section(tl('At a glance'), h('div', { class: 'rs-grid' }, kpis)) : null,
+    section(tl('Your action plan'), h('ol', { class: 'rs-list' }, steps.map((s) => h('li', null, `${done.has(s.id) ? '✓ ' : ''}${s.title} — ${s.text}`)))),
+    h('footer', { class: 'rs-foot' }, h('span', null, tl('Prepared with Unwrapped')), h('span', null, tl('Official {v0} data export of {v1} · processed on-device', { v0: ds.label, v1: dateShort(ds.exportedAt) }))),
+  );
 }

@@ -118,7 +118,7 @@ export function buildReport(ds, ctx, { brand, client, note }) {
   );
 }
 
-function printSheet(sheet) {
+export function printSheet(sheet) {
   document.querySelector('.report-print')?.remove();
   const holder = h('div', { class: 'report-print' }, sheet);
   document.body.append(holder);

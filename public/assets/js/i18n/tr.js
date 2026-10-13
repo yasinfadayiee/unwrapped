@@ -1245,5 +1245,8 @@ export default {
   "Cancel requests one by one": "İstekleri tek tek iptal et",
   "You went through {v0} requests.": "{v0} isteğin üzerinden geçtin.",
   "On the profile, tap “Requested” and choose “Cancel request”.": "Profilde “İstek gönderildi”ye dokun ve “İsteği iptal et”i seç.",
-  "Cancel them one by one": "Tek tek iptal et"
+  "Cancel them one by one": "Tek tek iptal et",
+  "Download a one-page summary as PDF": "Tek sayfalık özeti PDF olarak indir",
+  "My {v0} summary": "{v0} özetim",
+  "At a glance": "Bir bakışta"
 };

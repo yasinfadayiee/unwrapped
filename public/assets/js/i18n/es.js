@@ -1245,5 +1245,8 @@ export default {
   "Cancel requests one by one": "Cancelar solicitudes una por una",
   "You went through {v0} requests.": "Revisaste {v0} solicitudes.",
   "On the profile, tap “Requested” and choose “Cancel request”.": "En el perfil, toca “Solicitado” y elige “Cancelar solicitud”.",
-  "Cancel them one by one": "Cancelarlas una por una"
+  "Cancel them one by one": "Cancelarlas una por una",
+  "Download a one-page summary as PDF": "Descargar un resumen de una página en PDF",
+  "My {v0} summary": "Mi resumen de {v0}",
+  "At a glance": "De un vistazo"
 };
