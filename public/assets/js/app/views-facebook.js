@@ -8,6 +8,7 @@ import { wrappedView } from './views-wrapped.js';
 import { privacyParts } from './wrapped.js';
 import { messagesView } from './views-messages.js';
 import { lookupView } from './views-lookup.js';
+import { actionPlan } from './action-plan.js';
 import { t as tl } from '../lib/i18n.js';
 
 function overview(ds, ctx) {
@@ -30,6 +31,7 @@ function overview(ds, ctx) {
       stat({ label: tl('Requests you sent'), value: fmtInt(L.sentRequests.length), sub: tl('Still pending'), onClick: () => ctx.go('requests') }),
       stat({ label: tl('Requests received'), value: fmtInt(L.receivedRequests.length) }),
     ),
+    actionPlan(ds, ctx),
     bars.length > 1 ? panel({ title: tl('Friends added per year'), text: tl('Based on when each current friendship started') }, barChart(bars, { title: tl('Friends'), ariaLabel: tl('Friends added per year') })) : null,
     panel(
       null,

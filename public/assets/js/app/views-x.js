@@ -8,6 +8,7 @@ import { wrappedView } from './views-wrapped.js';
 import { privacyParts } from './wrapped.js';
 import { t as tl } from '../lib/i18n.js';
 import { tweetsView } from './views-finders.js';
+import { actionPlan } from './action-plan.js';
 
 function overview(ds, ctx) {
   const st = tweetStats(ds.tweets);
@@ -26,11 +27,14 @@ function overview(ds, ctx) {
       ),
     );
   }
+  const plan = actionPlan(ds, ctx);
   if (ds.hasRelationships) {
     const { tiles, rel } = relationshipStats(ds, ctx);
-    root.append(tiles, h('div', { class: 'panels panels--3-2' }, networkPanel(ds, rel), panel({ title: tl('What stands out') }, relationshipInsights(ds, rel))));
+    root.append(tiles);
+    if (plan) root.append(plan);
+    root.append(h('div', { class: 'panels panels--3-2' }, networkPanel(ds, rel), panel({ title: tl('What stands out') }, relationshipInsights(ds, rel))));
     root.append(h('p', { class: 'tiny muted' }, tl('X archives list followers by account ID only — use “Open” to see who each one is.')));
-  }
+  } else if (plan) root.append(plan);
   root.append(dataNote(ds));
   return root;
 }

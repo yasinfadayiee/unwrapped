@@ -36,3 +36,6 @@ export function countMatches(texts) {
 
 // How many of your own posts (not reposts) each check finds.
 export const scanCounts = (tweets) => countMatches(tweets.filter((tw) => !tw.isRT).map((tw) => tw.text));
+
+// How many texts at least one check finds.
+export const flaggedCount = (texts) => texts.filter((text) => text && Object.values(SCAN_RES).some((re) => matches(re, text))).length;

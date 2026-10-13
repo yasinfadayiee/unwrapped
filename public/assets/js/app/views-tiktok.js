@@ -10,6 +10,7 @@ import { privacyParts } from './wrapped.js';
 import { t as tl } from '../lib/i18n.js';
 import { videosView } from './views-videos.js';
 import { lookupView } from './views-lookup.js';
+import { actionPlan } from './action-plan.js';
 
 function overview(ds, ctx) {
   const w = watchStats(ds.watch);
@@ -17,7 +18,7 @@ function overview(ds, ctx) {
   const a = ds.account;
   root.append(viewHead(a.username ? `@${a.username}` : tl('TikTok'), tl('TikTok export from {v0}', { v0: dateShort(ds.exportedAt) })));
   if (!w) {
-    root.append(panel(null, emptyState(tl('No watch history in this export. Request “All data” in JSON to get it.'), 'clock')));
+    root.append(panel(null, emptyState(tl('No watch history in this export. Request “All data” in JSON to get it.'), 'clock')), actionPlan(ds, ctx) || '');
   } else {
     const days = w.hours / 24;
     root.append(
@@ -30,6 +31,7 @@ function overview(ds, ctx) {
         stat({ label: tl('Longest binge'), value: duration(w.longest.ms), sub: tl('{v0} videos · {v1}', { v0: fmtInt(w.longest.count), v1: dateShort(w.longest.start) }) }),
         stat({ label: tl('Peak hour'), value: hourLabel(w.peakHour), sub: tl('{v0}% after midnight', { v0: Math.round(w.nightShare * 100) }) }),
       ),
+      actionPlan(ds, ctx) || '',
       panel(
         { title: tl('When you scroll'), text: tl('Videos watched by weekday and hour (your local time)') },
         heatmapChart(w.heat, { unit: tl('videos') }),

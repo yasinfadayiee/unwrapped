@@ -210,6 +210,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
       render();
       main.scrollTo({ top: 0 });
     },
+    hasView: (id) => viewsFor(tabs[tabIndex]).some((v) => v.id === id),
     // Jump from anywhere (e.g. Look up anyone) straight to one conversation.
     openChat: (thread) => {
       ctx.pendingChat = thread;

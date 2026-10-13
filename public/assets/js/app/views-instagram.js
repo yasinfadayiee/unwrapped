@@ -11,6 +11,7 @@ import { archiveView } from './views-archive.js';
 import { likesView } from './views-finders.js';
 import { lookupView } from './views-lookup.js';
 import { buildPeopleIndex, engagementScore, relationOf } from '../core/people.js';
+import { actionPlan } from './action-plan.js';
 import { t as tl } from '../lib/i18n.js';
 
 function overview(ds, ctx) {
@@ -30,6 +31,7 @@ function overview(ds, ctx) {
     { class: 'app-content' },
     viewHead(handle, `${tl('{v0} export from {v1}', { v0: ds.label, v1: dateShort(ds.exportedAt) })}${a.createdAt ? ` · ${tl('account {v0} years old', { v0: yearsSince(a.createdAt).toFixed(1) })}` : ''}`),
     tiles,
+    actionPlan(ds, ctx),
     h('div', { class: 'panels panels--3-2' }, networkPanel(ds, rel), panel({ title: tl('What stands out') }, relationshipInsights(ds, rel))),
     months.length > 2
       ? panel({ title: tl('New followers by month'), text: tl('When the people who follow you today first followed you') }, barChart(months, { title: tl('New followers'), ariaLabel: tl('New followers by month') }))
