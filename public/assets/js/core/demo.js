@@ -389,7 +389,10 @@ export function buildDemoVfs(now = Date.now()) {
 // A fictional older snapshot so the demo can show "who unfollowed you".
 export function demoPreviousSnapshot(current, rand) {
   const followers = [...current.followers];
-  const gone = usernames(rand, 17, 6);
+  // A few who left are accounts you still follow — the "unfollow back" case.
+  const followerSet = new Set(followers);
+  const stillFollowed = current.following.filter((k) => !followerSet.has(k)).slice(20, 25);
+  const gone = [...usernames(rand, 12, 6), ...stillFollowed];
   const newcomers = new Set(followers.slice(-23));
   return {
     platform: current.platform,

@@ -1237,5 +1237,8 @@ export default {
   "Settings → Data privacy → Data for Generative AI Improvement.": "Ayarlar → Veri gizliliği → Üretken yapay zekâ iyileştirmesi için veriler.",
   "Say hi to {v0} already in your network": "Ağındaki {v0} ile merhabalaş",
   "recruiter": "işe alım uzmanı",
-  "recruiters": "işe alım uzmanı"
+  "recruiters": "işe alım uzmanı",
+  "{v0} of them you still follow — they’re listed first.": "Bunlardan {v0} kişiyi hâlâ takip ediyorsun — en üstte listelendiler.",
+  "You still follow them": "Hâlâ takip ediyorsun",
+  "You still follow {v0} of them — decide whether to unfollow back.": "Bunlardan {v0} kişiyi hâlâ takip ediyorsun — sen de takipten çıkıp çıkmayacağına karar ver."
 };

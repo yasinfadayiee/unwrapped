@@ -189,7 +189,9 @@ export function unfollowersView(ds, ctx) {
     }),
   );
 
-  function list(keys, snap, title) {
+  function list(keys, snap, title, { stillFollowing = null } = {}) {
+    // People who left but you still follow come first, flagged.
+    if (stillFollowing) keys = [...keys].sort((a, b) => Number(stillFollowing.has(b)) - Number(stillFollowing.has(a)));
     const items = keys.map((k) => labelFor(ds, snap, k));
     if (!items.length) return panel({ title }, emptyState(tl('Nobody in this period.'), 'check'));
     if (!ctx.pro) {
@@ -203,7 +205,11 @@ export function unfollowersView(ds, ctx) {
         ),
       );
     }
-    return panel({ title: `${title} · ${fmtInt(items.length)}` }, h('div', { class: 'rows' }, items.map((i) => personRow(ds.platform, i))));
+    const back = stillFollowing ? keys.filter((k) => stillFollowing.has(k)).length : 0;
+    return panel(
+      { title: `${title} · ${fmtInt(items.length)}`, text: back ? tl('{v0} of them you still follow — they’re listed first.', { v0: fmtInt(back) }) : '' },
+      h('div', { class: 'rows' }, items.map((i, n) => personRow(ds.platform, i, { sub: stillFollowing?.has(keys[n]) ? tl('You still follow them') : '' }))),
+    );
   }
 
   function draw() {
@@ -224,7 +230,7 @@ export function unfollowersView(ds, ctx) {
         ds.platform !== 'facebook' ? stat({ label: tl('You unfollowed'), value: fmtInt(diff.youUnfollowed.length) }) : null,
         ds.platform !== 'facebook' ? stat({ label: tl('You followed'), value: fmtInt(diff.youFollowed.length) }) : null,
       ),
-      list(diff.unfollowedYou, from, leftLabel),
+      list(diff.unfollowedYou, from, leftLabel, { stillFollowing: ds.platform === 'facebook' ? null : new Set(to.following) }),
       h('div', { class: 'panels panels--2' }, list(diff.newFollowers, to, tl('New followers')), ds.platform !== 'facebook' ? list(diff.youUnfollowed, from, tl('You unfollowed')) : null),
       h('p', { class: 'tiny muted' }, tl('Accounts that were deactivated or deleted also disappear from follower lists.')),
     );

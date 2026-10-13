@@ -66,13 +66,15 @@ function snapshotSteps(ds, ctx) {
   }
   const n = last.diff.unfollowedYou.length;
   if (!n) return [];
+  const following = new Set(last.to.following || []);
+  const back = fb ? 0 : last.diff.unfollowedYou.filter((k) => following.has(k)).length;
   return [
     {
       // A new export brings the step back.
       id: `unfollowers:${last.to.takenAt}`,
       icon: 'ghost',
       title: fb ? tl('{v0} unfriended you since {v1}', { v0: plural(n, 'person', 'people'), v1: dateShort(last.from.takenAt) }) : tl('{v0} unfollowed you since {v1}', { v0: plural(n, 'account'), v1: dateShort(last.from.takenAt) }),
-      text: tl('Compared with the snapshot saved from your previous export.'),
+      text: back ? tl('You still follow {v0} of them — decide whether to unfollow back.', { v0: fmtInt(back) }) : tl('Compared with the snapshot saved from your previous export.'),
       go: 'unfollowers',
     },
   ];

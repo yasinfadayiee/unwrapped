@@ -1237,5 +1237,8 @@ export default {
   "Settings → Data privacy → Data for Generative AI Improvement.": "Configurações → Privacidade de dados → Dados para aprimoramento de IA generativa.",
   "Say hi to {v0} already in your network": "Dê um oi para {v0} que já estão na sua rede",
   "recruiter": "recrutador",
-  "recruiters": "recrutadores"
+  "recruiters": "recrutadores",
+  "{v0} of them you still follow — they’re listed first.": "Você ainda segue {v0} deles — eles aparecem primeiro.",
+  "You still follow them": "Você ainda segue",
+  "You still follow {v0} of them — decide whether to unfollow back.": "Você ainda segue {v0} deles — decida se vai deixar de seguir também."
 };
