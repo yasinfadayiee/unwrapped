@@ -234,6 +234,16 @@ test('an old and a new export dropped together stay separate', async () => {
   assert.equal(twice.datasets[0].previous.length, 0);
 });
 
+test('digital life timeline is ordered and has the firsts', async () => {
+  const { buildTimeline } = await import('../public/assets/js/core/timeline.js');
+  const result = await analyze(buildDemoVfs(Date.UTC(2026, 9, 1)).vfs);
+  const events = buildTimeline(result.datasets);
+  assert.ok(events.every((e, i) => !i || events[i - 1].ts <= e.ts));
+  assert.ok(events.some((e) => e.kind === 'joined' && e.platform === 'instagram'));
+  assert.ok(events.some((e) => e.kind === 'milestone' && e.n === 1000));
+  assert.ok(events.every((e) => e.ts < Date.now() + 864e5));
+});
+
 test('sessions, snapshots and helpers', () => {
   const t0 = Date.UTC(2026, 0, 1, 22);
   const watch = [t0, t0 + 30_000, t0 + 60_000, t0 + 3 * 3600_000, t0 + 3 * 3600_000 + 15_000];

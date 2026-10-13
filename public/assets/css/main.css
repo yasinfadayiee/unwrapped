@@ -1395,3 +1395,17 @@ audio.msg-media { min-height: 0; }
 .ap-link:focus-visible { outline: 2px solid var(--signal); outline-offset: 6px; border-radius: 10px; }
 .ap-more { justify-self: start; padding: 6px 2px; border: 0; background: none; color: var(--text-2); font: inherit; font-size: 13.5px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-3); cursor: pointer; }
 .ap-more:hover { color: var(--signal); }
+
+/* Your digital life (timeline) */
+.dl-line { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.dl-year { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; }
+.dl-yr { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.03em; color: var(--signal); padding-top: 8px; }
+.dl-year ul { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--line-2); display: grid; gap: 10px; }
+.dl-ev { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); }
+.dl-ev::before { content: ''; position: absolute; left: -26px; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--uv); box-shadow: 0 0 0 4px var(--surface); }
+.dl-ev b { display: block; font-size: 14.5px; overflow-wrap: anywhere; }
+.dl-ev span:not(.dl-ico):not(.dl-kind) { font-size: 13px; color: var(--text-2); }
+.dl-ico { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--surface-3); }
+.dl-ico svg, .dl-kind svg { width: 16px; height: 16px; }
+.dl-kind { color: var(--muted); }
+@media (max-width: 560px) { .dl-year { grid-template-columns: 1fr; gap: 8px; } .dl-yr { padding-top: 0; } .dl-kind { display: none; } .dl-ev { grid-template-columns: auto minmax(0, 1fr); } }

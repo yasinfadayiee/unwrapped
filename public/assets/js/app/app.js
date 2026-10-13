@@ -17,6 +17,7 @@ import { xViews } from './views-x.js';
 import { facebookViews } from './views-facebook.js';
 import { linkedinViews } from './views-linkedin.js';
 import { crossView } from './views-cross.js';
+import { timelineView } from './views-timeline.js';
 import { playStory } from './story.js';
 import { t as tl, lang } from '../lib/i18n.js';
 import { track } from '../lib/stats.js';
@@ -239,6 +240,8 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         if (ds.hasRelationships && ['instagram', 'threads', 'tiktok', 'x'].includes(ds.platform)) {
           primary.splice(1, 0, { id: 'health', label: tl('Account health'), icon: 'pulse', render: () => healthView(ds, ctx) });
         }
+        // One timeline across every dropped export, shown in each tab.
+        primary.push({ id: 'timeline', label: tl('Your digital life'), icon: 'calendar', render: () => timelineView(datasets) });
         viewCache.set(tab.key, [...primary, ...lab, ...wrapped]);
       }
     }
