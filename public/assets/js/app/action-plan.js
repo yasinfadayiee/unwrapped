@@ -74,7 +74,11 @@ function snapshotSteps(ds, ctx) {
       id: `unfollowers:${last.to.takenAt}`,
       icon: 'ghost',
       title: fb ? tl('{v0} unfriended you since {v1}', { v0: plural(n, 'person', 'people'), v1: dateShort(last.from.takenAt) }) : tl('{v0} unfollowed you since {v1}', { v0: plural(n, 'account'), v1: dateShort(last.from.takenAt) }),
-      text: back ? tl('You still follow {v0} of them — decide whether to unfollow back.', { v0: fmtInt(back) }) : tl('Compared with the snapshot saved from your previous export.'),
+      text: !ctx.pro
+        ? tl('Free shows how many — Plus shows exactly who.')
+        : back
+          ? tl('You still follow {v0} of them — decide whether to unfollow back.', { v0: fmtInt(back) })
+          : tl('Compared with the snapshot saved from your previous export.'),
       go: 'unfollowers',
     },
   ];

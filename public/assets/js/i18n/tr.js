@@ -1251,5 +1251,6 @@ export default {
   "At a glance": "Bir bakışta",
   "Welcome back, {v0}": "Tekrar hoş geldin, {v0}",
   "Your last {v0} export is from {v1} — {v2} days ago. Download a fresh one and drop it here to see who unfollowed you since.": "Son {v0} dışa aktarımın {v1} tarihli — {v2} gün önce. O zamandan beri kimin seni takipten çıktığını görmek için yenisini indirip buraya bırak.",
-  "How to download": "Nasıl indirilir"
+  "How to download": "Nasıl indirilir",
+  "Free shows how many — Plus shows exactly who.": "Ücretsiz sürüm kaç kişi olduğunu, Plus tam olarak kim olduğunu gösterir."
 };

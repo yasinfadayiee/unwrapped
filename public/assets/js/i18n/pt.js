@@ -1251,5 +1251,6 @@ export default {
   "At a glance": "Num relance",
   "Welcome back, {v0}": "Bem-vindo de volta, {v0}",
   "Your last {v0} export is from {v1} — {v2} days ago. Download a fresh one and drop it here to see who unfollowed you since.": "Sua última exportação do {v0} é de {v1} — há {v2} dias. Baixe uma nova e solte aqui para ver quem deixou de te seguir desde então.",
-  "How to download": "Como baixar"
+  "How to download": "Como baixar",
+  "Free shows how many — Plus shows exactly who.": "O grátis mostra quantos — o Plus mostra exatamente quem."
 };
