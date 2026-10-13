@@ -1206,3 +1206,25 @@ audio.msg-media { min-height: 0; }
 .inapp-notice svg { width: 18px; height: 18px; flex: none; }
 .inapp-notice span { flex: 1 1 220px; }
 .inapp-notice .btn { background: #0a0a0e; color: var(--signal); }
+
+/* Compact inputs and segmented tabs (Message viewer, Video finder) */
+.input.input--sm, .select.input--sm { height: 38px; font-size: 14px; border-radius: 11px; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
+.seg-btn { border: 0; background: none; color: var(--text-2); padding: 7px 12px; border-radius: 9px; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.seg-btn[aria-selected='true'] { background: var(--surface-3); color: var(--text); }
+
+/* Video finder */
+.vid-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.vid-tools .input, .vid-tools .select { width: auto; }
+.vid-tools .btn { margin-left: auto; }
+.panel > .tiny.muted svg { width: 13px; height: 13px; vertical-align: -2px; }
+.vid-list { display: grid; gap: 4px; margin-top: 12px; }
+.vid-day { margin: 16px 0 4px; font-size: 12.5px; font-weight: 600; color: var(--text-2); text-transform: capitalize; }
+.vid-row { display: grid; grid-template-columns: 64px 34px 1fr auto; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); color: var(--text); text-decoration: none; font-size: 14px; }
+.vid-row:hover { border-color: var(--line-2); background: var(--surface-3); }
+.vid-time { font-family: var(--font-mono); font-size: 13px; color: var(--text-2); }
+.vid-thumb { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: linear-gradient(135deg, #25f4ee33, #fe2c5533); }
+.vid-thumb svg { width: 14px; height: 14px; }
+.vid-open { display: inline-flex; align-items: center; gap: 6px; color: var(--uv); font-weight: 600; font-size: 13px; }
+.vid-open svg { width: 13px; height: 13px; }
+@media (max-width: 560px) { .vid-tools .btn { margin-left: 0; } .vid-row { grid-template-columns: 54px 1fr auto; } .vid-thumb { display: none; } }

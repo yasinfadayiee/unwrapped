@@ -18,7 +18,7 @@ import { facebookViews } from './views-facebook.js';
 import { linkedinViews } from './views-linkedin.js';
 import { crossView } from './views-cross.js';
 import { playStory } from './story.js';
-import { t as tl } from '../lib/i18n.js';
+import { t as tl, lang } from '../lib/i18n.js';
 import { track } from '../lib/stats.js';
 
 const VIEW_BUILDERS = {
@@ -88,7 +88,12 @@ function noDataHelp(result, hints = []) {
         h('li', null, icon('check'), tl('TikTok: choose JSON or TXT. X: upload the archive ZIP. LinkedIn: the ZIP with Connections.csv.')),
       ),
       result.problems.length ? h('div', { class: 'err-box' }, result.problems.join(' · ')) : null,
-      h('a', { class: 'btn btn--ghost', href: '/#how' }, tl('See how to download your data')),
+      h(
+        'div',
+        { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } },
+        h('a', { class: 'btn btn--ghost', href: `${lang === 'en' ? '' : `/${lang}`}/help/` }, tl('Open the help center')),
+        h('a', { class: 'btn btn--ghost', href: `${lang === 'en' ? '' : `/${lang}`}/#how` }, tl('See how to download your data')),
+      ),
     ),
   );
 }

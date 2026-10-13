@@ -232,7 +232,7 @@ function demoTikTokFiles(now, rand, igFollowers, igFollowing) {
   const follows = [...igFollowing.slice(0, 240), ...usernames(rand, 140, 5)];
   const json = {
     'Your Activity': {
-      'Watch History': { VideoList: watch.map((ts) => ({ Date: fmt(ts), Link: 'https://www.tiktokv.com/share/video/7000000000000000000/' })) },
+      'Watch History': { VideoList: watch.map((ts, i) => ({ Date: fmt(ts), Link: `https://www.tiktokv.com/share/video/73${String(1e8 + i * 7919).padStart(17, '0')}/` })) },
       'Like List': { ItemFavoriteList: watch.filter(() => rand() < 0.11).map((ts) => ({ date: fmt(ts), link: 'https://www.tiktokv.com/share/video/1/' })) },
       'Favorite Videos': { FavoriteVideoList: new Array(184).fill({ Date: fmt(now), Link: '' }) },
       Follower: { FansList: fans.map((u) => ({ Date: fmt(now - Math.floor(rand() * 600) * DAY), UserName: u })) },

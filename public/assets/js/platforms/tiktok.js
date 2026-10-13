@@ -139,6 +139,13 @@ export async function parseTikTok(vfs, progress) {
     },
     lists: { followers: data.followers, following: data.following, blocked: data.blocked },
     watch: data.watch.map((w) => w.ts),
+    // Every video with its link, for the Video finder.
+    history: {
+      watched: data.watch.filter((w) => w.link),
+      liked: data.likes.filter((l) => l.ts && l.link),
+      favorites: data.favorites.filter((f) => f.link),
+      shared: data.shares.filter((s) => s.ts && s.link),
+    },
     likes: data.likes.map((l) => l.ts).filter(Boolean),
     favorites: data.favorites.length,
     posted: data.posted.length,

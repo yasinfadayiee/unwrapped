@@ -268,3 +268,12 @@ test('unrecognized uploads get a specific explanation', async () => {
   const parts = diagnose({ entries: [] }, [{ name: 'instagram.zip.001' }]);
   assert.deepEqual(ids(parts), ['parts', 'empty']);
 });
+
+test('TikTok keeps video links for the Video finder', async () => {
+  const { vfs } = buildDemoVfs(Date.UTC(2026, 9, 1));
+  const tt = ds(await analyze(vfs), 'tiktok');
+  assert.equal(tt.history.watched.length, tt.watch.length);
+  assert.match(tt.history.watched[0].link, /^https:\/\/www\.tiktokv\.com\/share\/video\/\d+\/$/);
+  assert.ok(tt.history.liked.length > 0);
+  assert.equal(tt.history.favorites.length, 0);
+});
