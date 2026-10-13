@@ -47,5 +47,5 @@ export function duration(ms) {
 }
 
 export const hourLabel = (h) => hourFmt.format(new Date(2026, 0, 1, h));
-export const plural = (n, one, many = `${one}s`) => `${fmtInt(n)} ${n === 1 ? one : many}`;
+export const plural = (n, one, many = `${one}s`) => `${fmtInt(n)} ${t(n === 1 ? one : many)}`;
 export const yearsSince = (ts) => (ts ? Math.max(0, (Date.now() - ts) / (365.25 * 864e5)) : 0);

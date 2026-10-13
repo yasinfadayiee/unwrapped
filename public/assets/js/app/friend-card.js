@@ -7,6 +7,7 @@ import { THEMES, drawCard, fontsReady } from './wrapped.js';
 import { cardButtons } from './views-wrapped.js';
 import { panel, lockCard } from './components.js';
 import { replyTime } from './views-lab.js';
+import { t as tl } from '../lib/i18n.js';
 
 const YEAR = 365.25 * 86_400_000;
 
@@ -15,12 +16,12 @@ function persona(t) {
   const c = t.chat;
   const share = t.count ? t.sent / t.count : 0.5;
   const years = (t.last - t.first) / YEAR;
-  if (c.streak >= 30) return ['Daily Duo', 'Not a day goes by without a message.'];
-  if (c.nightShare >= 0.25) return ['Night Owls', 'Your best talks happen after midnight.'];
-  if (d.replyThem != null && d.replyMe != null && d.replyThem < 300_000 && d.replyMe < 300_000) return ['Speed Texters', 'Neither of you ever keeps the other waiting.'];
-  if (Math.abs(share - 0.5) <= 0.05) return ['Perfect Balance', 'You both carry this friendship equally.'];
-  if (years >= 3) return ['Old Friends', `${Math.floor(years)} years and still talking.`];
-  return ['Ride or Die', 'One of the busiest chats on your phone.'];
+  if (c.streak >= 30) return [tl('Daily Duo'), tl('Not a day goes by without a message.')];
+  if (c.nightShare >= 0.25) return [tl('Night Owls'), tl('Your best talks happen after midnight.')];
+  if (d.replyThem != null && d.replyMe != null && d.replyThem < 300_000 && d.replyMe < 300_000) return [tl('Speed Texters'), tl('Neither of you ever keeps the other waiting.')];
+  if (Math.abs(share - 0.5) <= 0.05) return [tl('Perfect Balance'), tl('You both carry this friendship equally.')];
+  if (years >= 3) return [tl('Old Friends'), tl('{v0} years and still talking.', { v0: Math.floor(years) })];
+  return [tl('Ride or Die'), tl('One of the busiest chats on your phone.')];
 }
 
 export function friendCard(t, nickname, label) {
@@ -29,16 +30,16 @@ export function friendCard(t, nickname, label) {
   const replies = [d.replyMe, d.replyThem].filter((v) => v != null);
   const [title, line] = persona(t);
   return {
-    kicker: `${label} · friendship`,
+    kicker: tl('{v0} · friendship', { v0: label }),
     titleA: `Me & ${nickname},`,
-    titleB: 'unwrapped.',
+    titleB: tl('unwrapped.'),
     hero: compact(t.count),
-    heroLabel: `messages since ${new Date(t.first).getFullYear()}`,
+    heroLabel: tl('messages since {v0}', { v0: new Date(t.first).getFullYear() }),
     rows: [
-      ['Longest streak', `${fmtInt(t.chat.streak)} ${t.chat.streak === 1 ? 'day' : 'days'}`],
-      ['Who texts more', share >= 0.55 ? 'Me' : share <= 0.45 ? 'Them' : 'Dead even'],
-      ['Typical reply', replies.length ? replyTime(replies.reduce((a, b) => a + b, 0) / replies.length) : '—'],
-      ['Late-night chats', pct(t.chat.nightShare)],
+      [tl('Longest streak'), `${fmtInt(t.chat.streak)} ${t.chat.streak === 1 ? 'day' : 'days'}`],
+      [tl('Who texts more'), share >= 0.55 ? tl('Me') : share <= 0.45 ? tl('Them') : tl('Dead even')],
+      [tl('Typical reply'), replies.length ? replyTime(replies.reduce((a, b) => a + b, 0) / replies.length) : '—'],
+      [tl('Late-night chats'), pct(t.chat.nightShare)],
     ],
     persona: title,
     personaLine: line,
@@ -54,14 +55,14 @@ export function friendCardPanel(ds, ctx) {
   let theme = 'aurora';
   const select = h(
     'select',
-    { class: 'select', id: 'fc-friend', 'aria-label': 'Friend' },
-    people.map((p, i) => h('option', { value: String(i) }, `${can ? p.title : `Friend #${i + 1}`} · ${compact(p.count)} messages`)),
+    { class: 'select', id: 'fc-friend', 'aria-label': tl('Friend') },
+    people.map((p, i) => h('option', { value: String(i) }, `${can ? p.title : tl('Friend #{v0}', { v0: i + 1 })} · ${tl('{v0} messages', { v0: compact(p.count) })}`)),
   );
   const nick = h('input', { class: 'input', type: 'text', id: 'fc-nick', maxlength: '20', placeholder: 'e.g. my bestie' });
-  const canvas = h('canvas', { width: 1080, height: 1920, role: 'img', 'aria-label': 'Friendship card preview' });
-  const themes = h('div', { class: 'theme-row', role: 'group', 'aria-label': 'Card theme' });
+  const canvas = h('canvas', { width: 1080, height: 1920, role: 'img', 'aria-label': tl('Friendship card preview') });
+  const themes = h('div', { class: 'theme-row', role: 'group', 'aria-label': tl('Card theme') });
   for (const [id, t] of Object.entries(THEMES)) {
-    const dot = h('button', { class: 'theme-dot', type: 'button', style: { background: t.swatch }, 'aria-pressed': String(id === theme), 'aria-label': `${t.label} theme` });
+    const dot = h('button', { class: 'theme-dot', type: 'button', style: { background: t.swatch }, 'aria-pressed': String(id === theme), 'aria-label': tl('{v0} theme', { v0: t.label }) });
     dot.addEventListener('click', () => {
       theme = id;
       themes.querySelectorAll('.theme-dot').forEach((x) => x.setAttribute('aria-pressed', String(x === dot)));
@@ -81,20 +82,20 @@ export function friendCardPanel(ds, ctx) {
   draw();
 
   return panel(
-    { title: 'Friendship Wrapped', text: 'A story card about you and one friend — made to send to them. It shows only the nickname you type.' },
+    { title: tl('Friendship Wrapped'), text: tl('A story card about you and one friend — made to send to them. It shows only the nickname you type.') },
     h(
       'div',
       { class: 'friend-card' },
-      h('div', { class: `friend-card-preview${can ? '' : ' is-locked'}` }, canvas, can ? cardButtons(canvas, 'unwrapped-friendship.png', 'Our friendship, unwrapped') : null),
+      h('div', { class: `friend-card-preview${can ? '' : ' is-locked'}` }, canvas, can ? cardButtons(canvas, 'unwrapped-friendship.png', tl('Our friendship, unwrapped')) : null),
       h(
         'div',
         { class: 'stack', style: { '--stack': '14px' } },
-        h('div', { class: 'field' }, h('label', { for: 'fc-friend' }, 'Friend'), select),
-        h('div', { class: 'field' }, h('label', { for: 'fc-nick' }, 'Nickname on the card'), nick),
-        h('div', { class: 'field' }, h('span', { class: 'small text-2' }, 'Theme'), themes),
+        h('div', { class: 'field' }, h('label', { for: 'fc-friend' }, tl('Friend')), select),
+        h('div', { class: 'field' }, h('label', { for: 'fc-nick' }, tl('Nickname on the card')), nick),
+        h('div', { class: 'field' }, h('span', { class: 'small text-2' }, tl('Theme')), themes),
         can
-          ? h('p', { class: 'tiny muted' }, icon('shield'), ' Made on your device. Nothing is sent to your friend unless you share it.')
-          : lockCard({ tier: 'pro', title: 'Friendship Wrapped is part of Pro', text: 'Make a story card for any friend — streaks, reply times and your friendship type.', onUpgrade: () => ctx.upgrade('friends') }),
+          ? h('p', { class: 'tiny muted' }, icon('shield'), ' ', tl('Made on your device. Nothing is sent to your friend unless you share it.'))
+          : lockCard({ tier: 'pro', title: tl('Friendship Wrapped is part of Pro'), text: tl('Make a story card for any friend — streaks, reply times and your friendship type.'), onUpgrade: () => ctx.upgrade('friends') }),
       ),
     ),
   );

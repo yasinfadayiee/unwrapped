@@ -385,6 +385,9 @@ export function bestTimes({ tweets = null, followers = [], inbound = null } = {}
 
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const pctText = (x) => `${Math.round(x * 100)}%`;
+// detailKey + vars let the UI translate the sentence; detail is the English text.
+const fill = (key, vars) => key.replace(/\{(\w+)\}/g, (_, k) => vars[k]);
+const detail = (detailKey, vars) => ({ detailKey, vars, detail: fill(detailKey, vars) });
 
 // One 0–100 score from the factors this export can measure. Each factor
 // points at the Pro Lab view (`fix`) that helps improve it.
@@ -393,16 +396,16 @@ export function accountHealth(ds, { snapshots = [] } = {}) {
   const factors = [];
   const rel = relationships(ds);
   if (rel.following >= 20) {
-    factors.push({ id: 'balance', label: 'Follow-back balance', weight: 30, score: clamp01(rel.followBackRate / 0.75), detail: `${pctText(rel.followBackRate)} of the accounts you follow follow you back`, fix: 'notBack' });
+    factors.push({ id: 'balance', label: 'Follow-back balance', weight: 30, score: clamp01(rel.followBackRate / 0.75), ...detail('{n} of the accounts you follow follow you back', { n: pctText(rel.followBackRate) }), fix: 'notBack' });
   }
   const quality = ds.platform === 'x' ? null : audienceQuality(ds.lists.followers);
   if (quality) {
-    factors.push({ id: 'authentic', label: 'Audience authenticity', weight: 30, score: quality.score / 100, detail: `${quality.likely.length} likely bot or spam followers`, fix: 'audience' });
+    factors.push({ id: 'authentic', label: 'Audience authenticity', weight: 30, score: quality.score / 100, ...detail('{n} likely bot or spam followers', { n: quality.likely.length }), fix: 'audience' });
   }
   const audit = ds.platform === 'instagram' ? engagementAudit(ds) : null;
   if (audit) {
-    factors.push({ id: 'reciprocity', label: 'Two-way engagement', weight: 20, score: clamp01(1 - audit.oneWayShare), detail: `${pctText(audit.oneWayShare)} of your likes and comments go unreturned`, fix: 'audit' });
-    factors.push({ id: 'active', label: 'Active following', weight: 20, score: clamp01(1 - audit.deadShare), detail: `${audit.dead.length} follows you never interact with`, fix: 'audit' });
+    factors.push({ id: 'reciprocity', label: 'Two-way engagement', weight: 20, score: clamp01(1 - audit.oneWayShare), ...detail('{n} of your likes and comments go unreturned', { n: pctText(audit.oneWayShare) }), fix: 'audit' });
+    factors.push({ id: 'active', label: 'Active following', weight: 20, score: clamp01(1 - audit.deadShare), ...detail('{n} follows you never interact with', { n: audit.dead.length }), fix: 'audit' });
   }
   const growth = growthTimeline(ds, snapshots);
   const dated = (ds.lists.followers || []).filter((f) => f.ts);
@@ -410,10 +413,10 @@ export function accountHealth(ds, { snapshots = [] } = {}) {
     const first = Math.min(...dated.map((f) => f.ts));
     const spanDays = Math.max(90, ((ds.exportedAt || Date.now()) - first) / DAY);
     const usual = (dated.length / spanDays) * 90; // typical new followers per 90 days
-    factors.push({ id: 'momentum', label: 'Growth momentum', weight: 20, score: clamp01(growth.last90 / usual), detail: `${growth.last90} new followers in 90 days vs ${Math.round(usual)} usually`, fix: 'growth' });
+    factors.push({ id: 'momentum', label: 'Growth momentum', weight: 20, score: clamp01(growth.last90 / usual), ...detail('{n} new followers in 90 days vs {usual} usually', { n: growth.last90, usual: Math.round(usual) }), fix: 'growth' });
   }
   if (growth.churn30 != null) {
-    factors.push({ id: 'retention', label: 'Follower retention', weight: 15, score: clamp01(1 - growth.churn30 / 0.1), detail: `${pctText(growth.churn30)} of followers lost per month`, fix: 'growth' });
+    factors.push({ id: 'retention', label: 'Follower retention', weight: 15, score: clamp01(1 - growth.churn30 / 0.1), ...detail('{n} of followers lost per month', { n: pctText(growth.churn30) }), fix: 'growth' });
   }
   if (factors.length < 2) return null;
   const weight = sum(factors, (f) => f.weight);

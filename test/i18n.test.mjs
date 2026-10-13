@@ -34,6 +34,20 @@ export function translationKeys() {
   const checkout = readFileSync(path.join(jsRoot, 'lib/checkout.js'), 'utf8');
   const errors = checkout.match(/const ERRORS = \{([\s\S]*?)\};/)[1];
   for (const m of errors.matchAll(/: '([^']+)'/g)) keys.add(m[1]);
+  // Text produced by the analysis modules and translated where it is shown.
+  const lab = readFileSync(path.join(jsRoot, 'core/lab.js'), 'utf8');
+  for (const m of lab.matchAll(/label: '([^']+)'/g)) keys.add(m[1]);
+  for (const m of lab.matchAll(/\.\.\.detail\('([^']+)'/g)) keys.add(m[1]);
+  for (const m of lab.matchAll(/flag\(\d, '([^']+)'\)/g)) keys.add(m[1]);
+  for (const m of lab.matchAll(/reasons\.push\('([^']+)'\)/g)) keys.add(m[1]);
+  const insights = readFileSync(path.join(jsRoot, 'core/insights.js'), 'utf8');
+  for (const m of insights.matchAll(/(?:title|line|label): '([^']+)'/g)) keys.add(m[1]);
+  for (const file of walk(jsRoot)) {
+    for (const m of readFileSync(file, 'utf8').matchAll(/plural\([^,]+, '([^']+)'(?:, '([^']+)')?\)/g)) {
+      keys.add(m[1]);
+      keys.add(m[2] || `${m[1]}s`);
+    }
+  }
   keys.delete('');
   return keys;
 }

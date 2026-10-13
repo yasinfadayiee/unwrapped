@@ -311,7 +311,7 @@ function netMonitor() {
     total.textContent = String(entries.length);
     const start = window.__unwAnalysisStart;
     if (start !== undefined && during) during.textContent = String(entries.filter((e) => e.startTime >= start).length);
-    if (online) online.textContent = navigator.onLine ? 'Online' : 'Offline — and still working';
+    if (online) online.textContent = navigator.onLine ? t('Online') : t('Offline — and still working');
   };
   update();
   setInterval(update, 1000);
@@ -327,10 +327,10 @@ function showcase() {
     const { drawCard, fontsReady } = await import('./app/wrapped.js');
     await fontsReady();
     const cards = [
-      ['aurora', { kicker: 'Instagram · network', titleA: 'My Instagram,', titleB: 'unwrapped.', hero: '74%', heroLabel: 'of the accounts I follow follow me back', rows: [['Followers', '1,284'], ['Following', '1,032'], ['Mutuals', '764'], ['Don’t follow back', '268']], persona: 'The Magnet', personaLine: 'More people follow you than you follow.', period: 'EXPORT · OCT 9, 2026' }],
-      ['signal', { kicker: 'TikTok · screen time', titleA: 'My TikTok,', titleB: 'unwrapped.', hero: '412h', heroLabel: 'watched in 180 days', rows: [['Videos watched', '41.2K'], ['Per day', '137 min'], ['Longest binge', '4 h 17 min'], ['Peak hour', '11 PM']], persona: 'Night Owl', personaLine: 'One more video… at 11 PM. Every night.', period: 'APR 13 – OCT 9, 2026' }],
-      ['ember', { kicker: 'Instagram · privacy', titleA: 'What they know,', titleB: 'unwrapped.', hero: 'D', heroLabel: 'exposure score 68/100', rows: [['Advertisers with my data', '214'], ['Interests profiled', '36'], ['Login IP addresses', '20'], ['Connected apps', '6']], persona: 'Open Book', personaLine: 'Advertisers know you well.', period: 'EXPORT · OCT 9, 2026' }],
-      ['paper', { kicker: 'X · posts', titleA: 'My X,', titleB: 'unwrapped.', hero: '1.9K', heroLabel: 'posts, replies & reposts', rows: [['Likes earned', '84.1K'], ['Best post', '896 likes'], ['Most active', '9 AM'], ['On X for', '6.6 years']], persona: 'The Original', personaLine: 'You post your own takes.', period: 'EXPORT · OCT 9, 2026' }],
+      ['aurora', { kicker: t('{v0} · network', { v0: 'Instagram' }), titleA: t('My Instagram,'), titleB: t('unwrapped.'), hero: '74%', heroLabel: t('of the accounts I follow follow me back'), rows: [[t('Followers'), '1,284'], [t('Following'), '1,032'], [t('Mutuals'), '764'], [t('Don’t follow back'), '268']], persona: 'The Magnet', personaLine: 'More people follow you than you follow.', period: 'EXPORT · OCT 9, 2026' }],
+      ['signal', { kicker: t('TikTok · screen time'), titleA: t('My TikTok,'), titleB: t('unwrapped.'), hero: '412h', heroLabel: t('watched in {v0} days', { v0: 180 }), rows: [[t('Videos watched'), '41.2K'], [t('Per day'), t('{v0} min', { v0: 137 })], [t('Longest binge'), '4 h 17 min'], [t('Peak hour'), '23:00']], persona: 'Night Owl', personaLine: 'One more video… at 11 PM. Every night.', period: 'APR 13 – OCT 9, 2026' }],
+      ['ember', { kicker: t('{v0} · privacy', { v0: 'Instagram' }), titleA: t('What they know,'), titleB: t('unwrapped.'), hero: 'D', heroLabel: t('exposure score {v0}/100', { v0: 68 }), rows: [[t('Advertisers with my data'), '214'], [t('Interests profiled'), '36'], [t('Login IP addresses'), '20'], [t('Connected apps'), '6']], persona: 'Open Book', personaLine: 'Advertisers know you well.', period: 'EXPORT · OCT 9, 2026' }],
+      ['paper', { kicker: t('X · posts'), titleA: t('My X,'), titleB: t('unwrapped.'), hero: '1.9K', heroLabel: t('posts, replies & reposts'), rows: [[t('Likes earned'), '84.1K'], [t('Best post'), t('{v0} likes', { v0: 896 })], [t('Most active'), '09:00'], [t('On X for'), t('{v0} years', { v0: '6.6' })]], persona: 'The Original', personaLine: 'You post your own takes.', period: 'EXPORT · OCT 9, 2026' }],
     ];
     for (const [theme, card] of cards) {
       const canvas = h('canvas', { role: 'img', 'aria-label': `Example card: ${card.titleA} ${card.hero} ${card.heroLabel}` });

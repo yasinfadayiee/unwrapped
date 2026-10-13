@@ -1,4 +1,5 @@
-// Tiny DOM toolkit. Untrusted text (usernames, file contents) only ever
+
+import { t as tl } from './i18n.js';// Tiny DOM toolkit. Untrusted text (usernames, file contents) only ever
 // enters the page through text nodes — never through innerHTML.
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -78,7 +79,7 @@ export function modal({ title, wide = false, onClose } = {}) {
   const previous = document.activeElement;
   const titleId = `m-${Math.random().toString(36).slice(2)}`;
   const body = h('div', { class: 'modal-body' });
-  const closeBtn = h('button', { class: 'icon-btn', 'aria-label': 'Close', type: 'button' }, icon('close'));
+  const closeBtn = h('button', { class: 'icon-btn', 'aria-label': tl('Close'), type: 'button' }, icon('close'));
   const titleEl = h('h2', { id: titleId, class: 'h4', style: { fontSize: '19px' } }, title || '');
   const panel = h(
     'div',
@@ -137,7 +138,7 @@ export async function copyText(text, button) {
   }
   if (button) {
     const prev = button.textContent;
-    button.textContent = 'Copied';
+    button.textContent = tl('Copied');
     button.classList.add('is-done');
     setTimeout(() => {
       button.textContent = prev;

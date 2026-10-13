@@ -2,6 +2,7 @@
 // accounts that don't follow you back drifting on the outer ring.
 
 import { h } from '../lib/ui.js';
+import { t as tl } from '../lib/i18n.js';
 
 const COLORS = { mutual: '#8f7dff', notBack: '#e0574a', fan: '#1a9e8e' };
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -138,7 +139,7 @@ export function heroOrbit(canvas) {
  * Interactive orbit for the dashboard.
  * groups: { mutual: [names], fan: [names], notBack: [names] }
  */
-export function relationshipOrbit(groups, { labels = { mutual: 'Mutual', fan: 'Follows you · you don’t follow back', notBack: 'Doesn’t follow you back' } } = {}) {
+export function relationshipOrbit(groups, { labels = { mutual: tl('Mutual'), fan: tl('Follows you · you don’t follow back'), notBack: tl('Doesn’t follow you back') } } = {}) {
   const wrap = h('div', { class: 'orbit-wrap' });
   const canvas = h('canvas', { role: 'img', 'aria-label': `Network orbit: ${groups.mutual.length} mutuals, ${groups.fan.length} fans, ${groups.notBack.length} not following back` });
   const tip = h('div', { class: 'orbit-tip' });
@@ -201,7 +202,7 @@ export function relationshipOrbit(groups, { labels = { mutual: 'Mutual', fan: 'F
       ctx.fillStyle = '#0a0a0e';
       ctx.font = '700 11px Inter, system-ui, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('YOU', cx, cy + 4);
+      ctx.fillText(tl('YOU'), cx, cy + 4);
 
       let nearest = null;
       let best = 14 * 14;

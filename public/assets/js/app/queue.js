@@ -4,6 +4,7 @@
 import { h, icon, modal, clear, avatarStyle } from '../lib/ui.js';
 import { fmtInt } from '../lib/format.js';
 import { profileUrl, displayName } from './components.js';
+import { t as tl } from '../lib/i18n.js';
 
 const DAILY_SUGGESTED = 100;
 
@@ -38,7 +39,7 @@ export function openQueue(ds, items, ctx, keepKey) {
   const queue = [...items].filter((i) => !kept.has(idOf(i)) && !done.has(idOf(i))).sort((a, b) => (a.ts || 0) - (b.ts || 0));
   let index = 0;
 
-  const m = modal({ title: 'Unfollow queue' });
+  const m = modal({ title: tl('Unfollow queue') });
   const total = queue.length;
 
   function render() {
@@ -47,15 +48,15 @@ export function openQueue(ds, items, ctx, keepKey) {
     const progress = total ? (index / total) * 100 : 100;
     if (!current) {
       m.body.append(
-        h('div', { class: 'queue' }, h('div', { class: 'success-burst' }, icon('check')), h('div', { class: 'h3' }, 'Queue cleared'), h('p', { class: 'text-2' }, `You reviewed ${fmtInt(total)} accounts. Fresh export next week?`)),
+        h('div', { class: 'queue' }, h('div', { class: 'success-burst' }, icon('check')), h('div', { class: 'h3' }, tl('Queue cleared')), h('p', { class: 'text-2' }, tl('You reviewed {v0} accounts. Fresh export next week?', { v0: fmtInt(total) }))),
       );
       return;
     }
     const url = profileUrl(ds.platform, current);
-    const open = h('a', { class: 'btn btn--primary btn--lg', href: url, target: '_blank', rel: 'noopener noreferrer nofollow' }, icon('external'), 'Open profile');
-    const next = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('check'), 'Done — next');
-    const keep = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('pin'), 'Keep following');
-    const skip = h('button', { class: 'btn btn--ghost', type: 'button' }, 'Skip');
+    const open = h('a', { class: 'btn btn--primary btn--lg', href: url, target: '_blank', rel: 'noopener noreferrer nofollow' }, icon('external'), tl('Open profile'));
+    const next = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('check'), tl('Done — next'));
+    const keep = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('pin'), tl('Keep following'));
+    const skip = h('button', { class: 'btn btn--ghost', type: 'button' }, tl('Skip'));
     open.addEventListener('click', () => {
       next.focus();
     });
@@ -80,15 +81,15 @@ export function openQueue(ds, items, ctx, keepKey) {
       h(
         'div',
         { class: 'queue' },
-        h('div', { class: 'progress', 'aria-label': `${index} of ${total} reviewed` }, h('i', { style: { width: `${progress}%` } })),
-        h('div', { class: 'small muted' }, `${fmtInt(index + 1)} of ${fmtInt(total)} · ${fmtInt(state.today || 0)} done today`),
+        h('div', { class: 'progress', 'aria-label': tl('{v0} of {v1} reviewed', { v0: index, v1: total }) }, h('i', { style: { width: `${progress}%` } })),
+        h('div', { class: 'small muted' }, tl('{v0} of {v1} · {v2} done today', { v0: fmtInt(index + 1), v1: fmtInt(total), v2: fmtInt(state.today || 0) })),
         h('span', { class: 'av', style: { ...avatarStyle(idOf(current)), width: '84px', height: '84px', borderRadius: '50%', display: 'grid', placeItems: 'center', fontWeight: '700', fontSize: '24px' } }, idOf(current).slice(0, 2).toUpperCase()),
         h('div', { class: 'who' }, displayName(ds.platform, current)),
         open,
         h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' } }, next, keep, skip),
         pace
-          ? h('div', { class: 'warn-box' }, icon('warning'), h('span', null, `You’ve done ${fmtInt(state.today)} today. Platforms may temporarily limit accounts that unfollow too fast — take a break and continue tomorrow.`))
-          : h('p', { class: 'tiny muted' }, `Tip: stay under ~${DAILY_SUGGESTED} unfollows a day, with breaks, to avoid temporary action limits.`),
+          ? h('div', { class: 'warn-box' }, icon('warning'), h('span', null, tl('You’ve done {v0} today. Platforms may temporarily limit accounts that unfollow too fast — take a break and continue tomorrow.', { v0: fmtInt(state.today) })))
+          : h('p', { class: 'tiny muted' }, tl('Tip: stay under ~{v0} unfollows a day, with breaks, to avoid temporary action limits.', { v0: DAILY_SUGGESTED })),
       ),
     );
   }

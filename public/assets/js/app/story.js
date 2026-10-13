@@ -6,6 +6,7 @@ import { recordStory, videoSupported } from './story-video.js';
 import { fmtInt, compact, hourLabel, duration, pct } from '../lib/format.js';
 import { relationships, watchStats, tweetStats, exposureScore, friendshipRadar, diffSnapshots } from '../core/insights.js';
 import { privacyParts } from './wrapped.js';
+import { t as tl } from '../lib/i18n.js';
 
 const BG = [
   'radial-gradient(80% 70% at 20% 20%, #5a43d6 0%, transparent 60%), radial-gradient(70% 60% at 90% 90%, #1a9e8e 0%, transparent 60%), #07070b',
@@ -16,38 +17,38 @@ const BG = [
 ];
 
 function slidesFor(datasets) {
-  const slides = [{ kicker: 'Ready?', title: 'Your socials,', serif: 'unwrapped.', text: `We decoded ${datasets.map((d) => d.label).join(', ')} — right here on your device.` }];
+  const slides = [{ kicker: tl('Ready?'), title: tl('Your socials,'), serif: tl('unwrapped.'), text: tl('We decoded {v0} — right here on your device.', { v0: datasets.map((d) => d.label).join(', ') }) }];
   let relDone = false;
   let worstPrivacy = null;
   for (const ds of datasets) {
     if (['instagram', 'tiktok', 'threads', 'x'].includes(ds.platform) && ds.hasRelationships && relDone) {
       const rel = relationships(ds);
-      slides.push({ kicker: `${ds.label} · your people`, number: rel.notFollowingBack.length, title: `don’t follow you back on ${ds.label}`, text: `${fmtInt(rel.followers)} followers, ${pct(rel.followBackRate)} follow-back rate.`, accent: 'var(--c2)' });
+      slides.push({ kicker: tl('{v0} · your people', { v0: ds.label }), number: rel.notFollowingBack.length, title: tl('don’t follow you back on {v0}', { v0: ds.label }), text: tl('{v0} followers, {v1} follow-back rate.', { v0: fmtInt(rel.followers), v1: pct(rel.followBackRate) }), accent: 'var(--c2)' });
     } else if (['instagram', 'tiktok', 'threads', 'x'].includes(ds.platform) && ds.hasRelationships) {
       relDone = true;
       const rel = relationships(ds);
-      slides.push({ kicker: `${ds.label} · your people`, number: rel.followers, title: 'people follow you', text: `And you follow ${fmtInt(rel.following)}. ${pct(rel.followBackRate)} of them follow you back.` });
-      if (rel.notFollowingBack.length) slides.push({ kicker: `${ds.label} · the truth`, number: rel.notFollowingBack.length, title: 'don’t follow you back', text: 'Don’t worry — we made you a list. And a safe way to clean it up.', accent: 'var(--c2)' });
+      slides.push({ kicker: tl('{v0} · your people', { v0: ds.label }), number: rel.followers, title: tl('people follow you'), text: tl('And you follow {v0}. {v1} of them follow you back.', { v0: fmtInt(rel.following), v1: pct(rel.followBackRate) }) });
+      if (rel.notFollowingBack.length) slides.push({ kicker: tl('{v0} · the truth', { v0: ds.label }), number: rel.notFollowingBack.length, title: tl('don’t follow you back'), text: tl('Don’t worry — we made you a list. And a safe way to clean it up.'), accent: 'var(--c2)' });
       const snaps = ds._snapshots || [];
       if (snaps.length >= 2) {
         const d = diffSnapshots(snaps[snaps.length - 2], snaps[snaps.length - 1]);
-        slides.push({ kicker: `${ds.label} · since last time`, number: d.unfollowedYou.length, title: d.unfollowedYou.length === 1 ? 'person unfollowed you' : 'people unfollowed you', text: `But ${fmtInt(d.newFollowers.length)} new ones followed. Want to see who?`, accent: 'var(--c2)' });
+        slides.push({ kicker: tl('{v0} · since last time', { v0: ds.label }), number: d.unfollowedYou.length, title: d.unfollowedYou.length === 1 ? tl('person unfollowed you') : tl('people unfollowed you'), text: tl('But {v0} new ones followed. Want to see who?', { v0: fmtInt(d.newFollowers.length) }), accent: 'var(--c2)' });
       }
     }
     if (ds.platform === 'instagram') {
       const radar = friendshipRadar(ds.activity?.messages);
       if (radar) {
-        slides.push({ kicker: 'Instagram · your DMs', number: ds.activity.messages.total, title: 'messages, sent and received', text: `Your inner circle has ${radar.innerCircle.length} people. ${fmtInt(radar.fading.length + radar.quiet.length)} friendships are quietly fading…` });
+        slides.push({ kicker: tl('Instagram · your DMs'), number: ds.activity.messages.total, title: tl('messages, sent and received'), text: tl('Your inner circle has {v0} people. {v1} friendships are quietly fading…', { v0: radar.innerCircle.length, v1: fmtInt(radar.fading.length + radar.quiet.length) }) });
       }
     }
     if (ds.platform === 'tiktok' && ds.watch.length) {
       const w = watchStats(ds.watch);
-      slides.push({ kicker: 'TikTok · screen time', number: Math.round(w.hours), suffix: 'h', title: 'of scrolling', text: `${fmtInt(w.videos)} videos. That’s ${Math.round(w.perDayMinutes)} minutes every single day.`, accent: 'var(--signal)' });
-      slides.push({ kicker: 'TikTok · your longest binge', big: duration(w.longest.ms), title: 'in one sitting', text: `${fmtInt(w.longest.count)} videos without stopping. You’re a ${w.persona.title} — peak hour ${hourLabel(w.peakHour)}.` });
+      slides.push({ kicker: tl('TikTok · screen time'), number: Math.round(w.hours), suffix: 'h', title: tl('of scrolling'), text: tl('{v0} videos. That’s {v1} minutes every single day.', { v0: fmtInt(w.videos), v1: Math.round(w.perDayMinutes) }), accent: 'var(--signal)' });
+      slides.push({ kicker: tl('TikTok · your longest binge'), big: duration(w.longest.ms), title: tl('in one sitting'), text: tl('{v0} videos without stopping. You’re a {v1} — peak hour {v2}.', { v0: fmtInt(w.longest.count), v1: tl(w.persona.title), v2: hourLabel(w.peakHour) }) });
     }
     if (ds.platform === 'x' && ds.tweets.length) {
       const st = tweetStats(ds.tweets);
-      slides.push({ kicker: 'X · everything you posted', number: st.total, title: 'posts, replies & reposts', text: `They earned you ${compact(st.likesEarned)} likes. Your best one got ${fmtInt(st.best[0]?.likes || 0)}.` });
+      slides.push({ kicker: tl('X · everything you posted'), number: st.total, title: tl('posts, replies & reposts'), text: tl('They earned you {v0} likes. Your best one got {v1}.', { v0: compact(st.likesEarned), v1: fmtInt(st.best[0]?.likes || 0) }) });
     }
     const parts = privacyParts(ds);
     if (parts && (parts.advertisers || parts.interests)) {
@@ -57,9 +58,9 @@ function slidesFor(datasets) {
   }
   if (worstPrivacy) {
     const { ds, parts, ex } = worstPrivacy;
-    slides.push({ kicker: `${ds.label} · privacy`, big: ex.grade, title: 'your privacy grade', text: `${fmtInt(parts.advertisers)} advertisers have your data. ${fmtInt(parts.interests)} interests were profiled about you.`, accent: ex.score > 60 ? 'var(--c2)' : 'var(--signal)' });
+    slides.push({ kicker: tl('{v0} · privacy', { v0: ds.label }), big: ex.grade, title: tl('your privacy grade'), text: tl('{v0} advertisers have your data. {v1} interests were profiled about you.', { v0: fmtInt(parts.advertisers), v1: fmtInt(parts.interests) }), accent: ex.score > 60 ? 'var(--c2)' : 'var(--signal)' });
   }
-  slides.push({ kicker: 'That’s the trailer', title: 'Now explore', serif: 'everything.', text: 'Every list, every chart, every card — waiting in your dashboard.', final: true });
+  slides.push({ kicker: tl('That’s the trailer'), title: tl('Now explore'), serif: 'everything.', text: tl('Every list, every chart, every card — waiting in your dashboard.'), final: true });
   return slides;
 }
 
@@ -87,8 +88,8 @@ export function playStory(datasets, { onDone }) {
 
   const bars = h('div', { class: 'story-bars' }, slides.map(() => h('span', null, h('i'))));
   const stage = h('div', { class: 'story-stage', 'aria-live': 'polite' });
-  const skip = h('button', { class: 'story-skip', type: 'button' }, 'Skip', icon('arrow'));
-  const root = h('div', { class: 'story', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Your results story' }, h('div', { class: 'story-bg' }), bars, skip, stage, h('div', { class: 'story-hint' }, 'Tap to continue'));
+  const skip = h('button', { class: 'story-skip', type: 'button' }, tl('Skip'), icon('arrow'));
+  const root = h('div', { class: 'story', role: 'dialog', 'aria-modal': 'true', 'aria-label': tl('Your results story') }, h('div', { class: 'story-bg' }), bars, skip, stage, h('div', { class: 'story-hint' }, tl('Tap to continue')));
   const bg = root.querySelector('.story-bg');
 
   function finish() {
@@ -121,7 +122,7 @@ export function playStory(datasets, { onDone }) {
         ? h(
             'div',
             { style: { display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' } },
-            h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: (e) => { e.stopPropagation(); finish(); } }, 'Open my dashboard', icon('arrow')),
+            h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: (e) => { e.stopPropagation(); finish(); } }, tl('Open my dashboard'), icon('arrow')),
             videoSupported() ? videoButton() : null,
           )
         : null,
@@ -133,25 +134,25 @@ export function playStory(datasets, { onDone }) {
   }
 
   function videoButton() {
-    const btn = h('button', { class: 'btn btn--ghost btn--lg', type: 'button', style: { background: 'rgba(0,0,0,.35)' } }, icon('film'), 'Save as story video');
+    const btn = h('button', { class: 'btn btn--ghost btn--lg', type: 'button', style: { background: 'rgba(0,0,0,.35)' } }, icon('film'), tl('Save as story video'));
     btn.addEventListener('click', async (e) => {
       e.stopPropagation();
       btn.disabled = true;
       try {
-        const blob = await recordStory(slides, { site: location.host, onProgress: (p) => (btn.textContent = `Rendering… ${Math.round(p * 100)}%`) });
+        const blob = await recordStory(slides, { site: location.host, onProgress: (p) => (btn.textContent = tl('Rendering… {v0}%', { v0: Math.round(p * 100) })) });
         const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
         const file = new File([blob], `my-unwrapped-story.${ext}`, { type: blob.type });
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
-            await navigator.share({ files: [file], title: 'My socials, unwrapped' });
+            await navigator.share({ files: [file], title: tl('My socials, unwrapped') });
           } catch {
             /* cancelled */
           }
         } else downloadBlob(blob, file.name);
-        btn.textContent = 'Saved ✓';
+        btn.textContent = tl('Saved ✓');
       } catch (err) {
         console.error(err);
-        btn.textContent = 'Video not supported here';
+        btn.textContent = tl('Video not supported here');
       }
     });
     return btn;

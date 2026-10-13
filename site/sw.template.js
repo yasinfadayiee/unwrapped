@@ -10,6 +10,7 @@ const CORE = [
   '/assets/js/lib/api.js',
   '/assets/js/lib/license.js',
   '/assets/js/lib/format.js',
+  '/assets/js/lib/i18n.js',
   '/assets/js/lib/checkout.js',
   '/assets/js/lib/referral.js',
   '/assets/js/lib/tiers.js',

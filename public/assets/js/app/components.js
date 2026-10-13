@@ -2,6 +2,7 @@ import { h, icon, clear, avatarStyle, csvFile, downloadBlob, toast } from '../li
 import { fmtInt, relTime, dateShort } from '../lib/format.js';
 import { TIER_NAME } from '../lib/tiers.js';
 import { icsReminder } from '../lib/calendar.js';
+import { t as tl } from '../lib/i18n.js';
 
 export function viewHead(title, text, ...actions) {
   return h('div', { class: 'view-head' }, h('div', null, h('h2', null, title), text ? h('p', null, text) : null), actions.length ? h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } }, actions) : null);
@@ -48,9 +49,9 @@ export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tie
       'div',
       { class: 'lock-inner' },
       h('span', { class: 'ico' }, icon('lock')),
-      h('h4', null, title || (count ? `${fmtInt(count)} more ${what}` : `Unlock with ${TIER_NAME[tier]}`)),
-      h('p', null, text || `Unlock the full list, search, CSV export and your unfollower history with ${TIER_NAME[tier]}.`),
-      h('button', { class: 'btn btn--primary', type: 'button', onClick: onUpgrade }, icon('bolt'), `Unlock with ${TIER_NAME[tier]}`),
+      h('h4', null, title || (count ? tl('{v0} more {v1}', { v0: fmtInt(count), v1: what }) : tl('Unlock with {v0}', { v0: TIER_NAME[tier] }))),
+      h('p', null, text || tl('Unlock the full list, search, CSV export and your unfollower history with {v0}.', { v0: TIER_NAME[tier] })),
+      h('button', { class: 'btn btn--primary', type: 'button', onClick: onUpgrade }, icon('bolt'), tl('Unlock with {v0}', { v0: TIER_NAME[tier] })),
     ),
   );
 }
@@ -75,7 +76,7 @@ export function profileUrl(platform, item) {
 }
 
 export function displayName(platform, item) {
-  if (platform === 'x') return `Account #${item.id}`;
+  if (platform === 'x') return tl('Account #{v0}', { v0: item.id });
   if (platform === 'facebook' || platform === 'linkedin') return item.name;
   return `@${item.u}`;
 }
@@ -93,22 +94,22 @@ export function personRow(platform, item, { sub, actions = [], kept = false } = 
       'div',
       { class: 'acts' },
       actions,
-      url ? h('a', { class: 'row-btn', href: url, target: '_blank', rel: 'noopener noreferrer nofollow' }, icon('external'), h('span', { class: 'sr-only' }, `Open ${name}`), 'Open') : null,
+      url ? h('a', { class: 'row-btn', href: url, target: '_blank', rel: 'noopener noreferrer nofollow' }, icon('external'), h('span', { class: 'sr-only' }, tl('Open {v0}', { v0: name })), tl('Open')) : null,
     ),
   );
 }
 
 const SORTS = {
-  newest: { label: 'Newest first', fn: (a, b) => (b.ts || 0) - (a.ts || 0) },
-  oldest: { label: 'Oldest first', fn: (a, b) => (a.ts || Infinity) - (b.ts || Infinity) },
-  az: { label: 'A → Z', fn: (a, b) => String(a.u || a.name || a.id).localeCompare(String(b.u || b.name || b.id)) },
+  newest: { label: tl('Newest first'), fn: (a, b) => (b.ts || 0) - (a.ts || 0) },
+  oldest: { label: tl('Oldest first'), fn: (a, b) => (a.ts || Infinity) - (b.ts || Infinity) },
+  az: { label: tl('A → Z'), fn: (a, b) => String(a.u || a.name || a.id).localeCompare(String(b.u || b.name || b.id)) },
 };
 
 /**
  * Searchable, sortable, incrementally rendered list with a Pro lock.
  * opts: { platform, items, ctx, subFor, exportName, keepKey, emptyText, extraTools }
  */
-export function userList({ platform, items, ctx, subFor, exportName = 'list', keepKey = null, emptyText = 'Nobody here — nice.', extraTools = [] }) {
+export function userList({ platform, items, ctx, subFor, exportName = 'list', keepKey = null, emptyText = tl('Nobody here — nice.'), extraTools = [] }) {
   const root = h('div');
   if (!items.length) return root.appendChild(emptyState(emptyText, 'users')) && root;
 
@@ -120,16 +121,16 @@ export function userList({ platform, items, ctx, subFor, exportName = 'list', ke
   const pro = ctx.pro;
   const limit = ctx.freeLimit;
 
-  const search = h('input', { class: 'input', type: 'search', placeholder: pro ? 'Search…' : 'Search (Pro)', 'aria-label': 'Search this list', disabled: !pro });
+  const search = h('input', { class: 'input', type: 'search', placeholder: pro ? tl('Search…') : tl('Search (Pro)'), 'aria-label': tl('Search this list'), disabled: !pro });
   const sortSel = h(
     'select',
-    { class: 'select', 'aria-label': 'Sort' },
+    { class: 'select', 'aria-label': tl('Sort') },
     Object.entries(SORTS)
       .filter(([k]) => k === 'az' || items.some((i) => i.ts))
       .map(([k, v]) => h('option', { value: k, selected: k === sort }, v.label)),
   );
   const exportBtn = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('download'), 'CSV');
-  const hideKeptBtn = kept ? h('button', { class: 'btn btn--ghost btn--sm', type: 'button', 'aria-pressed': 'false' }, icon('eye'), 'Hide kept') : null;
+  const hideKeptBtn = kept ? h('button', { class: 'btn btn--ghost btn--sm', type: 'button', 'aria-pressed': 'false' }, icon('eye'), tl('Hide kept')) : null;
   const listBox = h('div');
   root.append(h('div', { class: 'list-tools' }, h('label', { class: 'search' }, icon('search'), search), sortSel, hideKeptBtn, exportBtn, extraTools), listBox);
 
@@ -148,7 +149,7 @@ export function userList({ platform, items, ctx, subFor, exportName = 'list', ke
     const actions = [];
     if (kept) {
       const isKept = kept.has(key);
-      const btn = h('button', { class: `row-btn${isKept ? ' is-on' : ''}`, type: 'button', 'aria-pressed': String(isKept), title: 'Keep following (hide from clean-up)' }, icon(isKept ? 'check' : 'pin'), isKept ? 'Kept' : 'Keep');
+      const btn = h('button', { class: `row-btn${isKept ? ' is-on' : ''}`, type: 'button', 'aria-pressed': String(isKept), title: tl('Keep following (hide from clean-up)') }, icon(isKept ? 'check' : 'pin'), isKept ? tl('Kept') : tl('Keep'));
       btn.addEventListener('click', () => {
         ctx.toggleKeep(keepKey, key);
         render();
@@ -162,13 +163,13 @@ export function userList({ platform, items, ctx, subFor, exportName = 'list', ke
     const list = filtered();
     clear(listBox);
     if (!list.length) {
-      listBox.append(emptyState(query ? 'No matches.' : emptyText, 'search'));
+      listBox.append(emptyState(query ? tl('No matches.') : emptyText, 'search'));
       return;
     }
     const visible = pro ? list.slice(0, shown) : list.slice(0, limit);
     listBox.append(h('div', { class: 'rows' }, visible.map(row)));
     if (!pro && list.length > limit) {
-      const ghost = list.slice(limit, limit + 6).map((i) => personRow(platform, { ...i, u: i.u ? 'hidden.account' : i.u, name: i.name ? 'Hidden name' : i.name, id: i.id ? '•••••' : i.id }, { sub: 'Locked' }));
+      const ghost = list.slice(limit, limit + 6).map((i) => personRow(platform, { ...i, u: i.u ? 'hidden.account' : i.u, name: i.name ? tl('Hidden name') : i.name, id: i.id ? '•••••' : i.id }, { sub: tl('Locked') }));
       listBox.append(
         h(
           'div',
@@ -178,7 +179,7 @@ export function userList({ platform, items, ctx, subFor, exportName = 'list', ke
         ),
       );
     } else if (pro && list.length > shown) {
-      const more = h('button', { class: 'btn btn--ghost', type: 'button' }, `Show more (${fmtInt(list.length - shown)} left)`);
+      const more = h('button', { class: 'btn btn--ghost', type: 'button' }, tl('Show more ({v0} left)', { v0: fmtInt(list.length - shown) }));
       more.addEventListener('click', () => {
         shown += 200;
         render();
@@ -206,7 +207,7 @@ export function userList({ platform, items, ctx, subFor, exportName = 'list', ke
     const rows = [['account', 'profile_url', 'date']];
     for (const i of filtered()) rows.push([displayName(platform, i), profileUrl(platform, i) || '', i.ts ? new Date(i.ts).toISOString().slice(0, 10) : '']);
     downloadBlob(csvFile(rows), `${exportName}.csv`);
-    toast('CSV downloaded');
+    toast(tl('CSV downloaded'));
   });
   render();
   return root;
@@ -214,21 +215,21 @@ export function userList({ platform, items, ctx, subFor, exportName = 'list', ke
 
 // Saves a calendar reminder to download a fresh export, so the next one can be
 // compared with today's snapshot.
-export function reminderButton(ds, { days = 14, label = 'Remind me in 2 weeks' } = {}) {
+export function reminderButton(ds, { days = 14, label = tl('Remind me in 2 weeks') } = {}) {
   const btn = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('calendar'), label);
   btn.addEventListener('click', () => {
     const ics = icsReminder({
-      title: `Download a fresh ${ds.label} export`,
-      description: `Request your ${ds.label} data again and drop it on ${location.origin}. Unwrapped compares it with your snapshot from ${dateShort(ds.exportedAt)} and shows exactly who unfollowed you.`,
+      title: tl('Download a fresh {v0} export', { v0: ds.label }),
+      description: tl('Request your {v0} data again and drop it on {v1}. Unwrapped compares it with your snapshot from {v2} and shows exactly who unfollowed you.', { v0: ds.label, v1: location.origin, v2: dateShort(ds.exportedAt) }),
       url: `${location.origin}/#how`,
       days,
     });
     downloadBlob(new Blob([ics], { type: 'text/calendar' }), 'unwrapped-reminder.ics');
-    toast('Reminder saved — open it to add it to your calendar', { iconName: 'calendar', timeout: 4200 });
+    toast(tl('Reminder saved — open it to add it to your calendar'), { iconName: 'calendar', timeout: 4200 });
   });
   return btn;
 }
 
 export function dataNote(ds) {
-  return h('p', { class: 'tiny muted', style: { marginTop: '4px' } }, `Data from your export of ${dateShort(ds.exportedAt)} · processed on this device only.`);
+  return h('p', { class: 'tiny muted', style: { marginTop: '4px' } }, tl('Data from your export of {v0} · processed on this device only.', { v0: dateShort(ds.exportedAt) }));
 }

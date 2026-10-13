@@ -1,14 +1,15 @@
 import { h, icon, toast, downloadBlob } from '../lib/ui.js';
 import { viewHead, panel, emptyState } from './components.js';
 import { THEMES, cardsFor, drawCard, fontsReady, canvasBlob } from './wrapped.js';
+import { t as tl } from '../lib/i18n.js';
 
 // "Share" (native share sheet with the PNG, or a download) and "Save" buttons for a card.
-export function cardButtons(canvas, filename, title = 'My socials, unwrapped') {
-  const save = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('download'), 'Save');
-  const share = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('share'), 'Share');
+export function cardButtons(canvas, filename, title = tl('My socials, unwrapped')) {
+  const save = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('download'), tl('Save'));
+  const share = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('share'), tl('Share'));
   save.addEventListener('click', async () => {
     downloadBlob(await canvasBlob(canvas), filename);
-    toast('Image saved');
+    toast(tl('Image saved'));
   });
   share.addEventListener('click', async () => {
     const blob = await canvasBlob(canvas);
@@ -21,7 +22,7 @@ export function cardButtons(canvas, filename, title = 'My socials, unwrapped') {
       }
     } else {
       downloadBlob(blob, file.name);
-      toast('Saved — share it from your gallery');
+      toast(tl('Saved — share it from your gallery'));
     }
   });
   return h('div', { style: { display: 'flex', gap: '8px' } }, share, save);
@@ -30,19 +31,19 @@ export function cardButtons(canvas, filename, title = 'My socials, unwrapped') {
 export function wrappedView(ds, ctx) {
   const root = h('div', { class: 'app-content' });
   const cards = cardsFor(ds);
-  root.append(viewHead('Wrapped cards', 'Story-sized cards (1080×1920) of your stats — ready for Instagram, TikTok or WhatsApp. They show numbers only, never other people’s names.'));
+  root.append(viewHead(tl('Wrapped cards'), tl('Story-sized cards (1080×1920) of your stats — ready for Instagram, TikTok or WhatsApp. They show numbers only, never other people’s names.')));
   if (!cards.length) {
-    root.append(panel(null, emptyState('Not enough data in this export for a card yet.', 'sparkles')));
+    root.append(panel(null, emptyState(tl('Not enough data in this export for a card yet.'), 'sparkles')));
     return root;
   }
   let theme = 'aurora';
-  const themeRow = h('div', { class: 'theme-row', role: 'group', 'aria-label': 'Card theme' });
+  const themeRow = h('div', { class: 'theme-row', role: 'group', 'aria-label': tl('Card theme') });
   const grid = h('div', { class: 'wrapped-grid' });
   const canvases = [];
 
   for (const [id, t] of Object.entries(THEMES)) {
     const locked = !t.free && !ctx.pro;
-    const dot = h('button', { class: 'theme-dot', type: 'button', style: { background: t.swatch }, 'aria-pressed': String(id === theme), 'aria-label': `${t.label} theme${locked ? ' (Pro)' : ''}` }, locked ? h('span', { class: 'lk' }, icon('lock')) : null);
+    const dot = h('button', { class: 'theme-dot', type: 'button', style: { background: t.swatch }, 'aria-pressed': String(id === theme), 'aria-label': tl('{v0} theme{v1}', { v0: t.label, v1: locked ? ' (Pro)' : '' }) }, locked ? h('span', { class: 'lk' }, icon('lock')) : null);
     dot.addEventListener('click', () => {
       if (locked) return ctx.upgrade('themes');
       theme = id;
@@ -66,7 +67,7 @@ export function wrappedView(ds, ctx) {
 
   root.append(
     panel(
-      { title: 'Theme', text: ctx.pro ? 'All themes unlocked · no watermark' : 'Free cards include a small watermark. Plus unlocks every theme without it.' },
+      { title: tl('Theme'), text: ctx.pro ? tl('All themes unlocked · no watermark') : tl('Free cards include a small watermark. Plus unlocks every theme without it.') },
       themeRow,
     ),
     grid,

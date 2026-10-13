@@ -7,37 +7,38 @@ import { relationshipViews, relationshipStats, networkPanel, exposurePanel, tagC
 import { barChart, heatmapChart, rankList } from './charts.js';
 import { wrappedView } from './views-wrapped.js';
 import { privacyParts } from './wrapped.js';
+import { t as tl } from '../lib/i18n.js';
 
 function overview(ds, ctx) {
   const w = watchStats(ds.watch);
   const root = h('div', { class: 'app-content' });
   const a = ds.account;
-  root.append(viewHead(a.username ? `@${a.username}` : 'TikTok', `TikTok export from ${dateShort(ds.exportedAt)}`));
+  root.append(viewHead(a.username ? `@${a.username}` : tl('TikTok'), tl('TikTok export from {v0}', { v0: dateShort(ds.exportedAt) })));
   if (!w) {
-    root.append(panel(null, emptyState('No watch history in this export. Request “All data” in JSON to get it.', 'clock')));
+    root.append(panel(null, emptyState(tl('No watch history in this export. Request “All data” in JSON to get it.'), 'clock')));
   } else {
     const days = w.hours / 24;
     root.append(
       h(
         'div',
         { class: 'stats' },
-        stat({ hero: true, label: `Time on TikTok · ${dateShort(w.first)} – ${dateShort(w.last)}`, value: `${fmtInt(w.hours)} hours`, sub: `≈ ${Math.round(w.perDayMinutes)} minutes a day · ${days >= 1 ? `${days.toFixed(1)} full days nonstop` : 'less than a day nonstop'}` }),
-        stat({ label: 'Videos watched', value: compact(w.videos), sub: `${Math.round(w.perDayVideos)} per day` }),
-        stat({ label: 'Sessions', value: fmtInt(w.sessions), sub: `avg ${Math.round(w.avgSessionMinutes)} min` }),
-        stat({ label: 'Longest binge', value: duration(w.longest.ms), sub: `${fmtInt(w.longest.count)} videos · ${dateShort(w.longest.start)}` }),
-        stat({ label: 'Peak hour', value: hourLabel(w.peakHour), sub: `${Math.round(w.nightShare * 100)}% after midnight` }),
+        stat({ hero: true, label: tl('Time on TikTok · {v0} – {v1}', { v0: dateShort(w.first), v1: dateShort(w.last) }), value: tl('{v0} hours', { v0: fmtInt(w.hours) }), sub: `${tl('≈ {v0} minutes a day', { v0: Math.round(w.perDayMinutes) })} · ${days >= 1 ? tl('{v0} full days nonstop', { v0: days.toFixed(1) }) : tl('less than a day nonstop')}` }),
+        stat({ label: tl('Videos watched'), value: compact(w.videos), sub: tl('{v0} per day', { v0: Math.round(w.perDayVideos) }) }),
+        stat({ label: tl('Sessions'), value: fmtInt(w.sessions), sub: tl('avg {v0} min', { v0: Math.round(w.avgSessionMinutes) }) }),
+        stat({ label: tl('Longest binge'), value: duration(w.longest.ms), sub: tl('{v0} videos · {v1}', { v0: fmtInt(w.longest.count), v1: dateShort(w.longest.start) }) }),
+        stat({ label: tl('Peak hour'), value: hourLabel(w.peakHour), sub: tl('{v0}% after midnight', { v0: Math.round(w.nightShare * 100) }) }),
       ),
       panel(
-        { title: 'When you scroll', text: 'Videos watched by weekday and hour (your local time)' },
-        heatmapChart(w.heat, { unit: 'videos' }),
+        { title: tl('When you scroll'), text: tl('Videos watched by weekday and hour (your local time)') },
+        heatmapChart(w.heat, { unit: tl('videos') }),
       ),
       panel(
-        { title: `You’re a ${w.persona.title}` },
+        { title: tl('You’re a {v0}', { v0: tl(w.persona.title) }) },
         insights([
-          { icon: 'moon', title: w.persona.title, text: w.persona.line },
-          { icon: 'flame', title: `Biggest day: ${fmtInt(w.topDay.count)} videos`, text: `On ${dateShort(new Date(`${w.topDay.day}T12:00:00`).getTime())}.` },
-          { icon: 'calendar', title: `${fmtInt(w.streak)}-day streak`, text: `You opened TikTok on ${fmtInt(w.activeDays)} of ${fmtInt(w.spanDays)} days.` },
-          { icon: 'film', title: `That’s about ${fmtInt(w.hours / 2)} movies`, text: 'If every two hours of scrolling were a feature film.' },
+          { icon: 'moon', title: tl(w.persona.title), text: tl(w.persona.line) },
+          { icon: 'flame', title: tl('Biggest day: {v0} videos', { v0: fmtInt(w.topDay.count) }), text: `On ${dateShort(new Date(`${w.topDay.day}T12:00:00`).getTime())}.` },
+          { icon: 'calendar', title: tl('{v0}-day streak', { v0: fmtInt(w.streak) }), text: tl('You opened TikTok on {v0} of {v1} days.', { v0: fmtInt(w.activeDays), v1: fmtInt(w.spanDays) }) },
+          { icon: 'film', title: tl('That’s about {v0} movies', { v0: fmtInt(w.hours / 2) }), text: tl('If every two hours of scrolling were a feature film.') },
         ]),
       ),
     );
@@ -52,8 +53,8 @@ function overview(ds, ctx) {
 
 function habitsView(ds, ctx) {
   const w = watchStats(ds.watch);
-  const root = h('div', { class: 'app-content' }, viewHead('Your habits', 'How your scrolling changed over time — and your biggest binges.'));
-  if (!w) return root.appendChild(panel(null, emptyState('No watch history in this export.', 'clock'))) && root;
+  const root = h('div', { class: 'app-content' }, viewHead(tl('Your habits'), tl('How your scrolling changed over time — and your biggest binges.')));
+  if (!w) return root.appendChild(panel(null, emptyState(tl('No watch history in this export.'), 'clock'))) && root;
   const months = w.months.map((m) => ({ label: monthLabel(m.month), short: monthLabel(m.month, true), value: m.count }));
   const hours = w.byHour.map((v, i) => ({ label: hourLabel(i), short: i % 3 === 0 ? `${i}h` : '', value: v }));
   // Rebuild the top sessions for the list.
@@ -74,9 +75,9 @@ function habitsView(ds, ctx) {
   }
   const top = sessions.sort((a, b) => b.ms - a.ms).slice(0, ctx.pro || ctx.demo ? 10 : 3);
   root.append(
-    h('div', { class: 'panels panels--2' }, panel({ title: 'Videos by month' }, barChart(months, { title: 'Videos', ariaLabel: 'Videos watched by month' })), panel({ title: 'Videos by hour of day' }, barChart(hours, { title: 'Videos', ariaLabel: 'Videos by hour' }))),
+    h('div', { class: 'panels panels--2' }, panel({ title: tl('Videos by month') }, barChart(months, { title: tl('Videos'), ariaLabel: tl('Videos watched by month') })), panel({ title: tl('Videos by hour of day') }, barChart(hours, { title: tl('Videos'), ariaLabel: tl('Videos by hour') }))),
     panel(
-      { title: 'Your longest binges' },
+      { title: tl('Your longest binges') },
       h(
         'div',
         { class: 'rows' },
@@ -85,19 +86,19 @@ function habitsView(ds, ctx) {
             'div',
             { class: 'row' },
             h('span', { class: 'count-pill' }, `#${i + 1}`),
-            h('div', { class: 'who' }, h('b', null, duration(s.ms)), h('span', null, `${fmtInt(s.count)} videos · ${new Date(s.start).toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}`)),
+            h('div', { class: 'who' }, h('b', null, duration(s.ms)), h('span', null, tl('{v0} videos · {v1}', { v0: fmtInt(s.count), v1: new Date(s.start).toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) }))),
           ),
         ),
       ),
-      !ctx.pro && !ctx.demo ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('habits') }, icon('lock'), 'See your top 10 with Plus')) : null,
+      !ctx.pro && !ctx.demo ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('habits') }, icon('lock'), tl('See your top 10 with Plus'))) : null,
     ),
   );
   if (ds.likes.length) {
     const likeMonths = byMonth(ds.likes).map((m) => ({ label: monthLabel(m.month), short: monthLabel(m.month, true), value: m.count }));
     root.append(
       panel(
-        { title: `Likes · ${fmtInt(ds.likes.length)}`, text: `You liked ${((ds.likes.length / Math.max(1, w.videos)) * 100).toFixed(1)}% of the videos you watched` },
-        barChart(likeMonths, { title: 'Likes', ariaLabel: 'Likes by month', color: 'var(--c3)' }),
+        { title: tl('Likes · {v0}', { v0: fmtInt(ds.likes.length) }), text: tl('You liked {v0}% of the videos you watched', { v0: ((ds.likes.length / Math.max(1, w.videos)) * 100).toFixed(1) }) },
+        barChart(likeMonths, { title: tl('Likes'), ariaLabel: tl('Likes by month'), color: 'var(--c3)' }),
       ),
     );
   }
@@ -110,48 +111,48 @@ function searchesView(ds, ctx) {
   return h(
     'div',
     { class: 'app-content' },
-    viewHead('Your searches', `${fmtInt(ds.searches.length)} searches in this export.`),
+    viewHead(tl('Your searches'), tl('{v0} searches in this export.', { v0: fmtInt(ds.searches.length) })),
     ds.searches.length
       ? h(
           'div',
           { class: 'panels panels--2' },
-          panel({ title: 'Most searched' }, rankList(top, { limit: ctx.pro || ctx.demo ? 20 : 5 })),
-          panel({ title: 'Recent searches' }, tagCloud(ds.searches.map((s) => s.term), { locked: !ctx.pro && !ctx.demo, ctx, limit: 60 })),
+          panel({ title: tl('Most searched') }, rankList(top, { limit: ctx.pro || ctx.demo ? 20 : 5 })),
+          panel({ title: tl('Recent searches') }, tagCloud(ds.searches.map((s) => s.term), { locked: !ctx.pro && !ctx.demo, ctx, limit: 60 })),
         )
-      : panel(null, emptyState('No searches found.', 'search')),
+      : panel(null, emptyState(tl('No searches found.'), 'search')),
   );
 }
 
 function privacyView(ds, ctx) {
   const parts = privacyParts(ds) || { advertisers: 0, interests: 0, ips: 0, apps: 0 };
-  const devices = countMap(ds.logins, (l) => l.device || 'Unknown device');
-  const root = h('div', { class: 'app-content' }, viewHead('Privacy X-ray', 'What TikTok recorded about your logins and ad profile.'));
+  const devices = countMap(ds.logins, (l) => l.device || tl('Unknown device'));
+  const root = h('div', { class: 'app-content' }, viewHead(tl('Privacy X-ray'), tl('What TikTok recorded about your logins and ad profile.')));
   root.append(
     exposurePanel(parts, [
-      { icon: 'device', title: 'Review your devices', text: 'Settings → Security → Your devices — remove anything you don’t recognise.' },
-      ds.offTiktok ? { icon: 'globe', title: `${fmtInt(ds.offTiktok)} activities from other apps & sites`, text: 'Settings → Privacy → Ads and data — limit off-TikTok activity.' } : null,
+      { icon: 'device', title: tl('Review your devices'), text: tl('Settings → Security → Your devices — remove anything you don’t recognise.') },
+      ds.offTiktok ? { icon: 'globe', title: tl('{v0} activities from other apps & sites', { v0: fmtInt(ds.offTiktok) }), text: tl('Settings → Privacy → Ads and data — limit off-TikTok activity.') } : null,
     ]),
     h(
       'div',
       { class: 'stats' },
-      stat({ label: 'Logins recorded', value: fmtInt(ds.logins.length) }),
-      stat({ label: 'IP addresses', value: fmtInt(parts.ips) }),
-      stat({ label: 'Ad interest categories', value: fmtInt(ds.adInterests.length) }),
-      stat({ label: 'Off-TikTok activities', value: fmtInt(ds.offTiktok) }),
+      stat({ label: tl('Logins recorded'), value: fmtInt(ds.logins.length) }),
+      stat({ label: tl('IP addresses'), value: fmtInt(parts.ips) }),
+      stat({ label: tl('Ad interest categories'), value: fmtInt(ds.adInterests.length) }),
+      stat({ label: tl('Off-TikTok activities'), value: fmtInt(ds.offTiktok) }),
     ),
   );
-  if (ds.logins.length) root.append(panel({ title: 'Devices' }, rankList(topN(devices, 10), { color: 'var(--c3)' })));
-  if (ds.adInterests.length) root.append(panel({ title: 'Ad interests TikTok assigned you' }, tagCloud(ds.adInterests)));
+  if (ds.logins.length) root.append(panel({ title: tl('Devices') }, rankList(topN(devices, 10), { color: 'var(--c3)' })));
+  if (ds.adInterests.length) root.append(panel({ title: tl('Ad interests TikTok assigned you') }, tagCloud(ds.adInterests)));
   return root;
 }
 
 export function tiktokViews(ds, ctx) {
   const keepKey = `tiktok:${ds.account?.username || 'me'}`;
-  const views = [{ id: 'overview', label: 'Screen time', icon: 'clock', render: () => overview(ds, ctx) }];
-  if (ds.watch.length) views.push({ id: 'habits', label: 'Habits & binges', icon: 'flame', render: () => habitsView(ds, ctx) });
+  const views = [{ id: 'overview', label: tl('Screen time'), icon: 'clock', render: () => overview(ds, ctx) }];
+  if (ds.watch.length) views.push({ id: 'habits', label: tl('Habits & binges'), icon: 'flame', render: () => habitsView(ds, ctx) });
   if (ds.hasRelationships) views.push(...relationshipViews(ds, ctx, { keepKey }));
-  if (ds.searches.length) views.push({ id: 'searches', label: 'Searches', icon: 'search', count: ds.searches.length, render: () => searchesView(ds, ctx) });
-  if (ds.logins.length || ds.adInterests.length || ds.offTiktok) views.push({ id: 'privacy', label: 'Privacy X-ray', icon: 'fingerprint', render: () => privacyView(ds, ctx) });
-  views.push({ id: 'wrapped', label: 'Wrapped cards', icon: 'sparkles', render: () => wrappedView(ds, ctx) });
+  if (ds.searches.length) views.push({ id: 'searches', label: tl('Searches'), icon: 'search', count: ds.searches.length, render: () => searchesView(ds, ctx) });
+  if (ds.logins.length || ds.adInterests.length || ds.offTiktok) views.push({ id: 'privacy', label: tl('Privacy X-ray'), icon: 'fingerprint', render: () => privacyView(ds, ctx) });
+  views.push({ id: 'wrapped', label: tl('Wrapped cards'), icon: 'sparkles', render: () => wrappedView(ds, ctx) });
   return views;
 }

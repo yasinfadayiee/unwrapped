@@ -2,6 +2,7 @@
 // MediaRecorder) ready for Instagram / TikTok stories. Numbers only.
 
 import { fontsReady } from './wrapped.js';
+import { t as tl } from '../lib/i18n.js';
 
 const W = 1080;
 const H = 1920;
@@ -101,7 +102,7 @@ function drawFrame(ctx, slide, i, t, total, site) {
   ctx.globalAlpha = 1;
   ctx.fillStyle = 'rgba(255,255,255,0.7)';
   ctx.font = '600 34px Inter, sans-serif';
-  ctx.fillText(`made with ${site}`, W / 2, H - 110);
+  ctx.fillText(tl('made with {v0}', { v0: site }), W / 2, H - 110);
 }
 
 const ACCENTS = { 'var(--c2)': '#ff7b6e', 'var(--signal)': '#d7ff3a' };
@@ -113,7 +114,7 @@ export async function recordStory(slides, { site, onProgress } = {}) {
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   const list = slides.filter((s) => !s.final).map((s) => ({ ...s, accentHex: ACCENTS[s.accent] }));
-  list.push({ kicker: 'Your turn', title: 'Unwrap yours at', serif: site, text: 'No password. Nothing uploaded.' });
+  list.push({ kicker: tl('Your turn'), title: tl('Unwrap yours at'), serif: site, text: tl('No password. Nothing uploaded.') });
   const mime = pickMime();
   const stream = canvas.captureStream(30);
   const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 6_000_000 });

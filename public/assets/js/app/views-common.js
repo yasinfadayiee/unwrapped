@@ -8,6 +8,7 @@ import { relationshipOrbit } from './orbit.js';
 import { barChart, splitBar } from './charts.js';
 import { deleteSnapshot } from './snapshots.js';
 import { openQueue } from './queue.js';
+import { t as tl } from '../lib/i18n.js';
 
 export const C = { mutual: 'var(--c1)', notBack: 'var(--c2)', fan: 'var(--c3)', other: 'var(--c4)' };
 
@@ -20,11 +21,11 @@ export function relationshipStats(ds, ctx) {
     tiles: h(
       'div',
       { class: 'stats stats--5' },
-      stat({ label: 'Followers', value: fmtInt(rel.followers) }),
-      stat({ label: 'Following', value: fmtInt(rel.following) }),
-      stat({ label: 'Mutuals', value: fmtInt(rel.mutuals.length), color: C.mutual, sub: `${pct(rel.followBackRate)} follow back`, onClick: () => ctx.go('mutuals') }),
-      stat({ label: 'Not following back', value: fmtInt(rel.notFollowingBack.length), color: C.notBack, sub: 'Tap to review', onClick: () => ctx.go('notBack') }),
-      stat({ label: 'Fans', value: fmtInt(rel.fans.length), color: C.fan, sub: 'You don’t follow back', onClick: () => ctx.go('fans') }),
+      stat({ label: tl('Followers'), value: fmtInt(rel.followers) }),
+      stat({ label: tl('Following'), value: fmtInt(rel.following) }),
+      stat({ label: tl('Mutuals'), value: fmtInt(rel.mutuals.length), color: C.mutual, sub: tl('{v0} follow back', { v0: pct(rel.followBackRate) }), onClick: () => ctx.go('mutuals') }),
+      stat({ label: tl('Not following back'), value: fmtInt(rel.notFollowingBack.length), color: C.notBack, sub: tl('Tap to review'), onClick: () => ctx.go('notBack') }),
+      stat({ label: tl('Fans'), value: fmtInt(rel.fans.length), color: C.fan, sub: tl('You don’t follow back'), onClick: () => ctx.go('fans') }),
     ),
   };
 }
@@ -36,15 +37,15 @@ export function networkPanel(ds, rel) {
     notBack: rel.notFollowingBack.map((i) => name(ds.platform, i)),
   };
   return panel(
-    { title: 'Your network orbit', text: 'Every dot is an account. Hover to see who.' },
+    { title: tl('Your network orbit'), text: tl('Every dot is an account. Hover to see who.') },
     relationshipOrbit(groups),
     h(
       'div',
       { style: { marginTop: '16px' } },
       splitBar([
-        { label: 'Mutuals', value: rel.mutuals.length, color: C.mutual },
-        { label: 'Not following back', value: rel.notFollowingBack.length, color: C.notBack },
-        { label: 'Fans', value: rel.fans.length, color: C.fan },
+        { label: tl('Mutuals'), value: rel.mutuals.length, color: C.mutual },
+        { label: tl('Not following back'), value: rel.notFollowingBack.length, color: C.notBack },
+        { label: tl('Fans'), value: rel.fans.length, color: C.fan },
       ]),
     ),
   );
@@ -57,19 +58,19 @@ export function relationshipInsights(ds, rel) {
   return insights([
     rel.following && {
       icon: 'users',
-      title: `${pct(rel.followBackRate)} of the accounts you follow follow you back`,
-      text: rel.followBackRate > 0.75 ? 'That’s a strong, reciprocal network.' : 'A clean-up could make your feed feel more like yours.',
+      title: tl('{v0} of the accounts you follow follow you back', { v0: pct(rel.followBackRate) }),
+      text: rel.followBackRate > 0.75 ? tl('That’s a strong, reciprocal network.') : tl('A clean-up could make your feed feel more like yours.'),
     },
     staleNotBack && {
       icon: 'clock',
-      title: `${plural(staleNotBack, 'account')} never followed back in over a year`,
-      text: 'Prime candidates for the unfollow queue.',
+      title: tl('{v0} never followed back in over a year', { v0: plural(staleNotBack, 'account') }),
+      text: tl('Prime candidates for the unfollow queue.'),
     },
-    recentFollowers && { icon: 'user-plus', title: `${plural(recentFollowers, 'new follower')} in the 30 days before your export`, text: 'Based on the follow dates inside your export.' },
+    recentFollowers && { icon: 'user-plus', title: tl('{v0} in the 30 days before your export', { v0: plural(recentFollowers, 'new follower') }), text: tl('Based on the follow dates inside your export.') },
     oldestMutual && {
       icon: 'heart',
-      title: `Your oldest mutual: ${ds.platform === 'x' ? 'an account' : `@${oldestMutual.u}`}`,
-      text: `Connected since ${dateShort(oldestMutual.since)}.`,
+      title: tl('Your oldest mutual: {v0}', { v0: ds.platform === 'x' ? tl('an account') : `@${oldestMutual.u}` }),
+      text: tl('Connected since {v0}.', { v0: dateShort(oldestMutual.since) }),
     },
   ]);
 }
@@ -80,52 +81,52 @@ export function relationshipViews(ds, ctx, { keepKey }) {
   const views = [
     {
       id: 'notBack',
-      label: 'Not following back',
+      label: tl('Not following back'),
       icon: 'user-minus',
       count: rel.notFollowingBack.length,
       render: () => {
-        const queueBtn = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('bolt'), 'Start unfollow queue');
+        const queueBtn = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('bolt'), tl('Start unfollow queue'));
         queueBtn.addEventListener('click', () => (ctx.can('queue') ? openQueue(ds, rel.notFollowingBack, ctx, keepKey) : ctx.upgrade('queue')));
         return h(
           'div',
           { class: 'app-content' },
-          viewHead('Not following you back', `${fmtInt(rel.notFollowingBack.length)} accounts you follow don’t follow you. Tap “Keep” on the ones you want to keep (creators, brands, friends).`, queueBtn),
-          panel(null, userList({ platform: ds.platform, items: rel.notFollowingBack, ctx, subFor: sub('You followed'), exportName: `${ds.platform}-not-following-back`, keepKey })),
+          viewHead(tl('Not following you back'), tl('{v0} accounts you follow don’t follow you. Tap “Keep” on the ones you want to keep (creators, brands, friends).', { v0: fmtInt(rel.notFollowingBack.length) }), queueBtn),
+          panel(null, userList({ platform: ds.platform, items: rel.notFollowingBack, ctx, subFor: sub(tl('You followed')), exportName: `${ds.platform}-not-following-back`, keepKey })),
           dataNote(ds),
         );
       },
     },
     {
       id: 'fans',
-      label: 'Fans',
+      label: tl('Fans'),
       icon: 'star',
       count: rel.fans.length,
       render: () =>
         h(
           'div',
           { class: 'app-content' },
-          viewHead('Your fans', `${fmtInt(rel.fans.length)} accounts follow you, but you don’t follow them back.`),
-          panel(null, userList({ platform: ds.platform, items: rel.fans, ctx, subFor: sub('Followed you'), exportName: `${ds.platform}-fans` })),
+          viewHead(tl('Your fans'), tl('{v0} accounts follow you, but you don’t follow them back.', { v0: fmtInt(rel.fans.length) })),
+          panel(null, userList({ platform: ds.platform, items: rel.fans, ctx, subFor: sub(tl('Followed you')), exportName: `${ds.platform}-fans` })),
           dataNote(ds),
         ),
     },
     {
       id: 'mutuals',
-      label: 'Mutuals',
+      label: tl('Mutuals'),
       icon: 'users',
       count: rel.mutuals.length,
       render: () =>
         h(
           'div',
           { class: 'app-content' },
-          viewHead('Mutuals', `${fmtInt(rel.mutuals.length)} accounts follow you and you follow them.`),
-          panel(null, userList({ platform: ds.platform, items: rel.mutuals.map((m) => ({ ...m, ts: m.since })), ctx, subFor: (i) => (i.ts ? `Mutual since ${dateShort(i.ts)}` : ''), exportName: `${ds.platform}-mutuals` })),
+          viewHead(tl('Mutuals'), tl('{v0} accounts follow you and you follow them.', { v0: fmtInt(rel.mutuals.length) })),
+          panel(null, userList({ platform: ds.platform, items: rel.mutuals.map((m) => ({ ...m, ts: m.since })), ctx, subFor: (i) => (i.ts ? tl('Mutual since {v0}', { v0: dateShort(i.ts) }) : ''), exportName: `${ds.platform}-mutuals` })),
           dataNote(ds),
         ),
     },
     {
       id: 'unfollowers',
-      label: 'Who unfollowed you',
+      label: tl('Who unfollowed you'),
       icon: 'ghost',
       pro: true,
       render: () => unfollowersView(ds, ctx),
@@ -144,18 +145,19 @@ function labelFor(ds, snap, key) {
 export function unfollowersView(ds, ctx) {
   const root = h('div', { class: 'app-content' });
   const snaps = ctx.snapshots || [];
-  const word = ds.platform === 'facebook' ? 'unfriended' : 'unfollowed';
-  root.append(viewHead(`Who ${word} you`, `Every export you analyze is saved as a private snapshot in this browser. Comparing snapshots shows exactly who left — no login, no tracking.`, reminderButton(ds)));
+  const fb = ds.platform === 'facebook';
+  const leftLabel = fb ? tl('Unfriended you') : tl('Unfollowed you');
+  root.append(viewHead(fb ? tl('Who unfriended you') : tl('Who unfollowed you'), tl('Every export you analyze is saved as a private snapshot in this browser. Comparing snapshots shows exactly who left — no login, no tracking.'), reminderButton(ds)));
 
   if (snaps.length < 2) {
     root.append(
       panel(
-        { title: 'Your first snapshot is saved', text: snaps[0] ? `Snapshot from ${dateShort(snaps[0].takenAt)} · ${fmtInt(snaps[0].followers.length)} ${ds.platform === 'facebook' ? 'friends' : 'followers'}` : '' },
+        { title: tl('Your first snapshot is saved'), text: snaps[0] ? (fb ? tl('Snapshot from {v0} · {v1} friends', { v0: dateShort(snaps[0].takenAt), v1: fmtInt(snaps[0].followers.length) }) : tl('Snapshot from {v0} · {v1} followers', { v0: dateShort(snaps[0].takenAt), v1: fmtInt(snaps[0].followers.length) })) : '' },
         insights([
-          { icon: 'calendar', title: 'Download a fresh export in a week or two', text: 'Request the same data again and drop it here — we’ll compare it with this snapshot automatically.' },
-          { icon: 'ghost', title: 'You’ll see who left, by name', text: 'Plus new followers, and who you unfollowed in between.' },
-          { icon: 'shield', title: 'Stored only on this device', text: 'Snapshots live in your browser’s storage. Clearing site data deletes them.' },
-          !ctx.pro && { icon: 'bolt', title: 'Seeing the names needs Plus', text: 'Free shows how many unfollowed you; Plus reveals who.' },
+          { icon: 'calendar', title: tl('Download a fresh export in a week or two'), text: tl('Request the same data again and drop it here — we’ll compare it with this snapshot automatically.') },
+          { icon: 'ghost', title: tl('You’ll see who left, by name'), text: tl('Plus new followers, and who you unfollowed in between.') },
+          { icon: 'shield', title: tl('Stored only on this device'), text: tl('Snapshots live in your browser’s storage. Clearing site data deletes them.') },
+          !ctx.pro && { icon: 'bolt', title: tl('Seeing the names needs Plus'), text: tl('Free shows how many unfollowed you; Plus reveals who.') },
         ]),
       ),
     );
@@ -166,36 +168,36 @@ export function unfollowersView(ds, ctx) {
   let fromIdx = snaps.length - 2;
   const body = h('div', { class: 'panels' });
   const pick = (value, cb) => {
-    const sel = h('select', { class: 'select', 'aria-label': 'Compare snapshots' }, snaps.map((s, i) => h('option', { value: String(i), selected: i === value }, `${dateShort(s.takenAt)} · ${fmtInt(s.followers.length)}`)));
+    const sel = h('select', { class: 'select', 'aria-label': tl('Compare snapshots') }, snaps.map((s, i) => h('option', { value: String(i), selected: i === value }, `${dateShort(s.takenAt)} · ${fmtInt(s.followers.length)}`)));
     sel.addEventListener('change', () => cb(Number(sel.value)));
     return sel;
   };
   const controls = h(
     'div',
     { class: 'list-tools' },
-    h('span', { class: 'small muted' }, 'Compare'),
+    h('span', { class: 'small muted' }, tl('Compare')),
     pick(fromIdx, (v) => {
       fromIdx = v;
       draw();
     }),
-    h('span', { class: 'small muted' }, 'with'),
+    h('span', { class: 'small muted' }, tl('with')),
     pick(toIdx, (v) => {
       toIdx = v;
       draw();
     }),
   );
 
-  function list(keys, snap, title, verb) {
+  function list(keys, snap, title) {
     const items = keys.map((k) => labelFor(ds, snap, k));
-    if (!items.length) return panel({ title }, emptyState(`Nobody ${verb} in this period.`, 'check'));
+    if (!items.length) return panel({ title }, emptyState(tl('Nobody in this period.'), 'check'));
     if (!ctx.pro) {
       return panel(
         { title: `${title} · ${fmtInt(items.length)}` },
         h(
           'div',
           { class: 'locked', style: { minHeight: '260px' } },
-          h('div', { class: 'locked-rows' }, items.slice(0, 5).map((i) => personRow(ds.platform, { ...i, u: i.u && 'hidden.account', name: i.name && 'Hidden name', id: i.id && '•••' }, { sub: 'Locked' }))),
-          lockCard({ count: items.length, what: 'names', title: `See all ${fmtInt(items.length)} names`, text: 'Plus shows exactly who it was — and keeps your full unfollower history.', onUpgrade: () => ctx.upgrade('unfollowers') }),
+          h('div', { class: 'locked-rows' }, items.slice(0, 5).map((i) => personRow(ds.platform, { ...i, u: i.u && 'hidden.account', name: i.name && tl('Hidden name'), id: i.id && '•••' }, { sub: tl('Locked') }))),
+          lockCard({ count: items.length, what: tl('names'), title: tl('See all {v0} names', { v0: fmtInt(items.length) }), text: tl('Plus shows exactly who it was — and keeps your full unfollower history.'), onUpgrade: () => ctx.upgrade('unfollowers') }),
         ),
       );
     }
@@ -215,37 +217,37 @@ export function unfollowersView(ds, ctx) {
       h(
         'div',
         { class: 'stats' },
-        stat({ label: `${word[0].toUpperCase()}${word.slice(1)} you`, value: fmtInt(diff.unfollowedYou.length), color: C.notBack, sub: `${dateShort(from.takenAt)} → ${dateShort(to.takenAt)}` }),
-        stat({ label: 'New followers', value: fmtInt(diff.newFollowers.length), color: C.fan }),
-        ds.platform !== 'facebook' ? stat({ label: 'You unfollowed', value: fmtInt(diff.youUnfollowed.length) }) : null,
-        ds.platform !== 'facebook' ? stat({ label: 'You followed', value: fmtInt(diff.youFollowed.length) }) : null,
+        stat({ label: leftLabel, value: fmtInt(diff.unfollowedYou.length), color: C.notBack, sub: `${dateShort(from.takenAt)} → ${dateShort(to.takenAt)}` }),
+        stat({ label: tl('New followers'), value: fmtInt(diff.newFollowers.length), color: C.fan }),
+        ds.platform !== 'facebook' ? stat({ label: tl('You unfollowed'), value: fmtInt(diff.youUnfollowed.length) }) : null,
+        ds.platform !== 'facebook' ? stat({ label: tl('You followed'), value: fmtInt(diff.youFollowed.length) }) : null,
       ),
-      list(diff.unfollowedYou, from, `${word[0].toUpperCase()}${word.slice(1)} you`, word + ' you'),
-      h('div', { class: 'panels panels--2' }, list(diff.newFollowers, to, 'New followers', 'followed you'), ds.platform !== 'facebook' ? list(diff.youUnfollowed, from, 'You unfollowed', 'was unfollowed') : null),
-      h('p', { class: 'tiny muted' }, 'Accounts that were deactivated or deleted also disappear from follower lists.'),
+      list(diff.unfollowedYou, from, leftLabel),
+      h('div', { class: 'panels panels--2' }, list(diff.newFollowers, to, tl('New followers')), ds.platform !== 'facebook' ? list(diff.youUnfollowed, from, tl('You unfollowed')) : null),
+      h('p', { class: 'tiny muted' }, tl('Accounts that were deactivated or deleted also disappear from follower lists.')),
     );
   }
 
   const timeline = panel(
-    { title: 'Followers over time', text: `${snaps.length} snapshots saved on this device` },
+    { title: tl('Followers over time'), text: tl('{v0} snapshots saved on this device', { v0: snaps.length }) },
     barChart(
       snaps.map((s) => ({ label: dateShort(s.takenAt), short: dateShort(s.takenAt).replace(/, \d{4}$/, ''), value: s.followers.length })),
-      { title: 'Followers', ariaLabel: 'Followers per snapshot', height: 200 },
+      { title: tl('Followers'), ariaLabel: tl('Followers per snapshot'), height: 200 },
     ),
   );
   const manage = panel(
-    { title: 'Manage snapshots' },
+    { title: tl('Manage snapshots') },
     h(
       'div',
       { class: 'rows' },
       snaps.map((s) => {
-        const del = h('button', { class: 'row-btn', type: 'button' }, icon('trash'), 'Delete');
+        const del = h('button', { class: 'row-btn', type: 'button' }, icon('trash'), tl('Delete'));
         del.addEventListener('click', async () => {
           if (!s.id) return;
           await deleteSnapshot(s.id);
           ctx.reloadSnapshots();
         });
-        return h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, dateShort(s.takenAt)), h('span', null, `${fmtInt(s.followers.length)} followers · ${fmtInt(s.following.length)} following`)), s.id ? h('div', { class: 'acts' }, del) : h('span', { class: 'badge badge--uv' }, 'demo'));
+        return h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, dateShort(s.takenAt)), h('span', null, tl('{v0} followers · {v1} following', { v0: fmtInt(s.followers.length), v1: fmtInt(s.following.length) }))), s.id ? h('div', { class: 'acts' }, del) : h('span', { class: 'badge badge--uv' }, 'demo'));
       }),
     ),
   );
@@ -259,12 +261,12 @@ export function exposurePanel(parts, tips) {
   const R = 70;
   const circ = 2 * Math.PI * R;
   const color = ex.score > 60 ? 'var(--critical)' : ex.score > 30 ? 'var(--warning)' : 'var(--good)';
-  const label = ex.score > 60 ? 'High exposure' : ex.score > 30 ? 'Moderate exposure' : 'Low exposure';
+  const label = ex.score > 60 ? tl('High exposure') : ex.score > 30 ? tl('Moderate exposure') : tl('Low exposure');
   const ring = h('div', { class: 'score-ring' });
   ring.innerHTML = `<svg viewBox="0 0 168 168" aria-hidden="true"><circle cx="84" cy="84" r="${R}" fill="none" stroke="#1e1e2a" stroke-width="12"/><circle cx="84" cy="84" r="${R}" fill="none" stroke="${color}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${(ex.score / 100) * circ} ${circ}"/></svg>`;
-  ring.append(h('div', { class: 'center' }, h('div', null, h('b', null, String(ex.score)), h('span', { style: { display: 'block' } }, 'out of 100'))));
+  ring.append(h('div', { class: 'center' }, h('div', null, h('b', null, String(ex.score)), h('span', { style: { display: 'block' } }, tl('out of 100')))));
   return panel(
-    { title: 'Exposure score', text: 'How much of you is out there — computed only from facts inside your export.' },
+    { title: tl('Exposure score'), text: tl('How much of you is out there — computed only from facts inside your export.') },
     h(
       'div',
       { style: { display: 'flex', flexWrap: 'wrap', gap: '24px', alignItems: 'center' } },
@@ -272,8 +274,8 @@ export function exposurePanel(parts, tips) {
       h(
         'div',
         { style: { flex: '1', minWidth: '220px', display: 'grid', gap: '12px' } },
-        h('div', { style: { display: 'flex', alignItems: 'center', gap: '12px' } }, h('span', { class: 'grade', style: { background: 'var(--surface-3)', color: 'var(--text)' } }, ex.grade), h('div', null, h('b', null, label), h('div', { class: 'small muted' }, 'Grade A = hard to profile · F = an open book'))),
-        h('div', { class: 'rank' }, ex.factors.map((f) => h('div', { class: 'rank-row', style: { gridTemplateColumns: 'minmax(0,1fr) auto' } }, h('div', { class: 'lbl' }, h('b', null, f.label), h('div', { class: 'track' }, h('i', { style: { width: `${(f.points / 35) * 100}%`, background: 'var(--c1)' } }))), h('span', { class: 'v' }, fmtInt(f.value))))),
+        h('div', { style: { display: 'flex', alignItems: 'center', gap: '12px' } }, h('span', { class: 'grade', style: { background: 'var(--surface-3)', color: 'var(--text)' } }, ex.grade), h('div', null, h('b', null, label), h('div', { class: 'small muted' }, tl('Grade A = hard to profile · F = an open book')))),
+        h('div', { class: 'rank' }, ex.factors.map((f) => h('div', { class: 'rank-row', style: { gridTemplateColumns: 'minmax(0,1fr) auto' } }, h('div', { class: 'lbl' }, h('b', null, tl(f.label)), h('div', { class: 'track' }, h('i', { style: { width: `${(f.points / 35) * 100}%`, background: 'var(--c1)' } }))), h('span', { class: 'v' }, fmtInt(f.value))))),
       ),
     ),
     tips?.length ? h('div', { style: { marginTop: '18px' } }, insights(tips)) : null,
@@ -287,9 +289,9 @@ export function tagCloud(items, { limit = 60, locked = false, ctx } = {}) {
     null,
     h('div', { class: 'tags' }, shown.map((t) => h('span', { class: 'tag' }, t))),
     locked && items.length > 12
-      ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('privacy') }, icon('lock'), `See all ${fmtInt(items.length)} with Plus`))
+      ? h('div', { style: { marginTop: '12px' } }, h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => ctx.upgrade('privacy') }, icon('lock'), tl('See all {v0} with Plus', { v0: fmtInt(items.length) })))
       : items.length > limit
-        ? h('p', { class: 'tiny muted', style: { marginTop: '10px' } }, `+ ${fmtInt(items.length - limit)} more`)
+        ? h('p', { class: 'tiny muted', style: { marginTop: '10px' } }, tl('+ {v0} more', { v0: fmtInt(items.length - limit) }))
         : null,
   );
 }

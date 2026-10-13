@@ -18,6 +18,7 @@ import { facebookViews } from './views-facebook.js';
 import { linkedinViews } from './views-linkedin.js';
 import { crossView } from './views-cross.js';
 import { playStory } from './story.js';
+import { t as tl } from '../lib/i18n.js';
 
 const VIEW_BUILDERS = {
   instagram: instagramViews,
@@ -31,7 +32,7 @@ const VIEW_BUILDERS = {
 let active = null;
 
 function loader() {
-  const label = h('div', { class: 'text-2' }, 'Unwrapping your export…');
+  const label = h('div', { class: 'text-2' }, tl('Unwrapping your export…'));
   const bar = h('i');
   const sparks = Array.from({ length: 8 }, (_, i) => {
     const a = (i / 8) * Math.PI * 2;
@@ -44,10 +45,10 @@ function loader() {
       'div',
       { class: 'loading-card' },
       h('div', { class: 'unwrap-anim', 'aria-hidden': 'true' }, h('div', { class: 'box' }), sparks),
-      h('div', { class: 'h3' }, 'Unwrapping…'),
+      h('div', { class: 'h3' }, tl('Unwrapping…')),
       label,
       h('div', { class: 'bar' }, bar),
-      h('div', { class: 'tiny muted', style: { display: 'flex', gap: '8px', alignItems: 'center' } }, icon('shield'), 'Processing on your device — nothing is uploaded.'),
+      h('div', { class: 'tiny muted', style: { display: 'flex', gap: '8px', alignItems: 'center' } }, icon('shield'), tl('Processing on your device — nothing is uploaded.')),
     ),
   );
   document.body.append(root);
@@ -61,28 +62,28 @@ function loader() {
 }
 
 function noDataHelp(result) {
-  const m = modal({ title: 'We couldn’t find social media data' });
+  const m = modal({ title: tl('We couldn’t find social media data') });
   m.body.append(
     h(
       'div',
       { class: 'stack', style: { '--stack': '14px' } },
-      h('p', { class: 'text-2' }, `We looked through ${fmtInt(result.files)} files but none of them look like an Instagram, TikTok, X, Facebook, Threads or LinkedIn export.`),
+      h('p', { class: 'text-2' }, tl('We looked through {v0} files but none of them look like an Instagram, TikTok, X, Facebook, Threads or LinkedIn export.', { v0: fmtInt(result.files) })),
       h(
         'ul',
         { class: 'checklist text-2' },
-        h('li', null, icon('check'), 'Upload the ZIP exactly as the platform sent it — or the unzipped folder.'),
-        h('li', null, icon('check'), 'Instagram: choose “Followers and following” (or “All available information”), format JSON or HTML.'),
-        h('li', null, icon('check'), 'TikTok: choose JSON or TXT. X: upload the archive ZIP. LinkedIn: the ZIP with Connections.csv.'),
+        h('li', null, icon('check'), tl('Upload the ZIP exactly as the platform sent it — or the unzipped folder.')),
+        h('li', null, icon('check'), tl('Instagram: choose “Followers and following” (or “All available information”), format JSON or HTML.')),
+        h('li', null, icon('check'), tl('TikTok: choose JSON or TXT. X: upload the archive ZIP. LinkedIn: the ZIP with Connections.csv.')),
       ),
       result.problems.length ? h('div', { class: 'err-box' }, result.problems.join(' · ')) : null,
-      h('a', { class: 'btn btn--ghost', href: '/#how' }, 'See how to download your data'),
+      h('a', { class: 'btn btn--ghost', href: '/#how' }, tl('See how to download your data')),
     ),
   );
 }
 
 function networkMonitor(startTime) {
   const value = h('b', null, '0');
-  const el = h('span', { class: 'net-indicator', title: 'Counted live by your browser. Your files are never sent anywhere.' }, h('span', { class: 'pulse-dot' }), value, ' network requests since you opened your file');
+  const el = h('span', { class: 'net-indicator', title: tl('Counted live by your browser. Your files are never sent anywhere.') }, h('span', { class: 'pulse-dot' }), value, ' ', tl('network requests since you opened your file'));
   let count = 0;
   try {
     const po = new PerformanceObserver((list) => {
@@ -123,9 +124,9 @@ function keepStore() {
 
 // What the sidebar offers next, depending on the tier the user has.
 const NEXT_UP = {
-  free: { tier: 'plus', title: 'Unlock everything', text: 'Full lists, who unfollowed you, search & CSV, every Wrapped theme.' },
-  plus: { tier: 'pro', title: 'Open the Pro Lab', text: 'Ghost Detector, Engagement Audit, Growth Time Machine and Friendship Radar.' },
-  pro: { tier: 'creator', title: 'Grow like a pro', text: 'Bot detector, Best Time to Post and white-label client reports.' },
+  free: { tier: 'plus', title: tl('Unlock everything'), text: tl('Full lists, who unfollowed you, search & CSV, every Wrapped theme.') },
+  plus: { tier: 'pro', title: tl('Open the Pro Lab'), text: tl('Ghost Detector, Engagement Audit, Growth Time Machine and Friendship Radar.') },
+  pro: { tier: 'creator', title: tl('Grow like a pro'), text: tl('Bot detector, Best Time to Post and white-label client reports.') },
 };
 
 function mount(result, { tier, demo, config, netStart, onNewFiles }) {
@@ -133,34 +134,34 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
   const datasets = result.datasets;
   const cross = crossPlatform(datasets);
   const tabs = datasets.map((ds, i) => ({ key: `ds${i}`, label: ds.label, icon: ds.platform, ds }));
-  if (cross) tabs.push({ key: 'cross', label: 'Cross-platform', icon: 'orbit', cross });
+  if (cross) tabs.push({ key: 'cross', label: tl('Cross-platform'), icon: 'orbit', cross });
   const keeps = keepStore();
   let tabIndex = 0;
   let viewId = 'overview';
   const viewCache = new Map();
 
-  const root = h('div', { class: 'app', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Your results' });
-  const nav = h('nav', { class: 'app-nav', 'aria-label': 'Sections' });
-  const mobileTabs = h('nav', { class: 'app-tabs', 'aria-label': 'Sections' });
+  const root = h('div', { class: 'app', role: 'dialog', 'aria-modal': 'true', 'aria-label': tl('Your results') });
+  const nav = h('nav', { class: 'app-nav', 'aria-label': tl('Sections') });
+  const mobileTabs = h('nav', { class: 'app-tabs', 'aria-label': tl('Sections') });
   const main = h('main', { class: 'app-main', id: 'app-main', tabindex: '-1' });
-  const dsSwitch = h('div', { class: 'ds-switch', role: 'group', 'aria-label': 'Platform' });
+  const dsSwitch = h('div', { class: 'ds-switch', role: 'group', 'aria-label': tl('Platform') });
 
-  const upgradeBtn = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('bolt'), 'Upgrade');
+  const upgradeBtn = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('bolt'), tl('Upgrade'));
   upgradeBtn.addEventListener('click', () => ctx.upgrade(NEXT_UP[tier] ? NEXT_UP[tier].tier : 'header'));
-  const newBtn = h('button', { class: 'btn btn--ghost btn--sm', type: 'button', title: 'Analyze another export' }, icon('upload'), h('span', { class: 'hide-sm' }, 'New file'));
+  const newBtn = h('button', { class: 'btn btn--ghost btn--sm', type: 'button', title: tl('Analyze another export') }, icon('upload'), h('span', { class: 'hide-sm' }, tl('New file')));
   const fileInput = h('input', { type: 'file', multiple: true, accept: '.zip,.json,.html,.htm,.js,.txt,.csv', class: 'drop-file', tabindex: '-1', 'aria-hidden': 'true' });
   newBtn.addEventListener('click', () => fileInput.click());
   fileInput.addEventListener('change', () => fileInput.files.length && onNewFiles([...fileInput.files]));
-  const closeBtn = h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Close results' }, icon('close'));
+  const closeBtn = h('button', { class: 'icon-btn', type: 'button', 'aria-label': tl('Close results') }, icon('close'));
 
   const bar = h(
     'header',
     { class: 'app-bar' },
-    h('a', { class: 'logo', href: '/', 'aria-label': 'Unwrapped home' }, icon('logo'), h('span', { class: 'hide-sm' }, 'Unwrapped')),
+    h('a', { class: 'logo', href: '/', 'aria-label': tl('Unwrapped home') }, icon('logo'), h('span', { class: 'hide-sm' }, tl('Unwrapped'))),
     dsSwitch,
     h('span', { class: 'spacer' }),
     networkMonitor(netStart),
-    demo ? h('span', { class: 'badge badge--uv' }, 'Live demo') : pro ? h('span', { class: 'badge' }, icon('check'), TIER_NAME[tier]) : null,
+    demo ? h('span', { class: 'badge badge--uv' }, tl('Live demo')) : pro ? h('span', { class: 'badge' }, icon('check'), TIER_NAME[tier]) : null,
     !demo && NEXT_UP[tier] ? upgradeBtn : null,
     newBtn,
     fileInput,
@@ -179,7 +180,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
     snapshots: [],
     upgrade: async (reason) => {
       if (demo) {
-        toast('This is the demo — everything is unlocked. Upgrade to unlock your own data.', { iconName: 'sparkles', timeout: 4200 });
+        toast(tl('This is the demo — everything is unlocked. Upgrade to unlock your own data.'), { iconName: 'sparkles', timeout: 4200 });
         return;
       }
       const { openCheckout } = await import('../lib/checkout.js');
@@ -202,7 +203,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
 
   function viewsFor(tab) {
     if (!viewCache.has(tab.key)) {
-      if (tab.cross) viewCache.set(tab.key, [{ id: 'overview', label: 'Cross-platform map', icon: 'orbit', render: () => crossView(tab.cross, ctx) }]);
+      if (tab.cross) viewCache.set(tab.key, [{ id: 'overview', label: tl('Cross-platform map'), icon: 'orbit', render: () => crossView(tab.cross, ctx) }]);
       else {
         // Platform views first, then the Pro Lab, then Wrapped cards last.
         const ds = tab.ds;
@@ -213,7 +214,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         const primary = rest.filter((v) => v.id !== 'wrapped');
         // Account health (free) sits right after the overview.
         if (ds.hasRelationships && ['instagram', 'threads', 'tiktok', 'x'].includes(ds.platform)) {
-          primary.splice(1, 0, { id: 'health', label: 'Account health', icon: 'pulse', render: () => healthView(ds, ctx) });
+          primary.splice(1, 0, { id: 'health', label: tl('Account health'), icon: 'pulse', render: () => healthView(ds, ctx) });
         }
         viewCache.set(tab.key, [...primary, ...lab, ...wrapped]);
       }
@@ -260,7 +261,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
     const firstLab = views.find((v) => v.group === 'lab');
     append(clear(nav), [
       h('div', { class: 'group' }, tab.label),
-      views.map((v) => [v === firstLab ? h('div', { class: 'group group--lab' }, icon('sparkles'), 'Pro Lab') : null, navButton(v, false)]),
+      views.map((v) => [v === firstLab ? h('div', { class: 'group group--lab' }, icon('sparkles'), tl('Pro Lab')) : null, navButton(v, false)]),
     ]);
     const next = NEXT_UP[tier];
     if (next && !demo) {
@@ -270,7 +271,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
           { class: 'panel nav-upsell', style: { marginTop: '18px', padding: '18px', display: 'grid', gap: '10px' } },
           h('div', { style: { display: 'flex', alignItems: 'center', gap: '8px' } }, tierPill(next.tier), h('b', null, next.title)),
           h('span', { class: 'small text-2' }, next.text),
-          h('button', { class: 'btn btn--primary btn--sm', type: 'button', onClick: () => ctx.upgrade(next.tier) }, icon('bolt'), `Get ${TIER_NAME[next.tier]}`),
+          h('button', { class: 'btn btn--primary btn--sm', type: 'button', onClick: () => ctx.upgrade(next.tier) }, icon('bolt'), tl('Get {v0}', { v0: TIER_NAME[next.tier] })),
         ),
       );
     }
@@ -284,7 +285,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
       content = h(
         'div',
         { class: 'app-content' },
-        h('div', { class: 'err-box' }, `This section couldn’t be displayed (${err.message}). The rest of your results still work.`),
+        h('div', { class: 'err-box' }, tl('This section couldn’t be displayed ({v0}). The rest of your results still work.', { v0: err.message })),
       );
     }
     clear(main);
@@ -293,8 +294,8 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         h(
           'div',
           { class: 'demo-banner' },
-          h('span', null, 'You’re exploring a demo with made-up data. Your own results look exactly like this.'),
-          h('a', { class: 'btn btn--primary btn--sm', href: '/#how' }, 'Get my export'),
+          h('span', null, tl('You’re exploring a demo with made-up data. Your own results look exactly like this.')),
+          h('a', { class: 'btn btn--primary btn--sm', href: '/#how' }, tl('Get my export')),
         ),
       );
     }
@@ -352,7 +353,7 @@ export async function openApp({ files = [], demo = false } = {}) {
     if (demo) {
       ({ vfs, rand } = buildDemoVfs());
     } else {
-      vfs = await buildVfs(files, { onProgress: (f) => load.set('Opening your files…', f * 0.2) });
+      vfs = await buildVfs(files, { onProgress: (f) => load.set(tl('Opening your files…'), f * 0.2) });
     }
     const result = await analyze(vfs, (label, f) => load.set(label, 0.2 + f * 0.75));
     if (!result.datasets.length) {
@@ -360,7 +361,7 @@ export async function openApp({ files = [], demo = false } = {}) {
       noDataHelp(result);
       return;
     }
-    load.set('Saving a private snapshot on this device…', 0.97);
+    load.set(tl('Saving a private snapshot on this device…'), 0.97);
     for (const ds of result.datasets) {
       if (!ds.hasRelationships || ds.platform === 'linkedin') continue;
       const snap = snapshotFromDataset(ds);
@@ -379,7 +380,7 @@ export async function openApp({ files = [], demo = false } = {}) {
   } catch (err) {
     console.error(err);
     load.close();
-    const m = modal({ title: 'Something went wrong' });
-    m.body.append(h('div', { class: 'err-box' }, err.message || String(err)), h('p', { class: 'small text-2', style: { marginTop: '12px' } }, 'If your export is split into several ZIP files, select all of them at once. Damaged downloads can also cause this — try downloading the export again.'));
+    const m = modal({ title: tl('Something went wrong') });
+    m.body.append(h('div', { class: 'err-box' }, err.message || String(err)), h('p', { class: 'small text-2', style: { marginTop: '12px' } }, tl('If your export is split into several ZIP files, select all of them at once. Damaged downloads can also cause this — try downloading the export again.')));
   }
 }

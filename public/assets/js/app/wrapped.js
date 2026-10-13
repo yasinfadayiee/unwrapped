@@ -3,12 +3,13 @@
 
 import { relationships, watchStats, tweetStats, exposureScore } from '../core/insights.js';
 import { fmtInt, compact, pct, hourLabel, duration, dateShort, yearsSince } from '../lib/format.js';
+import { t as tl } from '../lib/i18n.js';
 
 export const THEMES = {
-  aurora: { label: 'Aurora', bg: '#0a0a12', ink: '#f4f4f6', sub: 'rgba(244,244,246,0.62)', accent: '#d7ff3a', line: 'rgba(255,255,255,0.14)', free: true, swatch: 'linear-gradient(135deg,#2a1f6b,#0a0a12)' },
-  signal: { label: 'Signal', bg: '#d7ff3a', ink: '#0a0a0e', sub: 'rgba(10,10,14,0.62)', accent: '#0a0a0e', line: 'rgba(10,10,14,0.18)', swatch: '#d7ff3a' },
-  ember: { label: 'Ember', bg: '#2a0b0a', ink: '#fff1e8', sub: 'rgba(255,241,232,0.66)', accent: '#ff9b6b', line: 'rgba(255,241,232,0.16)', swatch: 'linear-gradient(135deg,#e0574a,#2a0b0a)' },
-  paper: { label: 'Paper', bg: '#f2efe8', ink: '#121212', sub: 'rgba(18,18,18,0.6)', accent: '#5b48d6', line: 'rgba(18,18,18,0.14)', swatch: '#f2efe8' },
+  aurora: { label: tl('Aurora'), bg: '#0a0a12', ink: '#f4f4f6', sub: 'rgba(244,244,246,0.62)', accent: '#d7ff3a', line: 'rgba(255,255,255,0.14)', free: true, swatch: 'linear-gradient(135deg,#2a1f6b,#0a0a12)' },
+  signal: { label: tl('Signal'), bg: '#d7ff3a', ink: '#0a0a0e', sub: 'rgba(10,10,14,0.62)', accent: '#0a0a0e', line: 'rgba(10,10,14,0.18)', swatch: '#d7ff3a' },
+  ember: { label: tl('Ember'), bg: '#2a0b0a', ink: '#fff1e8', sub: 'rgba(255,241,232,0.66)', accent: '#ff9b6b', line: 'rgba(255,241,232,0.16)', swatch: 'linear-gradient(135deg,#e0574a,#2a0b0a)' },
+  paper: { label: tl('Paper'), bg: '#f2efe8', ink: '#121212', sub: 'rgba(18,18,18,0.6)', accent: '#5b48d6', line: 'rgba(18,18,18,0.14)', swatch: '#f2efe8' },
 };
 
 const W = 1080;
@@ -94,7 +95,7 @@ export function drawCard(canvas, card, theme = 'aurora', { watermark = true, sit
   ctx.fillStyle = t.ink;
   ctx.font = '700 40px Bricolage, Inter, sans-serif';
   ctx.textBaseline = 'middle';
-  ctx.fillText('Unwrapped', pad + 84, 143);
+  ctx.fillText(tl('Unwrapped'), pad + 84, 143);
   ctx.font = '500 26px "JetBrains Mono", monospace';
   ctx.fillStyle = t.sub;
   ctx.textAlign = 'right';
@@ -137,13 +138,14 @@ export function drawCard(canvas, card, theme = 'aurora', { watermark = true, sit
   y += 30;
   ctx.fillStyle = t.sub;
   ctx.font = '500 26px "JetBrains Mono", monospace';
-  ctx.fillText('YOUR TYPE', pad, y);
+  ctx.fillText(tl('YOUR TYPE'), pad, y);
   ctx.fillStyle = t.ink;
-  fitText(ctx, card.persona, W - pad * 2, 82, '700', 'Bricolage, Inter, sans-serif');
-  ctx.fillText(card.persona, pad, y + 92);
+  const persona = tl(card.persona);
+  fitText(ctx, persona, W - pad * 2, 82, '700', 'Bricolage, Inter, sans-serif');
+  ctx.fillText(persona, pad, y + 92);
   ctx.fillStyle = t.sub;
   ctx.font = '500 36px Inter, sans-serif';
-  ctx.fillText(card.personaLine, pad, y + 150);
+  ctx.fillText(tl(card.personaLine), pad, y + 150);
 
   ctx.font = '500 26px "JetBrains Mono", monospace';
   ctx.fillStyle = t.sub;
@@ -152,14 +154,14 @@ export function drawCard(canvas, card, theme = 'aurora', { watermark = true, sit
     ctx.textAlign = 'right';
     ctx.fillStyle = t.ink;
     ctx.font = '600 30px Inter, sans-serif';
-    ctx.fillText(`made with ${site || 'Unwrapped'}`, W - pad, H - 110);
+    ctx.fillText(tl('made with {v0}', { v0: site || 'Unwrapped' }), W - pad, H - 110);
     ctx.textAlign = 'left';
   }
   return canvas;
 }
 
 function periodOf(ds) {
-  return `EXPORT · ${dateShort(ds.exportedAt).toUpperCase()}`;
+  return tl('EXPORT · {v0}', { v0: dateShort(ds.exportedAt).toUpperCase() });
 }
 
 export function cardsFor(ds) {
@@ -168,25 +170,25 @@ export function cardsFor(ds) {
     const rel = relationships(ds);
     const persona =
       rel.ratio >= 1.5
-        ? ['The Magnet', 'More people follow you than you follow.']
+        ? [tl('The Magnet'), tl('More people follow you than you follow.')]
         : rel.ratio <= 0.7
-          ? ['The Explorer', 'You follow the world — loudly.']
+          ? [tl('The Explorer'), tl('You follow the world — loudly.')]
           : rel.followBackRate >= 0.8
-            ? ['The Loyalist', 'Your follows come back to you.']
-            : ['The Balanced One', 'Give and take, mostly even.'];
+            ? [tl('The Loyalist'), tl('Your follows come back to you.')]
+            : [tl('The Balanced One'), tl('Give and take, mostly even.')];
     cards.push({
       id: 'network',
       platform: ds.platform,
-      kicker: `${ds.label} · network`,
+      kicker: tl('{v0} · network', { v0: ds.label }),
       titleA: `My ${ds.label},`,
-      titleB: 'unwrapped.',
+      titleB: tl('unwrapped.'),
       hero: pct(rel.followBackRate),
-      heroLabel: 'of the accounts I follow follow me back',
+      heroLabel: tl('of the accounts I follow follow me back'),
       rows: [
-        ['Followers', fmtInt(rel.followers)],
-        ['Following', fmtInt(rel.following)],
-        ['Mutuals', fmtInt(rel.mutuals.length)],
-        ['Don’t follow back', fmtInt(rel.notFollowingBack.length)],
+        [tl('Followers'), fmtInt(rel.followers)],
+        [tl('Following'), fmtInt(rel.following)],
+        [tl('Mutuals'), fmtInt(rel.mutuals.length)],
+        [tl('Don’t follow back'), fmtInt(rel.notFollowingBack.length)],
       ],
       persona: persona[0],
       personaLine: persona[1],
@@ -198,16 +200,16 @@ export function cardsFor(ds) {
     cards.push({
       id: 'screen',
       platform: 'tiktok',
-      kicker: 'TikTok · screen time',
-      titleA: 'My TikTok,',
-      titleB: 'unwrapped.',
+      kicker: tl('TikTok · screen time'),
+      titleA: tl('My TikTok,'),
+      titleB: tl('unwrapped.'),
       hero: `${fmtInt(w.hours)}h`,
-      heroLabel: `watched in ${fmtInt(w.spanDays)} days`,
+      heroLabel: tl('watched in {v0} days', { v0: fmtInt(w.spanDays) }),
       rows: [
-        ['Videos watched', compact(w.videos)],
-        ['Per day', `${Math.round(w.perDayMinutes)} min`],
-        ['Longest binge', duration(w.longest.ms)],
-        ['Peak hour', hourLabel(w.peakHour)],
+        [tl('Videos watched'), compact(w.videos)],
+        [tl('Per day'), tl('{v0} min', { v0: Math.round(w.perDayMinutes) })],
+        [tl('Longest binge'), duration(w.longest.ms)],
+        [tl('Peak hour'), hourLabel(w.peakHour)],
       ],
       persona: w.persona.title,
       personaLine: w.persona.line,
@@ -218,23 +220,23 @@ export function cardsFor(ds) {
     const st = tweetStats(ds.tweets);
     const persona =
       st.replies > st.originals
-        ? ['The Reply Guy', 'You live in the comments.']
+        ? [tl('The Reply Guy'), tl('You live in the comments.')]
         : st.retweets > st.originals
-          ? ['The Amplifier', 'You make other voices louder.']
-          : ['The Original', 'You post your own takes.'];
+          ? [tl('The Amplifier'), tl('You make other voices louder.')]
+          : [tl('The Original'), tl('You post your own takes.')];
     cards.push({
       id: 'posts',
       platform: 'x',
-      kicker: 'X · posts',
-      titleA: 'My X,',
-      titleB: 'unwrapped.',
+      kicker: tl('X · posts'),
+      titleA: tl('My X,'),
+      titleB: tl('unwrapped.'),
       hero: compact(st.total),
-      heroLabel: 'posts, replies & reposts',
+      heroLabel: tl('posts, replies & reposts'),
       rows: [
-        ['Likes earned', compact(st.likesEarned)],
-        ['Best post', `${compact(st.best[0]?.likes || 0)} likes`],
-        ['Most active', hourLabel(st.peakHour)],
-        ['On X for', `${yearsSince(ds.account.createdAt).toFixed(1)} years`],
+        [tl('Likes earned'), compact(st.likesEarned)],
+        [tl('Best post'), tl('{v0} likes', { v0: compact(st.best[0]?.likes || 0) })],
+        [tl('Most active'), hourLabel(st.peakHour)],
+        [tl('On X for'), tl('{v0} years', { v0: yearsSince(ds.account.createdAt).toFixed(1) })],
       ],
       persona: persona[0],
       personaLine: persona[1],
@@ -244,20 +246,20 @@ export function cardsFor(ds) {
   const privacy = privacyParts(ds);
   if (privacy) {
     const ex = exposureScore(privacy);
-    const persona = ex.score > 60 ? ['Open Book', 'Advertisers know you well.'] : ex.score > 30 ? ['Half Visible', 'They know some. Not all.'] : ['Low Profile', 'Hard to profile. Nice.'];
+    const persona = ex.score > 60 ? [tl('Open Book'), tl('Advertisers know you well.')] : ex.score > 30 ? [tl('Half Visible'), tl('They know some. Not all.')] : [tl('Low Profile'), tl('Hard to profile. Nice.')];
     cards.push({
       id: 'privacy',
       platform: ds.platform,
-      kicker: `${ds.label} · privacy`,
-      titleA: 'What they know,',
-      titleB: 'unwrapped.',
+      kicker: tl('{v0} · privacy', { v0: ds.label }),
+      titleA: tl('What they know,'),
+      titleB: tl('unwrapped.'),
       hero: ex.grade,
-      heroLabel: `exposure score ${ex.score}/100`,
+      heroLabel: tl('exposure score {v0}/100', { v0: ex.score }),
       rows: [
-        ['Advertisers with my data', fmtInt(privacy.advertisers || 0)],
-        ['Interests profiled', fmtInt(privacy.interests || 0)],
-        ['Login IP addresses', fmtInt(privacy.ips || 0)],
-        ['Connected apps', fmtInt(privacy.apps || 0)],
+        [tl('Advertisers with my data'), fmtInt(privacy.advertisers || 0)],
+        [tl('Interests profiled'), fmtInt(privacy.interests || 0)],
+        [tl('Login IP addresses'), fmtInt(privacy.ips || 0)],
+        [tl('Connected apps'), fmtInt(privacy.apps || 0)],
       ],
       persona: persona[0],
       personaLine: persona[1],

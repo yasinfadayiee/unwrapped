@@ -3,6 +3,7 @@
 
 import { h, s, clear } from '../lib/ui.js';
 import { fmtInt } from '../lib/format.js';
+import { t as tl } from '../lib/i18n.js';
 
 // Sequential ramp (one hue, dark → bright) for magnitude on the dark surface.
 export const RAMP = ['#1b1b27', '#262143', '#332a63', '#433685', '#5644a8', '#6d5acb', '#8f7dff', '#b4a8ff'];
@@ -60,11 +61,11 @@ function tableView(columns, rows) {
 function withTable(wrapper, columns, rows, legend) {
   const table = tableView(columns, rows);
   table.hidden = true;
-  const toggle = h('button', { class: 'table-toggle', type: 'button', 'aria-expanded': 'false' }, 'Show as table');
+  const toggle = h('button', { class: 'table-toggle', type: 'button', 'aria-expanded': 'false' }, tl('Show as table'));
   toggle.addEventListener('click', () => {
     table.hidden = !table.hidden;
     toggle.setAttribute('aria-expanded', String(!table.hidden));
-    toggle.textContent = table.hidden ? 'Show as table' : 'Hide table';
+    toggle.textContent = table.hidden ? tl('Show as table') : tl('Hide table');
   });
   wrapper.append(h('div', { class: 'chart-foot' }, legend || h('span'), toggle), table);
   return wrapper;
@@ -74,7 +75,7 @@ function withTable(wrapper, columns, rows, legend) {
  * Column chart for one series.
  * data: [{ label, short?, value }]
  */
-export function barChart(data, { height = 220, color = 'var(--c1)', valueLabel = (v) => fmtInt(v), title = 'Value', ariaLabel = 'Bar chart' } = {}) {
+export function barChart(data, { height = 220, color = 'var(--c1)', valueLabel = (v) => fmtInt(v), title = tl('Value'), ariaLabel = tl('Bar chart') } = {}) {
   const wrapper = h('div', { class: 'chart' });
   const plot = h('div', { style: { position: 'relative' } });
   const holder = h('div');
@@ -135,12 +136,12 @@ export function barChart(data, { height = 220, color = 'var(--c1)', valueLabel =
   // Re-render at the real pixel width so text never shrinks on phones.
   new ResizeObserver(render).observe(plot);
   requestAnimationFrame(render);
-  return withTable(wrapper, ['Period', title], data.map((d) => [d.label, valueLabel(d.value)]));
+  return withTable(wrapper, [tl('Period'), title], data.map((d) => [d.label, valueLabel(d.value)]));
 }
 
 /** 7×24 heatmap (Monday first) with a sequential ramp. */
-export function heatmapChart(grid, { unit = 'videos', ariaLabel = 'Activity by weekday and hour', valueLabel = (v) => `${fmtInt(v)} ${unit}` } = {}) {
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+export function heatmapChart(grid, { unit = 'videos', ariaLabel = tl('Activity by weekday and hour'), valueLabel = (v) => `${fmtInt(v)} ${unit}` } = {}) {
+  const days = [tl('Mon'), tl('Tue'), tl('Wed'), tl('Thu'), tl('Fri'), tl('Sat'), tl('Sun')];
   const max = Math.max(...grid.flat(), 0);
   const wrapper = h('div', { class: 'chart' });
   const plot = h('div', { style: { position: 'relative' }, role: 'img', 'aria-label': ariaLabel });
@@ -166,13 +167,13 @@ export function heatmapChart(grid, { unit = 'videos', ariaLabel = 'Activity by w
   const legend = h(
     'div',
     { class: 'heat-scale' },
-    h('span', null, 'Less'),
+    h('span', null, tl('Less')),
     RAMP.slice(1).map((c) => h('i', { style: { background: c } })),
-    h('span', null, 'More'),
+    h('span', null, tl('More')),
   );
   const rows = [];
   grid.forEach((row, d) => row.forEach((v, hour) => v && rows.push([`${days[d]} ${String(hour).padStart(2, '0')}:00`, valueLabel(v)])));
-  return withTable(wrapper, ['Weekday & hour', unit[0].toUpperCase() + unit.slice(1)], rows, legend);
+  return withTable(wrapper, [tl('Weekday & hour'), unit[0].toUpperCase() + unit.slice(1)], rows, legend);
 }
 
 /** Horizontal ranking list: [{ key, count }] */
