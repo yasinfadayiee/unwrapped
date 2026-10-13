@@ -101,6 +101,23 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Code and styles: network first, so a deploy never mixes old and new
+  // modules; the cached copy is the offline fallback.
+  if (/^\/assets\/(js|css)\//.test(url.pathname)) {
+    event.respondWith(
+      fetch(request)
+        .then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(request, copy));
+          }
+          return res;
+        })
+        .catch(() => caches.match(request)),
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(request).then((cached) => {
       const network = fetch(request)

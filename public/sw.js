@@ -1,6 +1,6 @@
 // Service worker: caches the app shell so the analyzer keeps working offline
 // (yes — you can turn on airplane mode and still unwrap your export).
-const VERSION = 'mv6qdwbu';
+const VERSION = 'mv6qfmgc';
 const CACHE = `unwrapped-${VERSION}`;
 const CORE = [
   '/',
@@ -97,6 +97,23 @@ self.addEventListener('fetch', (event) => {
           return res;
         })
         .catch(() => caches.match(request).then((hit) => hit || caches.match('/'))),
+    );
+    return;
+  }
+
+  // Code and styles: network first, so a deploy never mixes old and new
+  // modules; the cached copy is the offline fallback.
+  if (/^\/assets\/(js|css)\//.test(url.pathname)) {
+    event.respondWith(
+      fetch(request)
+        .then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(request, copy));
+          }
+          return res;
+        })
+        .catch(() => caches.match(request)),
     );
     return;
   }
