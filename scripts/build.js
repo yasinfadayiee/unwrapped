@@ -154,6 +154,7 @@ function languageLinks(loc, route) {
 }
 
 const sitemap = [];
+const ogManifest = [];
 for (const { loc, file, meta, body } of pages) {
   const partials = loc.code === 'en' ? basePartials : { ...basePartials, ...loadPartials(`site/i18n/${loc.code}/partials`) };
   const strings = { ...layoutStrings.en, ...layoutStrings[loc.code] };
@@ -175,6 +176,14 @@ for (const { loc, file, meta, body } of pages) {
       : '';
   const schemas = [];
   const pageName = meta.headline || shortTitle(meta.title, 60).split(' · ')[0].split(' — ')[0];
+  // Share image: a per-page, per-language card when it has been rendered
+  // (npm run og), otherwise the generic one.
+  const ogKey = `${loc.code}-${meta.route.replace(/^\/|\/$/g, '').replace(/\//g, '--') || 'home'}`;
+  const ogImage = existsSync(path.join(root, `public/assets/img/og/${ogKey}.jpg`)) ? `/assets/img/og/${ogKey}.jpg` : '/assets/img/og.png';
+  if (!meta.noindex && !meta.route.endsWith('.html')) {
+    const kicker = meta.route.startsWith('/guides/') ? strings.fGuides : meta.route.startsWith('/blog/') ? strings.fBlog : TOOL_ROUTES.has(meta.route) ? strings.fTools : '';
+    ogManifest.push({ key: ogKey, lang: loc.code, kicker, tag: strings.ogTag, title: meta.route === '/' ? strings.ogHome || pageName : pageName, sub: shortDescription(meta.description, 130) });
+  }
   if (meta.route === '/') {
     schemas.push({
       '@context': 'https://schema.org',
@@ -215,7 +224,7 @@ for (const { loc, file, meta, body } of pages) {
       datePublished: meta.article,
       dateModified: meta.article,
       mainEntityOfPage: canonical,
-      image: `${origin}/assets/img/og.png`,
+      image: `${origin}${ogImage}`,
       author: { '@type': 'Organization', name: site.name, url: `${origin}/` },
       publisher: { '@type': 'Organization', name: site.name, logo: { '@type': 'ImageObject', url: `${origin}/assets/img/icon-512.png` } },
     });
@@ -232,6 +241,7 @@ for (const { loc, file, meta, body } of pages) {
   const vars = {
     lang: loc.hreflang,
     ogLocale: loc.og,
+    ogImage,
     alternates,
     title: esc(shortTitle(meta.title)),
     description: esc(shortDescription(meta.description)),
@@ -271,6 +281,9 @@ write(
 );
 const privatePaths = ['/admin/', '/success/', '/api/', ...locales.map((l) => `${l.path}/account/`)];
 write('public/robots.txt', `User-agent: *\nAllow: /\n${[...new Set(privatePaths)].map((p) => `Disallow: ${p}`).join('\n')}\n\nSitemap: ${origin}/sitemap.xml\n`);
+
+// Texts for the share-image renderer (scripts/og.js), one card per page.
+write('.og/manifest.json', JSON.stringify(ogManifest, null, 1));
 
 const sw = read('site/sw.template.js').replace('__VERSION__', version);
 write('public/sw.js', sw);
