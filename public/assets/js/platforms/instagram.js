@@ -39,9 +39,13 @@ function relEntries(vfs, threads) {
   });
 }
 
+// Your own posts, stories and reels: content/ in older exports, media/ in newer ones.
+const MEDIA_FILE = /(^|\/)(content|media)\/(posts_\d+|stories|reels|archived_posts|profile_photos|igtv_videos)\.json$/;
+
 export function detectInstagram(vfs) {
   return (
     relEntries(vfs, false).some((e) => /^followers(_\d+)?$|^following$/.test(stripExt(e.name))) ||
+    Boolean(vfs.find((e) => MEDIA_FILE.test(e.lower) && !isFacebookPath(e.lower))) ||
     Boolean(vfs.find(/(^|\/)your_instagram_activity\//)) ||
     Boolean(vfs.find((e) => /personal_information\.json$/.test(e.lower) && /instagram/.test(e.source.toLowerCase())))
   );
@@ -368,6 +372,47 @@ async function readPrivacy(vfs) {
   return Object.keys(privacy).length ? privacy : null;
 }
 
+const MEDIA_KIND = { posts: 'post', stories: 'story', reels: 'reel', archived_posts: 'archived', profile_photos: 'profile', igtv_videos: 'reel' };
+
+// Every photo/video you posted, with its caption and date, oldest data first.
+async function readMedia(vfs) {
+  const findMedia = mediaFinder(vfs);
+  const items = [];
+  const seen = new Set();
+  for (const file of vfs.all((e) => MEDIA_FILE.test(e.lower) && !isFacebookPath(e.lower))) {
+    const kind = MEDIA_KIND[file.name.replace(/(_\d+)?\.json$/i, '').toLowerCase()] || 'post';
+    let data;
+    try {
+      data = await file.json();
+    } catch {
+      continue;
+    }
+    // Walk the JSON: any object with a media `uri` is one photo or video; a
+    // post's caption and date sit on its parent when the media has none.
+    const visit = (node, parent) => {
+      if (Array.isArray(node)) return node.forEach((n) => visit(n, parent));
+      if (!node || typeof node !== 'object') return;
+      if (typeof node.uri === 'string' && /\.(jpe?g|png|webp|heic|gif|mp4|mov|srt|svg)$/i.test(node.uri)) {
+        if (seen.has(node.uri) || /\.srt$/i.test(node.uri)) return;
+        seen.add(node.uri);
+        const entry = findMedia(node.uri);
+        items.push({
+          kind,
+          video: /\.(mp4|mov)$/i.test(node.uri),
+          ts: toMs(node.creation_timestamp || parent?.creation_timestamp),
+          caption: fixMeta(node.title || parent?.title || ''),
+          entry,
+        });
+        return;
+      }
+      for (const v of Object.values(node)) visit(v, Array.isArray(node.media) ? node : parent);
+    };
+    visit(data, null);
+  }
+  if (!items.length) return null;
+  return items.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+}
+
 export async function parseInstagram(vfs, progress) {
   progress?.('Reading followers & following…', 0.1);
   const lists = await readLists(vfs, false);
@@ -376,6 +421,7 @@ export async function parseInstagram(vfs, progress) {
   const activity = await readActivity(vfs, account, progress);
   progress?.('Running the privacy X-ray…', 0.8);
   const privacy = await readPrivacy(vfs);
+  const media = await readMedia(vfs);
   return {
     platform: 'instagram',
     label: 'Instagram',
@@ -383,6 +429,7 @@ export async function parseInstagram(vfs, progress) {
     lists,
     activity,
     privacy,
+    media,
     hasRelationships: lists.followers.length > 0 || lists.following.length > 0,
   };
 }

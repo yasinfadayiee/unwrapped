@@ -1004,5 +1004,20 @@ export default {
   "{v0} videos": "{v0} videos",
   "No videos for this day and time.": "No hay videos para ese día y hora.",
   "No date": "Sin fecha",
-  "Video {v0}": "Video {v0}"
+  "Video {v0}": "Video {v0}",
+  "Save original": "Guardar original",
+  "Your posts & stories": "Tus publicaciones e historias",
+  "Every photo and video you posted — {v0} items, including stories that have long disappeared. Open one to see its caption and save the original.": "Cada foto y video que publicaste, {v0} elementos, incluidas historias que desaparecieron hace tiempo. Abre uno para ver su texto y guardar el original.",
+  "Your export lists your posts but doesn’t include the files. Request your data again with media included.": "Tu exportación enumera tus publicaciones pero no incluye los archivos. Vuelve a pedir tus datos incluyendo los archivos multimedia.",
+  "No posts or stories in this export.": "No hay publicaciones ni historias en esta exportación.",
+  "All": "Todo",
+  "Stories": "Historias",
+  "Reels": "Reels",
+  "Archived": "Archivadas",
+  "Profile photos": "Fotos de perfil",
+  "Year": "Año",
+  "All years": "Todos los años",
+  "{v0} items": "{v0} elementos",
+  "Nothing here for this filter.": "No hay nada con este filtro.",
+  "{v0} items are listed in your export without their files.": "{v0} elementos aparecen en tu exportación sin sus archivos."
 };

@@ -60,6 +60,12 @@ function botNames(n) {
 
 const sec = (ms) => Math.floor(ms / 1000);
 const DAY = 86_400_000;
+// A small gradient "photo" for the demo gallery.
+function demoArt(hue, label, i, tall = false) {
+  const [w, hgt] = tall ? [540, 960] : [800, 800];
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${hgt}" viewBox="0 0 ${w} ${hgt}"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(${hue},70%,62%)"/><stop offset="1" stop-color="hsl(${(hue + 60) % 360},60%,22%)"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><circle cx="${w * 0.7}" cy="${hgt * 0.3}" r="${80 + (i % 5) * 20}" fill="rgba(255,255,255,.18)"/><text x="40" y="${hgt - 60}" font-family="sans-serif" font-size="44" font-weight="700" fill="#fff">${label.replace(/[<&]/g, '')}</text></svg>`;
+}
+
 const DEMO_LINES = [
   'hey! how was the weekend?', 'omg did you see that reel 😂', 'coffee tomorrow?', 'sure, 10am works', 'sending you the photos now',
   'that typography is so good', 'haha yes', 'can’t wait for the trip ✈️', 'are you coming to the launch on friday?', 'love this',
@@ -210,6 +216,25 @@ export function demoInstagramFiles(now, rand, { followerCount = 1284, followingC
   files.push(['ads_information/ads_and_topics/ads_viewed.json', JSON.stringify({ impressions_history_ads_seen: new Array(5120).fill({}) })]);
   files.push(['ads_information/ads_and_topics/posts_viewed.json', JSON.stringify({ impressions_history_posts_seen: new Array(9810).fill({}) })]);
 
+  // Your own posts & stories (deterministic, no rand(), so other demo numbers stay put).
+  const CAPTIONS = ['Golden hour in Lisbon ☀️', 'New poster series — typography week', 'Studio day', 'Coffee + sketches', 'Launch night 🎉', 'Weekend hike', 'Behind the scenes', 'Color study #4'];
+  const HUES = [262, 168, 12, 42, 300, 200, 330, 90];
+  const posts = [];
+  const stories = [];
+  for (let i = 0; i < 30; i++) {
+    const ts = sec(now - (i * 11 + 2) * DAY);
+    const uri = `media/posts/2026/demo_post_${i}.svg`;
+    files.push([`your_instagram_activity/${uri}`, demoArt(HUES[i % 8], CAPTIONS[i % 8], i)]);
+    posts.push({ media: [{ uri, creation_timestamp: ts, title: '' }], title: CAPTIONS[i % 8], creation_timestamp: ts });
+  }
+  for (let i = 0; i < 14; i++) {
+    const ts = sec(now - (i * 6 + 1) * DAY);
+    const uri = `media/stories/2026/demo_story_${i}.svg`;
+    files.push([`your_instagram_activity/${uri}`, demoArt(HUES[(i + 3) % 8], 'story', i, true)]);
+    stories.push({ uri, creation_timestamp: ts, title: '' });
+  }
+  files.push(['your_instagram_activity/media/posts_1.json', JSON.stringify(posts)]);
+  files.push(['your_instagram_activity/media/stories.json', JSON.stringify({ ig_stories: stories })]);
   return { files, followers, following };
 }
 

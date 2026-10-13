@@ -277,3 +277,21 @@ test('TikTok keeps video links for the Video finder', async () => {
   assert.ok(tt.history.liked.length > 0);
   assert.equal(tt.history.favorites.length, 0);
 });
+
+test('your own Instagram posts and stories become a gallery with captions and files', async () => {
+  const zip = makeZip([
+    { path: 'your_instagram_activity/media/posts_1.json', content: JSON.stringify([{ media: [{ uri: 'media/posts/202401/a.jpg', creation_timestamp: 1704100000, title: '' }, { uri: 'media/posts/202401/b.mp4', creation_timestamp: 1704100000, title: '' }], title: 'Caf\u00c3\u00a9 day', creation_timestamp: 1704100000 }]) },
+    { path: 'your_instagram_activity/media/stories.json', content: JSON.stringify({ ig_stories: [{ uri: 'media/stories/202402/s.jpg', creation_timestamp: 1707000000, title: '' }, { uri: 'media/stories/202402/missing.jpg', creation_timestamp: 1706000000, title: '' }] }) },
+    { path: 'media/posts/202401/a.jpg', content: 'A' },
+    { path: 'media/posts/202401/b.mp4', content: 'B' },
+    { path: 'media/stories/202402/s.jpg', content: 'S' },
+  ]);
+  const ig = ds(await analyze(await buildVfs([asFile(zip, 'instagram-me.zip')])), 'instagram');
+  assert.equal(ig.media.length, 4);
+  assert.deepEqual(ig.media.map((m) => m.kind), ['story', 'story', 'post', 'post']);
+  const post = ig.media.find((m) => m.video);
+  assert.equal(post.caption, 'Café day');
+  assert.equal(post.ts, 1704100000000);
+  assert.equal(new TextDecoder().decode(await post.entry.bytes()), 'B');
+  assert.equal(ig.media.filter((m) => !m.entry).length, 1);
+});

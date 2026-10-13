@@ -1004,5 +1004,20 @@ export default {
   "{v0} videos": "{v0} video",
   "No videos for this day and time.": "Bu gün ve saat için video yok.",
   "No date": "Tarih yok",
-  "Video {v0}": "Video {v0}"
+  "Video {v0}": "Video {v0}",
+  "Save original": "Orijinali kaydet",
+  "Your posts & stories": "Gönderilerin ve hikâyelerin",
+  "Every photo and video you posted — {v0} items, including stories that have long disappeared. Open one to see its caption and save the original.": "Paylaştığın her fotoğraf ve video — çoktan kaybolmuş hikâyeler dahil {v0} öğe. Açıklamasını görmek ve orijinalini kaydetmek için birini aç.",
+  "Your export lists your posts but doesn’t include the files. Request your data again with media included.": "Dışa aktarımın gönderilerini listeliyor ama dosyaları içermiyor. Verilerini medya dahil olacak şekilde yeniden iste.",
+  "No posts or stories in this export.": "Bu dışa aktarımda gönderi veya hikâye yok.",
+  "All": "Tümü",
+  "Stories": "Hikâyeler",
+  "Reels": "Reels",
+  "Archived": "Arşivlenenler",
+  "Profile photos": "Profil fotoğrafları",
+  "Year": "Yıl",
+  "All years": "Tüm yıllar",
+  "{v0} items": "{v0} öğe",
+  "Nothing here for this filter.": "Bu filtrede hiçbir şey yok.",
+  "{v0} items are listed in your export without their files.": "{v0} öğe dışa aktarımında dosyaları olmadan listeleniyor."
 };

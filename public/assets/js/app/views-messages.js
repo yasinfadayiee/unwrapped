@@ -6,40 +6,23 @@ import { h, icon, clear, toast, downloadBlob, avatarStyle } from '../lib/ui.js';
 import { fmtInt, dateShort } from '../lib/format.js';
 import { viewHead, emptyState, lockCard } from './components.js';
 import { locale } from '../lib/i18n.js';
+import { lazySrc } from '../lib/media.js';
 import { t as tl } from '../lib/i18n.js';
 
 const PAGE = 300;
 const timeFmt = new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' });
 const dayFmt = new Intl.DateTimeFormat(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-const MIME = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif', mp4: 'video/mp4', mov: 'video/quicktime', m4a: 'audio/mp4', mp3: 'audio/mpeg', aac: 'audio/aac', ogg: 'audio/ogg' };
-
 const cache = new WeakMap();
 function loadCached(thread) {
   if (!cache.has(thread)) cache.set(thread, thread.load());
   return cache.get(thread);
 }
 
-async function mediaUrl(entry) {
-  const ext = entry.name.split('.').pop().toLowerCase();
-  return URL.createObjectURL(new Blob([await entry.bytes()], { type: MIME[ext] || 'application/octet-stream' }));
-}
-
 function mediaEl(m) {
   if (!m.entry) return h('span', { class: 'msg-media-missing' }, icon(m.kind === 'photo' ? 'image' : 'play'), tl('Media not included in this export'));
   const el = m.kind === 'photo' ? h('img', { alt: '', loading: 'lazy' }) : h(m.kind, { controls: true, preload: 'none' });
   el.className = 'msg-media';
-  // Decode only when scrolled into view: large chats can hold thousands of photos.
-  const io = new IntersectionObserver(async ([e]) => {
-    if (!e.isIntersecting) return;
-    io.disconnect();
-    try {
-      el.src = await mediaUrl(m.entry);
-    } catch {
-      /* unreadable entry */
-    }
-  });
-  io.observe(el);
-  return el;
+  return lazySrc(el, m.entry);
 }
 
 function bubble(msg, me, isGroup, query) {
