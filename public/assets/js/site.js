@@ -486,11 +486,17 @@ netMonitor();
 stickyCta();
 welcomeBack();
 remindButtons();
+if (document.readyState === 'complete') setTimeout(featuredPlanFirst, 50);
+else window.addEventListener('load', () => setTimeout(featuredPlanFirst, 50), { once: true });
 // Phones show the plans as a swipe row: start on the featured one.
-$$('.pricing--tiers').forEach((row) => {
-  const featured = $('.is-featured', row);
-  if (featured && row.scrollWidth > row.clientWidth) row.scrollLeft = featured.offsetLeft - (row.clientWidth - featured.offsetWidth) / 2;
-});
+function featuredPlanFirst() {
+  $$('.pricing--tiers').forEach((row) => {
+    const featured = $('.is-featured', row);
+    if (!featured || row.scrollWidth <= row.clientWidth) return;
+    const delta = featured.getBoundingClientRect().left - row.getBoundingClientRect().left - (row.clientWidth - featured.offsetWidth) / 2;
+    row.scrollLeft += delta;
+  });
+}
 getConfig().then(() => {
   pricing();
   licenseBadge();
