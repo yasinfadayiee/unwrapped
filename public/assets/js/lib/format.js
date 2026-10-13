@@ -8,7 +8,9 @@ const dateFmt = new Intl.DateTimeFormat(LOC, { month: 'short', day: 'numeric', y
 const monthFmt = new Intl.DateTimeFormat(LOC, { month: 'short', year: 'numeric' });
 const monthShortFmt = new Intl.DateTimeFormat(LOC, { month: 'short' });
 const rtf = new Intl.RelativeTimeFormat(LOC, { numeric: 'auto' });
-const hourFmt = new Intl.DateTimeFormat(LOC, { hour: 'numeric' });
+// 12-hour locales read best as "9 PM"; 24-hour locales need "21:00", since a bare "0" is unclear.
+const hour12 = new Intl.DateTimeFormat(LOC, { hour: 'numeric' }).resolvedOptions().hour12;
+const hourFmt = new Intl.DateTimeFormat(LOC, hour12 ? { hour: 'numeric' } : { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 
 export const fmtInt = (n) => intFmt.format(Math.round(n || 0));
 export const compact = (n) => (Math.abs(n) < 10_000 ? fmtInt(n) : compactFmt.format(n));

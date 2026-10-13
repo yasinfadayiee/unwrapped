@@ -1,0 +1,67 @@
+<!--page {
+  "route": "/guides/download-instagram-data/",
+  "title": "Instagram verilerini indirme (takipçiler, mesajlar, her şey) · 2026",
+  "headline": "Instagram verilerini adım adım indirme",
+  "description": "Adım adım: Instagram verilerini Hesaplar Merkezi’nden indir, hangi seçenekleri seçmelisin (JSON mu HTML mi, yalnızca takipçiler mi her şey mi), ne kadar sürer ve ZIP’in içinde neler var.",
+  "article": "2026-10-11",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container">
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Rehber · Instagram</span>
+      <h1 class="h1">Instagram verilerini indirme, <span class="serif grad">adım adım.</span></h1>
+      <p class="lead">Instagram, senin hakkında sakladığı neredeyse her şeyin bir kopyasını indirmene izin verir: takipçiler, takip edilenler, beğeniler, yorumlar, mesajlar, girişler ve bilgilerine sahip reklamverenler. İşte tam olarak nasıl yapılır ve hangi seçenekleri seçmelisin.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Başlamadan önce: hangi verilere ihtiyacın var?</h2>
+      <ul>
+        <li><strong>Yalnızca seni kimin geri takip etmediğini veya takipten çıktığını mı öğrenmek istiyorsun?</strong> Sadece <strong>Takipçiler ve takip edilenler</strong>’i iste. Çok küçüktür ve genellikle dakikalar içinde hazır olur.</li>
+        <li><strong>DM istatistikleri, en çok beğendiğin hesaplar ve gizlilik kontrolü mü istiyorsun?</strong> <strong>Tüm mevcut bilgiler</strong>’i iste. Daha büyüktür ve daha uzun sürebilir.</li>
+      </ul>
+
+      <h2>Instagram uygulamasında (iPhone veya Android)</h2>
+      <ol>
+        <li>Profiline git ve <strong>☰</strong>’e (sağ üst) dokun.</li>
+        <li><strong>Hesaplar Merkezi</strong>’ne dokun.</li>
+        <li><strong>Bilgilerin ve izinlerin</strong> → <strong>Bilgilerini indir</strong>’e dokun.</li>
+        <li><strong>Bilgileri indir veya aktar</strong>’a dokun ve Instagram hesabını seç.</li>
+        <li><strong>Bilgilerinin bir kısmı</strong>’nı (ardından <strong>Takipçiler ve takip edilenler</strong>’i işaretle) veya <strong>Tüm mevcut bilgiler</strong>’i seç.</li>
+        <li><strong>Cihaza indir</strong>’i seç.</li>
+        <li><strong>Tarih aralığı: Tüm zamanlar</strong>, <strong>Biçim: JSON</strong>, <strong>Medya kalitesi: Düşük</strong> olarak ayarla.</li>
+        <li><strong>Dosya oluştur</strong>’a dokun.</li>
+      </ol>
+      <p>Bilgisayarda aynı menü Hesaplar Merkezi → Bilgilerin ve izinlerin → Bilgilerini indir altında bulunur.</p>
+
+      <h2>JSON mu HTML mi?</h2>
+      <p><strong>JSON</strong> makinece okunabilen bir biçimdir ve Unwrapped gibi araçlar için en güvenilir seçimdir. <strong>HTML</strong> tarayıcıda okumak içindir. Unwrapped ikisini de anlar, ama seçebiliyorsan JSON’u seç.</p>
+
+      <h2>Ne kadar sürer?</h2>
+      <p>Küçük istekler çoğu zaman dakikalar içinde hazır olur; büyük olanlar saatler sürebilir ve Instagram’a göre nadir durumlarda birkaç gün. Bir e-posta ve bildirim alırsın. İndirme bağlantısının süresi birkaç gün sonra dolar, bu yüzden kısa sürede indir.</p>
+
+      <h2>ZIP’in içinde neler var?</h2>
+      <ul>
+        <li><code>connections/followers_and_following/followers_1.json</code> — takipçilerin, her birinin seni takip ettiği tarihle.</li>
+        <li><code>following.json</code> — takip ettiğin herkes.</li>
+        <li><code>pending_follow_requests.json</code>, <code>close_friends.json</code>, <code>blocked_profiles.json</code> ve fazlası.</li>
+        <li>“Tüm bilgiler” ile: beğeniler, yorumlar, mesajlar, giriş etkinliği ve <code>advertisers_using_your_activity_or_information.json</code>.</li>
+      </ul>
+      <p>Hiçbir şeyi açmana gerek yok. ZIP’i olduğu gibi <a href="/instagram/">Unwrapped</a>’a bırak — birden fazla ZIP parçasını aynı anda bile.</p>
+
+      <h2>Gizli tut</h2>
+      <p>Dışa aktarımın, başkalarının isimleri ve mesajların dahil kişisel bilgiler içerir. Onu asla bir sunucuya gönderen bir siteye yükleme. Unwrapped dosyayı tamamen tarayıcında işler — bırakmadan önce uçak modunu bile açabilirsin.</p>
+
+      <h2>Sık sorulan sorular</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>“Bilgilerini indir” seçeneğini neden bulamıyorum?</summary><div class="answer"><p>Instagram bu seçeneği Hesaplar Merkezi’ne taşıdı. Hesaplar Merkezi → Bilgilerin ve izinlerin altına bak. Uygulamanın güncel olduğundan emin ol.</p></div></details>
+      <details><summary>Takipçi dosyam eksik görünüyor. Neden?</summary><div class="answer"><p>Dışa aktarım uygulamanın birkaç saat gerisinde kalabilir ve devre dışı hesapları içermez. Çok büyük hesaplar birkaç takipçi dosyasına bölünebilir — hepsi otomatik olarak okunur.</p></div></details>
+      <details><summary>Verilerimi indirmek birine bildirim gönderir mi veya hesabımı etkiler mi?</summary><div class="answer"><p>Hayır. Resmî bir özelliktir ve dosyayı yalnızca sen alırsın.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

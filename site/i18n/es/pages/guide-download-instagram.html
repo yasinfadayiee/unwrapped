@@ -1,0 +1,67 @@
+<!--page {
+  "route": "/guides/download-instagram-data/",
+  "title": "Cómo descargar tus datos de Instagram (seguidores, mensajes, todo) · 2026",
+  "headline": "Cómo descargar tus datos de Instagram, paso a paso",
+  "description": "Paso a paso: descarga tus datos de Instagram desde el Centro de cuentas, qué opciones elegir (JSON o HTML, solo seguidores o todo), cuánto tarda y qué hay dentro del ZIP.",
+  "article": "2026-10-11",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container">
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Guía · Instagram</span>
+      <h1 class="h1">Cómo descargar tus datos de Instagram, <span class="serif grad">paso a paso.</span></h1>
+      <p class="lead">Instagram te deja descargar una copia de casi todo lo que guarda sobre ti: seguidores, seguidos, me gusta, comentarios, mensajes, inicios de sesión y los anunciantes que tienen tu información. Así se hace, y estas son las opciones que debes elegir.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Antes de empezar: ¿qué datos necesitas?</h2>
+      <ul>
+        <li><strong>¿Solo quieres saber quién no te sigue o quién te dejó de seguir?</strong> Pide únicamente <strong>Seguidores y seguidos</strong>. Ocupa muy poco y suele estar listo en minutos.</li>
+        <li><strong>¿Quieres estadísticas de mensajes, tus cuentas más gustadas y una revisión de privacidad?</strong> Pide <strong>Toda la información disponible</strong>. Es más grande y puede tardar más.</li>
+      </ul>
+
+      <h2>En la app de Instagram (iPhone o Android)</h2>
+      <ol>
+        <li>Ve a tu perfil y toca <strong>☰</strong> (arriba a la derecha).</li>
+        <li>Toca <strong>Centro de cuentas</strong>.</li>
+        <li>Toca <strong>Tu información y permisos</strong> → <strong>Descargar tu información</strong>.</li>
+        <li>Toca <strong>Descargar o transferir información</strong> y selecciona tu cuenta de Instagram.</li>
+        <li>Elige <strong>Parte de tu información</strong> (y marca <strong>Seguidores y seguidos</strong>) o <strong>Toda la información disponible</strong>.</li>
+        <li>Elige <strong>Descargar en el dispositivo</strong>.</li>
+        <li>Configura <strong>Intervalo de fechas: Desde el principio</strong>, <strong>Formato: JSON</strong>, <strong>Calidad multimedia: Baja</strong>.</li>
+        <li>Toca <strong>Crear archivos</strong>.</li>
+      </ol>
+      <p>En una computadora, el mismo menú está en Centro de cuentas → Tu información y permisos → Descargar tu información.</p>
+
+      <h2>¿JSON o HTML?</h2>
+      <p><strong>JSON</strong> es un formato legible por máquinas y la opción más fiable para herramientas como Unwrapped. <strong>HTML</strong> está pensado para leerlo en un navegador. Unwrapped entiende ambos, pero si puedes elegir, elige JSON.</p>
+
+      <h2>¿Cuánto tarda?</h2>
+      <p>Las solicitudes pequeñas suelen estar listas en minutos; las grandes pueden tardar horas, e Instagram indica que en casos raros hasta unos días. Recibirás un correo y una notificación. El enlace de descarga caduca en unos días, así que descárgalo pronto.</p>
+
+      <h2>¿Qué hay dentro del ZIP?</h2>
+      <ul>
+        <li><code>connections/followers_and_following/followers_1.json</code>: tus seguidores, con la fecha en que cada uno te siguió.</li>
+        <li><code>following.json</code>: todas las cuentas que sigues.</li>
+        <li><code>pending_follow_requests.json</code>, <code>close_friends.json</code>, <code>blocked_profiles.json</code> y más.</li>
+        <li>Con “Toda la información”: me gusta, comentarios, mensajes, actividad de inicio de sesión y <code>advertisers_using_your_activity_or_information.json</code>.</li>
+      </ul>
+      <p>No necesitas descomprimir nada. Suelta el ZIP tal cual en <a href="/instagram/">Unwrapped</a>, incluso varias partes ZIP a la vez.</p>
+
+      <h2>Mantenlo privado</h2>
+      <p>Tu exportación contiene información personal, incluidos nombres de otras personas y tus mensajes. Nunca la subas a un sitio que la envíe a un servidor. Unwrapped la procesa por completo en tu navegador: incluso puedes activar el modo avión antes de soltarla.</p>
+
+      <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>¿Por qué no encuentro “Descargar tu información”?</summary><div class="answer"><p>Instagram la trasladó al Centro de cuentas. Búscala en Centro de cuentas → Tu información y permisos. Asegúrate de tener la app actualizada.</p></div></details>
+      <details><summary>Mi archivo de seguidores parece incompleto. ¿Por qué?</summary><div class="answer"><p>La exportación puede ir unas horas por detrás de la app y no incluye cuentas desactivadas. Las cuentas muy grandes pueden repartirse en varios archivos de seguidores; todos se leen automáticamente.</p></div></details>
+      <details><summary>¿Descargar mis datos avisa a alguien o afecta a mi cuenta?</summary><div class="answer"><p>No. Es una función oficial y solo tú recibes el archivo.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
