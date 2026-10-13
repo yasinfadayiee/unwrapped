@@ -376,6 +376,7 @@ async function supportContact() {
 
 header();
 supportContact();
+import('./lib/stats.js').then(({ trackView }) => trackView()).catch(() => {});
 reveals();
 spotlight();
 dropZones();

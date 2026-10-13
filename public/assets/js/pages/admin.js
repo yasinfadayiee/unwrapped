@@ -67,6 +67,38 @@ async function load() {
   }
   root.append(h('section', { class: 'panel' }, h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Revenue, last 30 days'), h('p', null, 'USD, by UTC day of payment'))), barChart(days, { title: 'Revenue', valueLabel: (v) => usd(v), ariaLabel: 'Revenue per day' })));
 
+  // Visitors (anonymous daily counters from /api/hit).
+  const st = await api('/api/admin/stats', { headers: auth() }).catch(() => null);
+  if (st) {
+    const viewsByDay = new Map(st.daily.map((d) => [d.day, d.n]));
+    const vdays = [];
+    for (let i = 29; i >= 0; i--) {
+      const day = today - i * 86400000;
+      vdays.push({ label: dateShort(day), short: new Date(day).getUTCDate() % 5 === 0 ? String(new Date(day).getUTCDate()) : '', value: viewsByDay.get(day) || 0 });
+    }
+    const ev = st.events;
+    const pctOf = (a, b) => (b ? `${Math.round((a / b) * 100)}%` : '—');
+    const list = (title, rows) => h('div', null, h('h4', { style: { margin: '0 0 8px' } }, title), rows.length ? h('div', { class: 'rows' }, rows.map((r) => h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, r.key)), h('span', { class: 'badge badge--muted' }, fmtInt(r.n))))) : h('p', { class: 'small text-2' }, 'No data yet.'));
+    root.append(
+      h(
+        'section',
+        { class: 'panel' },
+        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Visitors, last 30 days'), h('p', null, 'Anonymous counters — no cookies, no IPs. Visitors with Do Not Track are not counted.'))),
+        h(
+          'div',
+          { class: 'stats stats--5' },
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Page views'), h('span', { class: 'value' }, fmtInt(ev.view || 0))),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Demos opened'), h('span', { class: 'value' }, fmtInt(ev.demo || 0)), h('span', { class: 'sub' }, `${pctOf(ev.demo || 0, ev.view || 0)} of views`)),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Exports analyzed'), h('span', { class: 'value' }, fmtInt(ev.analyze || 0)), h('span', { class: 'sub' }, `${pctOf(ev.analyze || 0, ev.view || 0)} of views`)),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Checkouts opened'), h('span', { class: 'value' }, fmtInt(ev.checkout || 0)), h('span', { class: 'sub' }, `${pctOf(ev.checkout || 0, ev.analyze || 0)} of analyses`)),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Orders paid'), h('span', { class: 'value' }, fmtInt(s.funnel30d.paid)), h('span', { class: 'sub' }, `${pctOf(s.funnel30d.paid, ev.checkout || 0)} of checkouts`)),
+        ),
+        barChart(vdays, { title: 'Page views', ariaLabel: 'Page views per day' }),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginTop: '18px' } }, list('Top pages', st.pages), list('Where visitors come from', st.refs), list('Languages', st.langs)),
+      ),
+    );
+  }
+
   const hl = s.health;
   const cronAge = hl.cronLastRun ? Math.round((Date.now() - hl.cronLastRun) / 60000) : null;
   root.append(

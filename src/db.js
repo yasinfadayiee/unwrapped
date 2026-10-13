@@ -63,6 +63,8 @@ export const SCHEMA = [
     ref TEXT,
     data TEXT
   )`,
+  // Daily counters for the privacy-friendly site statistics (src/stats.js).
+  `CREATE TABLE IF NOT EXISTS stats (day INTEGER NOT NULL, kind TEXT NOT NULL, key TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, kind, key))`,
 ];
 
 // Columns added after the first release. SQLite has no "ADD COLUMN IF NOT
@@ -114,6 +116,7 @@ export async function cleanup(env) {
     env.DB.prepare("UPDATE orders SET status = 'expired' WHERE status = 'pending' AND expires_at < ?").bind(now),
     env.DB.prepare('DELETE FROM rate_limits WHERE reset_at < ?').bind(now),
     env.DB.prepare('DELETE FROM events WHERE ts < ?').bind(now - 90 * 86_400_000),
+    env.DB.prepare('DELETE FROM stats WHERE day < ?').bind(Math.floor(now / 86_400_000) - 400),
     // Higher-tier time on a lifetime license ran out: back to the lifetime plan.
     env.DB.prepare('UPDATE licenses SET plan = base_plan, expires_at = NULL, base_plan = NULL, reminded_at = NULL WHERE base_plan IS NOT NULL AND expires_at < ?').bind(now),
   ]);

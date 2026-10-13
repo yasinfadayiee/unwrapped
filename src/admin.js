@@ -8,6 +8,7 @@ import { fulfillOrder } from './orders.js';
 import { tronEnabled } from './payments/tron.js';
 import { nowpaymentsEnabled } from './payments/nowpayments.js';
 import { emailEnabled } from './email.js';
+import { statsSummary } from './stats.js';
 import { DAY, formatUsdt, isEmail, maskEmail, normalizeLicenseKey, timingSafeEqual } from './util.js';
 
 function authorized(request, env) {
@@ -37,6 +38,8 @@ export async function handleAdmin(request, env, url) {
       return markPaid(env, await readJson(request));
     case 'GET /api/admin/events':
       return listEvents(env);
+    case 'GET /api/admin/stats':
+      return statsSummary(env);
     default:
       return fail(404, 'not_found');
   }

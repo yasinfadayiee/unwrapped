@@ -74,6 +74,7 @@ function creditText(state, tierId, plans) {
 }
 
 export async function openCheckout({ plan: preselect, tier: wantTier, reason } = {}) {
+  import('./stats.js').then(({ track }) => track('checkout')).catch(() => {});
   const [config, state] = await Promise.all([getConfig(), proState()]);
   const plans = config.plans || [];
   const tiers = config.tiers || [];

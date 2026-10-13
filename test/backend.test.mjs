@@ -244,6 +244,21 @@ test('licenses activate, renew on top of remaining time, and can be revoked', as
   assert.equal(missing.body.reason, 'not_found');
 });
 
+test('anonymous site stats count views, referrers and funnel events', async () => {
+  const hit = (body) => worker.fetch(new Request('https://shop.test/api/hit', { method: 'POST', body: JSON.stringify(body) }), env, ctx());
+  assert.equal((await hit({ k: 'view', p: '/es/pricing/', r: 'www.google.com', l: 'es' })).status, 204);
+  await hit({ k: 'view', p: '/es/pricing/', r: 'shop.test', l: 'es' });
+  await hit({ k: 'analyze' });
+  assert.equal((await hit({ k: 'view', p: 'javascript:alert(1)' })).status, 400);
+  assert.equal((await hit({ k: 'nope' })).status, 400);
+  const { body } = await call('GET', '/api/admin/stats', undefined, { authorization: `Bearer ${env.ADMIN_TOKEN}` });
+  assert.equal(body.events.view, 2);
+  assert.equal(body.events.analyze, 1);
+  assert.deepEqual(body.pages, [{ key: '/es/pricing/', n: 2 }]);
+  assert.deepEqual(body.refs.map((r) => r.key).sort(), ['(direct)', 'google.com']);
+  assert.equal((await call('GET', '/api/admin/stats')).status, 401);
+});
+
 test('admin summary reports revenue', async () => {
   const co = (await call('POST', '/api/checkout', { plan: 'year', method: 'tron' })).body;
   transfer(co.order.amountUnits);

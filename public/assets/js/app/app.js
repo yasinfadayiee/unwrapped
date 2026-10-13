@@ -19,6 +19,7 @@ import { linkedinViews } from './views-linkedin.js';
 import { crossView } from './views-cross.js';
 import { playStory } from './story.js';
 import { t as tl } from '../lib/i18n.js';
+import { track } from '../lib/stats.js';
 
 const VIEW_BUILDERS = {
   instagram: instagramViews,
@@ -373,6 +374,7 @@ export async function openApp({ files = [], demo = false } = {}) {
       }
     }
     load.close();
+    track(demo ? 'demo' : 'analyze');
     if (!openApp.skipStory) {
       playStory(result.datasets, { onDone: () => active?.root?.querySelector('.app-main')?.focus() });
     }
