@@ -206,6 +206,19 @@ npm run og
 
 ---
 
+## وصل کردن دامنه‌ی اختصاصی (مثلاً myunwrapped.com)
+
+1. دامنه را در Cloudflare بخرید (Domains → Registrations). Nameserverها خودکار روی Cloudflare تنظیم می‌شوند.
+2. در داشبورد: Workers & Pages → unwrapped → Settings → Domains & Routes → Add → Custom domain → `myunwrapped.com` (و اگر خواستید `www.myunwrapped.com`).
+3. در `wrangler.jsonc`:
+   - `"SITE_URL": "https://myunwrapped.com"`
+   - داخل `"assets"` این خط را اضافه کنید: `"run_worker_first": true` تا صفحه‌های آدرس قدیمی `workers.dev` با ریدایرکت ۳۰۱ به دامنه‌ی جدید بروند (کد ریدایرکت از قبل در `src/worker.js` هست).
+4. `npm run build`، بعد `npm run og` (تصویرها با آدرس جدید)، دوباره `npm run build`، و `npm run deploy`.
+5. در Google Search Console دامنه‌ی جدید را اضافه و sitemap را ثبت کنید: `https://myunwrapped.com/sitemap.xml`.
+6. اگر NOWPayments فعال است، آدرس IPN را هم به دامنه‌ی جدید عوض کنید (آدرس قدیمی هم کار می‌کند).
+
+---
+
 ## اجرا روی سرور شخصی (VPS) به‌جای Cloudflare
 
 ```bash

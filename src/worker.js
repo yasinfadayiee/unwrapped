@@ -167,6 +167,14 @@ async function route(request, env, ctx, url) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // Once SITE_URL is a custom domain, pages on the old workers.dev address
+    // move there permanently (301), so search engines carry rankings over.
+    // API calls keep working on both addresses (payment webhooks).
+    const canonical = (env.SITE_URL || '').replace(/\/+$/, '');
+    if (canonical && url.hostname.endsWith('.workers.dev') && !url.pathname.startsWith('/api/')) {
+      const target = new URL(canonical);
+      if (target.hostname !== url.hostname) return Response.redirect(`${target.origin}${url.pathname}${url.search}`, 301);
+    }
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     try {
       await ensureSchema(env);

@@ -244,6 +244,14 @@ test('licenses activate, renew on top of remaining time, and can be revoked', as
   assert.equal(missing.body.reason, 'not_found');
 });
 
+test('the old workers.dev address redirects pages to the custom domain, not the API', async () => {
+  const res = await worker.fetch(new Request('https://unwrapped.someone.workers.dev/es/pricing/?a=1'), env, ctx());
+  assert.equal(res.status, 301);
+  assert.equal(res.headers.get('location'), 'https://shop.test/es/pricing/?a=1');
+  const api = await worker.fetch(new Request('https://unwrapped.someone.workers.dev/api/config'), env, ctx());
+  assert.equal(api.status, 200);
+});
+
 test('anonymous site stats count views, referrers and funnel events', async () => {
   const hit = (body) => worker.fetch(new Request('https://shop.test/api/hit', { method: 'POST', body: JSON.stringify(body) }), env, ctx());
   assert.equal((await hit({ k: 'view', p: '/es/pricing/', r: 'www.google.com', l: 'es' })).status, 204);
