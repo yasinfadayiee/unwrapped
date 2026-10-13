@@ -1261,5 +1261,9 @@ export default {
   "Not sure? The free version stays free — try everything first.": "¿No estás seguro? La versión gratis sigue siendo gratis: pruébalo todo primero.",
   "Drop your data export on Unwrapped": "Suelta tu exportación de datos en Unwrapped",
   "Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}": "Tu exportación ya debería estar lista. Descarga el ZIP del correo y suéltalo aquí: {v0}",
-  "Problem with a payment? Send us your order ID:": "¿Problemas con un pago? Envíanos el ID de tu pedido:"
+  "Problem with a payment? Send us your order ID:": "¿Problemas con un pago? Envíanos el ID de tu pedido:",
+  "Start here": "Empieza aquí",
+  "Followers & people": "Seguidores y personas",
+  "Your posts & activity": "Tus publicaciones y actividad",
+  "Privacy": "Privacidad"
 };

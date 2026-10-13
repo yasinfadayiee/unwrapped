@@ -1261,5 +1261,9 @@ export default {
   "Not sure? The free version stays free — try everything first.": "Emin değil misin? Ücretsiz sürüm ücretsiz kalır — önce her şeyi dene.",
   "Drop your data export on Unwrapped": "Veri dışa aktarımını Unwrapped’a bırak",
   "Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}": "Dışa aktarımın hazır olmalı. ZIP’i e-postadan indir ve buraya bırak: {v0}",
-  "Problem with a payment? Send us your order ID:": "Ödemede sorun mu var? Sipariş numaranı bize gönder:"
+  "Problem with a payment? Send us your order ID:": "Ödemede sorun mu var? Sipariş numaranı bize gönder:",
+  "Start here": "Buradan başla",
+  "Followers & people": "Takipçiler ve kişiler",
+  "Your posts & activity": "Gönderilerin ve etkinliğin",
+  "Privacy": "Gizlilik"
 };

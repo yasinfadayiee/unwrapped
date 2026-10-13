@@ -1423,3 +1423,5 @@ audio.msg-media { min-height: 0; }
 .crypto-help summary { cursor: pointer; font-weight: 600; color: var(--text); }
 .crypto-help ol { margin: 10px 0 6px; padding-left: 20px; display: grid; gap: 6px; color: var(--text-2); }
 .crypto-help p { margin: 0; }
+.app-nav .group:not(:first-child):not(.group--lab) { margin-top: 8px; border-top: 1px solid var(--line); padding-top: 16px; }
+.app-picker { width: 100%; height: 46px; font-size: 15px; font-weight: 600; }

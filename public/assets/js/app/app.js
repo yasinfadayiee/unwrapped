@@ -31,6 +31,14 @@ const VIEW_BUILDERS = {
   linkedin: linkedinViews,
 };
 
+const SECTIONS = ['start', 'people', 'content', 'privacy', 'lab', 'share'];
+const SECTION_TITLE = { start: () => tl('Start here'), people: () => tl('Followers & people'), content: () => tl('Your posts & activity'), privacy: () => tl('Privacy'), lab: () => tl('Pro Lab'), share: () => tl('Share') };
+const SECTION_OF = {
+  overview: 'start', health: 'start', timeline: 'start',
+  notBack: 'people', fans: 'people', mutuals: 'people', unfollowers: 'people', lookup: 'people', requests: 'people', lists: 'people', friends: 'people', connections: 'people',
+  privacy: 'privacy',
+};
+
 let active = null;
 const trackedTools = new Set();
 
@@ -243,7 +251,10 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         }
         // One timeline across every dropped export, shown in each tab.
         primary.push({ id: 'timeline', label: tl('Your digital life'), icon: 'calendar', render: () => timelineView(datasets, ctx) });
-        viewCache.set(tab.key, [...primary, ...lab, ...wrapped]);
+        // The menu is grouped so people find things by what they want to do.
+        const all = [...primary, ...lab.map((v) => ({ ...v, section: 'lab' })), ...wrapped.map((v) => ({ ...v, section: 'share' }))];
+        for (const v of all) v.section = v.section || SECTION_OF[v.id] || 'content';
+        viewCache.set(tab.key, SECTIONS.flatMap((s) => all.filter((v) => v.section === s)));
       }
     }
     return viewCache.get(tab.key);
@@ -290,10 +301,16 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         dsSwitch.append(b);
       });
     }
-    const firstLab = views.find((v) => v.group === 'lab');
     append(clear(nav), [
-      h('div', { class: 'group' }, tab.label),
-      views.map((v) => [v === firstLab ? h('div', { class: 'group group--lab' }, icon('sparkles'), tl('Pro Lab')) : null, navButton(v, false)]),
+      views.map((v, i) => [
+        // A heading wherever the section changes (the first one names the platform).
+        i === 0 || views[i - 1].section !== v.section
+          ? v.section === 'lab'
+            ? h('div', { class: 'group group--lab' }, icon('sparkles'), tl('Pro Lab'))
+            : h('div', { class: 'group' }, i === 0 && !v.section ? tab.label : v.section === 'start' ? `${tab.label} · ${SECTION_TITLE.start()}` : (SECTION_TITLE[v.section] || (() => tab.label))())
+          : null,
+        navButton(v, false),
+      ]),
     ]);
     const next = NEXT_UP[tier];
     if (next && !demo) {
@@ -307,7 +324,23 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         ),
       );
     }
-    append(clear(mobileTabs), views.map((v) => navButton(v, true)));
+    // Phones: one grouped picker instead of a long row of tabs.
+    const picker = h(
+      'select',
+      { class: 'select app-picker', 'aria-label': tl('Sections') },
+      SECTIONS.concat([undefined]).map((s) => {
+        const list = views.filter((v) => v.section === s);
+        if (!list.length) return null;
+        const opts = list.map((v) => h('option', { value: v.id, selected: v.id === viewId }, `${v.label}${v.count !== undefined ? ` (${compact(v.count)})` : ''}`));
+        return s ? h('optgroup', { label: s === 'lab' ? tl('Pro Lab') : SECTION_TITLE[s]() }, opts) : opts;
+      }),
+    );
+    picker.addEventListener('change', () => {
+      viewId = picker.value;
+      render();
+      main.scrollTo({ top: 0 });
+    });
+    append(clear(mobileTabs), [picker]);
     const view = views.find((v) => v.id === viewId);
     let content;
     try {
