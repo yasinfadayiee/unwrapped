@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/instagram-liked-posts/",
+  "nav": "tools",
+  "title": "Find posts you liked on Instagram & your comment history · Unwrapped",
+  "headline": "Find any post you liked on Instagram — and every comment you wrote",
+  "description": "See every Instagram post you ever liked or saved and every comment you wrote. Search by account, word or year and open the post again — from your own data download, privately.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-heart"/></svg>Likes &amp; comments · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Find that post</span></span>
+        <span class="line"><span><span class="serif grad">you liked.</span></span></span>
+      </h1>
+      <p class="hero-sub">Instagram only shows a slice of your likes. Your data download has <b>every post you ever liked or saved</b> and <b>every comment you wrote</b>, with dates and links. Search by account, word or year and open the post again.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">What you get</span><h2 class="h2">Your Instagram activity, <span class="serif">searchable.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Liked posts</b> — every like, with the account and the date, one tap from the post.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Saved posts</b> — your whole collection in one list.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Your comments</b> — search the words you wrote, years back.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Search by @account</b>, filter by year, newest or oldest first.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Plus your <a href="/instagram-message-viewer/">messages</a> and <a href="/instagram-story-archive/">old stories</a> from the same download.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2 class="h2">Three steps, on your device.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Request your activity</b><span>Accounts Center → Your information and permissions → Download your information → choose <b>Likes</b>, <b>Comments</b> and <b>Saved</b> (or All available information), format JSON.</span></li>
+      <li><b>Drop the ZIP here</b><span>It’s opened in your browser — nothing is uploaded.</span></li>
+      <li><b>Open “Likes &amp; comments finder”</b><span>Searching is free. Exporting lists as CSV is part of <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Likes &amp; comments, found.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>How do I see all the posts I liked on Instagram?</summary><div class="answer"><p>The app’s “Your activity → Likes” shows recent likes only. Your data download lists every like Instagram keeps, with the account and date. Drop it here and open the Likes &amp; comments finder.</p></div></details>
+      <details><summary>Can I see every comment I’ve written?</summary><div class="answer"><p>Yes — the download includes your comments with the account they were on and the date. Search any word you remember.</p></div></details>
+      <details><summary>Why does a post no longer open?</summary><div class="answer"><p>If the owner deleted it, archived it or made their account private, Instagram won’t show it anymore — even though it’s still listed in your data.</p></div></details>
+      <details><summary>Is this private?</summary><div class="answer"><p>Yes. Your file is read in your browser and never uploaded. Nobody is notified.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

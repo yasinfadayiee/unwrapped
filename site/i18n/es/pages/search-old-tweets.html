@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/search-old-tweets/",
+  "nav": "tools",
+  "title": "Busca tus tweets antiguos y encuentra qué borrar · Unwrapped",
+  "headline": "Busca tus tweets antiguos y limpia tu historial de X",
+  "description": "Busca cada tweet, respuesta y repost que hiciste, filtra por año y revisa groserías, publicaciones de fiesta y datos personales, desde tu archivo de X y en privado. Sin login.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-search"/></svg>Buscar y limpiar · X</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Encuentra los tweets</span></span>
+        <span class="line"><span><span class="serif grad">que olvidaste.</span></span></span>
+      </h1>
+      <p class="hero-sub">Antes de que un reclutador, un cliente o un nuevo jefe revise tu historial de X, hazlo tú. Busca <b>cada publicación que hiciste</b>, filtra por año y deja que la <b>revisión de limpieza</b> marque groserías, publicaciones de fiesta y datos personales como teléfonos y correos.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Qué obtienes</span><h2 class="h2">Todo tu historial de X, <span class="serif">buscable en segundos.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Búsqueda de texto completo</b> en cada publicación, respuesta y repost, con las palabras resaltadas.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Revisión de limpieza</b>: groserías, alcohol y drogas, y datos personales, en español, inglés, portugués y turco.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tus propias palabras</b>: el nombre de una ex, un antiguo empleador, lo que prefieras no encontrar después.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Filtra por año y tipo</b>, ordena por fecha o por más gustados.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Un clic para abrir</b> cada publicación en X, donde puedes borrarla.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Cómo funciona</span><h2 class="h2">Tres pasos, en tu dispositivo.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Pide tu archivo de X</b><span>X → Configuración → Tu cuenta → <b>Descargar un archivo de tus datos</b>. Suele llegar en un día.</span></li>
+      <li><b>Suelta el ZIP aquí</b><span>Se abre en tu navegador: tus publicaciones nunca se suben.</span></li>
+      <li><b>Abre “Buscar y limpiar”</b><span>La búsqueda y la revisión de limpieza son gratis. Exportar resultados en CSV es parte de <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Preguntas frecuentes</span><h2 class="h2">Tweets antiguos, resueltos.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>¿Cómo puedo buscar todos mis tweets antiguos?</summary><div class="answer"><p>La búsqueda de X a menudo no encuentra publicaciones antiguas. Tu archivo las contiene todas. Suéltalo aquí, abre “Buscar y limpiar” y escribe cualquier palabra: los resultados aparecen al instante, con las coincidencias resaltadas.</p></div></details>
+      <details><summary>¿Puede Unwrapped borrar mis tweets?</summary><div class="answer"><p>No: eso necesitaría tu contraseña y nunca la pedimos. Cada resultado se abre en X con un clic, donde tú lo borras. Tu cuenta sigue segura.</p></div></details>
+      <details><summary>¿Qué busca la revisión de limpieza?</summary><div class="answer"><p>Groserías, referencias a alcohol y drogas, y datos personales como teléfonos y correos, en cuatro idiomas. Añade tus propias palabras para lo demás. Es un punto de partida, no un veredicto: lee cada publicación tú mismo.</p></div></details>
+      <details><summary>¿Se incluyen respuestas y reposts?</summary><div class="answer"><p>Sí. Filtra por publicaciones, respuestas o reposts. La revisión de limpieza solo cuenta tus propias palabras, no los reposts de otras personas.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

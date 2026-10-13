@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/search-old-tweets/",
+  "nav": "tools",
+  "title": "Eski tweet’lerinde ara ve silinecekleri bul · Unwrapped",
+  "headline": "Eski tweet’lerinde ara ve X geçmişini temizle",
+  "description": "Yaptığın her tweet’i, yanıtı ve yeniden paylaşımı ara, yıla göre filtrele ve küfür, parti gönderileri ve kişisel bilgiler için temizlik kontrolü yap — X arşivinden, gizlice. Giriş yok.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-search"/></svg>Ara ve temizle · X</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Unuttuğun</span></span>
+        <span class="line"><span><span class="serif grad">tweet’leri bul.</span></span></span>
+      </h1>
+      <p class="hero-sub">Bir işe alımcı, müşteri veya yeni patronun X geçmişini kaydırmadan önce bunu sen yap. <b>Yaptığın her gönderide</b> ara, yıla göre filtrele — ve <b>temizlik kontrolü</b> küfürleri, parti gönderilerini ve telefon numarası, e-posta gibi kişisel bilgileri işaretlesin.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Neler alırsın</span><h2 class="h2">Tüm X geçmişin, <span class="serif">saniyeler içinde aranabilir.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Her gönderi, yanıt ve yeniden paylaşımda <b>tam metin arama</b> — eşleşen kelimeler vurgulanır.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Temizlik kontrolü</b> — küfür, alkol ve uyuşturucu ve kişisel bilgiler; Türkçe, İngilizce, İspanyolca ve Portekizce.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Kendi kelimelerin</b> — eski sevgilinin adı, eski bir işveren, sonradan bulunmasını istemediğin her şey.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Yıla ve türe göre filtrele</b>, tarihe veya en çok beğenilene göre sırala.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Her gönderiyi X’te <b>tek tıkla aç</b> ve orada sil.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Nasıl çalışır</span><h2 class="h2">Üç adım, cihazında.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>X arşivini iste</b><span>X → Ayarlar → Hesabın → <b>Verilerinin arşivini indir</b>. Genellikle bir gün içinde gelir.</span></li>
+      <li><b>ZIP’i buraya bırak</b><span>Tarayıcında açılır — gönderilerin asla yüklenmez.</span></li>
+      <li><b>“Ara ve temizle”yi aç</b><span>Arama ve temizlik kontrolü ücretsizdir. Sonuçları CSV olarak dışa aktarmak <a href="/pricing/">Plus</a>’a dahildir.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Sık sorulan sorular</span><h2 class="h2">Eski tweet’ler, çözüldü.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Tüm eski tweet’lerimde nasıl arama yaparım?</summary><div class="answer"><p>X’in kendi araması eski gönderileri çoğu zaman bulamaz. Arşivin hepsini içerir. Buraya bırak, “Ara ve temizle”yi aç ve herhangi bir kelime yaz — sonuçlar eşleşmeler vurgulanmış hâlde anında görünür.</p></div></details>
+      <details><summary>Unwrapped tweet’lerimi silebilir mi?</summary><div class="answer"><p>Hayır — bunun için şifren gerekirdi ve biz asla istemeyiz. Her sonuç tek tıkla X’te açılır, orada kendin silersin. Hesabın güvende kalır.</p></div></details>
+      <details><summary>Temizlik kontrolü neleri arar?</summary><div class="answer"><p>Dört dilde küfürleri, alkol ve uyuşturucu göndermelerini ve telefon numarası, e-posta gibi kişisel bilgileri. Geri kalanı için kendi kelimelerini ekle. Bu bir başlangıç noktasıdır, kesin yargı değil: her gönderiyi kendin oku.</p></div></details>
+      <details><summary>Yanıtlar ve yeniden paylaşımlar dahil mi?</summary><div class="answer"><p>Evet. Gönderilere, yanıtlara veya yeniden paylaşımlara göre filtrele. Temizlik kontrolü yalnızca kendi kelimelerini sayar, başkalarının yeniden paylaşımlarını değil.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

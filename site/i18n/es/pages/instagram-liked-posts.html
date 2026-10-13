@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/instagram-liked-posts/",
+  "nav": "tools",
+  "title": "Encuentra publicaciones que te gustaron en Instagram y tus comentarios · Unwrapped",
+  "headline": "Encuentra cualquier publicación que te gustó en Instagram y cada comentario que escribiste",
+  "description": "Mira cada publicación de Instagram que te gustó o guardaste y cada comentario que escribiste. Busca por cuenta, palabra o año y vuelve a abrirla, desde tu propia descarga de datos y en privado.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-heart"/></svg>Me gusta y comentarios · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Encuentra esa publicación</span></span>
+        <span class="line"><span><span class="serif grad">que te gustó.</span></span></span>
+      </h1>
+      <p class="hero-sub">Instagram solo muestra una parte de tus me gusta. Tu descarga de datos tiene <b>cada publicación que te gustó o guardaste</b> y <b>cada comentario que escribiste</b>, con fechas y enlaces. Busca por cuenta, palabra o año y vuelve a abrirla.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Qué obtienes</span><h2 class="h2">Tu actividad en Instagram, <span class="serif">buscable.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Publicaciones que te gustaron</b>: cada me gusta, con la cuenta y la fecha, a un toque de la publicación.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Publicaciones guardadas</b>: toda tu colección en una lista.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tus comentarios</b>: busca las palabras que escribiste, años atrás.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Busca por @cuenta</b>, filtra por año, más recientes o más antiguos primero.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Además, tus <a href="/instagram-message-viewer/">mensajes</a> y tus <a href="/instagram-story-archive/">historias antiguas</a> desde la misma descarga.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Cómo funciona</span><h2 class="h2">Tres pasos, en tu dispositivo.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Pide tu actividad</b><span>Centro de cuentas → Tu información y permisos → Descargar tu información → elige <b>Me gusta</b>, <b>Comentarios</b> y <b>Guardado</b> (o Toda la información disponible), formato JSON.</span></li>
+      <li><b>Suelta el ZIP aquí</b><span>Se abre en tu navegador: no se sube nada.</span></li>
+      <li><b>Abre “Buscador de me gusta y comentarios”</b><span>Buscar es gratis. Exportar listas en CSV es parte de <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Preguntas frecuentes</span><h2 class="h2">Me gusta y comentarios, encontrados.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>¿Cómo veo todas las publicaciones que me gustaron en Instagram?</summary><div class="answer"><p>“Tu actividad → Me gusta” en la app solo muestra los recientes. Tu descarga de datos enumera cada me gusta que Instagram guarda, con la cuenta y la fecha. Suéltala aquí y abre el buscador de me gusta y comentarios.</p></div></details>
+      <details><summary>¿Puedo ver cada comentario que escribí?</summary><div class="answer"><p>Sí: la descarga incluye tus comentarios con la cuenta donde los escribiste y la fecha. Busca cualquier palabra que recuerdes.</p></div></details>
+      <details><summary>¿Por qué una publicación ya no se abre?</summary><div class="answer"><p>Si el dueño la borró, la archivó o hizo privada su cuenta, Instagram ya no la mostrará, aunque siga apareciendo en tus datos.</p></div></details>
+      <details><summary>¿Es privado?</summary><div class="answer"><p>Sí. Tu archivo se lee en tu navegador y nunca se sube. Nadie recibe ningún aviso.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

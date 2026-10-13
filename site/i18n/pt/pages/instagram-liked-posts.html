@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/instagram-liked-posts/",
+  "nav": "tools",
+  "title": "Encontre posts que você curtiu no Instagram e seus comentários · Unwrapped",
+  "headline": "Encontre qualquer post que você curtiu no Instagram — e cada comentário que escreveu",
+  "description": "Veja cada post do Instagram que você curtiu ou salvou e cada comentário que escreveu. Busque por conta, palavra ou ano e abra o post de novo — pelo seu próprio download de dados, com privacidade.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-heart"/></svg>Curtidas e comentários · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Encontre aquele post</span></span>
+        <span class="line"><span><span class="serif grad">que você curtiu.</span></span></span>
+      </h1>
+      <p class="hero-sub">O Instagram mostra só uma parte das suas curtidas. Seu download de dados tem <b>cada post que você curtiu ou salvou</b> e <b>cada comentário que escreveu</b>, com datas e links. Busque por conta, palavra ou ano e abra o post de novo.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">O que você recebe</span><h2 class="h2">Sua atividade no Instagram, <span class="serif">pesquisável.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Posts curtidos</b> — cada curtida, com a conta e a data, a um toque do post.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Posts salvos</b> — toda a sua coleção numa lista.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Seus comentários</b> — busque as palavras que você escreveu, anos atrás.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Busque por @conta</b>, filtre por ano, mais recentes ou mais antigos primeiro.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Além das suas <a href="/instagram-message-viewer/">mensagens</a> e dos seus <a href="/instagram-story-archive/">stories antigos</a> do mesmo download.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Como funciona</span><h2 class="h2">Três passos, no seu dispositivo.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Peça sua atividade</b><span>Central de contas → Suas informações e permissões → Baixar suas informações → escolha <b>Curtidas</b>, <b>Comentários</b> e <b>Salvos</b> (ou Todas as informações disponíveis), formato JSON.</span></li>
+      <li><b>Solte o ZIP aqui</b><span>Ele é aberto no seu navegador — nada é enviado.</span></li>
+      <li><b>Abra o “Localizador de curtidas e comentários”</b><span>Buscar é grátis. Exportar listas em CSV faz parte do <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Perguntas frequentes</span><h2 class="h2">Curtidas e comentários, encontrados.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Como vejo todos os posts que curti no Instagram?</summary><div class="answer"><p>“Sua atividade → Curtidas” no app mostra só as recentes. Seu download de dados lista cada curtida que o Instagram guarda, com a conta e a data. Solte aqui e abra o localizador de curtidas e comentários.</p></div></details>
+      <details><summary>Consigo ver cada comentário que escrevi?</summary><div class="answer"><p>Sim — o download inclui seus comentários com a conta onde foram feitos e a data. Busque qualquer palavra de que você se lembre.</p></div></details>
+      <details><summary>Por que um post não abre mais?</summary><div class="answer"><p>Se o dono apagou, arquivou ou deixou a conta privada, o Instagram não mostra mais — mesmo que ele continue listado nos seus dados.</p></div></details>
+      <details><summary>É privado?</summary><div class="answer"><p>Sim. Seu arquivo é lido no seu navegador e nunca é enviado. Ninguém é notificado.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

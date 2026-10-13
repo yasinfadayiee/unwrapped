@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/search-old-tweets/",
+  "nav": "tools",
+  "title": "Busque seus tweets antigos e encontre o que apagar · Unwrapped",
+  "headline": "Busque seus tweets antigos e limpe seu histórico do X",
+  "description": "Busque cada tweet, resposta e repost que você já fez, filtre por ano e faça uma checagem de palavrões, posts de festa e dados pessoais — pelo seu arquivo do X, com privacidade. Sem login.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-search"/></svg>Buscar e limpar · X</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Encontre os tweets</span></span>
+        <span class="line"><span><span class="serif grad">que você esqueceu.</span></span></span>
+      </h1>
+      <p class="hero-sub">Antes que um recrutador, um cliente ou um novo chefe role seu histórico do X, faça isso você mesmo. Busque <b>cada post que você já fez</b>, filtre por ano — e deixe a <b>checagem de limpeza</b> apontar palavrões, posts de festa e dados pessoais como telefones e e-mails.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">O que você recebe</span><h2 class="h2">Todo o seu histórico do X, <span class="serif">pesquisável em segundos.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Busca no texto completo</b> de cada post, resposta e repost — com as palavras destacadas.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Checagem de limpeza</b> — palavrões, álcool e drogas e dados pessoais, em português, inglês, espanhol e turco.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Suas próprias palavras</b> — o nome de um ex, um antigo empregador, o que preferir não encontrar depois.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Filtre por ano e tipo</b>, ordene por data ou pelos mais curtidos.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Um clique para abrir</b> cada post no X, onde você pode apagá-lo.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Como funciona</span><h2 class="h2">Três passos, no seu dispositivo.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Peça seu arquivo do X</b><span>X → Configurações → Sua conta → <b>Baixar um arquivo com seus dados</b>. Costuma chegar em um dia.</span></li>
+      <li><b>Solte o ZIP aqui</b><span>Ele é aberto no seu navegador — seus posts nunca são enviados.</span></li>
+      <li><b>Abra “Buscar e limpar”</b><span>A busca e a checagem de limpeza são grátis. Exportar resultados em CSV faz parte do <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Perguntas frequentes</span><h2 class="h2">Tweets antigos, resolvidos.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Como busco todos os meus tweets antigos?</summary><div class="answer"><p>A busca do próprio X muitas vezes não acha posts antigos. Seu arquivo tem todos. Solte aqui, abra “Buscar e limpar” e digite qualquer palavra — os resultados aparecem na hora, com os trechos destacados.</p></div></details>
+      <details><summary>O Unwrapped pode apagar meus tweets?</summary><div class="answer"><p>Não — isso exigiria sua senha, e nunca pedimos. Cada resultado abre no X com um clique, onde você mesmo apaga. Sua conta continua segura.</p></div></details>
+      <details><summary>O que a checagem de limpeza procura?</summary><div class="answer"><p>Palavrões, referências a álcool e drogas e dados pessoais como telefones e e-mails — em quatro idiomas. Adicione suas próprias palavras para o resto. É um ponto de partida, não um veredito: leia cada post você mesmo.</p></div></details>
+      <details><summary>Respostas e reposts entram?</summary><div class="answer"><p>Sim. Filtre por posts, respostas ou reposts. A checagem de limpeza só conta as suas próprias palavras, não reposts de outras pessoas.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

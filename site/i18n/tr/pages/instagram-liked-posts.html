@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/instagram-liked-posts/",
+  "nav": "tools",
+  "title": "Instagram’da beğendiğin gönderileri ve yorum geçmişini bul · Unwrapped",
+  "headline": "Instagram’da beğendiğin her gönderiyi ve yazdığın her yorumu bul",
+  "description": "Instagram’da beğendiğin veya kaydettiğin her gönderiyi ve yazdığın her yorumu gör. Hesaba, kelimeye veya yıla göre ara ve gönderiyi yeniden aç — kendi veri indirmenden, gizlice.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-heart"/></svg>Beğeniler ve yorumlar · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Beğendiğin o gönderiyi</span></span>
+        <span class="line"><span><span class="serif grad">yeniden bul.</span></span></span>
+      </h1>
+      <p class="hero-sub">Instagram beğenilerinin yalnızca bir kısmını gösterir. Veri indirmende <b>beğendiğin veya kaydettiğin her gönderi</b> ve <b>yazdığın her yorum</b> tarih ve bağlantılarıyla var. Hesaba, kelimeye veya yıla göre ara ve gönderiyi yeniden aç.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Neler alırsın</span><h2 class="h2">Instagram etkinliğin, <span class="serif">aranabilir.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Beğenilen gönderiler</b> — her beğeni, hesap ve tarihle, gönderiye tek dokunuş uzaklıkta.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Kaydedilen gönderiler</b> — tüm koleksiyonun tek listede.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Yorumların</b> — yıllar önce yazdığın kelimelerde ara.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>@hesaba göre ara</b>, yıla göre filtrele, önce en yeni veya en eski.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Aynı indirmeden <a href="/instagram-message-viewer/">mesajların</a> ve <a href="/instagram-story-archive/">eski hikâyelerin</a> de.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Nasıl çalışır</span><h2 class="h2">Üç adım, cihazında.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Etkinliğini iste</b><span>Hesaplar Merkezi → Bilgilerin ve izinlerin → Bilgilerini indir → <b>Beğeniler</b>, <b>Yorumlar</b> ve <b>Kaydedilenler</b>’i (veya Tüm mevcut bilgiler’i) seç, biçim JSON.</span></li>
+      <li><b>ZIP’i buraya bırak</b><span>Tarayıcında açılır — hiçbir şey yüklenmez.</span></li>
+      <li><b>“Beğeni ve yorum bulucu”yu aç</b><span>Aramak ücretsizdir. Listeleri CSV olarak dışa aktarmak <a href="/pricing/">Plus</a>’a dahildir.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Sık sorulan sorular</span><h2 class="h2">Beğeniler ve yorumlar, bulundu.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Instagram’da beğendiğim tüm gönderileri nasıl görürüm?</summary><div class="answer"><p>Uygulamadaki “Hareketlerin → Beğeniler” yalnızca yakın tarihlileri gösterir. Veri indirmen, Instagram’ın sakladığı her beğeniyi hesap ve tarihle listeler. Buraya bırak ve beğeni ve yorum bulucuyu aç.</p></div></details>
+      <details><summary>Yazdığım her yorumu görebilir miyim?</summary><div class="answer"><p>Evet — indirme, yorumlarını yazıldıkları hesap ve tarihle içerir. Hatırladığın herhangi bir kelimeyi ara.</p></div></details>
+      <details><summary>Bir gönderi neden artık açılmıyor?</summary><div class="answer"><p>Sahibi silmiş, arşivlemiş veya hesabını gizli yapmışsa Instagram onu artık göstermez — verilerinde listelenmeye devam etse bile.</p></div></details>
+      <details><summary>Gizli mi?</summary><div class="answer"><p>Evet. Dosyan tarayıcında okunur ve asla yüklenmez. Kimseye bildirim gitmez.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
