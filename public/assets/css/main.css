@@ -1427,3 +1427,12 @@ audio.msg-media { min-height: 0; }
 .app-picker { width: 100%; height: 46px; font-size: 15px; font-weight: 600; }
 .drop-links { display: flex; flex-wrap: wrap; gap: 6px 10px; justify-content: center; align-items: center; color: var(--muted); }
 .drop-links button { background: none; border: 0; font: inherit; cursor: pointer; }
+
+/* Phones: long card stacks become a swipeable row (the next card peeks in). */
+@media (max-width: 760px) {
+  .lab-grid, .pricing--tiers, #tools .bento, #how .steps { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(var(--gutter) * -1); padding: 4px var(--gutter) 14px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .lab-grid::-webkit-scrollbar, .pricing--tiers::-webkit-scrollbar, #tools .bento::-webkit-scrollbar, #how .steps::-webkit-scrollbar { display: none; }
+  .lab-grid > *, .pricing--tiers > *, #tools .bento > *, #how .steps > * { flex: 0 0 86%; scroll-snap-align: center; margin: 0; }
+}
+
+@media (max-width: 560px) { .drop-links { flex-direction: column; gap: 4px; } .drop-links span { display: none; } }

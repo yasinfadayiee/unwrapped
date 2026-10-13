@@ -486,6 +486,11 @@ netMonitor();
 stickyCta();
 welcomeBack();
 remindButtons();
+// Phones show the plans as a swipe row: start on the featured one.
+$$('.pricing--tiers').forEach((row) => {
+  const featured = $('.is-featured', row);
+  if (featured && row.scrollWidth > row.clientWidth) row.scrollLeft = featured.offsetLeft - (row.clientWidth - featured.offsetWidth) / 2;
+});
 getConfig().then(() => {
   pricing();
   licenseBadge();
