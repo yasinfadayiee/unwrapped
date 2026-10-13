@@ -194,9 +194,10 @@ export function unfollowersView(ds, ctx) {
     if (stillFollowing) keys = [...keys].sort((a, b) => Number(stillFollowing.has(b)) - Number(stillFollowing.has(a)));
     const items = keys.map((k) => labelFor(ds, snap, k));
     if (!items.length) return panel({ title }, emptyState(tl('Nobody in this period.'), 'check'));
+    const back = stillFollowing ? keys.filter((k) => stillFollowing.has(k)).length : 0;
     if (!ctx.pro) {
       return panel(
-        { title: `${title} · ${fmtInt(items.length)}` },
+        { title: `${title} · ${fmtInt(items.length)}`, text: back ? tl('You still follow {v0} of them — Plus shows who.', { v0: fmtInt(back) }) : '' },
         h(
           'div',
           { class: 'locked', style: { minHeight: '260px' } },
@@ -205,7 +206,6 @@ export function unfollowersView(ds, ctx) {
         ),
       );
     }
-    const back = stillFollowing ? keys.filter((k) => stillFollowing.has(k)).length : 0;
     return panel(
       { title: `${title} · ${fmtInt(items.length)}`, text: back ? tl('{v0} of them you still follow — they’re listed first.', { v0: fmtInt(back) }) : '' },
       h('div', { class: 'rows' }, items.map((i, n) => personRow(ds.platform, i, { sub: stillFollowing?.has(keys[n]) ? tl('You still follow them') : '' }))),

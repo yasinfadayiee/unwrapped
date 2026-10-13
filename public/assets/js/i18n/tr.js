@@ -1240,5 +1240,6 @@ export default {
   "recruiters": "işe alım uzmanı",
   "{v0} of them you still follow — they’re listed first.": "Bunlardan {v0} kişiyi hâlâ takip ediyorsun — en üstte listelendiler.",
   "You still follow them": "Hâlâ takip ediyorsun",
-  "You still follow {v0} of them — decide whether to unfollow back.": "Bunlardan {v0} kişiyi hâlâ takip ediyorsun — sen de takipten çıkıp çıkmayacağına karar ver."
+  "You still follow {v0} of them — decide whether to unfollow back.": "Bunlardan {v0} kişiyi hâlâ takip ediyorsun — sen de takipten çıkıp çıkmayacağına karar ver.",
+  "You still follow {v0} of them — Plus shows who.": "Bunlardan {v0} kişiyi hâlâ takip ediyorsun — Plus kim olduklarını gösterir."
 };

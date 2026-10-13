@@ -1240,5 +1240,6 @@ export default {
   "recruiters": "recrutadores",
   "{v0} of them you still follow — they’re listed first.": "Você ainda segue {v0} deles — eles aparecem primeiro.",
   "You still follow them": "Você ainda segue",
-  "You still follow {v0} of them — decide whether to unfollow back.": "Você ainda segue {v0} deles — decida se vai deixar de seguir também."
+  "You still follow {v0} of them — decide whether to unfollow back.": "Você ainda segue {v0} deles — decida se vai deixar de seguir também.",
+  "You still follow {v0} of them — Plus shows who.": "Você ainda segue {v0} deles — o Plus mostra quem são."
 };
