@@ -1248,5 +1248,8 @@ export default {
   "Cancel them one by one": "Cancelarlas una por una",
   "Download a one-page summary as PDF": "Descargar un resumen de una página en PDF",
   "My {v0} summary": "Mi resumen de {v0}",
-  "At a glance": "De un vistazo"
+  "At a glance": "De un vistazo",
+  "Welcome back, {v0}": "Bienvenido de nuevo, {v0}",
+  "Your last {v0} export is from {v1} — {v2} days ago. Download a fresh one and drop it here to see who unfollowed you since.": "Tu última exportación de {v0} es del {v1}, hace {v2} días. Descarga una nueva y suéltala aquí para ver quién dejó de seguirte desde entonces.",
+  "How to download": "Cómo descargarla"
 };

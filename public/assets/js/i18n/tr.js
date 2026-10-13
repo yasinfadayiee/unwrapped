@@ -1248,5 +1248,8 @@ export default {
   "Cancel them one by one": "Tek tek iptal et",
   "Download a one-page summary as PDF": "Tek sayfalık özeti PDF olarak indir",
   "My {v0} summary": "{v0} özetim",
-  "At a glance": "Bir bakışta"
+  "At a glance": "Bir bakışta",
+  "Welcome back, {v0}": "Tekrar hoş geldin, {v0}",
+  "Your last {v0} export is from {v1} — {v2} days ago. Download a fresh one and drop it here to see who unfollowed you since.": "Son {v0} dışa aktarımın {v1} tarihli — {v2} gün önce. O zamandan beri kimin seni takipten çıktığını görmek için yenisini indirip buraya bırak.",
+  "How to download": "Nasıl indirilir"
 };

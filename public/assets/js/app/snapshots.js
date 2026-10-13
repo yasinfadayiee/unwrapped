@@ -115,6 +115,16 @@ export async function importSnapshots(backup) {
   return added;
 }
 
+// The newest snapshot of any account (for the "welcome back" reminder).
+export async function latestSnapshot() {
+  try {
+    const all = await tx('readonly', (store) => store.getAll());
+    return (all || []).reduce((best, s) => (!best || s.takenAt > best.takenAt ? s : best), null);
+  } catch {
+    return null;
+  }
+}
+
 export async function countAllSnapshots() {
   try {
     return await tx('readonly', (store) => store.count());

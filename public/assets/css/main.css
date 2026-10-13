@@ -1413,3 +1413,9 @@ audio.msg-media { min-height: 0; }
 .also-strip button:hover { border-color: var(--line-2); background: var(--surface-2); }
 .also-strip--center { justify-content: center; margin: 26px 0 0; }
 .ap-check:focus-visible, .ap-more:focus-visible, .also-strip button:focus-visible, .also-strip a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+.welcome-back { display: flex; align-items: center; gap: 14px; max-width: 760px; margin: 0 auto 18px; padding: 14px 16px; border-radius: 18px; background: rgba(143, 125, 255, 0.12); border: 1px solid rgba(143, 125, 255, 0.3); text-align: start; }
+.welcome-back > svg { width: 26px; height: 26px; flex: none; color: #c9c0ff; }
+.welcome-back b { display: block; font-size: 15.5px; }
+.welcome-back span { font-size: 13.5px; color: var(--text-2); }
+.welcome-back .btn { flex: none; }
+@media (max-width: 560px) { .welcome-back { flex-wrap: wrap; } }

@@ -299,6 +299,36 @@ function stickyCta() {
   watch($('.site-footer'), 'foot');
 }
 
+/* ---------- welcome back ---------- */
+// Returning visitors with a saved snapshot older than ~10 days get a nudge:
+// a fresh export now shows who unfollowed them. Read from this browser only.
+async function welcomeBack() {
+  const drop = $('.hero .drop');
+  if (!drop || !window.indexedDB) return;
+  try {
+    // Don't create the database for first-time visitors.
+    if (indexedDB.databases && !(await indexedDB.databases()).some((d) => d.name === 'unwrapped')) return;
+    const { latestSnapshot } = await import('./app/snapshots.js');
+    const snap = await latestSnapshot();
+    if (!snap) return;
+    const days = Math.floor((Date.now() - snap.takenAt) / 864e5);
+    if (days < 10) return;
+    const { dateShort } = await import('./lib/format.js');
+    const label = { instagram: 'Instagram', tiktok: 'TikTok', x: 'X', facebook: 'Facebook', threads: 'Threads' }[snap.platform] || snap.platform;
+    const who = snap.account ? (snap.platform === 'facebook' ? snap.account : `@${snap.account}`) : label;
+    const box = h(
+      'div',
+      { class: 'welcome-back', role: 'status' },
+      icon('ghost'),
+      h('div', null, h('b', null, t('Welcome back, {v0}', { v0: who })), h('span', null, t('Your last {v0} export is from {v1} — {v2} days ago. Download a fresh one and drop it here to see who unfollowed you since.', { v0: label, v1: dateShort(snap.takenAt), v2: days }))),
+      h('a', { class: 'btn btn--primary btn--sm', href: '#how' }, t('How to download')),
+    );
+    drop.parentElement.before(box);
+  } catch {
+    /* storage blocked: no reminder */
+  }
+}
+
 /* ---------- privacy monitor ---------- */
 function netMonitor() {
   const box = $('[data-netmon]');
@@ -438,6 +468,7 @@ heroCanvas();
 showcase();
 netMonitor();
 stickyCta();
+welcomeBack();
 getConfig().then(() => {
   pricing();
   licenseBadge();
