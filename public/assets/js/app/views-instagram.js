@@ -12,6 +12,7 @@ import { likesView } from './views-finders.js';
 import { lookupView } from './views-lookup.js';
 import { buildPeopleIndex, engagementScore, relationOf } from '../core/people.js';
 import { actionPlan } from './action-plan.js';
+import { openQueue } from './queue.js';
 import { t as tl } from '../lib/i18n.js';
 
 function overview(ds, ctx) {
@@ -45,7 +46,13 @@ function requestsView(ds, ctx) {
   return h(
     'div',
     { class: 'app-content' },
-    viewHead(tl('Follow requests'), tl('Requests you sent that are still waiting, and requests you received.')),
+    viewHead(
+      tl('Follow requests'),
+      tl('Requests you sent that are still waiting, and requests you received.'),
+      L.pendingSent.length
+        ? h('button', { class: 'btn btn--primary btn--sm', type: 'button', onClick: () => (ctx.can('queue') ? openQueue(ds, L.pendingSent, ctx, `${ds.platform}:${ds.account?.username || 'me'}`, { mode: 'cancel' }) : ctx.upgrade('queue')) }, icon('bolt'), tl('Cancel them one by one'))
+        : null,
+    ),
     h(
       'div',
       { class: 'stats' },

@@ -23,8 +23,10 @@ function save(key, state) {
   }
 }
 
-export function openQueue(ds, items, ctx, keepKey) {
-  const key = keepKey || ds.platform;
+// mode 'cancel': the same one-by-one flow for follow requests nobody accepted.
+export function openQueue(ds, items, ctx, keepKey, { mode = 'unfollow' } = {}) {
+  const cancel = mode === 'cancel';
+  const key = `${keepKey || ds.platform}${cancel ? ':requests' : ''}`;
   const state = load(key);
   state.done = state.done || [];
   const today = new Date().toISOString().slice(0, 10);
@@ -32,14 +34,14 @@ export function openQueue(ds, items, ctx, keepKey) {
     state.day = today;
     state.today = 0;
   }
-  const kept = ctx.keepSet(keepKey);
+  const kept = cancel ? new Set() : ctx.keepSet(keepKey);
   const done = new Set(state.done);
   const idOf = (i) => String(i.u || i.name || i.id).toLowerCase();
   // Oldest follows first: the longer they never followed back, the likelier you won't miss them.
   const queue = [...items].filter((i) => !kept.has(idOf(i)) && !done.has(idOf(i))).sort((a, b) => (a.ts || 0) - (b.ts || 0));
   let index = 0;
 
-  const m = modal({ title: tl('Unfollow queue') });
+  const m = modal({ title: cancel ? tl('Cancel requests one by one') : tl('Unfollow queue') });
   const total = queue.length;
 
   function render() {
@@ -48,7 +50,7 @@ export function openQueue(ds, items, ctx, keepKey) {
     const progress = total ? (index / total) * 100 : 100;
     if (!current) {
       m.body.append(
-        h('div', { class: 'queue' }, h('div', { class: 'success-burst' }, icon('check')), h('div', { class: 'h3' }, tl('Queue cleared')), h('p', { class: 'text-2' }, tl('You reviewed {v0} accounts. Fresh export next week?', { v0: fmtInt(total) }))),
+        h('div', { class: 'queue' }, h('div', { class: 'success-burst' }, icon('check')), h('div', { class: 'h3' }, tl('Queue cleared')), h('p', { class: 'text-2' }, cancel ? tl('You went through {v0} requests.', { v0: fmtInt(total) }) : tl('You reviewed {v0} accounts. Fresh export next week?', { v0: fmtInt(total) }))),
       );
       return;
     }
@@ -86,10 +88,13 @@ export function openQueue(ds, items, ctx, keepKey) {
         h('span', { class: 'av', style: { ...avatarStyle(idOf(current)), width: '84px', height: '84px', borderRadius: '50%', display: 'grid', placeItems: 'center', fontWeight: '700', fontSize: '24px' } }, idOf(current).slice(0, 2).toUpperCase()),
         h('div', { class: 'who' }, displayName(ds.platform, current)),
         open,
-        h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' } }, next, keep, skip),
+        cancel ? h('p', { class: 'small text-2' }, tl('On the profile, tap “Requested” and choose “Cancel request”.')) : null,
+        h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' } }, next, cancel ? null : keep, skip),
         pace
           ? h('div', { class: 'warn-box' }, icon('warning'), h('span', null, tl('You’ve done {v0} today. Platforms may temporarily limit accounts that unfollow too fast — take a break and continue tomorrow.', { v0: fmtInt(state.today) })))
-          : h('p', { class: 'tiny muted' }, tl('Tip: stay under ~{v0} unfollows a day, with breaks, to avoid temporary action limits.', { v0: DAILY_SUGGESTED })),
+          : cancel
+            ? null
+            : h('p', { class: 'tiny muted' }, tl('Tip: stay under ~{v0} unfollows a day, with breaks, to avoid temporary action limits.', { v0: DAILY_SUGGESTED })),
       ),
     );
   }

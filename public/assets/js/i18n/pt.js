@@ -1241,5 +1241,9 @@ export default {
   "{v0} of them you still follow — they’re listed first.": "Você ainda segue {v0} deles — eles aparecem primeiro.",
   "You still follow them": "Você ainda segue",
   "You still follow {v0} of them — decide whether to unfollow back.": "Você ainda segue {v0} deles — decida se vai deixar de seguir também.",
-  "You still follow {v0} of them — Plus shows who.": "Você ainda segue {v0} deles — o Plus mostra quem são."
+  "You still follow {v0} of them — Plus shows who.": "Você ainda segue {v0} deles — o Plus mostra quem são.",
+  "Cancel requests one by one": "Cancelar solicitações uma por uma",
+  "You went through {v0} requests.": "Você passou por {v0} solicitações.",
+  "On the profile, tap “Requested” and choose “Cancel request”.": "No perfil, toque em “Solicitado” e escolha “Cancelar solicitação”.",
+  "Cancel them one by one": "Cancelar uma por uma"
 };
