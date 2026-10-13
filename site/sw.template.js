@@ -24,6 +24,7 @@ const CORE = [
   '/assets/js/core/insights.js',
   '/assets/js/core/lab.js',
   '/assets/js/core/demo.js',
+  '/assets/js/core/diagnose.js',
   '/assets/js/platforms/meta-common.js',
   '/assets/js/platforms/instagram.js',
   '/assets/js/platforms/tiktok.js',

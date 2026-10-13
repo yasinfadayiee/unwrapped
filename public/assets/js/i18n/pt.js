@@ -975,5 +975,14 @@ export default {
   "{v0} matches · {v1} of {v2} chats searched": "{v0} resultados · {v1} de {v2} conversas pesquisadas",
   "Search every chat and save conversations with Plus": "Busque em todas as conversas e salve-as com o Plus",
   "Find any message across all your chats in seconds, and save a chat as a readable text file.": "Encontre qualquer mensagem em todas as suas conversas em segundos e salve uma conversa como arquivo de texto legível.",
-  "Search every chat and save conversations": "Busca em todas as conversas e salvar conversas"
+  "Search every chat and save conversations": "Busca em todas as conversas e salvar conversas",
+  "Your export seems to be split into several parts. Select all of the parts at once (hold Ctrl or Shift), or drop the whole folder.": "Sua exportação parece estar dividida em várias partes. Selecione todas de uma vez (segure Ctrl ou Shift) ou solte a pasta inteira.",
+  "The file is empty or could not be opened. Download the export again — the first download sometimes breaks off.": "O arquivo está vazio ou não pôde ser aberto. Baixe a exportação de novo — às vezes o primeiro download é interrompido.",
+  "This looks like a {v0} export. Unwrapped reads Instagram, TikTok, X, Facebook, Threads and LinkedIn exports.": "Parece uma exportação do {v0}. O Unwrapped lê exportações de Instagram, TikTok, X, Facebook, Threads e LinkedIn.",
+  "This download only contains photos or videos. Request your data again and choose “Followers and following” (Instagram) or “All data” (TikTok) in JSON format.": "Este download só tem fotos ou vídeos. Peça seus dados de novo e escolha “Seguidores e seguindo” (Instagram) ou “Todos os dados” (TikTok) em formato JSON.",
+  "PDF files can’t be analyzed. Request the download in JSON (or HTML) format instead.": "Arquivos PDF não podem ser analisados. Peça o download em formato JSON (ou HTML).",
+  "Only a few files were found ({v0}). Drop the whole ZIP exactly as the platform sent it, not single files from inside it.": "Só foram encontrados alguns arquivos ({v0}). Solte o ZIP inteiro do jeito que a plataforma mandou, não arquivos soltos de dentro dele.",
+  "Copy link": "Copiar link",
+  "Copy this link": "Copie este link",
+  "You’re in the {v0} browser. For uploading your ZIP, open this page in {v1}: tap ⋯ and choose “Open in browser”.": "Você está no navegador do {v0}. Para enviar seu ZIP, abra esta página no {v1}: toque em ⋯ e escolha “Abrir no navegador”."
 };

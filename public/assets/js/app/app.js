@@ -62,12 +62,23 @@ function loader() {
   };
 }
 
-function noDataHelp(result) {
+// Plain-language explanations for diagnose() results.
+const HINTS = {
+  parts: () => tl('Your export seems to be split into several parts. Select all of the parts at once (hold Ctrl or Shift), or drop the whole folder.'),
+  empty: () => tl('The file is empty or could not be opened. Download the export again — the first download sometimes breaks off.'),
+  other: (v) => tl('This looks like a {v0} export. Unwrapped reads Instagram, TikTok, X, Facebook, Threads and LinkedIn exports.', v),
+  media: () => tl('This download only contains photos or videos. Request your data again and choose “Followers and following” (Instagram) or “All data” (TikTok) in JSON format.'),
+  pdf: () => tl('PDF files can’t be analyzed. Request the download in JSON (or HTML) format instead.'),
+  few: (v) => tl('Only a few files were found ({v0}). Drop the whole ZIP exactly as the platform sent it, not single files from inside it.', v),
+};
+
+function noDataHelp(result, hints = []) {
   const m = modal({ title: tl('We couldn’t find social media data') });
   m.body.append(
     h(
       'div',
       { class: 'stack', style: { '--stack': '14px' } },
+      hints.length ? h('div', { class: 'err-box', role: 'alert' }, hints.map((x) => h('p', { style: { margin: '0 0 6px' } }, HINTS[x.id](x.vars)))) : null,
       h('p', { class: 'text-2' }, tl('We looked through {v0} files but none of them look like an Instagram, TikTok, X, Facebook, Threads or LinkedIn export.', { v0: fmtInt(result.files) })),
       h(
         'ul',
@@ -359,7 +370,9 @@ export async function openApp({ files = [], demo = false } = {}) {
     const result = await analyze(vfs, (label, f) => load.set(label, 0.2 + f * 0.75));
     if (!result.datasets.length) {
       load.close();
-      noDataHelp(result);
+      const { diagnose } = await import('../core/diagnose.js');
+      noDataHelp(result, diagnose(vfs, files));
+      track('nodata');
       return;
     }
     load.set(tl('Saving a private snapshot on this device…'), 0.97);
@@ -383,6 +396,7 @@ export async function openApp({ files = [], demo = false } = {}) {
     console.error(err);
     load.close();
     const m = modal({ title: tl('Something went wrong') });
-    m.body.append(h('div', { class: 'err-box' }, err.message || String(err)), h('p', { class: 'small text-2', style: { marginTop: '12px' } }, tl('If your export is split into several ZIP files, select all of them at once. Damaged downloads can also cause this — try downloading the export again.')));
+    const split = files.some((f) => /\.(z\d\d|\d{3})$/i.test(f.name || '') || /\.zip\.\d+$/i.test(f.name || ''));
+    m.body.append(split ? h('div', { class: 'err-box', role: 'alert' }, HINTS.parts()) : null, h('div', { class: 'err-box' }, err.message || String(err)), h('p', { class: 'small text-2', style: { marginTop: '12px' } }, tl('If your export is split into several ZIP files, select all of them at once. Damaged downloads can also cause this — try downloading the export again.')));
   }
 }

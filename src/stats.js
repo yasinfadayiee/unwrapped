@@ -4,7 +4,7 @@
 import { HttpError, json, readJson } from './http.js';
 import { DAY } from './util.js';
 
-const EVENTS = new Set(['view', 'analyze', 'demo', 'checkout']);
+const EVENTS = new Set(['view', 'analyze', 'demo', 'checkout', 'nodata']);
 const PATH = /^\/[a-z0-9\-/]{0,100}$/;
 const HOST = /^[a-z0-9.-]{3,60}$/;
 const LANG = /^[a-z]{2}$/;

@@ -374,7 +374,35 @@ async function supportContact() {
   box.hidden = false;
 }
 
+/* ---------- in-app browsers (Instagram, TikTok, Facebook links) ---------- */
+// Most visitors arrive from a bio link. In-app browsers often can't pick ZIP
+// files or keep big downloads, so suggest the real browser before they try.
+function inAppBrowserNotice() {
+  const ua = navigator.userAgent || '';
+  const app = /Instagram/i.test(ua) ? 'Instagram' : /musical_ly|BytedanceWebview|TikTok/i.test(ua) ? 'TikTok' : /FBAN|FBAV|FB_IAB/i.test(ua) ? 'Facebook' : /Snapchat/i.test(ua) ? 'Snapchat' : null;
+  if (!app || !$('[data-drop], .drop')) return;
+  const ios = /iPhone|iPad|iPod/i.test(ua);
+  const copy = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, t('Copy link'));
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      copy.textContent = t('Copied');
+    } catch {
+      prompt(t('Copy this link'), location.href);
+    }
+  });
+  const bar = h(
+    'div',
+    { class: 'inapp-notice', role: 'note' },
+    icon('globe'),
+    h('span', null, t('You’re in the {v0} browser. For uploading your ZIP, open this page in {v1}: tap ⋯ and choose “Open in browser”.', { v0: app, v1: ios ? 'Safari' : 'Chrome' })),
+    copy,
+  );
+  document.body.prepend(bar);
+}
+
 header();
+inAppBrowserNotice();
 supportContact();
 import('./lib/stats.js').then(({ trackView }) => trackView()).catch(() => {});
 reveals();

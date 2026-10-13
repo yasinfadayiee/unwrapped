@@ -1200,3 +1200,9 @@ audio.msg-media { min-height: 0; }
   .msg-head .input { max-width: none; flex-basis: 100%; order: 3; }
   .msg { max-width: 88%; }
 }
+
+/* In-app browser notice (Instagram / TikTok / Facebook link browsers) */
+.inapp-notice { position: relative; z-index: 70; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 16px; background: var(--signal); color: #0a0a0e; font-size: 13.5px; font-weight: 500; line-height: 1.4; }
+.inapp-notice svg { width: 18px; height: 18px; flex: none; }
+.inapp-notice span { flex: 1 1 220px; }
+.inapp-notice .btn { background: #0a0a0e; color: var(--signal); }

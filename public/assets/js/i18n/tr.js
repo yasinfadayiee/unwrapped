@@ -975,5 +975,14 @@ export default {
   "{v0} matches · {v1} of {v2} chats searched": "{v0} eşleşme · {v2} sohbetten {v1} tarandı",
   "Search every chat and save conversations with Plus": "Plus ile tüm sohbetlerde ara ve sohbetleri kaydet",
   "Find any message across all your chats in seconds, and save a chat as a readable text file.": "Tüm sohbetlerindeki herhangi bir mesajı saniyeler içinde bul ve bir sohbeti okunabilir metin dosyası olarak kaydet.",
-  "Search every chat and save conversations": "Tüm sohbetlerde arama ve sohbet kaydetme"
+  "Search every chat and save conversations": "Tüm sohbetlerde arama ve sohbet kaydetme",
+  "Your export seems to be split into several parts. Select all of the parts at once (hold Ctrl or Shift), or drop the whole folder.": "Dışa aktarımın birkaç parçaya bölünmüş görünüyor. Tüm parçaları aynı anda seç (Ctrl veya Shift tuşunu basılı tut) ya da klasörün tamamını bırak.",
+  "The file is empty or could not be opened. Download the export again — the first download sometimes breaks off.": "Dosya boş ya da açılamadı. Dışa aktarımı yeniden indir — ilk indirme bazen yarıda kesilir.",
+  "This looks like a {v0} export. Unwrapped reads Instagram, TikTok, X, Facebook, Threads and LinkedIn exports.": "Bu bir {v0} dışa aktarımına benziyor. Unwrapped; Instagram, TikTok, X, Facebook, Threads ve LinkedIn dışa aktarımlarını okur.",
+  "This download only contains photos or videos. Request your data again and choose “Followers and following” (Instagram) or “All data” (TikTok) in JSON format.": "Bu indirme yalnızca fotoğraf veya video içeriyor. Verilerini yeniden iste ve JSON biçiminde “Takipçiler ve takip edilenler” (Instagram) ya da “Tüm veriler” (TikTok) seç.",
+  "PDF files can’t be analyzed. Request the download in JSON (or HTML) format instead.": "PDF dosyaları analiz edilemez. İndirmeyi bunun yerine JSON (veya HTML) biçiminde iste.",
+  "Only a few files were found ({v0}). Drop the whole ZIP exactly as the platform sent it, not single files from inside it.": "Yalnızca birkaç dosya bulundu ({v0}). Tek tek dosyaları değil, ZIP’in tamamını platformun gönderdiği hâliyle bırak.",
+  "Copy link": "Bağlantıyı kopyala",
+  "Copy this link": "Bu bağlantıyı kopyala",
+  "You’re in the {v0} browser. For uploading your ZIP, open this page in {v1}: tap ⋯ and choose “Open in browser”.": "{v0} tarayıcısındasın. ZIP’ini yüklemek için bu sayfayı {v1}’de aç: ⋯’ye dokun ve “Tarayıcıda aç”ı seç."
 };

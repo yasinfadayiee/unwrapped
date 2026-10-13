@@ -93,6 +93,32 @@ function localizeLinks(html, loc) {
   return html.replace(/href="(\/[^"#?]*)([^"]*)"/g, (all, p, rest) => (routes.has(p) ? `href="${loc.path}${p}${rest}"` : all));
 }
 
+// Search results cut titles after ~65 characters and descriptions after ~160.
+// Long page titles drop their trailing " · …" parts first (year, brand), then
+// end at a natural break; descriptions end at the last full sentence that fits.
+function shortTitle(title, max = 65) {
+  let t = String(title || '');
+  const parts = t.split(' · ');
+  while (t.length > max && parts.length > 1) {
+    parts.pop();
+    t = parts.join(' · ');
+  }
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max);
+  const brk = Math.max(cut.lastIndexOf(' — '), cut.lastIndexOf(': '), cut.lastIndexOf(' ('), cut.lastIndexOf(', '));
+  if (brk > 30) return cut.slice(0, brk).replace(/[\s,:—(]+$/, '');
+  return `${cut.slice(0, cut.lastIndexOf(' '))}…`;
+}
+
+function shortDescription(text, max = 160) {
+  const d = String(text || '');
+  if (d.length <= max) return d;
+  const cut = d.slice(0, max);
+  const end = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('? '), cut.lastIndexOf('! '), cut.lastIndexOf('.'));
+  if (end > 80) return cut.slice(0, end + 1);
+  return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,:;—–-]+$/, '')}…`;
+}
+
 function languageLinks(loc, route) {
   return locales
     .map((l) => {
@@ -163,8 +189,8 @@ for (const { loc, file, meta, body } of pages) {
     lang: loc.hreflang,
     ogLocale: loc.og,
     alternates,
-    title: esc(meta.title),
-    description: esc(meta.description),
+    title: esc(shortTitle(meta.title)),
+    description: esc(shortDescription(meta.description)),
     canonical: esc(canonical),
     robots: meta.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large',
     jsonld: schemas.map(ld).join('\n'),
