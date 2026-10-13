@@ -1252,5 +1252,13 @@ export default {
   "Welcome back, {v0}": "Bem-vindo de volta, {v0}",
   "Your last {v0} export is from {v1} — {v2} days ago. Download a fresh one and drop it here to see who unfollowed you since.": "Sua última exportação do {v0} é de {v1} — há {v2} dias. Baixe uma nova e solte aqui para ver quem deixou de te seguir desde então.",
   "How to download": "Como baixar",
-  "Free shows how many — Plus shows exactly who.": "O grátis mostra quantos — o Plus mostra exatamente quem."
+  "Free shows how many — Plus shows exactly who.": "O grátis mostra quantos — o Plus mostra exatamente quem.",
+  "New to crypto? How to pay in a few minutes": "Novo em cripto? Como pagar em poucos minutos",
+  "Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).": "Use uma corretora ou app de carteira que venda USDT com cartão ou transferência (por exemplo Binance, OKX ou Trust Wallet — a disponibilidade depende do seu país).",
+  "Buy a little more USDT than the price, to cover the network fee.": "Compre um pouco mais de USDT que o preço, para cobrir a taxa da rede.",
+  "Send it to the address on the next screen and choose the TRON (TRC20) network.": "Envie para o endereço da próxima tela e escolha a rede TRON (TRC20).",
+  "Your plan unlocks automatically about a minute after the payment arrives.": "Seu plano é liberado automaticamente cerca de um minuto depois que o pagamento chega.",
+  "Not sure? The free version stays free — try everything first.": "Ainda em dúvida? A versão grátis continua grátis — teste tudo primeiro.",
+  "Drop your data export on Unwrapped": "Solte sua exportação de dados no Unwrapped",
+  "Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}": "Sua exportação já deve estar pronta. Baixe o ZIP do e-mail e solte aqui: {v0}"
 };

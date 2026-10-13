@@ -201,6 +201,21 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       creditBox,
       h('div', { class: 'eyebrow' }, t('Pay with')),
       methodBox,
+      // Most buyers have never paid with crypto: a short, honest how-to.
+      h(
+        'details',
+        { class: 'crypto-help' },
+        h('summary', null, t('New to crypto? How to pay in a few minutes')),
+        h(
+          'ol',
+          null,
+          h('li', null, t('Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).')),
+          h('li', null, t('Buy a little more USDT than the price, to cover the network fee.')),
+          h('li', null, t('Send it to the address on the next screen and choose the TRON (TRC20) network.')),
+          h('li', null, t('Your plan unlocks automatically about a minute after the payment arrives.')),
+        ),
+        h('p', { class: 'tiny muted' }, t('Not sure? The free version stays free — try everything first.')),
+      ),
       config.email
         ? h('div', { class: 'field' }, h('label', { for: 'co-email' }, t('E-mail for your license & renewal reminder')), email)
         : null,

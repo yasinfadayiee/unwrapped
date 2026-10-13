@@ -299,6 +299,21 @@ function stickyCta() {
   watch($('.site-footer'), 'foot');
 }
 
+/* ---------- "remind me tomorrow" ---------- */
+// Exports take minutes to hours; a calendar reminder brings people back.
+function remindButtons() {
+  $$('[data-remind]').forEach((btn) =>
+    btn.addEventListener('click', async () => {
+      const [{ icsReminder }, { downloadBlob, toast }] = await Promise.all([import('./lib/calendar.js'), import('./lib/ui.js')]);
+      const prefix = (document.documentElement.lang || 'en').slice(0, 2);
+      const url = `${location.origin}${prefix === 'en' ? '' : `/${prefix}`}/#start`;
+      const ics = icsReminder({ title: t('Drop your data export on Unwrapped'), description: t('Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}', { v0: url }), url, days: 1 });
+      downloadBlob(new Blob([ics], { type: 'text/calendar' }), 'unwrapped-reminder.ics');
+      toast(t('Reminder saved — open it to add it to your calendar'), { iconName: 'calendar', timeout: 4200 });
+    }),
+  );
+}
+
 /* ---------- welcome back ---------- */
 // Returning visitors with a saved snapshot older than ~10 days get a nudge:
 // a fresh export now shows who unfollowed them. Read from this browser only.
@@ -469,6 +484,7 @@ showcase();
 netMonitor();
 stickyCta();
 welcomeBack();
+remindButtons();
 getConfig().then(() => {
   pricing();
   licenseBadge();

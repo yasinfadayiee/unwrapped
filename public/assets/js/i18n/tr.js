@@ -1252,5 +1252,13 @@ export default {
   "Welcome back, {v0}": "Tekrar hoş geldin, {v0}",
   "Your last {v0} export is from {v1} — {v2} days ago. Download a fresh one and drop it here to see who unfollowed you since.": "Son {v0} dışa aktarımın {v1} tarihli — {v2} gün önce. O zamandan beri kimin seni takipten çıktığını görmek için yenisini indirip buraya bırak.",
   "How to download": "Nasıl indirilir",
-  "Free shows how many — Plus shows exactly who.": "Ücretsiz sürüm kaç kişi olduğunu, Plus tam olarak kim olduğunu gösterir."
+  "Free shows how many — Plus shows exactly who.": "Ücretsiz sürüm kaç kişi olduğunu, Plus tam olarak kim olduğunu gösterir.",
+  "New to crypto? How to pay in a few minutes": "Kriptoda yeni misin? Birkaç dakikada nasıl ödenir",
+  "Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).": "Kartla veya banka havalesiyle USDT satan bir borsa ya da cüzdan uygulaması kullan (örneğin Binance, OKX veya Trust Wallet — kullanılabilirlik ülkene bağlıdır).",
+  "Buy a little more USDT than the price, to cover the network fee.": "Ağ ücretini karşılamak için fiyattan biraz fazla USDT al.",
+  "Send it to the address on the next screen and choose the TRON (TRC20) network.": "Bir sonraki ekrandaki adrese gönder ve TRON (TRC20) ağını seç.",
+  "Your plan unlocks automatically about a minute after the payment arrives.": "Ödeme ulaştıktan yaklaşık bir dakika sonra planın otomatik olarak açılır.",
+  "Not sure? The free version stays free — try everything first.": "Emin değil misin? Ücretsiz sürüm ücretsiz kalır — önce her şeyi dene.",
+  "Drop your data export on Unwrapped": "Veri dışa aktarımını Unwrapped’a bırak",
+  "Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}": "Dışa aktarımın hazır olmalı. ZIP’i e-postadan indir ve buraya bırak: {v0}"
 };
