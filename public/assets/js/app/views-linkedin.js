@@ -4,6 +4,7 @@ import { byMonth } from '../core/insights.js';
 import { viewHead, stat, panel, insights, userList, dataNote } from './components.js';
 import { barChart, rankList } from './charts.js';
 import { t as tl } from '../lib/i18n.js';
+import { actionPlan } from './action-plan.js';
 
 function overview(ds, ctx) {
   const years = new Map();
@@ -25,6 +26,7 @@ function overview(ds, ctx) {
       stat({ label: tl('Companies'), value: fmtInt(ds.companies.length >= 30 ? 30 : ds.companies.length), sub: ds.companies.length >= 30 ? 'top 30 shown' : '' }),
       stat({ label: tl('Share their e-mail'), value: fmtInt(ds.emailsShared) }),
     ),
+    actionPlan(ds, ctx),
     bars.length > 1 ? panel({ title: tl('Network growth'), text: tl('Connections added per year') }, barChart(bars, { title: tl('Connections'), ariaLabel: tl('Connections per year') })) : null,
     h(
       'div',

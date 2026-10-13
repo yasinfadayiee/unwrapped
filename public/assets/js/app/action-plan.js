@@ -229,6 +229,39 @@ function facebookSteps(ds) {
   ];
 }
 
+function linkedinSteps(ds) {
+  const recruiters = ds.roles?.find((r) => r.key === 'Recruiters & HR')?.count || 0;
+  return [
+    ds.invitations?.sent && {
+      id: 'invitations',
+      icon: 'send',
+      title: tl('Withdraw old invitations ({v0} sent)', { v0: fmtInt(ds.invitations.sent) }),
+      text: tl('My Network → Manage invitations → Sent. Pending invitations count against LinkedIn’s weekly limit.'),
+    },
+    recruiters && {
+      id: 'recruiters',
+      icon: 'briefcase',
+      title: tl('Say hi to {v0} already in your network', { v0: plural(recruiters, 'recruiter') }),
+      text: tl('Find them in your connections and send a short hello — before you need a job.'),
+      go: 'connections',
+    },
+    {
+      id: 'email-visibility',
+      icon: 'shield',
+      title: tl('Choose who can see your e-mail address'),
+      text: tl('Settings → Visibility → Who can see or download your email address.'),
+      late: true,
+    },
+    {
+      id: 'ai-data',
+      icon: 'fingerprint',
+      title: tl('Decide if LinkedIn may train AI on your data'),
+      text: tl('Settings → Data privacy → Data for Generative AI Improvement.'),
+      late: true,
+    },
+  ];
+}
+
 export function planSteps(ds, ctx) {
   const steps = [];
   const follows = ds.hasRelationships && ['instagram', 'threads', 'tiktok', 'x'].includes(ds.platform);
@@ -238,6 +271,7 @@ export function planSteps(ds, ctx) {
   if (ds.platform === 'tiktok') steps.push(...tiktokSteps(ds));
   if (ds.platform === 'x') steps.push(...xSteps(ds));
   if (ds.platform === 'facebook') steps.push(...facebookSteps(ds));
+  if (ds.platform === 'linkedin') steps.push(...linkedinSteps(ds));
   const usable = steps.filter((s) => s && (!s.go || !ctx.hasView || ctx.hasView(s.go)));
   // Reminders and settings tips go last; the cap keeps the list short.
   return [...usable.filter((s) => !s.late), ...usable.filter((s) => s.late)].slice(0, MAX_STEPS);

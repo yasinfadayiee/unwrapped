@@ -1226,5 +1226,16 @@ export default {
   "Biggest milestone": "En büyük dönüm noktası",
   "{v0} followers": "{v0} takipçi",
   "Share your timeline": "Zaman çizelgeni paylaş",
-  "A story-sized card with your numbers only — never other people’s names.": "Yalnızca senin sayılarınla hikâye boyutunda bir kart — asla başkalarının isimleri yok."
+  "A story-sized card with your numbers only — never other people’s names.": "Yalnızca senin sayılarınla hikâye boyutunda bir kart — asla başkalarının isimleri yok.",
+  "Withdraw old invitations ({v0} sent)": "Eski davetleri geri çek ({v0} gönderildi)",
+  "My Network → Manage invitations → Sent. Pending invitations count against LinkedIn’s weekly limit.": "Ağım → Davetleri yönet → Gönderilenler. Bekleyen davetler LinkedIn’in haftalık sınırına sayılır.",
+  "Reach out to the {v0} recruiters already in your network": "Ağındaki {v0} işe alım uzmanına ulaş",
+  "Find them in your connections and send a short hello — before you need a job.": "Onları bağlantılarında bul ve kısa bir merhaba gönder — iş aramaya başlamadan önce.",
+  "Choose who can see your e-mail address": "E-posta adresini kimin görebileceğini seç",
+  "Settings → Visibility → Who can see or download your email address.": "Ayarlar → Görünürlük → E-posta adresinizi kimler görebilir veya indirebilir.",
+  "Decide if LinkedIn may train AI on your data": "LinkedIn’in verilerinle yapay zekâ eğitip eğitemeyeceğine karar ver",
+  "Settings → Data privacy → Data for Generative AI Improvement.": "Ayarlar → Veri gizliliği → Üretken yapay zekâ iyileştirmesi için veriler.",
+  "Say hi to {v0} already in your network": "Ağındaki {v0} ile merhabalaş",
+  "recruiter": "işe alım uzmanı",
+  "recruiters": "işe alım uzmanı"
 };

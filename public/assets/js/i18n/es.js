@@ -1226,5 +1226,16 @@ export default {
   "Biggest milestone": "Mayor hito",
   "{v0} followers": "{v0} seguidores",
   "Share your timeline": "Comparte tu línea de tiempo",
-  "A story-sized card with your numbers only — never other people’s names.": "Una tarjeta del tamaño de una historia, solo con tus números: nunca nombres de otras personas."
+  "A story-sized card with your numbers only — never other people’s names.": "Una tarjeta del tamaño de una historia, solo con tus números: nunca nombres de otras personas.",
+  "Withdraw old invitations ({v0} sent)": "Retira las invitaciones antiguas ({v0} enviadas)",
+  "My Network → Manage invitations → Sent. Pending invitations count against LinkedIn’s weekly limit.": "Mi red → Gestionar invitaciones → Enviadas. Las invitaciones pendientes cuentan para el límite semanal de LinkedIn.",
+  "Reach out to the {v0} recruiters already in your network": "Escribe a los {v0} reclutadores que ya están en tu red",
+  "Find them in your connections and send a short hello — before you need a job.": "Búscalos en tus contactos y envía un saludo breve, antes de necesitar trabajo.",
+  "Choose who can see your e-mail address": "Elige quién puede ver tu dirección de correo",
+  "Settings → Visibility → Who can see or download your email address.": "Configuración → Visibilidad → Quién puede ver o descargar tu dirección de correo electrónico.",
+  "Decide if LinkedIn may train AI on your data": "Decide si LinkedIn puede entrenar IA con tus datos",
+  "Settings → Data privacy → Data for Generative AI Improvement.": "Configuración → Privacidad de datos → Datos para mejorar la IA generativa.",
+  "Say hi to {v0} already in your network": "Saluda a {v0} que ya están en tu red",
+  "recruiter": "reclutador",
+  "recruiters": "reclutadores"
 };
