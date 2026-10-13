@@ -32,6 +32,7 @@ const VIEW_BUILDERS = {
 };
 
 let active = null;
+const trackedTools = new Set();
 
 function loader() {
   const label = h('div', { class: 'text-2' }, tl('Unwrapping your export…'));
@@ -259,6 +260,11 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
       !compactMode && v.feature && !ctx.can(v.feature) ? tierPill(tierFor(v.feature)) : null,
     );
     btn.addEventListener('click', () => {
+      // Anonymous "+1 for this tool today", once per tool per visit; never in the demo.
+      if (!demo && !trackedTools.has(v.id)) {
+        trackedTools.add(v.id);
+        track('tool', { t: v.id });
+      }
       viewId = v.id;
       render();
       main.scrollTo({ top: 0 });
