@@ -234,6 +234,35 @@ test('an old and a new export dropped together stay separate', async () => {
   assert.equal(twice.datasets[0].previous.length, 0);
 });
 
+test('two unzipped export folders dropped together stay separate', async () => {
+  const rel = (u) => ({ title: '', string_list_data: [{ href: `https://www.instagram.com/${u}`, value: u, timestamp: 1700000000 }] });
+  const file = (folder, name, data, ts) => Object.assign(new File([JSON.stringify(data)], name, { lastModified: ts }), { relativePath: `${folder}/connections/followers_and_following/${name}` });
+  const old = Date.UTC(2026, 2, 1);
+  const now = Date.UTC(2026, 9, 1);
+  const files = [
+    file('instagram-me-2026-03-01', 'followers_1.json', ['a', 'b'].map(rel), old),
+    file('instagram-me-2026-03-01', 'following.json', { relationships_following: [rel('a')] }, old),
+    file('instagram-me-2026-10-01', 'followers_1.json', ['a'].map(rel), now),
+    file('instagram-me-2026-10-01', 'following.json', { relationships_following: [rel('a')] }, now),
+  ];
+  const result = await analyze(await buildVfs(files));
+  assert.equal(result.exports, 2);
+  assert.equal(result.datasets.length, 1);
+  assert.deepEqual(result.datasets[0].lists.followers.map((f) => f.u), ['a']);
+  assert.deepEqual(result.datasets[0].previous[0].lists.followers.map((f) => f.u).sort(), ['a', 'b']);
+});
+
+test('a ZIP with an extra root folder and Windows paths still parses', async () => {
+  const rel = (u) => ({ title: '', string_list_data: [{ href: `https://www.instagram.com/${u}`, value: u, timestamp: 1700000000 }] });
+  const zip = makeZip([
+    { path: 'instagram-me-2026-10-01-abc\\connections\\followers_and_following\\followers_1.json', content: JSON.stringify(['x', 'y'].map(rel)) },
+    { path: 'instagram-me-2026-10-01-abc/connections/followers_and_following/following.json', content: JSON.stringify({ relationships_following: [rel('x')] }) },
+  ]);
+  const ig = ds(await analyze(await buildVfs([asFile(zip, 'instagram-me.zip')])), 'instagram');
+  assert.equal(ig.lists.followers.length, 2);
+  assert.equal(relationships(ig).mutuals.length, 1);
+});
+
 test('digital life timeline is ordered and has the firsts', async () => {
   const { buildTimeline } = await import('../public/assets/js/core/timeline.js');
   const result = await analyze(buildDemoVfs(Date.UTC(2026, 9, 1)).vfs);
