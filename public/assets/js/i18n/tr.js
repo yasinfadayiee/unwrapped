@@ -1260,5 +1260,6 @@ export default {
   "Your plan unlocks automatically about a minute after the payment arrives.": "Ödeme ulaştıktan yaklaşık bir dakika sonra planın otomatik olarak açılır.",
   "Not sure? The free version stays free — try everything first.": "Emin değil misin? Ücretsiz sürüm ücretsiz kalır — önce her şeyi dene.",
   "Drop your data export on Unwrapped": "Veri dışa aktarımını Unwrapped’a bırak",
-  "Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}": "Dışa aktarımın hazır olmalı. ZIP’i e-postadan indir ve buraya bırak: {v0}"
+  "Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}": "Dışa aktarımın hazır olmalı. ZIP’i e-postadan indir ve buraya bırak: {v0}",
+  "Problem with a payment? Send us your order ID:": "Ödemede sorun mu var? Sipariş numaranı bize gönder:"
 };

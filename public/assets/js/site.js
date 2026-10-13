@@ -415,7 +415,8 @@ async function supportContact() {
   if (!box) return;
   const config = await getConfig().catch(() => null);
   if (!config?.support) return;
-  box.querySelector('[data-support-value]').textContent = config.support;
+  const { supportLinks } = await import('./lib/support.js');
+  clear(box.querySelector('[data-support-value]')).append(...supportLinks(config.support));
   box.hidden = false;
 }
 

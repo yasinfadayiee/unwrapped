@@ -7,6 +7,7 @@ import { qrcode } from '../vendor/qrcode.js';
 import { storedRef, forgetRef } from './referral.js';
 import { TIER_NAME, TIER_RANK, tierFor } from './tiers.js';
 import { t, locale, lang } from './i18n.js';
+import { supportLinks } from './support.js';
 
 const tr = t; // for loops where `t` is a tier
 
@@ -296,6 +297,7 @@ export function tronScreen(m, order, token, config) {
         claimMsg,
       ),
       config.dev ? h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => api('/api/dev/pay', { method: 'POST', body: { id: order.id } }) }, t('Simulate payment (dev mode)')) : null,
+      config.support ? h('p', { class: 'small muted' }, t('Problem with a payment? Send us your order ID:'), ' ', ...supportLinks(config.support)) : null,
     ),
   );
 

@@ -1260,5 +1260,6 @@ export default {
   "Your plan unlocks automatically about a minute after the payment arrives.": "Seu plano é liberado automaticamente cerca de um minuto depois que o pagamento chega.",
   "Not sure? The free version stays free — try everything first.": "Ainda em dúvida? A versão grátis continua grátis — teste tudo primeiro.",
   "Drop your data export on Unwrapped": "Solte sua exportação de dados no Unwrapped",
-  "Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}": "Sua exportação já deve estar pronta. Baixe o ZIP do e-mail e solte aqui: {v0}"
+  "Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}": "Sua exportação já deve estar pronta. Baixe o ZIP do e-mail e solte aqui: {v0}",
+  "Problem with a payment? Send us your order ID:": "Problema com um pagamento? Envie o ID do seu pedido:"
 };

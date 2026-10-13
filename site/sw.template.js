@@ -55,6 +55,7 @@ const CORE = [
   '/assets/js/app/views-lookup.js',
   '/assets/js/app/action-plan.js',
   '/assets/js/app/views-timeline.js',
+  '/assets/js/lib/support.js',
   '/assets/js/core/timeline.js',
   '/assets/js/core/people.js',
   '/assets/js/lib/media.js',

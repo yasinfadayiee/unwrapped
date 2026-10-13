@@ -6,6 +6,7 @@ import { countAllSnapshots, deleteAllSnapshots } from '../app/snapshots.js';
 import { inviteLink } from '../lib/referral.js';
 import { TIER_NAME, TIER_RANK } from '../lib/tiers.js';
 import { t, locale } from '../lib/i18n.js';
+import { supportLinks } from '../lib/support.js';
 
 const root = document.getElementById('account-root');
 
@@ -209,7 +210,7 @@ async function render() {
       h('p', { class: 'small text-2' }, t('Snapshots let us show who unfollowed you next time. They never leave this device and are not part of your license.')),
     ),
   );
-  if (config.support) root.append(h('p', { class: 'small muted' }, t('Need help? Contact:'), ' ', config.support));
+  if (config.support) root.append(h('p', { class: 'small muted' }, t('Need help? Contact:'), ' ', ...supportLinks(config.support)));
 }
 
 function keyRow(key) {
