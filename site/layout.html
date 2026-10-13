@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{lang}}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,10 +7,12 @@
 <meta name="description" content="{{description}}">
 <meta name="robots" content="{{robots}}">
 <link rel="canonical" href="{{canonical}}">
+{{alternates}}
 <meta name="theme-color" content="#07070b">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{siteName}}">
+<meta property="og:locale" content="{{ogLocale}}">
 <meta property="og:title" content="{{title}}">
 <meta property="og:description" content="{{description}}">
 <meta property="og:url" content="{{canonical}}">
@@ -34,38 +36,40 @@
 {{jsonld}}
 </head>
 <body class="{{bodyClass}}">
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip-link" href="#main">{{t:skip}}</a>
 {{icons}}
 <div class="noise" aria-hidden="true"></div>
 <header class="site-header">
   <div class="container">
-    <a class="logo" href="/" aria-label="{{siteName}} — home"><svg aria-hidden="true"><use href="#i-logo"/></svg>{{siteName}}</a>
-    <nav class="nav" aria-label="Main">
+    <a class="logo" href="/" aria-label="{{siteName}} — {{t:home}}"><svg aria-hidden="true"><use href="#i-logo"/></svg>{{siteName}}</a>
+    <nav class="nav" aria-label="{{t:navMain}}">
       <a href="/instagram/" data-nav="instagram">Instagram</a>
       <a href="/tiktok/" data-nav="tiktok">TikTok</a>
       <a href="/x/" data-nav="x">X</a>
-      <a href="/tools/" data-nav="tools">Tools <span class="nav-new">New</span></a>
-      <a href="/guides/" data-nav="guides">Guides</a>
-      <a href="/pricing/" data-nav="pricing">Pricing</a>
+      <a href="/tools/" data-nav="tools">{{t:navTools}} <span class="nav-new">{{t:new}}</span></a>
+      <a href="/guides/" data-nav="guides">{{t:navGuides}}</a>
+      <a href="/pricing/" data-nav="pricing">{{t:navPricing}}</a>
     </nav>
     <div class="header-actions">
-      <a class="btn btn--ghost btn--sm get-pro" href="/pricing/">Plans</a>
+      {{langSwitch}}
+      <a class="btn btn--ghost btn--sm get-pro" href="/pricing/">{{t:plans}}</a>
       <a class="badge pro-pill" href="/account/" style="text-decoration:none"><svg aria-hidden="true" style="width:14px;height:14px"><use href="#i-check"/></svg><span data-tier-name>Pro</span></a>
-      <a class="btn btn--primary btn--sm" href="/#start">Open the app</a>
-      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
+      <a class="btn btn--primary btn--sm" href="/#start">{{t:openApp}}</a>
+      <button class="menu-btn" type="button" aria-label="{{t:menu}}" aria-expanded="false"><span></span></button>
     </div>
   </div>
 </header>
-<nav class="mobile-nav" aria-label="Mobile">
+<nav class="mobile-nav" aria-label="{{t:navMobile}}">
   <a href="/instagram/">Instagram</a>
   <a href="/tiktok/">TikTok</a>
-  <a href="/x/">X (Twitter)</a>
+  <a href="/x/">{{t:mobileX}}</a>
   <a href="/facebook/">Facebook</a>
   <a href="/linkedin/">LinkedIn</a>
-  <a href="/tools/">All tools</a>
-  <a href="/guides/">Guides</a>
-  <a href="/pricing/">Pricing</a>
-  <a href="/account/">My license</a>
+  <a href="/tools/">{{t:allTools}}</a>
+  <a href="/guides/">{{t:navGuides}}</a>
+  <a href="/pricing/">{{t:navPricing}}</a>
+  <a href="/account/">{{t:myLicense}}</a>
+  <div class="mobile-langs" aria-label="{{t:language}}">{{langLinks}}</div>
 </nav>
 <main id="main" class="page">
 {{content}}
@@ -75,53 +79,54 @@
     <div class="footer-grid">
       <div class="stack" style="--stack:14px">
         <a class="logo" href="/"><svg aria-hidden="true"><use href="#i-logo"/></svg>{{siteName}}</a>
-        <p class="small text-2" style="max-width:36ch">Decode your social media data exports — privately, on your own device. No passwords. No uploads. Ever.</p>
-        <span class="chip"><span class="dot"></span>Works offline once loaded</span>
+        <p class="small text-2" style="max-width:36ch">{{t:tagline}}</p>
+        <span class="chip"><span class="dot"></span>{{t:offline}}</span>
+        <div class="footer-langs" aria-label="{{t:language}}"><svg aria-hidden="true"><use href="#i-globe"/></svg>{{langLinks}}</div>
       </div>
       <div>
-        <h4>Platforms</h4>
+        <h4>{{t:fPlatforms}}</h4>
         <ul>
-          <li><a href="/instagram/">Instagram unfollowers</a></li>
-          <li><a href="/tiktok/">TikTok screen time</a></li>
-          <li><a href="/x/">X archive explorer</a></li>
-          <li><a href="/facebook/">Facebook unfriend tracker</a></li>
-          <li><a href="/linkedin/">LinkedIn network map</a></li>
+          <li><a href="/instagram/">{{t:fIg}}</a></li>
+          <li><a href="/tiktok/">{{t:fTt}}</a></li>
+          <li><a href="/x/">{{t:fX}}</a></li>
+          <li><a href="/facebook/">{{t:fFb}}</a></li>
+          <li><a href="/linkedin/">{{t:fLi}}</a></li>
         </ul>
       </div>
       <div>
-        <h4>Tools</h4>
+        <h4>{{t:fTools}}</h4>
         <ul>
-          <li><a href="/instagram-audit/">Free account audit</a></li>
-          <li><a href="/fake-follower-checker/">Fake follower checker</a></li>
-          <li><a href="/instagram-dm-analyzer/">Instagram DM analyzer</a></li>
-          <li><a href="/best-time-to-post/">Best time to post</a></li>
-          <li><a href="/tools/">All tools</a></li>
+          <li><a href="/instagram-audit/">{{t:fAudit}}</a></li>
+          <li><a href="/fake-follower-checker/">{{t:fFake}}</a></li>
+          <li><a href="/instagram-dm-analyzer/">{{t:fDm}}</a></li>
+          <li><a href="/best-time-to-post/">{{t:fBest}}</a></li>
+          <li><a href="/tools/">{{t:allTools}}</a></li>
         </ul>
       </div>
       <div>
-        <h4>Product</h4>
+        <h4>{{t:fProduct}}</h4>
         <ul>
-          <li><a href="/pricing/">Pricing</a></li>
-          <li><a href="/#how">How it works</a></li>
-          <li><a href="/guides/">Guides</a></li>
-          <li><a href="/account/#invite">Invite friends</a></li>
-          <li><a href="/#demo" data-demo>Live demo</a></li>
-          <li><a href="/account/">My license</a></li>
+          <li><a href="/pricing/">{{t:fPricing}}</a></li>
+          <li><a href="/#how">{{t:fHow}}</a></li>
+          <li><a href="/guides/">{{t:fGuides}}</a></li>
+          <li><a href="/account/#invite">{{t:fInvite}}</a></li>
+          <li><a href="/#demo" data-demo>{{t:fDemo}}</a></li>
+          <li><a href="/account/">{{t:myLicense}}</a></li>
         </ul>
       </div>
       <div>
-        <h4>Trust</h4>
+        <h4>{{t:fTrust}}</h4>
         <ul>
-          <li><a href="/privacy/">Privacy</a></li>
-          <li><a href="/terms/">Terms &amp; refunds</a></li>
-          <li><a href="/#promise">The no-password promise</a></li>
+          <li><a href="/privacy/">{{t:fPrivacy}}</a></li>
+          <li><a href="/terms/">{{t:fTerms}}</a></li>
+          <li><a href="/#promise">{{t:fPromise}}</a></li>
         </ul>
       </div>
     </div>
     <div class="wordmark" aria-hidden="true">unwrapped</div>
     <div class="legal">
-      <span>© <span data-year></span> {{siteName}}. Not affiliated with Instagram, Meta, TikTok, X, or LinkedIn. All trademarks belong to their owners.</span>
-      <span>Made for people, not for data brokers.</span>
+      <span>© <span data-year></span> {{siteName}}. {{t:legalCopy}}</span>
+      <span>{{t:legalMade}}</span>
     </div>
   </div>
 </footer>

@@ -1,0 +1,76 @@
+<!--page {
+  "route": "/instagram/",
+  "nav": "instagram",
+  "title": "Quem não te segue de volta no Instagram? Descubra sem sua senha · Unwrapped",
+  "description": "Veja quem não te segue de volta no Instagram, quem deixou de te seguir, solicitações pendentes e o que os anunciantes sabem, a partir do download oficial dos seus dados do Instagram. Sem login, sem upload.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-instagram"/></svg>Ferramenta para Instagram · grátis para começar</span>
+      <h1 class="h1 hero-title" style="max-width:17ch">
+        <span class="line"><span>Quem não te segue</span></span>
+        <span class="line"><span>de volta? <span class="serif grad">Descubra.</span></span></span>
+      </h1>
+      <p class="hero-sub">O download oficial dos seus dados do Instagram, decifrado em segundos: <b>quem não te segue de volta</b>, <b>quem deixou de te seguir</b>, fãs, mútuos, solicitações pendentes, melhores amigos, estatísticas de DMs e os anunciantes que têm seus dados. <b>Sem senha, sem login, sem upload.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">O que você vai ver</span>
+      <h2 class="h2">Cada lista que o Instagram guarda sobre a sua conta.</h2>
+      <p class="lead">O Instagram não mostra quem não te segue de volta nem quem deixou de te seguir. A exportação oficial de dados tem as listas brutas, e o Unwrapped transforma tudo em respostas.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Quem não te segue de volta</b>, com a data em que você seguiu cada conta, para começar pelas mais antigas.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Quem deixou de te seguir</b>: compare uma exportação nova com a anterior e veja os nomes.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Fãs e mútuos</b>: quem te segue sem você seguir de volta, e seus mútuos mais antigos.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Solicitações que você enviou</b>: contas privadas que nunca aceitaram, prontas para cancelar.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Melhores amigos, bloqueados, restritos e para quem você oculta os stories</b>, tudo num lugar só.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Radar da amizade</b> <span class="badge badge--uv">Novo</span>: seu círculo íntimo real, as amizades que esfriam ou crescem e quem sempre chama primeiro.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Seus contatos de DM e suas curtidas</b>: com quem você mais conversa e quem mais curte (exportação completa).</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Raio-X da privacidade</b>: anunciantes que enviaram seus dados, temas com que te perfilaram e cada aparelho que fez login.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Como baixar seus dados do Instagram</span>
+      <h2 class="h2">Sua exportação em menos de um minuto de toques.</h2>
+    </div>
+    <div class="reveal">{{> steps-instagram}}</div>
+    <div class="note reveal" style="margin-top:18px"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Dica: peça só <b>Seguidores e seguindo</b>: é pequeno e costuma ficar pronto mais rápido. Volte com uma exportação nova a cada duas semanas para ter um histórico exato de quem deixou de te seguir.</span></div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Perguntas sobre o Instagram</span><h2 class="h2">Unfollows no Instagram, explicados.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Como vejo quem não me segue de volta no Instagram?</summary><div class="answer"><p>Baixe suas informações do Instagram (Central de Contas → Suas informações e permissões → Baixar suas informações → Seguidores e seguindo) e solte o ZIP nesta página. O Unwrapped compara suas listas de seguidores e seguindo e mostra todo mundo que você segue e não te segue de volta.</p></div></details>
+      <details><summary>Dá para ver quem deixou de me seguir no Instagram?</summary><div class="answer"><p>Sim, comparando duas exportações. Sua primeira exportação fica salva como um retrato privado no seu navegador. Quando você soltar uma mais nova, o Unwrapped mostra exatamente quais seguidores sumiram entre uma e outra. Contas desativadas também somem, então a lista pode incluí-las.</p></div></details>
+      <details><summary>É seguro? Vocês precisam da minha senha do Instagram?</summary><div class="answer"><p>Nunca pedimos sua senha e nunca fazemos login no Instagram. Tudo é calculado a partir do arquivo que o Instagram te dá, dentro do seu próprio navegador. Nada é enviado.</p></div></details>
+      <details><summary>JSON ou HTML: qual formato escolher?</summary><div class="answer"><p>Os dois funcionam. O JSON é um pouco mais confiável e rápido de processar, então prefira JSON se puder.</p></div></details>
+      <details><summary>Por que algumas contas faltam ou aparecem duas vezes?</summary><div class="answer"><p>A exportação reflete os dados do Instagram no momento em que foi criada e pode estar algumas horas atrás do app. Contas desativadas podem continuar aparecendo. Duplicados são juntados automaticamente.</p></div></details>
+      <details><summary>Funciona com o Threads?</summary><div class="answer"><p>Sim. Se sua exportação do Instagram tiver seguidores e seguindo do Threads, o Unwrapped mostra um painel separado para o Threads, e o mapa entre plataformas compara os dois.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Faça a faxina nos seus seguidos <span class="serif grad">hoje.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Analisar meu Instagram</a><a class="btn btn--ghost btn--lg" href="/pricing/">Ver planos</a></div>
+    </div>
+  </div>
+</section>

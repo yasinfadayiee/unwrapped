@@ -1,0 +1,68 @@
+<!--page {
+  "route": "/x/",
+  "nav": "x",
+  "title": "X (Twitter) arşiv görüntüleyici: en iyi tweet'ler, takipten çıkanlar ve X'in senin hakkında bildikleri · Unwrapped",
+  "description": "X / Twitter arşivini saniyeler içinde aç: en iyi gönderilerin, paylaşım alışkanlıkların, seni geri takip etmeyen hesaplar, X'in sana atadığı ilgi alanları ve reklamverenler, bağlı uygulamalar. Gizli, tarayıcında.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-x"/></svg>X (Twitter) arşiv gezgini</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>X arşivin,</span></span>
+        <span class="line"><span class="serif grad">sonunda okunabilir.</span></span>
+      </h1>
+      <p class="hero-sub">Yılların gönderileri, beğenileri ve reklamları tek bir ZIP'te. <b>Tüm zamanların en iyi gönderilerini</b>, ne zaman paylaştığını, seni <b>geri takip etmeyenleri</b>, X'in sana atadığı <b>ilgi alanlarını ve reklamverenleri</b> ve hangi <b>uygulamaların hâlâ senin adına işlem yapabildiğini</b> gör. <b>Cihazında işlenir.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Neler göreceksin</span>
+      <h2 class="h2">On yıllık paylaşım, ölçüldü.</h2>
+      <p class="lead">X'in sana verdiği arşiv, şifreli görünen JavaScript dosyalarıyla dolu bir klasördür. Unwrapped hepsini tek bir bayt yüklemeden okur.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tüm zamanların en iyi gönderileri</b>, beğeni ve yeniden paylaşımlara göre sıralı.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Paylaşım alışkanlıkları</b>: aya, güne ve saate göre, seriler, en çok kullanılan etiketler ve kelimeler.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Takipçiler ve takip edilenler</b>: karşılıklılar, hayranlar ve seni geri takip etmeyen hesaplar.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>X seni ne sanıyor</b>: çıkarımla bulunan yaş, cinsiyet, diller ve ilgi alanları.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Reklamverenler ve hedefleme</b>: seni kim, nasıl hedefledi.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Bağlı uygulamalar</b>, ve hangilerinin hâlâ paylaşım yapıp DM'lerini okuyabildiği.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">X arşivini nasıl indirirsin</span><h2 class="h2">X'ten bir kez iste. Sonsuza dek keşfet.</h2></div>
+    <div class="reveal">{{> steps-x}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">X SSS</span><h2 class="h2">X arşivleri, açıklandı.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Twitter / X arşivimi nasıl görüntülerim?</summary><div class="answer"><p>Ayarlar ve gizlilik → Hesabın → Verilerinin bir arşivini indir yolundan iste. Hazır olduğunda ZIP'i indir ve buraya bırak; açmana gerek yok.</p></div></details>
+      <details><summary>Takipçiler neden hesap numarası olarak görünüyor?</summary><div class="answer"><p>X'in arşivi takipçileri kullanıcı adıyla değil hesap kimliğiyle listeler. Herhangi bir satırın yanındaki “Aç”a dokun, X sana kim olduğunu gösterir.</p></div></details>
+      <details><summary>Arşivim birkaç gigabayt. Çalışır mı?</summary><div class="answer"><p>Evet. Unwrapped ZIP içindeki yalnızca küçük veri dosyalarını okur, fotoğraf ve videolarını atlar; bu yüzden dev arşivler bile saniyeler içinde açılır.</p></div></details>
+      <details><summary>X'te beni kimin takipten çıktığını görebilir miyim?</summary><div class="answer"><p>Evet, daha yeni bir arşivi daha önce analiz ettiğin eski bir arşivle karşılaştırarak; anlık görüntü tarayıcında gizli olarak saklanır.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:16ch">Yaptığın her gönderi, <span class="serif grad">tek ekranda.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Arşivimi aç</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Demoyu gör</button></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,69 @@
+<!--page {
+  "route": "/tiktok/",
+  "nav": "tiktok",
+  "title": "¿Cuántas horas pasas en TikTok? Historial, unfollowers y tu Wrapped · Unwrapped",
+  "description": "Convierte tu descarga de datos de TikTok en tiempo de pantalla real: horas vistas, maratones más largos, horas punta, búsquedas, seguidores que no te devuelven el follow y un TikTok Wrapped para compartir. Privado: no se sube nada.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-tiktok"/></svg>Herramienta para TikTok · tu Wrapped, cualquier día</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>¿Cuántas horas</span></span>
+        <span class="line"><span>te ha quitado <span class="serif grad">TikTok?</span></span></span>
+      </h1>
+      <p class="hero-sub">Tu descarga de datos de TikTok guarda cada video que viste, con fecha y hora. Unwrapped reconstruye tus sesiones para mostrarte <b>las horas reales</b>, <b>tu maratón más largo</b> y <b>cuándo haces scroll</b>, además de seguidores, búsquedas y una tarjeta <b>TikTok Wrapped</b>. <b>Nada sale de tu móvil.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Lo que verás</span>
+      <h2 class="h2">El informe de tiempo de pantalla que TikTok nunca te muestra.</h2>
+      <p class="lead">Agrupamos tu historial en sesiones de visualización (una pausa de más de 10 minutos empieza una nueva): una estimación mucho más honesta que contar videos.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Horas totales</b> y minutos al día en todo tu historial.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tus maratones más largos</b>: fecha, duración y videos por sesión.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Mapa de calor por día y hora</b> y tu personalidad de scroll (¿búho nocturno? ¿adicto de la hora de comer?).</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Seguidores que no te devuelven el follow</b>, fans y mutuos.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Lo que más buscaste</b>, tus “me gusta” y favoritos a lo largo del tiempo.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Rayos X de privacidad</b>: dispositivos de inicio de sesión, IP, intereses publicitarios y actividad fuera de TikTok.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Cómo descargar tus datos de TikTok</span><h2 class="h2">Pídelos una vez, analízalos cuando quieras.</h2></div>
+    <div class="reveal">{{> steps-tiktok}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Preguntas sobre TikTok</span><h2 class="h2">Tus datos de TikTok, explicados.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>¿Cómo veo cuánto tiempo paso en TikTok?</summary><div class="answer"><p>Solicita tus datos de TikTok (Ajustes y privacidad → Cuenta → Descargar tus datos, elige “Todos los datos” y JSON) y suelta el ZIP aquí. Unwrapped reconstruye tus sesiones a partir del historial de visualización y suma el tiempo.</p></div></details>
+      <details><summary>¿Existe un TikTok Wrapped oficial?</summary><div class="answer"><p>TikTok no ofrece un Wrapped completo de tus hábitos de visualización. Unwrapped crea uno a partir de tu propia exportación (horas, maratones, hora punta y personalidad) como una tarjeta del tamaño de una historia que puedes compartir.</p></div></details>
+      <details><summary>¿Por qué no aparece mi historial de visualización?</summary><div class="answer"><p>Asegúrate de haber pedido <b>Todos los datos</b>. Las selecciones personalizadas pueden dejar fuera el historial. Además, la exportación solo incluye el historial que TikTok todavía conserva.</p></div></details>
+      <details><summary>¿Qué tan precisa es la estimación de tiempo?</summary><div class="answer"><p>La exportación registra cuándo empezó cada video, no cuánto lo viste. Tratamos las visualizaciones con menos de 10 minutos de diferencia como una sola sesión, medimos desde la primera hasta la última y añadimos un margen corto para el último video. Es una estimación, pero coherente y honesta.</p></div></details>
+      <details><summary>¿Necesitan mi usuario de TikTok?</summary><div class="answer"><p>Nunca. Todo se calcula a partir del archivo que descargaste, dentro de tu navegador.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:16ch">Enfréntate al número. <span class="serif grad">Luego compártelo.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Analizar mi TikTok</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Ver la demo</button></div>
+    </div>
+  </div>
+</section>

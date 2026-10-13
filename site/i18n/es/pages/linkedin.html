@@ -1,0 +1,56 @@
+<!--page {
+  "route": "/linkedin/",
+  "nav": "linkedin",
+  "title": "Analizador de contactos de LinkedIn: mapea tu red por empresa y cargo · Unwrapped",
+  "description": "Convierte tu exportación de datos de LinkedIn en un mapa de tu red: las principales empresas, cargos, reclutadores y fundadores de tu red, y cómo creció año tras año. Privado: funciona en tu navegador.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-linkedin"/></svg>Mapa de tu red en LinkedIn</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>¿Quién hay realmente</span></span>
+        <span class="line"><span>en tu <span class="serif grad">red?</span></span></span>
+      </h1>
+      <p class="hero-sub">Suelta tu exportación de LinkedIn y descubre <b>en qué empresas</b> trabajan tus contactos, <b>cuántos reclutadores y fundadores</b> conoces y cómo creció tu red, en segundos y <b>sin subir nada</b>.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Lo que verás</span>
+      <h2 class="h2">Tu próximo trabajo ya está en este archivo.</h2>
+      <p class="lead">Connections.csv lista cada contacto con su empresa, cargo y fecha. Lo convertimos en un mapa con el que puedes actuar.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Principales empresas</b> de tu red.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Cargos</b>: reclutadores, fundadores, ingenieros, diseñadores, inversores…</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Crecimiento de tu red</b> año a año y los contactos nuevos recientes.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Lista con búsqueda</b> y exportación CSV (Plus).</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Cómo descargar tus datos de LinkedIn</span><h2 class="h2">Diez minutos, de principio a fin.</h2></div>
+    <div class="reveal">{{> steps-linkedin}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Preguntas sobre LinkedIn</span><h2 class="h2">La exportación de LinkedIn, explicada.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>¿Cómo exporto mis contactos de LinkedIn?</summary><div class="answer"><p>Yo → Configuración y privacidad → Privacidad de datos → Obtener una copia de tus datos → elige Contactos → Solicitar archivo. LinkedIn te envía por correo un enlace de descarga, normalmente en unos diez minutos.</p></div></details>
+      <details><summary>¿Por qué faltan la mayoría de los correos electrónicos?</summary><div class="answer"><p>LinkedIn solo incluye el correo de los contactos que lo permitieron en su propia configuración de privacidad.</p></div></details>
+      <details><summary>¿Se suben mis datos profesionales?</summary><div class="answer"><p>No. El CSV se procesa en tu navegador y nunca sale de tu dispositivo.</p></div></details>
+    </div>
+  </div>
+</section>

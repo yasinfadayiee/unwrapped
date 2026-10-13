@@ -6,6 +6,9 @@ import { proState, storeLicense, storedKey } from './license.js';
 import { qrcode } from '../vendor/qrcode.js';
 import { storedRef, forgetRef } from './referral.js';
 import { TIER_NAME, TIER_RANK, tierFor } from './tiers.js';
+import { t, locale } from './i18n.js';
+
+const tr = t; // for loops where `t` is a tier
 
 const ORDERS = 'unw.orders.v1';
 
@@ -41,7 +44,7 @@ const ERRORS = {
   already_lifetime: 'You already own this tier for life — pick a higher tier to upgrade.',
   busy_try_again: 'Lots of checkouts right now — try again in a minute.',
 };
-const errText = (err) => ERRORS[err?.code] || 'Something went wrong. Please try again.';
+const errText = (err) => t(ERRORS[err?.code] || 'Something went wrong. Please try again.');
 
 function money(n) {
   return `$${Number(n).toFixed(Number.isInteger(n) ? 0 : 2)}`;
@@ -60,14 +63,14 @@ function creditText(state, tierId, plans) {
   if (!state.pro) return null;
   const left = state.expiresAt ? state.expiresAt - Date.now() : 0;
   const days = Math.round(left / DAY);
-  if (left > 0 && state.tier === tierId) return `New time is added on top of the ${days} days you have left. Your key stays the same.`;
-  if (state.lifetimeTier) return `Your lifetime ${TIER_NAME[state.lifetimeTier]} stays. ${TIER_NAME[tierId]} runs on top for the time you buy, then you’re back on lifetime ${TIER_NAME[state.lifetimeTier]}.`;
+  if (left > 0 && state.tier === tierId) return t('New time is added on top of the {days} days you have left. Your key stays the same.', { days });
+  if (state.lifetimeTier) return t('Your lifetime {base} stays. {tier} runs on top for the time you buy, then you’re back on lifetime {base}.', { base: TIER_NAME[state.lifetimeTier], tier: TIER_NAME[tierId] });
   if (left <= 0) return null;
   const from = dailyValue(plans, state.tier);
   const to = dailyValue(plans, tierId);
   if (!from || !to) return null;
   const converted = Math.round((left * from) / to / DAY);
-  return `Upgrade credit: your ${days} days of ${TIER_NAME[state.tier]} become ${converted} days of ${TIER_NAME[tierId]}, added on top. Nothing you paid is lost.`;
+  return t('Upgrade credit: your {days} days of {from} become {converted} days of {to}, added on top. Nothing you paid is lost.', { days, from: TIER_NAME[state.tier], converted, to: TIER_NAME[tierId] });
 }
 
 export async function openCheckout({ plan: preselect, tier: wantTier, reason } = {}) {
@@ -80,7 +83,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
   let tierId = plans.find((p) => p.id === preselect)?.tier || wantTier || (reason ? tierFor(reason) : 'pro');
   if (state.pro && TIER_RANK[state.tier] > TIER_RANK[tierId]) tierId = state.tier;
   if (!tiers.some((t) => t.id === tierId && buyable(t))) tierId = tiers.find(buyable)?.id;
-  const m = modal({ title: state.pro ? 'Upgrade or extend' : 'Choose your plan' });
+  const m = modal({ title: state.pro ? t('Upgrade or extend') : t('Choose your plan') });
   let planId = null;
   let methodId = config.methods?.[0]?.id;
   const renewKey = state.key || storedKey();
@@ -90,8 +93,8 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       h(
         'div',
         { class: 'stack' },
-        h('p', { class: 'text-2' }, config.offline ? 'You seem to be offline. Connect to the internet to buy Pro — your analysis keeps working offline.' : 'Payments are being set up. Please check back soon.'),
-        h('button', { class: 'btn btn--ghost', type: 'button', onClick: m.close }, 'Close'),
+        h('p', { class: 'text-2' }, t(config.offline ? 'You seem to be offline. Connect to the internet to buy Pro — your analysis keeps working offline.' : 'Payments are being set up. Please check back soon.')),
+        h('button', { class: 'btn btn--ghost', type: 'button', onClick: m.close }, t('Close')),
       ),
     );
     return m;
@@ -103,20 +106,20 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
     discount
       ? h('span', { class: 'p' }, h('s', { class: 'muted', style: { fontWeight: '500', fontSize: '14px', marginRight: '6px' } }, money(p.priceUsd)), money(Math.round(p.priceUsd * (1 - discount) * 100) / 100))
       : h('span', { class: 'p' }, money(p.priceUsd));
-  const tierBox = h('div', { class: 'tier-switch', role: 'radiogroup', 'aria-label': 'Tier' });
+  const tierBox = h('div', { class: 'tier-switch', role: 'radiogroup', 'aria-label': t('Tier') });
   const featureBox = h('div');
-  const planBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': 'Billing' });
+  const planBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': t('Billing') });
   const creditBox = h('div');
 
   const monthly = (t) => plans.find((p) => p.tier === t && p.cycle === 'month');
   const planSub = (p) => {
-    if (p.cycle === 'life') return `Pay once, keep ${TIER_NAME[p.tier]} forever`;
+    if (p.cycle === 'life') return t('Pay once, keep {tier} forever', { tier: TIER_NAME[p.tier] });
     if (p.cycle === 'year') {
       const m1 = monthly(p.tier);
       const save = m1 ? Math.round((1 - p.priceUsd / (m1.priceUsd * 12)) * 100) : 0;
-      return `${money(Math.round((p.priceUsd / 12) * 100) / 100)}/month${save > 0 ? ` · save ${save}%` : ''}`;
+      return `${t('{price}/month', { price: money(Math.round((p.priceUsd / 12) * 100) / 100) })}${save > 0 ? ` · ${t('save {n}%', { n: save })}` : ''}`;
     }
-    return `${p.days} days · no auto-renewal`;
+    return t('{n} days · no auto-renewal', { n: p.days });
   };
 
   function drawTier() {
@@ -133,7 +136,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
         'button',
         { class: 'tier-opt', type: 'button', role: 'radio', 'aria-checked': String(t.id === tierId), disabled: !buyable(t) },
         h('span', { class: 'n' }, t.name),
-        h('span', { class: 's' }, buyable(t) ? `from ${money(Math.round(from * 100) / 100)}/mo` : 'Owned for life'),
+        h('span', { class: 's' }, buyable(t) ? tr('from {price}/mo', { price: money(Math.round(from * 100) / 100) }) : tr('Owned for life')),
       );
       b.addEventListener('click', () => {
         tierId = t.id;
@@ -146,8 +149,8 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       h(
         'div',
         { class: 'tier-detail' },
-        h('div', { class: 'small' }, h('b', null, tier?.tagline || ''), rank > 1 ? h('span', { class: 'muted' }, ` · everything in ${TIER_NAME[tiers.find((t) => t.rank === rank - 1)?.id]}, plus:`) : null),
-        h('ul', { class: 'checklist small text-2' }, (tier?.features || []).map((f) => h('li', null, icon('check'), f))),
+        h('div', { class: 'small' }, h('b', null, t(tier?.tagline || '')), rank > 1 ? h('span', { class: 'muted' }, ` · ${t('everything in {tier}, plus:', { tier: TIER_NAME[tiers.find((x) => x.rank === rank - 1)?.id] })}`) : null),
+        h('ul', { class: 'checklist small text-2' }, (tier?.features || []).map((f) => h('li', null, icon('check'), t(f)))),
       ),
     );
     clear(planBox);
@@ -160,7 +163,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
           { class: 'choice' },
           input,
           h('span', { class: 'radio' }),
-          h('span', { class: 'grow' }, h('span', { class: 't' }, p.short, p.badge ? h('span', { class: 'badge', style: { marginLeft: '8px' } }, p.badge) : null), h('span', { class: 's', style: { display: 'block' } }, planSub(p))),
+          h('span', { class: 'grow' }, h('span', { class: 't' }, t(p.short), p.badge ? h('span', { class: 'badge', style: { marginLeft: '8px' } }, t(p.badge)) : null), h('span', { class: 's', style: { display: 'block' } }, planSub(p))),
           priceTag(p),
         ),
       );
@@ -168,7 +171,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
     const credit = creditText(state, tierId, plans);
     clear(creditBox).append(credit ? h('div', { class: 'note' }, icon('info'), h('span', null, credit)) : '');
   }
-  const methodBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': 'Payment method' });
+  const methodBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': t('Payment method') });
   for (const meth of config.methods) {
     const input = h('input', { type: 'radio', name: 'method', value: meth.id, checked: meth.id === methodId });
     input.addEventListener('change', () => (methodId = meth.id));
@@ -178,14 +181,14 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
         { class: 'choice' },
         input,
         h('span', { class: 'radio' }),
-        h('span', { class: 'grow' }, h('span', { class: 't' }, meth.label), h('span', { class: 's', style: { display: 'block' } }, meth.detail)),
+        h('span', { class: 'grow' }, h('span', { class: 't' }, t(meth.label)), h('span', { class: 's', style: { display: 'block' } }, t(meth.detail))),
         icon(meth.id === 'tron' ? 'coin' : 'globe'),
       ),
     );
   }
-  const email = h('input', { class: 'input', type: 'email', placeholder: 'you@example.com (optional)', autocomplete: 'email', id: 'co-email' });
+  const email = h('input', { class: 'input', type: 'email', placeholder: t('you@example.com (optional)'), autocomplete: 'email', id: 'co-email' });
   const errorBox = h('div', { class: 'err-box', hidden: true, role: 'alert' });
-  const go = h('button', { class: 'btn btn--primary btn--lg btn--block', type: 'button' }, 'Continue to payment');
+  const go = h('button', { class: 'btn btn--primary btn--lg btn--block', type: 'button' }, t('Continue to payment'));
 
   m.body.append(
     h(
@@ -195,15 +198,15 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       featureBox,
       planBox,
       creditBox,
-      h('div', { class: 'eyebrow' }, 'Pay with'),
+      h('div', { class: 'eyebrow' }, t('Pay with')),
       methodBox,
       config.email
-        ? h('div', { class: 'field' }, h('label', { for: 'co-email' }, 'E-mail for your license & renewal reminder'), email)
+        ? h('div', { class: 'field' }, h('label', { for: 'co-email' }, t('E-mail for your license & renewal reminder')), email)
         : null,
-      discount ? h('div', { class: 'note' }, icon('sparkles'), h('span', null, `Friend invite applied — ${Math.round(discount * 100)}% off.`)) : null,
+      discount ? h('div', { class: 'note' }, icon('sparkles'), h('span', null, t('Friend invite applied — {n}% off.', { n: Math.round(discount * 100) }))) : null,
       errorBox,
       go,
-      h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, 'Activates in about a minute · no account · no auto-renewal · your social data is never uploaded'),
+      h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, t('Activates in about a minute · no account · no auto-renewal · your social data is never uploaded')),
     ),
   );
   drawTier();
@@ -211,7 +214,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
   go.addEventListener('click', async () => {
     go.disabled = true;
     errorBox.hidden = true;
-    go.textContent = 'Creating your order…';
+    go.textContent = t('Creating your order…');
     try {
       const res = await api('/api/checkout', {
         method: 'POST',
@@ -219,16 +222,16 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       });
       rememberOrder(res.order, res.token);
       if (res.order.method === 'nowpayments' && res.order.redirectUrl) {
-        go.textContent = 'Opening the payment page…';
+        go.textContent = t('Opening the payment page…');
         location.href = res.order.redirectUrl;
         return;
       }
       tronScreen(m, res.order, res.token, config);
     } catch (err) {
-      errorBox.textContent = err instanceof ApiError ? errText(err) : 'Could not reach the server. Check your connection.';
+      errorBox.textContent = err instanceof ApiError ? errText(err) : t('Could not reach the server. Check your connection.');
       errorBox.hidden = false;
       go.disabled = false;
-      go.textContent = 'Continue to payment';
+      go.textContent = t('Continue to payment');
     }
   });
   return m;
@@ -242,41 +245,41 @@ function qrSvg(text) {
 }
 
 function line(k, v, { big = false, copy } = {}) {
-  const btn = copy ? h('button', { class: 'copy-btn', type: 'button' }, 'Copy') : null;
+  const btn = copy ? h('button', { class: 'copy-btn', type: 'button' }, t('Copy')) : null;
   btn?.addEventListener('click', () => copyText(copy, btn));
   return h('div', { class: 'pay-line' }, h('span', { class: 'k' }, k), h('span', { class: `v${big ? ' big' : ''}` }, v), btn);
 }
 
 export function tronScreen(m, order, token, config) {
-  m.setTitle('Pay with USDT (TRC20)');
+  m.setTitle(t('Pay with USDT (TRC20)'));
   clear(m.body);
-  const qr = h('div', { class: 'pay-qr', 'aria-label': 'QR code of the wallet address' });
+  const qr = h('div', { class: 'pay-qr', 'aria-label': t('QR code of the wallet address') });
   qr.innerHTML = qrSvg(order.address);
   const timer = h('span', { class: 'mono' });
-  const status = h('div', { class: 'status-line' }, h('span', { class: 'spinner' }), h('span', null, 'Waiting for your payment — the blockchain is checked automatically.'));
-  const claimInput = h('input', { class: 'input mono', placeholder: 'Transaction hash (TxID)', 'aria-label': 'Transaction hash', spellcheck: false });
-  const claimBtn = h('button', { class: 'btn btn--ghost', type: 'button' }, 'Verify');
+  const status = h('div', { class: 'status-line' }, h('span', { class: 'spinner' }), h('span', null, t('Waiting for your payment — the blockchain is checked automatically.')));
+  const claimInput = h('input', { class: 'input mono', placeholder: t('Transaction hash (TxID)'), 'aria-label': t('Transaction hash'), spellcheck: false });
+  const claimBtn = h('button', { class: 'btn btn--ghost', type: 'button' }, t('Verify'));
   const claimMsg = h('div', { class: 'small text-2', role: 'status' });
 
   m.body.append(
     h(
       'div',
       { class: 'pay' },
-      h('div', { class: 'warn-box' }, icon('warning'), h('span', null, h('b', null, 'TRON (TRC20) network only. '), 'Sending on Ethereum, BNB Chain or any other network will lose the funds.')),
+      h('div', { class: 'warn-box' }, icon('warning'), h('span', null, h('b', null, t('TRON (TRC20) network only.') + ' '), t('Sending on Ethereum, BNB Chain or any other network will lose the funds.'))),
       qr,
-      line('Amount', `${order.amount} USDT`, { big: true, copy: order.amount }),
-      line('Address', order.address, { copy: order.address }),
-      h('p', { class: 'small text-2' }, 'This exact amount is unique to your order — that’s how we match your payment instantly. Paying from an exchange? Make sure the amount that ', h('b', null, 'arrives'), ` is ${order.amount} USDT (add the withdrawal fee on top).`),
+      line(t('Amount'), `${order.amount} USDT`, { big: true, copy: order.amount }),
+      line(t('Address'), order.address, { copy: order.address }),
+      h('p', { class: 'small text-2' }, t('This exact amount is unique to your order — that’s how we match your payment instantly. Paying from an exchange? Make sure the amount that arrives is {amount} USDT (add the withdrawal fee on top).', { amount: order.amount })),
       status,
-      h('div', { class: 'small muted' }, 'Order expires in ', timer, ' · ', h('span', { class: 'mono' }, order.id)),
+      h('div', { class: 'small muted' }, t('Order expires in') + ' ', timer, ' · ', h('span', { class: 'mono' }, order.id)),
       h(
         'details',
         { class: 'faq', style: { display: 'block' } },
-        h('summary', { style: { padding: '12px 0', fontSize: '14px' } }, 'Already paid? Paste your transaction hash'),
+        h('summary', { style: { padding: '12px 0', fontSize: '14px' } }, t('Already paid? Paste your transaction hash')),
         h('div', { style: { display: 'flex', gap: '8px' } }, claimInput, claimBtn),
         claimMsg,
       ),
-      config.dev ? h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => api('/api/dev/pay', { method: 'POST', body: { id: order.id } }) }, 'Simulate payment (dev mode)') : null,
+      config.dev ? h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onClick: () => api('/api/dev/pay', { method: 'POST', body: { id: order.id } }) }, t('Simulate payment (dev mode)')) : null,
     ),
   );
 
@@ -292,7 +295,7 @@ export function tronScreen(m, order, token, config) {
       stop();
       successScreen(m, o);
     } else if (o.status === 'expired') {
-      status.replaceChildren(icon('clock'), h('span', null, 'This order expired, but a payment arriving in the next hours is still accepted. You can also start a new order.'));
+      status.replaceChildren(icon('clock'), h('span', null, t('This order expired, but a payment arriving in the next hours is still accepted. You can also start a new order.')));
     }
   });
   const observer = new MutationObserver(() => {
@@ -308,7 +311,7 @@ export function tronScreen(m, order, token, config) {
     const txid = claimInput.value.trim();
     if (!txid) return;
     claimBtn.disabled = true;
-    claimMsg.textContent = 'Checking the blockchain…';
+    claimMsg.textContent = t('Checking the blockchain…');
     try {
       const res = await api('/api/order/claim', { method: 'POST', body: { id: order.id, t: token, txid } });
       if (res.ok && res.order?.status === 'paid') {
@@ -319,14 +322,14 @@ export function tronScreen(m, order, token, config) {
       }
       claimMsg.textContent =
         res.reason === 'underpaid'
-          ? `We received ${res.received} of ${res.required} USDT. Send the remaining ${res.remaining} USDT to the same address, then paste that new hash here.`
+          ? t('We received {received} of {required} USDT. Send the remaining {remaining} USDT to the same address, then paste that new hash here.', res)
           : res.reason === 'not_found'
-            ? 'Not visible yet — TRON needs about a minute to confirm. Try again shortly.'
+            ? t('Not visible yet — TRON needs about a minute to confirm. Try again shortly.')
             : res.reason === 'already_used'
-              ? 'That transaction was already used for another order.'
+              ? t('That transaction was already used for another order.')
               : res.reason === 'not_usdt'
-                ? 'That transaction is not a USDT transfer to our address.'
-                : 'That doesn’t look like a valid TRON transaction hash.';
+                ? t('That transaction is not a USDT transfer to our address.')
+                : t('That doesn’t look like a valid TRON transaction hash.');
     } catch (err) {
       claimMsg.textContent = errText(err);
     } finally {
@@ -360,12 +363,12 @@ export function successScreen(m, order) {
   if (order.license && order.token) storeLicense(order.license.key, order.token);
   forgetOrder(order.id);
   forgetRef();
-  m.setTitle('Payment received');
+  m.setTitle(t('Payment received'));
   clear(m.body);
   const key = order.license?.key || '';
-  const copy = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('copy'), 'Copy key');
+  const copy = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('copy'), t('Copy key'));
   copy.addEventListener('click', () => copyText(key, copy));
-  const save = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('download'), 'Save as file');
+  const save = h('button', { class: 'btn btn--ghost', type: 'button' }, icon('download'), t('Save as file'));
   const tierName = TIER_NAME[order.license?.tier] || 'Pro';
   save.addEventListener('click', () => downloadBlob(new Blob([`Unwrapped ${tierName} license\n\n${key}\n\nActivate on any device: ${location.origin}/account/\n`], { type: 'text/plain' }), 'unwrapped-license.txt'));
   m.body.append(
@@ -373,14 +376,14 @@ export function successScreen(m, order) {
       'div',
       { class: 'stack', style: { '--stack': '16px', textAlign: 'center' } },
       h('div', { class: 'success-burst' }, icon('check')),
-      h('div', { class: 'h3' }, `You’re ${tierName}. Enjoy!`),
-      h('p', { class: 'text-2' }, order.license?.lifetime ? 'Lifetime access is active on this device.' : `Active until ${new Date(order.license?.expiresAt).toLocaleDateString('en-US', { dateStyle: 'long' })}.`),
+      h('div', { class: 'h3' }, t('You’re {tier}. Enjoy!', { tier: tierName })),
+      h('p', { class: 'text-2' }, order.license?.lifetime ? t('Lifetime access is active on this device.') : t('Active until {date}.', { date: new Date(order.license?.expiresAt).toLocaleDateString(locale, { dateStyle: 'long' }) })),
       h('div', { class: 'license-key' }, key),
-      h('p', { class: 'small text-2' }, `Save this key — it unlocks ${tierName} on any browser or phone.`),
+      h('p', { class: 'small text-2' }, t('Save this key — it unlocks {tier} on any browser or phone.', { tier: tierName })),
       h('div', { style: { display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' } }, copy, save),
-      h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: m.close }, 'Continue'),
-      h('p', { class: 'small text-2' }, 'Invite friends and earn 30 free days for every friend who buys — ', h('a', { href: '/account/#invite' }, 'get your invite link'), '.'),
+      h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: m.close }, t('Continue')),
+      h('p', { class: 'small text-2' }, t('Invite friends and earn 30 free days for every friend who buys — ') , h('a', { href: '/account/#invite' }, t('get your invite link')), '.'),
     ),
   );
-  toast(`${tierName} unlocked`);
+  toast(t('{tier} unlocked', { tier: tierName }));
 }

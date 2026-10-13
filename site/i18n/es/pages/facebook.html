@@ -1,0 +1,56 @@
+<!--page {
+  "route": "/facebook/",
+  "nav": "facebook",
+  "title": "¿Quién me eliminó de Facebook? Rastreador de amigos gratis con tus datos de Facebook · Unwrapped",
+  "description": "Descubre quién te eliminó de amigos en Facebook, tus solicitudes de amistad pendientes y qué anunciantes tienen tus datos, con tu descarga oficial de datos de Facebook. Sin iniciar sesión, sin subir nada.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-facebook"/></svg>Rastreador de amigos eliminados en Facebook</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>¿Quién te eliminó</span></span>
+        <span class="line"><span>de amigos? <span class="serif grad">Ahora lo sabrás.</span></span></span>
+      </h1>
+      <p class="hero-sub">Suelta tu descarga de datos de Facebook para ver a tus amigos, tus <b>solicitudes pendientes</b>, a quién eliminaste tú y, de una instantánea a otra, <b>exactamente quién te eliminó</b>. Además, los anunciantes y empresas que comparten tu actividad. <b>Sin iniciar sesión. Sin subir nada.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Lo que verás</span>
+      <h2 class="h2">Tu lista de amigos, con memoria.</h2>
+      <p class="lead">Facebook nunca te avisa cuando alguien te elimina. Dos exportaciones con unas semanas de diferencia sí, y Unwrapped es lo bastante listo como para ignorar a quienes eliminaste <i>tú</i>.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Quién te eliminó</b> entre dos exportaciones.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Solicitudes de amistad que enviaste</b> y siguen pendientes.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Amigos añadidos por año</b> y desde cuándo conoces a cada uno.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Anunciantes que tienen tus datos</b> y tu actividad fuera de Facebook.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Cómo descargar tus datos de Facebook</span><h2 class="h2">Dos minutos en el Centro de cuentas.</h2></div>
+    <div class="reveal">{{> steps-facebook}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Preguntas sobre Facebook</span><h2 class="h2">Amigos eliminados, explicado.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>¿Cómo veo quién me eliminó de amigos en Facebook?</summary><div class="answer"><p>Descarga tu información de Facebook (Amigos y seguidores, JSON) y suéltala aquí: será tu primera instantánea. Repite en unas semanas: Unwrapped compara ambas y lista a todos los que desaparecieron, sin contar a quienes eliminaste tú.</p></div></details>
+      <details><summary>¿La persona sabrá que lo revisé?</summary><div class="answer"><p>No. Nadie recibe ninguna notificación: solo estás leyendo tu propia descarga de datos, en tu propio dispositivo.</p></div></details>
+      <details><summary>¿Por qué alguien podría aparecer como eliminado por error?</summary><div class="answer"><p>Las cuentas desactivadas o borradas también desaparecen de las listas de amigos, y quien cambia su nombre visible puede parecer una persona nueva. Revisa el perfil antes de sacar conclusiones.</p></div></details>
+    </div>
+  </div>
+</section>

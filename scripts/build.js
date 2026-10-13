@@ -3,7 +3,7 @@
 //   node scripts/build.js            (uses site/site.json)
 //   SITE_URL=https://example.com node scripts/build.js
 
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -47,9 +47,16 @@ const origin = (process.env.SITE_URL || wranglerVars.SITE_URL || site.url).repla
 const version = Date.now().toString(36);
 const layout = read('site/layout.html');
 const icons = read('site/icons.svg');
-const partials = Object.fromEntries(
-  readdirSync(path.join(root, 'site/partials')).map((f) => [f.replace(/\.html$/, ''), read(`site/partials/${f}`)]),
-);
+
+// Languages: English pages live in site/pages + site/partials; every other
+// locale has site/i18n/<code>/{pages,partials,layout.json}. A localized page
+// uses the same "route" as its English original and is served under the
+// locale's path prefix (e.g. /es/pricing/). Missing partials fall back to English.
+const locales = JSON.parse(read('site/i18n/locales.json'));
+const listHtml = (dir) => (existsSync(path.join(root, dir)) ? readdirSync(path.join(root, dir)).filter((f) => f.endsWith('.html')) : []);
+const loadPartials = (dir) => Object.fromEntries(listHtml(dir).map((f) => [f.replace(/\.html$/, ''), read(`${dir}/${f}`)]));
+const basePartials = loadPartials('site/partials');
+const layoutStrings = Object.fromEntries(locales.map((l) => [l.code, JSON.parse(read(`site/i18n/${l.code}/layout.json`))]));
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const stripTags = (s) => s.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').trim();
@@ -63,13 +70,43 @@ function faqSchema(html) {
   return items.length ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: items } : null;
 }
 
+// Pass 1: read every page of every locale, so links and hreflang tags know
+// which routes exist in which language.
+const pages = [];
+for (const loc of locales) {
+  const dir = loc.code === 'en' ? 'site/pages' : `site/i18n/${loc.code}/pages`;
+  for (const file of listHtml(dir)) {
+    const raw = read(`${dir}/${file}`);
+    const m = raw.match(/^<!--page\s+([\s\S]*?)-->\s*/);
+    if (!m) throw new Error(`${dir}/${file}: missing <!--page {...}--> header`);
+    pages.push({ loc, file: `${dir}/${file}`, meta: JSON.parse(m[1]), body: raw.slice(m[0].length) });
+  }
+}
+const routesOf = new Map(locales.map((l) => [l.code, new Set(pages.filter((p) => p.loc.code === l.code).map((p) => p.meta.route))]));
+const urlOf = (loc, route) => `${loc.path}${route}`;
+const localesWith = (route) => locales.filter((l) => routesOf.get(l.code).has(route));
+
+// Internal links point to the same-language page when it exists.
+function localizeLinks(html, loc) {
+  if (!loc.path) return html;
+  const routes = routesOf.get(loc.code);
+  return html.replace(/href="(\/[^"#?]*)([^"]*)"/g, (all, p, rest) => (routes.has(p) ? `href="${loc.path}${p}${rest}"` : all));
+}
+
+function languageLinks(loc, route) {
+  return locales
+    .map((l) => {
+      const href = urlOf(l, routesOf.get(l.code).has(route) ? route : '/');
+      return `<a href="${href}" hreflang="${l.hreflang}" lang="${l.hreflang}"${l.code === loc.code ? ' aria-current="true"' : ''}>${esc(l.name)}</a>`;
+    })
+    .join('');
+}
+
 const sitemap = [];
-for (const file of readdirSync(path.join(root, 'site/pages'))) {
-  const raw = read(`site/pages/${file}`);
-  const m = raw.match(/^<!--page\s+([\s\S]*?)-->\s*/);
-  if (!m) throw new Error(`${file}: missing <!--page {...}--> header`);
-  const meta = JSON.parse(m[1]);
-  let content = raw.slice(m[0].length);
+for (const { loc, file, meta, body } of pages) {
+  const partials = loc.code === 'en' ? basePartials : { ...basePartials, ...loadPartials(`site/i18n/${loc.code}/partials`) };
+  const strings = { ...layoutStrings.en, ...layoutStrings[loc.code] };
+  let content = body;
   for (let depth = 0; depth < 4 && /\{\{>/.test(content); depth++) {
     content = content.replace(/\{\{>\s*([\w-]+)\s*\}\}/g, (_, name) => {
       if (!(name in partials)) throw new Error(`${file}: unknown partial ${name}`);
@@ -78,14 +115,21 @@ for (const file of readdirSync(path.join(root, 'site/pages'))) {
   }
   content = content.replaceAll('{{siteName}}', site.name).replaceAll('{{origin}}', origin);
 
-  const canonical = `${origin}${meta.route.replace(/index\.html$/, '')}`;
+  const url = urlOf(loc, meta.route);
+  const canonical = `${origin}${url.replace(/index\.html$/, '')}`;
+  const translations = meta.noindex || meta.route.endsWith('.html') ? [] : localesWith(meta.route);
+  const alternates =
+    translations.length > 1
+      ? [...translations.map((l) => `<link rel="alternate" hreflang="${l.hreflang}" href="${origin}${urlOf(l, meta.route)}">`), `<link rel="alternate" hreflang="x-default" href="${origin}${meta.route}">`].join('\n')
+      : '';
   const schemas = [];
   if (meta.route === '/') {
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'WebApplication',
       name: site.name,
-      url: `${origin}/`,
+      url: `${origin}${url}`,
+      inLanguage: loc.hreflang,
       applicationCategory: 'UtilitiesApplication',
       operatingSystem: 'Any (runs in the browser)',
       description: meta.description,
@@ -111,8 +155,14 @@ for (const file of readdirSync(path.join(root, 'site/pages'))) {
     if (faq) schemas.push(faq);
   }
 
-  let html = layout;
+  let html = layout.replace(/\{\{t:(\w+)\}\}/g, (_, key) => {
+    if (!(key in strings)) throw new Error(`layout string "${key}" is missing in site/i18n/en/layout.json`);
+    return esc(strings[key]);
+  });
   const vars = {
+    lang: loc.hreflang,
+    ogLocale: loc.og,
+    alternates,
     title: esc(meta.title),
     description: esc(meta.description),
     canonical: esc(canonical),
@@ -127,17 +177,26 @@ for (const file of readdirSync(path.join(root, 'site/pages'))) {
   };
   for (const [key, value] of Object.entries(vars)) html = html.replaceAll(`{{${key}}}`, () => value);
   if (meta.nav) html = html.replace(`data-nav="${meta.nav}"`, `data-nav="${meta.nav}" aria-current="page"`);
+  html = localizeLinks(html, loc);
+  // Language links are absolute per locale, so they are added after localizeLinks.
+  const links = languageLinks(loc, meta.route);
+  const current = locales.find((l) => l.code === loc.code);
+  html = html
+    .replace('{{langSwitch}}', `<details class="lang-switch"><summary aria-label="${esc(strings.language)}: ${esc(current.name)}"><svg aria-hidden="true"><use href="#i-globe"/></svg>${current.short}</summary><div class="lang-menu">${links}</div></details>`)
+    .replaceAll('{{langLinks}}', links);
 
-  const out = meta.route.endsWith('.html') ? `public${meta.route}` : `public${meta.route}index.html`;
+  const out = url.endsWith('.html') ? `public${url}` : `public${url}index.html`;
   write(out, html);
-  if (!meta.noindex && !meta.route.endsWith('.html')) sitemap.push({ loc: canonical, priority: meta.route === '/' ? '1.0' : '0.8' });
+  if (!meta.noindex && !meta.route.endsWith('.html')) {
+    sitemap.push({ loc: canonical, priority: meta.route === '/' ? '1.0' : '0.8', alternates: translations.length > 1 ? translations.map((l) => ({ hreflang: l.hreflang, href: `${origin}${urlOf(l, meta.route)}` })) : [] });
+  }
 }
 
 const today = new Date().toISOString().slice(0, 10);
 write(
   'public/sitemap.xml',
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap
-    .map((u) => `  <url><loc>${u.loc}</loc><lastmod>${today}</lastmod><priority>${u.priority}</priority></url>`)
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sitemap
+    .map((u) => `  <url><loc>${u.loc}</loc><lastmod>${today}</lastmod><priority>${u.priority}</priority>${u.alternates.map((a) => `<xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}"/>`).join('')}</url>`)
     .join('\n')}\n</urlset>\n`,
 );
 write('public/robots.txt', `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /account/\nDisallow: /success/\nDisallow: /api/\n\nSitemap: ${origin}/sitemap.xml\n`);

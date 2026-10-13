@@ -3,6 +3,7 @@
 import { h, icon, clear, prefersReducedMotion } from './lib/ui.js';
 import { getConfig } from './lib/api.js';
 import { proState } from './lib/license.js';
+import { t } from './lib/i18n.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -130,7 +131,7 @@ function dropZones() {
   }
 
   // Page-wide drag & drop.
-  const overlay = h('div', { class: 'drop-overlay', 'aria-hidden': 'true' }, h('div', { class: 'box' }, 'Drop to unwrap ✦'));
+  const overlay = h('div', { class: 'drop-overlay', 'aria-hidden': 'true' }, h('div', { class: 'box' }, t('Drop to unwrap ✦')));
   document.body.append(overlay);
   let depth = 0;
   const hasFiles = (e) => [...(e.dataTransfer?.types || [])].includes('Files');
@@ -198,24 +199,24 @@ function tierCard(config, tier, cycle) {
   return h(
     'div',
     { class: `card plan plan--${tier.id}${featured ? ' is-featured' : ''}` },
-    h('div', { class: 'plan-top' }, h('span', { class: 'plan-name' }, tier.name), featured ? h('span', { class: 'badge' }, 'Most popular') : tier.id === 'creator' ? h('span', { class: 'badge badge--uv' }, 'For creators') : null),
-    h('p', { class: 'plan-tagline' }, tier.tagline),
+    h('div', { class: 'plan-top' }, h('span', { class: 'plan-name' }, tier.name), featured ? h('span', { class: 'badge' }, t('Most popular')) : tier.id === 'creator' ? h('span', { class: 'badge badge--uv' }, t('For creators')) : null),
+    h('p', { class: 'plan-tagline' }, t(tier.tagline)),
     h(
       'div',
       { class: 'plan-price' },
       h('span', { class: 'amt' }, money(plan.cycle === 'year' ? Math.round((plan.priceUsd / 12) * 100) / 100 : plan.priceUsd)),
-      h('span', { class: 'per' }, '/ month'),
+      h('span', { class: 'per' }, t('/ month')),
     ),
-    h('p', { class: 'plan-sub' }, plan.cycle === 'year' ? [`${money(plan.priceUsd)} billed once a year`, save > 0 ? h('span', { class: 'save' }, `save ${save}%`) : null] : `${plan.days} days · no auto-renewal`),
-    h('p', { class: 'plan-for' }, icon('target'), tier.bestFor),
+    h('p', { class: 'plan-sub' }, plan.cycle === 'year' ? [t('{price} billed once a year', { price: money(plan.priceUsd) }), save > 0 ? h('span', { class: 'save' }, t('save {n}%', { n: save })) : null] : t('{n} days · no auto-renewal', { n: plan.days })),
+    h('p', { class: 'plan-for' }, icon('target'), t(tier.bestFor)),
     h(
       'ul',
       null,
-      below ? h('li', { class: 'plan-inherit' }, icon('arrow'), `Everything in ${below.name}`) : null,
-      tier.features.map((f) => h('li', null, icon('check'), f)),
+      below ? h('li', { class: 'plan-inherit' }, icon('arrow'), t('Everything in {tier}', { tier: below.name })) : null,
+      tier.features.map((f) => h('li', null, icon('check'), t(f))),
     ),
-    h('button', { class: `btn ${featured ? 'btn--primary' : 'btn--ghost'} btn--block btn--lg`, type: 'button', dataset: { plan: plan.id } }, `Get ${tier.name}`),
-    lifetime ? h('button', { class: 'plan-alt', type: 'button', dataset: { plan: lifetime.id } }, `or ${money(lifetime.priceUsd)} once — ${tier.name} for life`) : null,
+    h('button', { class: `btn ${featured ? 'btn--primary' : 'btn--ghost'} btn--block btn--lg`, type: 'button', dataset: { plan: plan.id } }, t('Get {tier}', { tier: tier.name })),
+    lifetime ? h('button', { class: 'plan-alt', type: 'button', dataset: { plan: lifetime.id } }, t('or {price} once — {tier} for life', { price: money(lifetime.priceUsd), tier: tier.name })) : null,
   );
 }
 
@@ -240,10 +241,10 @@ async function pricing() {
   );
   for (const box of boxes) {
     const cards = h('div', { class: 'pricing pricing--tiers' });
-    const toggle = h('div', { class: 'billing', role: 'radiogroup', 'aria-label': 'Billing period' });
+    const toggle = h('div', { class: 'billing', role: 'radiogroup', 'aria-label': t('Billing period') });
     const draw = () => {
       clear(toggle);
-      for (const [cycle, label] of [['month', 'Monthly'], ['year', 'Yearly']]) {
+      for (const [cycle, label] of [['month', t('Monthly')], ['year', t('Yearly')]]) {
         const b = h('button', { type: 'button', role: 'radio', 'aria-checked': String(billing === cycle) }, label, cycle === 'year' && bestSave > 0 ? h('span', { class: 'save' }, `−${bestSave}%`) : null);
         b.addEventListener('click', () => {
           billing = cycle;
@@ -381,7 +382,7 @@ getConfig().then(() => {
 import('./lib/referral.js').then(async ({ captureRef }) => {
   if (await captureRef()) {
     const { toast } = await import('./lib/ui.js');
-    toast('A friend invited you — 10% off any plan is applied at checkout', { iconName: 'sparkles', timeout: 5000 });
+    toast(t('A friend invited you — 10% off any plan is applied at checkout'), { iconName: 'sparkles', timeout: 5000 });
   }
 });
 window.addEventListener('unw:license', licenseBadge);

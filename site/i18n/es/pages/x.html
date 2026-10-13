@@ -1,0 +1,68 @@
+<!--page {
+  "route": "/x/",
+  "nav": "x",
+  "title": "Visor del archivo de X (Twitter): tus mejores tweets, unfollowers y lo que X sabe de ti · Unwrapped",
+  "description": "Abre tu archivo de X / Twitter en segundos: tus mejores publicaciones, tus hábitos, las cuentas que no te siguen, los intereses y anunciantes que X te asignó y las apps conectadas. Privado, en tu navegador.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-x"/></svg>Explorador del archivo de X (Twitter)</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Tu archivo de X,</span></span>
+        <span class="line"><span class="serif grad">por fin legible.</span></span>
+      </h1>
+      <p class="hero-sub">Años de publicaciones, “me gusta” y anuncios en un solo ZIP. Descubre <b>tus mejores publicaciones</b>, cuándo publicas, quién <b>no te sigue</b>, los <b>intereses y anunciantes</b> que X te asignó y qué <b>apps todavía pueden actuar por ti</b>. <b>Se procesa en tu dispositivo.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Lo que verás</span>
+      <h2 class="h2">Una década publicando, medida.</h2>
+      <p class="lead">El archivo que te da X es una carpeta de archivos JavaScript crípticos. Unwrapped los lee todos sin subir ni un byte.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tus mejores publicaciones</b>, ordenadas por “me gusta” y reposts.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Hábitos de publicación</b>: por mes, día y hora, rachas, hashtags y palabras más usados.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Seguidores frente a seguidos</b>: mutuos, fans y cuentas que no te siguen.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Qué cree X que eres</b>: edad, género, idiomas e intereses inferidos.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Anunciantes y segmentación</b>: quién te segmentó y cómo.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Apps conectadas</b>, y cuáles todavía pueden publicar o leer tus mensajes.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Cómo descargar tu archivo de X</span><h2 class="h2">Pídeselo a X una vez. Explóralo siempre.</h2></div>
+    <div class="reveal">{{> steps-x}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Preguntas sobre X</span><h2 class="h2">El archivo de X, explicado.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>¿Cómo veo mi archivo de Twitter / X?</summary><div class="answer"><p>Solicítalo en Configuración y privacidad → Tu cuenta → Descargar un archivo con tus datos. Cuando esté listo, descarga el ZIP y suéltalo aquí, sin necesidad de descomprimirlo.</p></div></details>
+      <details><summary>¿Por qué los seguidores aparecen como números de cuenta?</summary><div class="answer"><p>El archivo de X lista a los seguidores por ID de cuenta, no por nombre de usuario. Toca “Abrir” junto a cualquier entrada y X te mostrará quién es.</p></div></details>
+      <details><summary>Mi archivo pesa varios gigas. ¿Funcionará?</summary><div class="answer"><p>Sí. Unwrapped solo lee los archivos de datos pequeños dentro del ZIP y se salta tus fotos y videos, así que incluso los archivos enormes se abren en segundos.</p></div></details>
+      <details><summary>¿Puedo ver quién me dejó de seguir en X?</summary><div class="answer"><p>Sí, comparando un archivo más reciente con uno anterior que ya analizaste: la instantánea se guarda en privado en tu navegador.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:16ch">Todo lo que publicaste, <span class="serif grad">en una sola vista.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Abrir mi archivo</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Ver la demo</button></div>
+    </div>
+  </div>
+</section>

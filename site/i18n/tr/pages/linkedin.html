@@ -1,0 +1,56 @@
+<!--page {
+  "route": "/linkedin/",
+  "nav": "linkedin",
+  "title": "LinkedIn bağlantı analizi: ağını şirkete ve unvana göre haritala · Unwrapped",
+  "description": "LinkedIn veri dışa aktarımını bir ağ haritasına dönüştür: ağındaki önde gelen şirketler, unvanlar, işe alım uzmanları ve kurucular, ve ağının yıldan yıla nasıl büyüdüğü. Gizli: tarayıcında çalışır.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-linkedin"/></svg>LinkedIn ağ haritası</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Ağında gerçekte</span></span>
+        <span class="line"><span>kimler <span class="serif grad">var?</span></span></span>
+      </h1>
+      <p class="hero-sub">LinkedIn dışa aktarımını bırak; bağlantılarının <b>hangi şirketlerde</b> çalıştığını, <b>kaç işe alım uzmanı ve kurucu</b> tanıdığını ve ağının nasıl büyüdüğünü saniyeler içinde, <b>hiçbir şey yüklemeden</b> gör.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Neler göreceksin</span>
+      <h2 class="h2">Bir sonraki işin zaten bu dosyada.</h2>
+      <p class="lead">Connections.csv her bağlantıyı şirketi, unvanı ve tarihiyle listeler. Biz bunu harekete geçebileceğin bir haritaya dönüştürürüz.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Ağındaki <b>önde gelen şirketler</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Unvanlar</b>: işe alım uzmanları, kurucular, mühendisler, tasarımcılar, yatırımcılar…</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Yıldan yıla <b>ağ büyümesi</b> ve son zamanlardaki yeni bağlantılar.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>CSV dışa aktarmalı <b>aranabilir liste</b> (Plus).</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">LinkedIn verilerini nasıl indirirsin</span><h2 class="h2">Baştan sona on dakika.</h2></div>
+    <div class="reveal">{{> steps-linkedin}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">LinkedIn SSS</span><h2 class="h2">LinkedIn dışa aktarımları, açıklandı.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>LinkedIn bağlantılarımı nasıl dışa aktarırım?</summary><div class="answer"><p>Ben → Ayarlar ve Gizlilik → Veri gizliliği → Verilerinin bir kopyasını al → Bağlantılar'ı seç → Arşiv iste. LinkedIn sana genellikle on dakika içinde bir indirme bağlantısı e-postalar.</p></div></details>
+      <details><summary>E-posta adreslerinin çoğu neden eksik?</summary><div class="answer"><p>LinkedIn yalnızca kendi gizlilik ayarlarında buna izin veren bağlantıların e-postasını ekler.</p></div></details>
+      <details><summary>Profesyonel verilerim yükleniyor mu?</summary><div class="answer"><p>Hayır. CSV tarayıcında işlenir ve cihazından asla çıkmaz.</p></div></details>
+    </div>
+  </div>
+</section>

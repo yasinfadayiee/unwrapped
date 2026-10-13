@@ -1,0 +1,56 @@
+<!--page {
+  "route": "/facebook/",
+  "nav": "facebook",
+  "title": "Quem me desfez a amizade no Facebook? Rastreador de amigos grátis com seus dados · Unwrapped",
+  "description": "Descubra quem desfez a amizade com você no Facebook, veja solicitações de amizade pendentes e quais anunciantes têm seus dados, usando o download oficial dos seus dados do Facebook. Sem login, sem upload.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-facebook"/></svg>Rastreador de amizades desfeitas no Facebook</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Quem desfez a</span></span>
+        <span class="line"><span>amizade? <span class="serif grad">Agora você vai saber.</span></span></span>
+      </h1>
+      <p class="hero-sub">Solte o download dos seus dados do Facebook para ver seus amigos, as <b>solicitações pendentes</b>, quem você removeu e, de um retrato para o outro, <b>exatamente quem desfez a amizade com você</b>. Além dos anunciantes e empresas que compartilham sua atividade. <b>Sem login. Sem upload.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">O que você vai ver</span>
+      <h2 class="h2">Sua lista de amigos, com memória.</h2>
+      <p class="lead">O Facebook nunca avisa quando alguém desfaz a amizade. Duas exportações com algumas semanas de diferença avisam, e o Unwrapped é esperto o bastante para ignorar quem <i>você</i> removeu.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Quem desfez a amizade</b> entre duas exportações.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Solicitações de amizade que você enviou</b> e continuam pendentes.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Amigos adicionados por ano</b> e há quanto tempo você conhece cada um.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Anunciantes que têm seus dados</b> e sua atividade fora do Facebook.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Como baixar seus dados do Facebook</span><h2 class="h2">Dois minutos na Central de Contas.</h2></div>
+    <div class="reveal">{{> steps-facebook}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Perguntas sobre o Facebook</span><h2 class="h2">Amizades desfeitas, explicadas.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Como vejo quem desfez a amizade comigo no Facebook?</summary><div class="answer"><p>Baixe suas informações do Facebook (Amigos e seguidores, JSON) e solte aqui: esse é o seu primeiro retrato. Repita em algumas semanas: o Unwrapped compara os dois e lista todo mundo que sumiu, sem contar quem você mesmo removeu.</p></div></details>
+      <details><summary>A pessoa vai saber que eu verifiquei?</summary><div class="answer"><p>Não. Ninguém é notificado: você só está lendo o download dos seus próprios dados, no seu próprio aparelho.</p></div></details>
+      <details><summary>Por que alguém pode aparecer como amizade desfeita por engano?</summary><div class="answer"><p>Contas desativadas ou excluídas também somem da lista de amigos, e quem muda o nome de exibição pode parecer uma pessoa nova. Confira o perfil antes de tirar conclusões.</p></div></details>
+    </div>
+  </div>
+</section>

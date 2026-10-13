@@ -1,9 +1,14 @@
-const intFmt = new Intl.NumberFormat('en-US');
-const compactFmt = new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 });
-const dateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-const monthFmt = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' });
-const monthShortFmt = new Intl.DateTimeFormat('en-US', { month: 'short' });
-const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+import { t } from './i18n.js';
+
+// Numbers and dates follow the page language (<html lang>).
+const LOC = globalThis.document?.documentElement?.lang || 'en-US';
+const intFmt = new Intl.NumberFormat(LOC);
+const compactFmt = new Intl.NumberFormat(LOC, { notation: 'compact', maximumFractionDigits: 1 });
+const dateFmt = new Intl.DateTimeFormat(LOC, { month: 'short', day: 'numeric', year: 'numeric' });
+const monthFmt = new Intl.DateTimeFormat(LOC, { month: 'short', year: 'numeric' });
+const monthShortFmt = new Intl.DateTimeFormat(LOC, { month: 'short' });
+const rtf = new Intl.RelativeTimeFormat(LOC, { numeric: 'auto' });
+const hourFmt = new Intl.DateTimeFormat(LOC, { hour: 'numeric' });
 
 export const fmtInt = (n) => intFmt.format(Math.round(n || 0));
 export const compact = (n) => (Math.abs(n) < 10_000 ? fmtInt(n) : compactFmt.format(n));
@@ -32,13 +37,15 @@ export function relTime(ts) {
 
 export function duration(ms) {
   const minutes = Math.round(ms / 60_000);
-  if (minutes < 60) return `${minutes} min`;
+  const m = t('min');
+  const hr = t('h');
+  if (minutes < 60) return `${minutes} ${m}`;
   const hours = Math.floor(minutes / 60);
   const rest = minutes % 60;
-  if (hours < 48) return rest ? `${hours} h ${rest} min` : `${hours} h`;
-  return `${fmtInt(hours)} h`;
+  if (hours < 48) return rest ? `${hours} ${hr} ${rest} ${m}` : `${hours} ${hr}`;
+  return `${fmtInt(hours)} ${hr}`;
 }
 
-export const hourLabel = (h) => `${h % 12 === 0 ? 12 : h % 12} ${h < 12 ? 'AM' : 'PM'}`;
+export const hourLabel = (h) => hourFmt.format(new Date(2026, 0, 1, h));
 export const plural = (n, one, many = `${one}s`) => `${fmtInt(n)} ${n === 1 ? one : many}`;
 export const yearsSince = (ts) => (ts ? Math.max(0, (Date.now() - ts) / (365.25 * 864e5)) : 0);

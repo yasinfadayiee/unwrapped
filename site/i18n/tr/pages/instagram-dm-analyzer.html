@@ -1,0 +1,87 @@
+<!--page {
+  "route": "/instagram-dm-analyzer/",
+  "nav": "tools",
+  "title": "Instagram DM analizi: seni görüldüde bırakanlar, cevap süreleri ve ilk kim yazıyor · Unwrapped",
+  "description": "Instagram DM'lerini gizlilik içinde analiz et: seni görüldüde bırakanları, herkesin sana gerçekte ne kadar hızlı cevap verdiğini, her zaman ilk kimin yazdığını ve hangi arkadaşlıkların söndüğünü resmi veri dışa aktarımından gör. Giriş yok, yükleme yok.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-ghost"/></svg>Görüldü Dedektörü · Instagram DM'leri</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Seni kim</span></span>
+        <span class="line"><span><span class="serif grad">görüldüde bırakıyor?</span></span></span>
+      </h1>
+      <p class="hero-sub">Instagram mesajların, ölçüldü: her arkadaşının <b>cevap süresi</b>, seni <b>görüldüde bırakanlar</b>, <b>her zaman ilk yazanlar</b> ve <b>sönmekte olan</b> arkadaşlıklar. Tasarımı gereği gizli: <b>kimseye bildirim gitmez, hiçbir şey yüklenmez.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Neler göreceksin</span>
+      <h2 class="h2">Sohbetlerinin ardındaki kalıplar.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Cevap süreleri</b>: her kişinin sana genelde ne kadar sürede cevap verdiği ve senin onlara ne kadar sürede cevap verdiğin.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Seni görüldüde bırakanlar</b>: yazdığın, bir gün ya da daha uzun süre cevap alamadığın ve tekrar yazmak zorunda kaldığın anlar.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Hiç cevaplanmayan</b>: son sözün sende olduğu ve o zamandan beri sana yazmadıkları sohbetler.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>İlk kim yazıyor</b>: yalnızca senin başlattığın sohbetler.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Arkadaşlık Radarı</b>: yakın çevren ve sönen ya da büyüyen arkadaşlıklar.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Arkadaşlık Wrapped</b>: sen ve bir arkadaşın için hikâye kartı: seriler, cevap hızı ve arkadaşlık tipiniz.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="lab-art art-reply">
+        <div class="rr"><span class="nm">@milo.design</span><i style="--w:8%"></i><b>2 dk</b></div>
+        <div class="rr"><span class="nm">@luna_eats</span><i style="--w:34%"></i><b>47 dk</b></div>
+        <div class="rr hot"><span class="nm">@theo.films</span><i style="--w:92%"></i><b>3 sa 12 dk</b></div>
+        <span class="read-tag">seni görüldüde bıraktı ×4</span>
+      </div>
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><b>Sohbetlerin %71'ini sen başlatıyorsun</b><em>6 arkadaşla</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><b>Son mesajın: 3 hafta önce</b><em>hâlâ cevapsız</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Nasıl çalışır</span><h2 class="h2">Mesajların asla telefonundan ya da bilgisayarından çıkmaz.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Mesajlarını iste</b><span>Instagram → Hesaplar Merkezi → Bilgilerin ve izinlerin → Bilgilerini indir → <b>Mesajlar</b>'ı seç (JSON). Genellikle birkaç saat içinde hazır olur.</span></li>
+      <li><b>ZIP'i buraya bırak</b><span>Tarayıcının içinde analiz edilir. Mesaj içerikleri asla okunmaz: yalnızca kimin ne zaman yazdığı.</span></li>
+      <li><b>Önce sayıları, sonra isimleri gör</b><span>Cevap sürelerin ve sayılar ücretsiz. İsimler, listeler ve Arkadaşlık Wrapped kartları <a href="/pricing/">Pro</a>'nun parçası.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">SSS</span><h2 class="h2">Instagram DM'leri, çözüldü.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Instagram'da beni kimin görüldüde bıraktığını görebilir miyim?</summary><div class="answer"><p>Instagram bunu göstermez, ama mesaj geçmişin gösterir. Unwrapped yazdığın, bir gün ya da daha uzun süre cevap alamadığın ve tekrar yazdığın anları sayar; son mesajının bir haftadan sonra hâlâ cevapsız olduğu sohbetleri de listeler.</p></div></details>
+      <details><summary>Karşı taraf öğrenir mi?</summary><div class="answer"><p>Hayır. Kimseye bildirim gitmez ve hiçbir şey bir yere gönderilmez: analiz, Instagram'ın sana verdiği dosyayla kendi cihazında yapılır.</p></div></details>
+      <details><summary>Mesajlarımı okuyor musunuz?</summary><div class="answer"><p>Hayır. Yalnızca her mesajı kimin ve ne zaman gönderdiği kullanılır. Metnin kendisi asla analiz edilmez, saklanmaz ya da yüklenmez.</p></div></details>
+      <details><summary>Hangi verileri indirmem gerekiyor?</summary><div class="answer"><p>Instagram'ın Bilgilerini indir bölümünde JSON biçiminde “Mesajlar”ı (ya da “Mevcut tüm bilgiler”i) seç.</p></div></details>
+      <details><summary>Grup sohbetleri dahil mi?</summary><div class="answer"><p>Cevap süreleri ve “görüldü” yalnızca anlamlı oldukları bire bir sohbetlerde ölçülür. Grup sohbetleri mesaj toplamlarında sayılmaya devam eder.</p></div></details>
+      <details><summary>Ücretsiz mi?</summary><div class="answer"><p>Kendi cevap süren, diğerlerinin ortalama cevap süresi ve sayılar ücretsizdir. Her listenin arkasındaki isimler, Arkadaşlık Radarı ve Arkadaşlık Wrapped kartları Pro'nun parçasıdır.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Kimin gerçekten <span class="serif grad">yanında olduğunu bul.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">DM'lerimi analiz et</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Demoda gör</button></div>
+    </div>
+  </div>
+</section>

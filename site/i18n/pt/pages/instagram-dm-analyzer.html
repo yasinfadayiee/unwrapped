@@ -1,0 +1,87 @@
+<!--page {
+  "route": "/instagram-dm-analyzer/",
+  "nav": "tools",
+  "title": "Analisador de DMs do Instagram: quem te deixa no vácuo, tempo de resposta e quem chama primeiro · Unwrapped",
+  "description": "Analise suas DMs do Instagram com privacidade: veja quem te deixa no vácuo, com que rapidez cada pessoa realmente responde, quem sempre chama primeiro e quais amizades estão esfriando, a partir da sua exportação oficial. Sem login, sem upload.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-ghost"/></svg>Detector de Vácuo · DMs do Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Quem te deixa</span></span>
+        <span class="line"><span><span class="serif grad">no vácuo?</span></span></span>
+      </h1>
+      <p class="hero-sub">Suas DMs do Instagram, medidas: <b>tempo de resposta</b> de cada amigo, quem <b>te deixa no vácuo</b>, quem <b>sempre chama primeiro</b> e quais amizades estão <b>esfriando</b>. Privado por padrão: <b>ninguém é notificado e nada é enviado.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">O que você vai ver</span>
+      <h2 class="h2">Os padrões por trás das suas conversas.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tempo de resposta</b>: quanto cada pessoa costuma levar para te responder, e quanto você leva.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Quem te deixa no vácuo</b>: as vezes em que você mandou mensagem, ficou sem resposta por um dia ou mais e teve que mandar de novo.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Nunca respondeu</b>: conversas em que a última palavra é sua e a pessoa não escreveu desde então.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Quem chama primeiro</b>: as conversas que só você começa.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Radar da amizade</b>: seu círculo íntimo e as amizades que esfriam ou crescem.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Wrapped da amizade</b>: um card para os stories de você com um amigo: sequências, velocidade de resposta e o tipo de amizade.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="lab-art art-reply">
+        <div class="rr"><span class="nm">@milo.design</span><i style="--w:8%"></i><b>2 min</b></div>
+        <div class="rr"><span class="nm">@luna_eats</span><i style="--w:34%"></i><b>47 min</b></div>
+        <div class="rr hot"><span class="nm">@theo.films</span><i style="--w:92%"></i><b>3 h 12 min</b></div>
+        <span class="read-tag">te deixou no vácuo ×4</span>
+      </div>
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><b>Você começa 71% das conversas</b><em>com 6 amigos</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><b>Sua última mensagem: há 3 semanas</b><em>ainda sem resposta</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Como funciona</span><h2 class="h2">Suas mensagens nunca saem do seu celular ou computador.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Peça suas mensagens</b><span>Instagram → Central de Contas → Suas informações e permissões → Baixar suas informações → escolha <b>Mensagens</b> (JSON). Costuma ficar pronto em algumas horas.</span></li>
+      <li><b>Solte o ZIP aqui</b><span>Ele é analisado dentro do seu navegador. O conteúdo das mensagens nunca é lido: só quem escreveu e quando.</span></li>
+      <li><b>Veja os números, depois os nomes</b><span>Seus tempos de resposta e as quantidades são grátis. Nomes, listas e cards do Wrapped da amizade fazem parte do <a href="/pricing/">Pro</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Perguntas</span><h2 class="h2">DMs do Instagram, decifradas.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Dá para ver quem me deixa no vácuo no Instagram?</summary><div class="answer"><p>O Instagram não mostra, mas seu histórico de mensagens sim. O Unwrapped conta as vezes em que você escreveu, ficou sem resposta por um dia ou mais e escreveu de novo, e lista as conversas em que sua última mensagem continua sem resposta depois de uma semana.</p></div></details>
+      <details><summary>A outra pessoa vai saber?</summary><div class="answer"><p>Não. Ninguém é notificado e nada é enviado para lugar nenhum: a análise roda no seu próprio aparelho com o arquivo que o Instagram te dá.</p></div></details>
+      <details><summary>Vocês leem minhas mensagens?</summary><div class="answer"><p>Não. Só usamos quem mandou cada mensagem e quando. O texto nunca é analisado, guardado ou enviado.</p></div></details>
+      <details><summary>Quais dados eu preciso baixar?</summary><div class="answer"><p>Escolha “Mensagens” (ou “Todas as informações disponíveis”) em Baixar suas informações do Instagram, no formato JSON.</p></div></details>
+      <details><summary>Inclui conversas em grupo?</summary><div class="answer"><p>O tempo de resposta e o “vácuo” são medidos só em conversas individuais, onde fazem sentido. As conversas em grupo continuam contando no total de mensagens.</p></div></details>
+      <details><summary>É grátis?</summary><div class="answer"><p>Seu tempo de resposta, o tempo médio de resposta dos outros e as quantidades são grátis. Os nomes por trás de cada lista, o radar da amizade e os cards do Wrapped da amizade fazem parte do Pro.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Descubra quem <span class="serif grad">está com você de verdade.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Analisar minhas DMs</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Ver na demo</button></div>
+    </div>
+  </div>
+</section>

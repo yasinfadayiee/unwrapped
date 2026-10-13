@@ -1,0 +1,56 @@
+<!--page {
+  "route": "/linkedin/",
+  "nav": "linkedin",
+  "title": "Analisador de conexões do LinkedIn: mapeie sua rede por empresa e cargo · Unwrapped",
+  "description": "Transforme a exportação de dados do LinkedIn num mapa da sua rede: principais empresas, cargos, recrutadores e fundadores na sua rede, e como ela cresceu ano a ano. Privado: roda no seu navegador.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-linkedin"/></svg>Mapa da sua rede no LinkedIn</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Quem está de verdade</span></span>
+        <span class="line"><span>na sua <span class="serif grad">rede?</span></span></span>
+      </h1>
+      <p class="hero-sub">Solte sua exportação do LinkedIn e veja <b>em quais empresas</b> suas conexões trabalham, <b>quantos recrutadores e fundadores</b> você conhece e como sua rede cresceu, em segundos e <b>sem enviar nada</b>.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">O que você vai ver</span>
+      <h2 class="h2">Seu próximo emprego já está neste arquivo.</h2>
+      <p class="lead">O Connections.csv lista cada conexão com empresa, cargo e data. Nós transformamos isso num mapa com o qual você pode agir.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Principais empresas</b> da sua rede.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Cargos</b>: recrutadores, fundadores, engenheiros, designers, investidores…</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Crescimento da rede</b> ano a ano, e as conexões recentes.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Lista com busca</b> e exportação em CSV (Plus).</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Como baixar seus dados do LinkedIn</span><h2 class="h2">Dez minutos, do começo ao fim.</h2></div>
+    <div class="reveal">{{> steps-linkedin}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Perguntas sobre o LinkedIn</span><h2 class="h2">A exportação do LinkedIn, explicada.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Como exporto minhas conexões do LinkedIn?</summary><div class="answer"><p>Eu → Configurações e privacidade → Privacidade de dados → Obter uma cópia dos seus dados → escolha Conexões → Solicitar arquivo. O LinkedIn manda por e-mail um link de download, geralmente em uns dez minutos.</p></div></details>
+      <details><summary>Por que faltam a maioria dos e-mails?</summary><div class="answer"><p>O LinkedIn só inclui o e-mail das conexões que permitiram isso nas próprias configurações de privacidade.</p></div></details>
+      <details><summary>Meus dados profissionais são enviados?</summary><div class="answer"><p>Não. O CSV é lido no seu navegador e nunca sai do seu aparelho.</p></div></details>
+    </div>
+  </div>
+</section>

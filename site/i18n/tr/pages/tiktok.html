@@ -1,0 +1,69 @@
+<!--page {
+  "route": "/tiktok/",
+  "nav": "tiktok",
+  "title": "TikTok'ta kaç saat geçiriyorsun? İzleme geçmişi, takipten çıkanlar ve Wrapped · Unwrapped",
+  "description": "TikTok veri indirmeni gerçek ekran süresine dönüştür: izlenen saatler, en uzun maratonlar, yoğun saatler, aramalar, seni geri takip etmeyen takipçiler ve paylaşılabilir bir TikTok Wrapped. Gizli: hiçbir şey yüklenmez.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-tiktok"/></svg>TikTok aracı · Wrapped'ın, her gün</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>TikTok senden</span></span>
+        <span class="line"><span>kaç saat <span class="serif grad">aldı?</span></span></span>
+      </h1>
+      <p class="hero-sub">TikTok veri indirmen izlediğin her videoyu zaman damgasıyla saklar. Unwrapped oturumlarını yeniden kurarak <b>gerçek saatleri</b>, <b>en uzun maratonunu</b> ve <b>ne zaman kaydırdığını</b> gösterir; ayrıca takipçiler, aramalar ve bir <b>TikTok Wrapped</b> kartı. <b>Hiçbir şey telefonundan çıkmaz.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Neler göreceksin</span>
+      <h2 class="h2">TikTok'un sana asla göstermediği ekran süresi raporu.</h2>
+      <p class="lead">İzleme geçmişini izleme oturumlarına ayırırız (10 dakikadan uzun bir ara yeni bir oturum başlatır): video saymaktan çok daha dürüst bir tahmin.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Toplam saat</b> ve tüm geçmişin boyunca günlük dakika.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>En uzun maratonların</b>: tarih, süre ve oturum başına video.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Gün × saat ısı haritası</b> ve kaydırma kişiliğin (Gece Kuşu mu? Öğle Arası Bağımlısı mı?).</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Seni geri takip etmeyen takipçiler</b>, hayranlar ve karşılıklılar.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>En çok aradıkların</b>, zaman içindeki beğeni ve favorilerin.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Gizlilik Röntgeni</b>: giriş cihazları, IP'ler, reklam ilgi alanları ve TikTok dışı etkinlik.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">TikTok verilerini nasıl indirirsin</span><h2 class="h2">Bir kez iste, istediğin zaman incele.</h2></div>
+    <div class="reveal">{{> steps-tiktok}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">TikTok SSS</span><h2 class="h2">TikTok verileri, açıklandı.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>TikTok'ta ne kadar zaman geçirdiğimi nasıl görürüm?</summary><div class="answer"><p>TikTok verilerini iste (Ayarlar ve gizlilik → Hesap → Verilerini indir, “Tüm veriler” ve JSON'u seç) ve ZIP'i buraya bırak. Unwrapped izleme geçmişinden oturumlarını yeniden kurar ve süreyi toplar.</p></div></details>
+      <details><summary>Resmi bir TikTok Wrapped var mı?</summary><div class="answer"><p>TikTok izleme alışkanlıklarının tam bir Wrapped'ını sunmaz. Unwrapped kendi dışa aktarımından bir tane oluşturur (saatler, maratonlar, yoğun saat ve kişilik) ve paylaşabileceğin hikâye boyutunda bir kart yapar.</p></div></details>
+      <details><summary>İzleme geçmişim neden görünmüyor?</summary><div class="answer"><p><b>Tüm veriler</b>'i istediğinden emin ol. Özel seçimler izleme geçmişini dışarıda bırakabilir. Ayrıca dışa aktarım yalnızca TikTok'un hâlâ sakladığı geçmişi içerir.</p></div></details>
+      <details><summary>Süre tahmini ne kadar doğru?</summary><div class="answer"><p>Dışa aktarım her videonun ne zaman başladığını kaydeder, ne kadar izlediğini değil. Aralarında 10 dakikadan az olan izlemeleri tek oturum sayar, ilkinden sonuncusuna kadar ölçer ve son video için kısa bir pay ekleriz. Bir tahmin, ama tutarlı ve dürüst bir tahmin.</p></div></details>
+      <details><summary>TikTok girişime ihtiyacınız var mı?</summary><div class="answer"><p>Asla. Her şey indirdiğin dosyadan, tarayıcının içinde hesaplanır.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:16ch">Sayıyla yüzleş. <span class="serif grad">Sonra paylaş.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">TikTok'umu analiz et</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Demoyu gör</button></div>
+    </div>
+  </div>
+</section>

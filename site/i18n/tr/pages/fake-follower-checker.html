@@ -1,0 +1,96 @@
+<!--page {
+  "route": "/fake-follower-checker/",
+  "nav": "tools",
+  "title": "Instagram ve TikTok için sahte takipçi kontrolü: ücretsiz bot analizi, girişsiz · Unwrapped",
+  "description": "Instagram ya da TikTok takipçilerinden kaçının bot, spam ya da satın alınmış olduğunu kontrol et. Kitle kalitesi notunu, uyarı işaretlerini ve hesapların kendisini resmi veri dışa aktarımından gör. Şifre yok, yükleme yok.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-bot"/></svg>Kitle Kalitesi · ücretsiz not</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Takipçilerinin kaçı</span></span>
+        <span class="line"><span><span class="serif grad">sahte?</span></span></span>
+      </h1>
+      <p class="hero-sub">Bir <b>kitle kalitesi notu</b> al; <b>botları, spam hesapları ve satın alınmış takipçileri</b> ve dalgalar halinde geldikleri günleri gör. Hepsi resmi Instagram ya da TikTok dışa aktarımından. <b>Şifre yok. Yükleme yok.</b></p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Neyi kontrol eder</span>
+      <h2 class="h2">Her takipçi, uyarı işaretleri için taranır.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Kullanıcı adı kalıpları</b>: uzun sayı dizileri, rastgele görünen harfler, “user12345” tarzı adlar.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Spam ve tanıtım kelimeleri</b>: kripto, çekiliş, follow4follow, beğeniye beğeni ve benzerleri.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Takipçi sıçramaları</b>: normalden çok daha fazla yeni takipçi gelen günler, satın alınmış takipçilerin tipik işareti.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>A'dan F'ye bir kalite notu</b>: kitlenin ne kadarının gerçek göründüğü.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Hesapların kendisi ve nedenleri</b>: aranabilir, CSV'ye aktarılabilir, her profili tek dokunuşla açabilirsin.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="lab-art art-gauge">
+        <div class="gauge" style="--v:86"><div class="gauge-in"><b>B</b><span>86/100</span></div></div>
+        <div class="gauge-side"><span><i class="dot-r"></i>71 olası bot</span><span><i class="dot-y"></i>58 şüpheli</span><span><i class="dot-g"></i>2 takipçi sıçraması</span></div>
+      </div>
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><b>user8273645</b><em>Uzun sayı · Genel ad</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><b>crypto.gains.daily</b><em>Tanıtım kelimesi · Sıçrama</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><b>xkqzvbt_77</b><em>Rastgele harfler</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Neden önemli</span><h2 class="h2">Sahte takipçiler erişimini sessizce düşürür.</h2></div>
+    <div class="how3 reveal">
+      <div class="card card--pad"><svg aria-hidden="true"><use href="#i-trend"/></svg><b>Daha düşük etkileşim oranı</b><p>Botlar asla beğenmez ya da yorum yapmaz; her sahte takipçi etkileşim oranını ve onunla birlikte gönderilerinin ne kadar gösterildiğini aşağı çeker.</p></div>
+      <div class="card card--pad"><svg aria-hidden="true"><use href="#i-briefcase"/></svg><b>Markalar bunu kontrol eder</b><p>Sponsorlar ödeme yapmadan önce kitle kalitesine bakar. Temiz bir kitle ve iyi bir not, fiyatlarını savunmanı kolaylaştırır.</p></div>
+      <div class="card card--pad"><svg aria-hidden="true"><use href="#i-shield"/></svg><b>Riskli uygulama yok</b><p>Çoğu kontrol aracı şifreni ister. Unwrapped, Instagram ve TikTok'un sana verdiği dışa aktarımı okur: hesabına asla dokunulmaz.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Nasıl çalışır</span><h2 class="h2">Üç adım, yaklaşık üç dakika.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Verilerini indir</b><span>Instagram: Hesaplar Merkezi → Bilgilerin → Bilgilerini indir → Takipçiler ve takip edilenler (JSON). TikTok: Ayarlar → Hesap → Verilerini indir (JSON).</span></li>
+      <li><b>ZIP'i buraya bırak</b><span>Tarayıcında açılır. Hiçbir şey yüklenmez: uçak modunda dene.</span></li>
+      <li><b>Notunu al</b><span>Not ve sayılar ücretsiz. Hesap listesi, nedenler, sıçramalar ve CSV <a href="/pricing/">Creator</a> planının parçası.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">SSS</span><h2 class="h2">Sahte takipçiler, açıklandı.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Takipçilerimin sahte olup olmadığını nasıl kontrol ederim?</summary><div class="answer"><p>Instagram ya da TikTok takipçi listeni (resmi veri dışa aktarımı) indir ve ZIP'i bu sayfaya bırak. Unwrapped her takipçiyi kullanıcı adındaki uyarı işaretleri için tarar ve ani yeni takipçi dalgalarını kontrol eder, sonra sana bir kitle kalitesi notu verir.</p></div></details>
+      <details><summary>Sahte takipçi kontrolü ne kadar doğru?</summary><div class="answer"><p>Kendi dışa aktarımındaki herkese açık işaretlerden yapılan bir tahmindir: kullanıcı adı kalıpları, spam kelimeleri ve takip zamanlaması. Birden fazla işareti olan hesaplar “olası”, bir ya da iki işareti olanlar “şüpheli” olarak listelenir. Bazı gerçek kişilerin alışılmadık kullanıcı adları vardır; kimseyi çıkarmadan önce kontrol et.</p></div></details>
+      <details><summary>Ücretsiz mi?</summary><div class="answer"><p>Evet: kalite notu ile olası ve şüpheli takipçi sayısı ücretsizdir. Hesapların kendisi, nedenler, sıçrama grafiği ve CSV dışa aktarma Creator planının parçasıdır.</p></div></details>
+      <details><summary>Sahte takipçileri otomatik çıkarır mı?</summary><div class="answer"><p>Hayır. Hesabına asla giriş yapmayız, yani sen olmadan hiçbir şey olmaz. Listedeki her hesabın bir “Aç” düğmesi var; takipçilerinden uygulama üzerinden kendin çıkar.</p></div></details>
+      <details><summary>Şifreme ihtiyacınız var mı?</summary><div class="answer"><p>Asla. Her şey platformun sana verdiği dosyadan, kendi tarayıcının içinde hesaplanır.</p></div></details>
+      <details><summary>TikTok ve Threads için çalışır mı?</summary><div class="answer"><p>Evet: takipçi kullanıcı adlarını içeren her dışa aktarımla: Instagram, Threads ve TikTok.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Gerçek kitleni <span class="serif grad">bugün tanı.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Takipçilerimi kontrol et</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Demoda gör</button></div>
+    </div>
+  </div>
+</section>
