@@ -1352,3 +1352,8 @@ audio.msg-media { min-height: 0; }
 .cf-col { padding: 14px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); display: grid; gap: 8px; align-content: start; }
 .cf-col h4 { margin: 0; font-size: 14.5px; }
 .cf-col .tiny { margin: 0; }
+
+/* "More guides" list: two columns on wide screens */
+.checklist.more-links { display: block; columns: 2; column-gap: 32px; }
+.checklist.more-links li { break-inside: avoid; margin-bottom: 10px; }
+@media (max-width: 720px) { .checklist.more-links { columns: 1; } }

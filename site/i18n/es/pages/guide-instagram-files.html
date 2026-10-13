@@ -1,0 +1,78 @@
+<!--page {
+  "route": "/guides/instagram-data-files-explained/",
+  "title": "Archivos de la descarga de datos de Instagram explicados: followers_1.json y más · 2026",
+  "headline": "Tu descarga de datos de Instagram, archivo por archivo",
+  "description": "Qué hay dentro de tu descarga de datos de Instagram: followers_1.json, following.json, liked_posts.json, message_1.json, advertisers_using_your_activity_or_information.json y más. Qué significa cada archivo y qué puedes hacer con él.",
+  "article": "2026-10-13",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container">
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Guía · Instagram</span>
+      <h1 class="h1">Tu descarga de datos de Instagram, <span class="serif grad">archivo por archivo.</span></h1>
+      <p class="lead">Abriste el ZIP y encontraste cientos de carpetas y archivos con nombres como <code>followers_1.json</code>. Esto es lo que contienen los importantes, y cómo leerlos sin abrir ni uno solo.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Seguidores y seguidos</h2>
+      <ul>
+        <li><code>connections/followers_and_following/followers_1.json</code>: todas las personas que te siguen, con la fecha en que te siguieron. Las cuentas grandes reciben <code>followers_2.json</code>, <code>followers_3.json</code>…, que van juntos.</li>
+        <li><code>following.json</code>: cada cuenta que sigues, con la fecha en que la seguiste.</li>
+        <li><code>close_friends.json</code>: tu lista de Mejores amigos.</li>
+        <li><code>pending_follow_requests.json</code>: solicitudes que enviaste a cuentas privadas y nunca se aceptaron.</li>
+        <li><code>follow_requests_you've_received.json</code>: personas esperando que las aceptes.</li>
+        <li><code>recently_unfollowed_profiles.json</code>: cuentas que <em>tú</em> dejaste de seguir hace poco (no quién te dejó de seguir).</li>
+        <li><code>blocked_profiles.json</code>, <code>restricted_profiles.json</code>, <code>hide_story_from.json</code>: tus listas de bloqueados, restringidos e historias ocultas.</li>
+      </ul>
+      <p>Comparar dos descargas de estos archivos es la forma de ver <a href="/guides/who-unfollowed-me-on-instagram/">quién te dejó de seguir</a>.</p>
+
+      <h2>Tu actividad</h2>
+      <ul>
+        <li><code>likes/liked_posts.json</code>: cada publicación que te gustó, con la cuenta y la fecha.</li>
+        <li><code>comments/post_comments_1.json</code> y <code>reels_comments.json</code>: cada comentario que escribiste y dónde.</li>
+        <li><code>story_likes.json</code>: historias que te gustaron.</li>
+        <li><code>saved/saved_posts.json</code>: tus publicaciones guardadas.</li>
+        <li>Archivos <code>recent_searches</code>: lo que buscaste.</li>
+      </ul>
+      <p>Busca en todos a la vez con el <a href="/instagram-liked-posts/">buscador de me gusta y comentarios</a>.</p>
+
+      <h2>Tus mensajes</h2>
+      <ul>
+        <li><code>messages/inbox/&lt;nombre&gt;_&lt;número&gt;/message_1.json</code>: una carpeta por conversación; los chats largos siguen en <code>message_2.json</code> y así. Las fotos, videos y notas de voz están en la misma carpeta.</li>
+      </ul>
+      <p>Los textos usan una codificación escapada, así que los emojis y acentos se ven rotos en un editor de texto. El <a href="/instagram-message-viewer/">Visor de mensajes</a> muestra cada chat como una app de mensajería.</p>
+
+      <h2>Tus publicaciones, historias y reels</h2>
+      <ul>
+        <li><code>media/posts_1.json</code> (en exportaciones antiguas: <code>content/posts_1.json</code>): tus publicaciones con textos y fechas.</li>
+        <li><code>media/stories.json</code>, <code>reels.json</code>, <code>archived_posts.json</code>, <code>profile_photos.json</code>.</li>
+        <li>Las fotos y videos, en carpetas <code>media/</code> por mes.</li>
+      </ul>
+      <p>Míralas como galería en <a href="/instagram-story-archive/">Publicaciones e historias</a>.</p>
+
+      <h2>Anuncios y privacidad</h2>
+      <ul>
+        <li><code>advertisers_using_your_activity_or_information.json</code>: empresas que subieron una lista de clientes en la que apareces o que te dirigen anuncios por tu actividad.</li>
+        <li><code>ads_interests.json</code> / <code>your_topics.json</code>: los intereses que Instagram te asignó.</li>
+        <li><code>ads_viewed.json</code>, <code>posts_viewed.json</code>, <code>videos_watched.json</code>: lo que viste.</li>
+        <li><code>login_activity.json</code>: cuándo y desde qué dispositivos y direcciones IP iniciaste sesión.</li>
+      </ul>
+      <p>Los <a href="/instagram/">Rayos X de privacidad</a> los convierten en una nota de exposición de la A a la F.</p>
+
+      <h2>¿JSON o HTML?</h2>
+      <p>Ambos contienen la misma información. JSON es más fiable para las herramientas; HTML está pensado para leerse en un navegador. Unwrapped lee los dos: suelta el ZIP tal cual, incluso en varias partes.</p>
+
+      <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>¿Qué es followers_1.json?</summary><div class="answer"><p>Es la lista de todas las personas que te siguen, de tu descarga de datos de Instagram, con la fecha en que te siguieron. Las cuentas grandes se dividen en followers_1.json, followers_2.json y más.</p></div></details>
+      <details><summary>¿La descarga muestra quién me dejó de seguir?</summary><div class="answer"><p>No directamente. Muestra quién te sigue ahora. Comparar dos descargas hechas en momentos distintos revela quién se fue.</p></div></details>
+      <details><summary>¿Es seguro subir mi ZIP de Instagram a una web?</summary><div class="answer"><p>Solo si la web nunca lo envía a un servidor: los archivos contienen tus mensajes y nombres de otras personas. Unwrapped lo lee todo en tu navegador; no se sube nada.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

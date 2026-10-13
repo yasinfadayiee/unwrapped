@@ -1,0 +1,78 @@
+<!--page {
+  "route": "/guides/instagram-data-files-explained/",
+  "title": "Arquivos do download de dados do Instagram explicados: followers_1.json e mais · 2026",
+  "headline": "Seu download de dados do Instagram, arquivo por arquivo",
+  "description": "O que tem no seu download de dados do Instagram: followers_1.json, following.json, liked_posts.json, message_1.json, advertisers_using_your_activity_or_information.json e mais — o que cada arquivo significa e o que fazer com ele.",
+  "article": "2026-10-13",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container">
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Guia · Instagram</span>
+      <h1 class="h1">Seu download de dados do Instagram, <span class="serif grad">arquivo por arquivo.</span></h1>
+      <p class="lead">Você abriu o ZIP e achou centenas de pastas e arquivos com nomes como <code>followers_1.json</code>. Veja o que os importantes contêm — e como ler tudo sem abrir um único arquivo.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Seguidores e seguindo</h2>
+      <ul>
+        <li><code>connections/followers_and_following/followers_1.json</code> — todo mundo que te segue, com a data em que começou a seguir. Contas grandes recebem <code>followers_2.json</code>, <code>followers_3.json</code>… — eles andam juntos.</li>
+        <li><code>following.json</code> — cada conta que você segue, com a data em que seguiu.</li>
+        <li><code>close_friends.json</code> — sua lista de Amigos próximos.</li>
+        <li><code>pending_follow_requests.json</code> — solicitações que você enviou a contas privadas e nunca foram aceitas.</li>
+        <li><code>follow_requests_you've_received.json</code> — pessoas esperando você aceitar.</li>
+        <li><code>recently_unfollowed_profiles.json</code> — contas que <em>você</em> deixou de seguir recentemente (não quem deixou de te seguir).</li>
+        <li><code>blocked_profiles.json</code>, <code>restricted_profiles.json</code>, <code>hide_story_from.json</code> — suas listas de bloqueados, restritos e stories ocultos.</li>
+      </ul>
+      <p>Comparar dois downloads desses arquivos é como você vê <a href="/guides/who-unfollowed-me-on-instagram/">quem deixou de te seguir</a>.</p>
+
+      <h2>Sua atividade</h2>
+      <ul>
+        <li><code>likes/liked_posts.json</code> — cada post que você curtiu, com a conta e a data.</li>
+        <li><code>comments/post_comments_1.json</code> e <code>reels_comments.json</code> — cada comentário que você escreveu e onde.</li>
+        <li><code>story_likes.json</code> — stories que você curtiu.</li>
+        <li><code>saved/saved_posts.json</code> — seus posts salvos.</li>
+        <li>Arquivos <code>recent_searches</code> — o que você buscou.</li>
+      </ul>
+      <p>Busque em todos de uma vez no <a href="/instagram-liked-posts/">localizador de curtidas e comentários</a>.</p>
+
+      <h2>Suas mensagens</h2>
+      <ul>
+        <li><code>messages/inbox/&lt;nome&gt;_&lt;número&gt;/message_1.json</code> — uma pasta por conversa; conversas longas continuam em <code>message_2.json</code> e assim por diante. Fotos, vídeos e áudios ficam na mesma pasta.</li>
+      </ul>
+      <p>Os textos usam uma codificação com escapes, então emojis e acentos aparecem quebrados num editor de texto. O <a href="/instagram-message-viewer/">Leitor de mensagens</a> mostra cada conversa como num app de mensagens.</p>
+
+      <h2>Seus posts, stories e reels</h2>
+      <ul>
+        <li><code>media/posts_1.json</code> (exportações antigas: <code>content/posts_1.json</code>) — seus posts com legendas e datas.</li>
+        <li><code>media/stories.json</code>, <code>reels.json</code>, <code>archived_posts.json</code>, <code>profile_photos.json</code>.</li>
+        <li>As fotos e vídeos em si, em pastas <code>media/</code> por mês.</li>
+      </ul>
+      <p>Veja tudo como galeria em <a href="/instagram-story-archive/">Posts e stories</a>.</p>
+
+      <h2>Anúncios e privacidade</h2>
+      <ul>
+        <li><code>advertisers_using_your_activity_or_information.json</code> — empresas que enviaram uma lista de clientes em que você aparece, ou que te segmentam pela sua atividade.</li>
+        <li><code>ads_interests.json</code> / <code>your_topics.json</code> — os interesses que o Instagram te atribuiu.</li>
+        <li><code>ads_viewed.json</code>, <code>posts_viewed.json</code>, <code>videos_watched.json</code> — o que você viu.</li>
+        <li><code>login_activity.json</code> — quando e de quais dispositivos e endereços IP você entrou.</li>
+      </ul>
+      <p>O <a href="/instagram/">Raio-X da privacidade</a> transforma tudo isso numa nota de exposição de A a F.</p>
+
+      <h2>JSON ou HTML?</h2>
+      <p>Os dois têm a mesma informação. JSON é mais confiável para ferramentas; HTML é feito para ler no navegador. O Unwrapped lê os dois — solte o ZIP como veio, mesmo em várias partes.</p>
+
+      <h2>Perguntas frequentes</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>O que é followers_1.json?</summary><div class="answer"><p>É a lista de todo mundo que te segue, do seu download de dados do Instagram, com a data em que cada pessoa começou a seguir. Contas grandes são divididas em followers_1.json, followers_2.json e mais.</p></div></details>
+      <details><summary>O download mostra quem deixou de me seguir?</summary><div class="answer"><p>Não diretamente. Ele mostra quem te segue agora. Comparar dois downloads feitos em momentos diferentes revela quem saiu.</p></div></details>
+      <details><summary>É seguro enviar meu ZIP do Instagram para um site?</summary><div class="answer"><p>Só se o site nunca mandar o arquivo para um servidor — ele contém suas mensagens e nomes de outras pessoas. O Unwrapped lê tudo no seu navegador; nada é enviado.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
