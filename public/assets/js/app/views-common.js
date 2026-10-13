@@ -154,6 +154,7 @@ export function unfollowersView(ds, ctx) {
       panel(
         { title: tl('Your first snapshot is saved'), text: snaps[0] ? (fb ? tl('Snapshot from {v0} · {v1} friends', { v0: dateShort(snaps[0].takenAt), v1: fmtInt(snaps[0].followers.length) }) : tl('Snapshot from {v0} · {v1} followers', { v0: dateShort(snaps[0].takenAt), v1: fmtInt(snaps[0].followers.length) })) : '' },
         insights([
+          { icon: 'upload', title: tl('Have an older export on your computer?'), text: tl('Drop it together with this one (select both files at once) and we’ll show who unfollowed you in between — right away.') },
           { icon: 'calendar', title: tl('Download a fresh export in a week or two'), text: tl('Request the same data again and drop it here — we’ll compare it with this snapshot automatically.') },
           { icon: 'ghost', title: tl('You’ll see who left, by name'), text: tl('Plus new followers, and who you unfollowed in between.') },
           { icon: 'shield', title: tl('Stored only on this device'), text: tl('Snapshots live in your browser’s storage. Clearing site data deletes them.') },

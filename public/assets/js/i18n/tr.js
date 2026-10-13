@@ -1187,5 +1187,9 @@ export default {
   "The few things worth doing next. Tick them off as you go — saved on this device.": "Sırada yapmaya değer birkaç şey. Yaptıkça işaretle — bu cihaza kaydedilir.",
   "person": "kişi",
   "Show fewer steps": "Daha az adım göster",
-  "Show {v0} more steps": "{v0} adım daha göster"
+  "Show {v0} more steps": "{v0} adım daha göster",
+  "Have an older export on your computer?": "Bilgisayarında eski bir dışa aktarım mı var?",
+  "Drop it together with this one (select both files at once) and we’ll show who unfollowed you in between — right away.": "Bununla birlikte bırak (iki dosyayı aynı anda seç), aradaki sürede kimin seni takipten çıktığını hemen gösterelim.",
+  "Today’s snapshot is saved on this device. Drop a fresh export later — or an older one you still have — and we’ll compare them automatically.": "Bugünkü anlık görüntü bu cihaza kaydedildi. Daha sonra yeni bir dışa aktarım — ya da hâlâ sakladığın eski bir tanesini — bırak, otomatik olarak karşılaştıralım.",
+  "Older {v0} export found — comparing {v1} with {v2}": "Eski bir {v0} dışa aktarımı bulundu — {v1} ile {v2} karşılaştırılıyor"
 };

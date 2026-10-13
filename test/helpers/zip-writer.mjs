@@ -13,12 +13,12 @@ function crc32(buf) {
   return (c ^ 0xffffffff) >>> 0;
 }
 
-export function makeZip(files, { zip64 = false } = {}) {
+export function makeZip(files, { zip64 = false, date = [2026, 9, 15] } = {}) {
   const locals = [];
   const centrals = [];
   let offset = 0;
   const dosTime = (10 << 11) | (30 << 5);
-  const dosDate = ((2026 - 1980) << 9) | (9 << 5) | 15; // 2026-09-15
+  const dosDate = ((date[0] - 1980) << 9) | (date[1] << 5) | date[2]; // default 2026-09-15
   for (const f of files) {
     const name = Buffer.from(f.path, 'utf8');
     const data = Buffer.isBuffer(f.content) ? f.content : Buffer.from(f.content, 'utf8');

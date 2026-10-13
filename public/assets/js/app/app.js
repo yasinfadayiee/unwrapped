@@ -1,7 +1,7 @@
 // The results dashboard. Everything here runs on the user's device.
 
 import { h, icon, clear, append, toast, modal } from '../lib/ui.js';
-import { fmtInt, compact } from '../lib/format.js';
+import { fmtInt, compact, dateShort } from '../lib/format.js';
 import { buildVfs } from '../core/vfs.js';
 import { analyze } from '../core/analyze.js';
 import { buildDemoVfs, demoPreviousSnapshot } from '../core/demo.js';
@@ -387,12 +387,18 @@ export async function openApp({ files = [], demo = false } = {}) {
       return;
     }
     load.set(tl('Saving a private snapshot on this device…'), 0.97);
+    const compared = [];
     for (const ds of result.datasets) {
+      const previous = ds.previous || [];
+      delete ds.previous;
       if (!ds.hasRelationships || ds.platform === 'linkedin') continue;
       const snap = snapshotFromDataset(ds);
       ds._acct = snap.acct;
       if (demo) ds._snapshots = [demoPreviousSnapshot(snap, rand), snap];
       else {
+        // Older exports dropped together with this one become earlier snapshots.
+        for (const old of previous.filter((d) => d.hasRelationships)) await saveSnapshot({ ...snapshotFromDataset(old), acct: snap.acct, account: snap.account });
+        if (previous.length) compared.push({ ds, from: previous[previous.length - 1].exportedAt });
         await saveSnapshot(snap);
         ds._snapshots = await listSnapshots(snap.acct);
       }
@@ -403,6 +409,9 @@ export async function openApp({ files = [], demo = false } = {}) {
       playStory(result.datasets, { onDone: () => active?.root?.querySelector('.app-main')?.focus() });
     }
     active = mount(result, { tier: activeTier, demo, config, netStart, onNewFiles: (f) => openApp({ files: f }) });
+    for (const { ds, from } of compared) {
+      toast(tl('Older {v0} export found — comparing {v1} with {v2}', { v0: ds.label, v1: dateShort(from), v2: dateShort(ds.exportedAt) }), { iconName: 'ghost', timeout: 6000 });
+    }
   } catch (err) {
     console.error(err);
     load.close();

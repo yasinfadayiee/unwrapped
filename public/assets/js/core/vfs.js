@@ -5,7 +5,9 @@ import { isZip, listZip, readZipEntry } from './zip.js';
 
 const decoder = new TextDecoder('utf-8');
 
-function makeEntry(path, size, read, source, mtime = 0) {
+// `group` is the dropped ZIP or top-level folder an entry came from, so several
+// exports dropped together can be told apart.
+function makeEntry(path, size, read, source, mtime = 0, group = source) {
   const clean = path.replace(/\\/g, '/').replace(/^\/+/, '');
   return {
     path: clean,
@@ -13,6 +15,7 @@ function makeEntry(path, size, read, source, mtime = 0) {
     name: clean.split('/').pop(),
     size,
     source,
+    group,
     mtime,
     bytes: read,
     async text() {
@@ -47,17 +50,24 @@ export class Vfs {
     const set = new Set(names.map((n) => n.toLowerCase()));
     return this.entries.filter((e) => set.has(e.name.toLowerCase()));
   }
+  // A Vfs over some of the entries (one export out of several).
+  subset(entries) {
+    const vfs = new Vfs();
+    vfs.sources = this.sources;
+    for (const e of entries) vfs.add(e);
+    return vfs;
+  }
 }
 
-async function addZip(vfs, blob, label, depth) {
+async function addZip(vfs, blob, label, depth, group = label) {
   const entries = await listZip(blob);
   for (const en of entries) {
     if (depth < 1 && /\.zip$/i.test(en.path) && en.size < 600_000_000) {
       const inner = new Blob([await readZipEntry(blob, en)]);
-      await addZip(vfs, inner, `${label} › ${en.path}`, depth + 1);
+      await addZip(vfs, inner, `${label} › ${en.path}`, depth + 1, group);
       continue;
     }
-    vfs.add(makeEntry(en.path, en.size, () => readZipEntry(blob, en), label, en.mtime));
+    vfs.add(makeEntry(en.path, en.size, () => readZipEntry(blob, en), label, en.mtime, group));
   }
 }
 
@@ -70,8 +80,9 @@ export async function buildVfs(files, { onProgress } = {}) {
     if (/\.zip$/i.test(file.name) || (await isZip(file))) {
       await addZip(vfs, file, file.name, 0);
     } else {
+      const folder = path.replace(/\\/g, '/').replace(/^\/+/, '').split('/');
       vfs.add(
-        makeEntry(path, file.size, async () => new Uint8Array(await file.arrayBuffer()), file.name, file.lastModified || 0),
+        makeEntry(path, file.size, async () => new Uint8Array(await file.arrayBuffer()), file.name, file.lastModified || 0, folder.length > 1 ? `${folder[0]}/` : '(files)'),
       );
     }
     done++;

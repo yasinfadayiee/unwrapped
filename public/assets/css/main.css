@@ -204,6 +204,7 @@ ul, ol { margin: 0; padding: 0; }
 .text-2 { color: var(--text-2); }
 .small { font-size: 14px; }
 .tiny { font-size: 12.5px; }
+.tiny > svg, .small > svg { display: inline-block; width: 1.1em; height: 1.1em; vertical-align: -0.18em; }
 .mono { font-family: var(--font-mono); font-feature-settings: 'zero' 1; }
 .serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
 .grad {
@@ -255,6 +256,7 @@ ul, ol { margin: 0; padding: 0; }
   display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px;
   font-size: 12px; font-weight: 650; letter-spacing: 0.01em; background: rgba(215, 255, 58, 0.12); color: var(--signal);
 }
+.badge svg { width: 13px; height: 13px; flex: none; }
 .badge--uv { background: rgba(143, 125, 255, 0.14); color: #c3b9ff; }
 .badge--muted { background: rgba(255, 255, 255, 0.06); color: var(--text-2); }
 .kbd { font-family: var(--font-mono); font-size: 12px; padding: 2px 7px; border-radius: 6px; border: 1px solid var(--line-2); background: var(--surface-2); }
@@ -363,6 +365,9 @@ ul, ol { margin: 0; padding: 0; }
 .drop:hover .drop-icon svg, .drop.is-over .drop-icon svg { transform: translateY(-4px) rotate(-6deg); }
 .drop-title { font-family: var(--font-display); font-weight: 650; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.03em; }
 .drop-hint { color: var(--muted); font-size: 14px; }
+.drop-tip { display: inline-flex; align-items: center; gap: 8px; max-width: 520px; margin: -6px auto 0; padding: 6px 12px; border-radius: 999px; font-size: 13px; color: var(--text-2); background: rgba(143, 125, 255, 0.1); border: 1px solid rgba(143, 125, 255, 0.22); }
+.drop-tip svg { width: 15px; height: 15px; flex: none; color: #c9c0ff; }
+@media (max-width: 560px) { .drop-tip { border-radius: 14px; text-align: start; } }
 .drop-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .drop-platforms { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .drop-platforms .pf { display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line); font-size: 12.5px; color: var(--text-2); }

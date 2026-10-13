@@ -1187,5 +1187,9 @@ export default {
   "The few things worth doing next. Tick them off as you go — saved on this device.": "Las pocas cosas que vale la pena hacer ahora. Márcalas a medida que avances; se guardan en este dispositivo.",
   "person": "persona",
   "Show fewer steps": "Mostrar menos pasos",
-  "Show {v0} more steps": "Mostrar {v0} pasos más"
+  "Show {v0} more steps": "Mostrar {v0} pasos más",
+  "Have an older export on your computer?": "¿Tienes una exportación antigua en tu computadora?",
+  "Drop it together with this one (select both files at once) and we’ll show who unfollowed you in between — right away.": "Suéltala junto con esta (selecciona los dos archivos a la vez) y te mostraremos al instante quién dejó de seguirte entre medias.",
+  "Today’s snapshot is saved on this device. Drop a fresh export later — or an older one you still have — and we’ll compare them automatically.": "La instantánea de hoy está guardada en este dispositivo. Suelta una exportación nueva más adelante, o una antigua que todavía tengas, y las compararemos automáticamente.",
+  "Older {v0} export found — comparing {v1} with {v2}": "Se encontró una exportación antigua de {v0}: comparando {v1} con {v2}"
 };

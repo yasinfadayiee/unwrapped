@@ -58,7 +58,7 @@ function snapshotSteps(ds, ctx) {
         id: 'fresh-export',
         icon: 'calendar',
         title: fb ? tl('Come back in two weeks to see who unfriended you') : tl('Come back in two weeks to see who unfollowed you'),
-        text: tl('Today’s snapshot is saved on this device. Drop a fresh export later and we’ll compare the two automatically.'),
+        text: tl('Today’s snapshot is saved on this device. Drop a fresh export later — or an older one you still have — and we’ll compare them automatically.'),
         action: reminderButton(ds),
         late: true,
       },

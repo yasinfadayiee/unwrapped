@@ -201,6 +201,39 @@ test('loose unzipped files work too', async () => {
   assert.equal(relationships(ig).notFollowingBack[0].u, 'two');
 });
 
+test('an old and a new export dropped together stay separate', async () => {
+  const rel = (u) => ({ title: '', string_list_data: [{ href: `https://www.instagram.com/${u}`, value: u, timestamp: 1700000000 }] });
+  const relNew = (u) => ({ title: u, string_list_data: [{ href: `https://www.instagram.com/_u/${u}`, timestamp: 1700000000 }] });
+  const exportOf = (followers, date, withName) =>
+    makeZip(
+      [
+        { path: 'connections/followers_and_following/followers_1.json', content: JSON.stringify(followers.map(rel)) },
+        { path: 'connections/followers_and_following/following.json', content: JSON.stringify({ relationships_following: [relNew('alpha')] }) },
+        withName && { path: 'personal_information/personal_information/personal_information.json', content: JSON.stringify({ profile_user: [{ string_map_data: { Username: { value: 'me.too' } } }] }) },
+      ].filter(Boolean),
+      { date },
+    );
+  const media = makeZip([{ path: 'media/posts_1.json', content: JSON.stringify([{ media: [{ uri: 'media/posts/1.jpg', creation_timestamp: 1700000000, title: 'hi' }] }]) }], { date: [2026, 10, 12] });
+  const vfs = await buildVfs([asFile(exportOf(['alpha', 'beta', 'gamma'], [2026, 3, 1], false), 'old.zip'), asFile(exportOf(['alpha', 'gamma', 'delta'], [2026, 10, 12], true), 'new.zip'), asFile(media, 'new-part-2.zip')]);
+  const result = await analyze(vfs);
+  assert.equal(result.exports, 2);
+  const igs = result.datasets.filter((d) => d.platform === 'instagram');
+  assert.equal(igs.length, 1, 'one tab per account');
+  const [ig] = igs;
+  assert.equal(ig.account.username, 'me.too');
+  assert.deepEqual(ig.lists.followers.map((f) => f.u).sort(), ['alpha', 'delta', 'gamma']);
+  assert.equal(new Date(ig.exportedAt).getMonth(), 9);
+  assert.equal(ig.media.length, 1, 'the extra part joins the export made at the same time');
+  assert.equal(ig.previous.length, 1);
+  assert.deepEqual(ig.previous[0].lists.followers.map((f) => f.u).sort(), ['alpha', 'beta', 'gamma']);
+  assert.equal(new Date(ig.previous[0].exportedAt).getMonth(), 2);
+
+  // The same export dropped twice is just one export.
+  const twice = await analyze(await buildVfs([asFile(exportOf(['alpha'], [2026, 10, 12], true), 'a.zip'), asFile(exportOf(['alpha'], [2026, 10, 12], true), 'a (1).zip')]));
+  assert.equal(twice.datasets.length, 1);
+  assert.equal(twice.datasets[0].previous.length, 0);
+});
+
 test('sessions, snapshots and helpers', () => {
   const t0 = Date.UTC(2026, 0, 1, 22);
   const watch = [t0, t0 + 30_000, t0 + 60_000, t0 + 3 * 3600_000, t0 + 3 * 3600_000 + 15_000];
