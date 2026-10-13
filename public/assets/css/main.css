@@ -1249,3 +1249,6 @@ audio.msg-media { min-height: 0; }
 .arch-full { display: block; max-width: 100%; max-height: 70vh; margin: 0 auto; border-radius: 12px; background: var(--surface-2); }
 .arch-caption { margin: 14px 0 0; white-space: pre-wrap; color: var(--text-2); }
 @media (max-width: 560px) { .arch-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; } .arch-tile { border-radius: 6px; } .arch-date { display: none; } }
+
+.related-platforms { margin: 18px 0 0; text-align: center; }
+.related-platforms a { color: var(--text); }

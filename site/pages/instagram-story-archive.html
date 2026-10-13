@@ -1,0 +1,60 @@
+<!--page {
+  "route": "/instagram-story-archive/",
+  "nav": "tools",
+  "title": "See your old Instagram stories & posts from your data download · Unwrapped",
+  "description": "View every story, post and reel you ever shared on Instagram — even deleted posts and long-gone stories — from your own data download. Browse by year and save the originals. Private, no login.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-image"/></svg>Posts &amp; stories · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Every story</span></span>
+        <span class="line"><span><span class="serif grad">you ever posted.</span></span></span>
+      </h1>
+      <p class="hero-sub">Instagram’s data download keeps your stories, posts and reels — even stories that disappeared years ago. Drop the ZIP and browse them as a <b>gallery by year</b>, with <b>captions and dates</b>, and <b>save the originals</b>. Nothing is uploaded.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">What you get</span><h2 class="h2">Your Instagram memories, <span class="serif">in one place.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Stories</b> — every story you shared, long after the 24 hours.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Posts and reels</b> — with their captions, including carousels.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Archived posts and old profile photos</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Filter by year and type</b>, open any item full-size and <b>save the original file</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Your chats too, in the <a href="/instagram-message-viewer/">Message viewer</a>.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2 class="h2">Three steps, on your device.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Request your content</b><span>Accounts Center → Your information and permissions → Download your information → choose <b>Content</b> (or All available information), format JSON, with media.</span></li>
+      <li><b>Drop the ZIP here</b><span>Your browser opens it locally — even large archives with thousands of photos.</span></li>
+      <li><b>Open “Your posts &amp; stories”</b><span>Free to browse and save, one by one.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Old stories, found.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>How can I see my old Instagram stories?</summary><div class="answer"><p>If Story Archive was on, they’re in the app’s Archive. Either way, your data download includes the stories Instagram kept for your account. Drop it here and open “Your posts &amp; stories”.</p></div></details>
+      <details><summary>Can I recover a post I deleted?</summary><div class="answer"><p>Recently deleted posts can be restored in the app for 30 days. After that, your download only contains what Instagram still keeps — often archived items, but not permanently deleted ones.</p></div></details>
+      <details><summary>Why are some photos missing?</summary><div class="answer"><p>Media is only included if you request it. Ask for the download again with media and a higher quality setting.</p></div></details>
+      <details><summary>Are my photos uploaded?</summary><div class="answer"><p>No. Everything is shown from the ZIP inside your browser.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

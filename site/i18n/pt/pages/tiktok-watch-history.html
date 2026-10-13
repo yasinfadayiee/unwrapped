@@ -1,0 +1,60 @@
+<!--page {
+  "route": "/tiktok-watch-history/",
+  "nav": "tools",
+  "title": "Histórico do TikTok: encontre um vídeo que você já assistiu · Unwrapped",
+  "description": "Perdeu um TikTok que assistiu? Abra todo o seu histórico de visualização por dia e horário, além de cada vídeo que curtiu, salvou ou compartilhou — do seu próprio download de dados, com privacidade.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-play"/></svg>Localizador de vídeos · TikTok</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Encontre aquele TikTok</span></span>
+        <span class="line"><span><span class="serif grad">que você assistiu.</span></span></span>
+      </h1>
+      <p class="hero-sub">Passou por um vídeo e não acha mais? Seu download de dados do TikTok guarda <b>cada vídeo que você assistiu</b>, com data e horário. Escolha o dia e o período de que se lembra e abra de novo — além de <b>tudo o que você curtiu, salvou e compartilhou</b>.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">O que você recebe</span><h2 class="h2">Seu histórico do TikTok, <span class="serif">pesquisável por horário.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Histórico de visualização</b> — cada vídeo com o horário exato em que você assistiu, agrupado por dia.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Curtidos, favoritos e compartilhados</b> — cada um na sua aba.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Filtre por dia e período</b> — manhã, tarde, noite ou madrugada.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Um toque para abrir</b> o vídeo de novo no TikTok.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Seu tempo de tela real</b> — horas, maratonas e seu perfil de rolagem, no mesmo painel.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Como funciona</span><h2 class="h2">Três passos, no seu dispositivo.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Peça seus dados do TikTok</b><span>Perfil → ☰ → Configurações e privacidade → Conta → Baixar seus dados → <b>Todos os dados</b>, formato <b>JSON</b>.</span></li>
+      <li><b>Solte o ZIP aqui</b><span>Ele é aberto no seu navegador — nada é enviado.</span></li>
+      <li><b>Abra o “Localizador de vídeos”</b><span>Navegar é grátis. Exportar uma lista em CSV faz parte do <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Perguntas frequentes</span><h2 class="h2">Histórico do TikTok, respondido.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Como vejo todo o meu histórico do TikTok?</summary><div class="answer"><p>O app só mostra o histórico recente. Seu download de dados contém a lista completa que o TikTok guarda, com data e horário de cada vídeo. Solte aqui e abra o Localizador de vídeos.</p></div></details>
+      <details><summary>Dá para buscar pelo título do vídeo?</summary><div class="answer"><p>Não — a exportação do TikTok tem links e horários, não títulos nem legendas. Filtre pelo dia e horário de que você se lembra e abra os candidatos.</p></div></details>
+      <details><summary>Até quando ele vai?</summary><div class="answer"><p>Até onde o TikTok guarda para a sua conta — geralmente meses. As datas mais antiga e mais recente aparecem no seletor de data.</p></div></details>
+      <details><summary>É privado?</summary><div class="answer"><p>Sim. O arquivo é lido no seu navegador e nunca é enviado, e o TikTok não é notificado.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

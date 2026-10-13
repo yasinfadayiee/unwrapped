@@ -1,0 +1,60 @@
+<!--page {
+  "route": "/tiktok-watch-history/",
+  "nav": "tools",
+  "title": "TikTok watch history: find a video you watched before · Unwrapped",
+  "description": "Lost a TikTok you watched? Open your full TikTok watch history by day and time, plus every video you liked, saved or shared — from your own data download, privately.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-play"/></svg>Video finder · TikTok</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Find that TikTok</span></span>
+        <span class="line"><span><span class="serif grad">you watched.</span></span></span>
+      </h1>
+      <p class="hero-sub">Scrolled past a video and can’t find it again? Your TikTok data download keeps <b>every video you watched</b>, with the date and time. Pick the day and the time of day you remember and open it again — plus <b>everything you liked, saved and shared</b>.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">What you get</span><h2 class="h2">Your TikTok history, <span class="serif">searchable by time.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Watch history</b> — every video with the exact time you watched it, grouped by day.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Liked, favorites and shared</b> — each in its own tab.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Filter by day and time of day</b> — morning, afternoon, evening or late night.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>One tap to open</b> the video in TikTok again.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Your real screen time</b> — hours, binges and your scrolling persona, on the same dashboard.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2 class="h2">Three steps, on your device.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Request your TikTok data</b><span>Profile → ☰ → Settings and privacy → Account → Download your data → <b>All data</b>, format <b>JSON</b>.</span></li>
+      <li><b>Drop the ZIP here</b><span>It’s opened in your browser — nothing is uploaded.</span></li>
+      <li><b>Open “Video finder”</b><span>Browsing is free. Exporting a list as CSV is part of <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">TikTok history, answered.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>How do I see my full TikTok watch history?</summary><div class="answer"><p>The app only shows recent watch history. Your data download contains the full list TikTok keeps, with the date and time of each video. Drop it here and open Video finder.</p></div></details>
+      <details><summary>Can I search by the video’s title?</summary><div class="answer"><p>No — TikTok’s export contains links and times, not titles or captions. Narrow it down by the day and time you remember, then open the candidates.</p></div></details>
+      <details><summary>How far back does it go?</summary><div class="answer"><p>As far as TikTok keeps it for your account — usually months. The oldest and newest dates are shown in the date picker.</p></div></details>
+      <details><summary>Is it private?</summary><div class="answer"><p>Yes. The file is read in your browser and never uploaded, and TikTok is not notified.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

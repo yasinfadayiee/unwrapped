@@ -3,7 +3,7 @@
 //   node scripts/build.js            (uses site/site.json)
 //   SITE_URL=https://example.com node scripts/build.js
 
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -119,6 +119,31 @@ function shortDescription(text, max = 160) {
   return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,:;—–-]+$/, '')}…`;
 }
 
+// When a page really changed: its source file (or partials it uses), never
+// "today" on every build — search engines ignore a lastmod that always moves.
+function lastModified(file, meta) {
+  const mtime = statSync(path.join(root, file)).mtime;
+  const article = meta.updated || meta.article;
+  const best = article && new Date(article) > mtime ? new Date(article) : mtime;
+  return best.toISOString().slice(0, 10);
+}
+
+// Pages that are tools people use in the browser.
+const TOOL_ROUTES = new Set(['/instagram/', '/tiktok/', '/x/', '/facebook/', '/linkedin/', '/fake-follower-checker/', '/instagram-audit/', '/instagram-dm-analyzer/', '/best-time-to-post/', '/instagram-message-viewer/', '/tiktok-watch-history/', '/instagram-story-archive/']);
+
+function breadcrumbs(loc, meta, strings, pageName) {
+  if (meta.route === '/') return null;
+  const items = [{ name: site.name, url: `${origin}${urlOf(loc, '/')}` }];
+  const parent = meta.route.match(/^\/(guides|blog)\/.+/);
+  if (parent) items.push({ name: parent[1] === 'guides' ? strings.fGuides : strings.fBlog, url: `${origin}${urlOf(loc, `/${parent[1]}/`)}` });
+  items.push({ name: pageName, url: `${origin}${urlOf(loc, meta.route)}` });
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, item: it.url })),
+  };
+}
+
 function languageLinks(loc, route) {
   return locales
     .map((l) => {
@@ -149,6 +174,7 @@ for (const { loc, file, meta, body } of pages) {
       ? [...translations.map((l) => `<link rel="alternate" hreflang="${l.hreflang}" href="${origin}${urlOf(l, meta.route)}">`), `<link rel="alternate" hreflang="x-default" href="${origin}${meta.route}">`].join('\n')
       : '';
   const schemas = [];
+  const pageName = meta.headline || shortTitle(meta.title, 60).split(' · ')[0].split(' — ')[0];
   if (meta.route === '/') {
     schemas.push({
       '@context': 'https://schema.org',
@@ -161,6 +187,24 @@ for (const { loc, file, meta, body } of pages) {
       description: meta.description,
       offers: { '@type': 'AggregateOffer', priceCurrency: 'USD', lowPrice: '0', highPrice: '119' },
     });
+    schemas.push({ '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: `${origin}/`, logo: `${origin}/assets/img/icon-512.png` });
+    schemas.push({ '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: `${origin}${url}`, inLanguage: loc.hreflang });
+  } else if (TOOL_ROUTES.has(meta.route)) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: `${pageName} — ${site.name}`,
+      url: `${origin}${url}`,
+      inLanguage: loc.hreflang,
+      applicationCategory: 'UtilitiesApplication',
+      operatingSystem: 'Any (runs in the browser)',
+      description: shortDescription(meta.description),
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    });
+  }
+  if (!meta.noindex) {
+    const crumbs = breadcrumbs(loc, meta, { ...layoutStrings.en, ...layoutStrings[loc.code] }, pageName);
+    if (crumbs) schemas.push(crumbs);
   }
   if (meta.article) {
     schemas.push({
@@ -214,18 +258,19 @@ for (const { loc, file, meta, body } of pages) {
   const out = url.endsWith('.html') ? `public${url}` : `public${url}index.html`;
   write(out, html);
   if (!meta.noindex && !meta.route.endsWith('.html')) {
-    sitemap.push({ loc: canonical, priority: meta.route === '/' ? '1.0' : '0.8', alternates: translations.length > 1 ? translations.map((l) => ({ hreflang: l.hreflang, href: `${origin}${urlOf(l, meta.route)}` })) : [] });
+    const alternates = translations.length > 1 ? [...translations.map((l) => ({ hreflang: l.hreflang, href: `${origin}${urlOf(l, meta.route)}` })), { hreflang: 'x-default', href: `${origin}${meta.route}` }] : [];
+    sitemap.push({ loc: canonical, lastmod: lastModified(file, meta), priority: meta.route === '/' ? '1.0' : meta.article ? '0.6' : '0.8', alternates });
   }
 }
 
-const today = new Date().toISOString().slice(0, 10);
 write(
   'public/sitemap.xml',
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sitemap
-    .map((u) => `  <url><loc>${u.loc}</loc><lastmod>${today}</lastmod><priority>${u.priority}</priority>${u.alternates.map((a) => `<xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}"/>`).join('')}</url>`)
+    .map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.lastmod}</lastmod><priority>${u.priority}</priority>${u.alternates.map((a) => `<xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}"/>`).join('')}</url>`)
     .join('\n')}\n</urlset>\n`,
 );
-write('public/robots.txt', `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /account/\nDisallow: /success/\nDisallow: /api/\n\nSitemap: ${origin}/sitemap.xml\n`);
+const privatePaths = ['/admin/', '/success/', '/api/', ...locales.map((l) => `${l.path}/account/`)];
+write('public/robots.txt', `User-agent: *\nAllow: /\n${[...new Set(privatePaths)].map((p) => `Disallow: ${p}`).join('\n')}\n\nSitemap: ${origin}/sitemap.xml\n`);
 
 const sw = read('site/sw.template.js').replace('__VERSION__', version);
 write('public/sw.js', sw);

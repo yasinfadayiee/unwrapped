@@ -1,0 +1,60 @@
+<!--page {
+  "route": "/tiktok-watch-history/",
+  "nav": "tools",
+  "title": "TikTok izleme geçmişi: daha önce izlediğin videoyu bul · Unwrapped",
+  "description": "İzlediğin bir TikTok’u mu kaybettin? Tüm izleme geçmişini gün ve saate göre aç; beğendiğin, kaydettiğin veya paylaştığın her video da dahil — kendi veri indirmenden, gizlice.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-play"/></svg>Video bulucu · TikTok</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>İzlediğin o TikTok’u</span></span>
+        <span class="line"><span><span class="serif grad">yeniden bul.</span></span></span>
+      </h1>
+      <p class="hero-sub">Bir videoyu kaydırıp geçtin ve bir daha bulamıyor musun? TikTok veri indirmen <b>izlediğin her videoyu</b> tarih ve saatiyle saklar. Hatırladığın günü ve günün saatini seç, yeniden aç — ayrıca <b>beğendiğin, kaydettiğin ve paylaştığın her şey</b>.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Neler alırsın</span><h2 class="h2">TikTok geçmişin, <span class="serif">saate göre aranabilir.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>İzleme geçmişi</b> — her video, izlediğin tam saatle, güne göre gruplanmış.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Beğenilenler, favoriler ve paylaşılanlar</b> — her biri kendi sekmesinde.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Gün ve günün saatine göre filtrele</b> — sabah, öğleden sonra, akşam veya gece.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Videoyu TikTok’ta yeniden açmak için <b>tek dokunuş</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Gerçek ekran süren</b> — saatler, maratonlar ve kaydırma tipin, aynı panelde.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Nasıl çalışır</span><h2 class="h2">Üç adım, cihazında.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>TikTok verilerini iste</b><span>Profil → ☰ → Ayarlar ve gizlilik → Hesap → Verilerini indir → <b>Tüm veriler</b>, biçim <b>JSON</b>.</span></li>
+      <li><b>ZIP’i buraya bırak</b><span>Tarayıcında açılır — hiçbir şey yüklenmez.</span></li>
+      <li><b>“Video bulucu”yu aç</b><span>Göz atmak ücretsizdir. Bir listeyi CSV olarak dışa aktarmak <a href="/pricing/">Plus</a>’a dahildir.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Sık sorulan sorular</span><h2 class="h2">TikTok geçmişi, yanıtlandı.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>TikTok izleme geçmişimin tamamını nasıl görürüm?</summary><div class="answer"><p>Uygulama yalnızca yakın tarihli geçmişi gösterir. Veri indirmen, TikTok’un sakladığı tam listeyi her videonun tarih ve saatiyle içerir. Buraya bırak ve Video bulucu’yu aç.</p></div></details>
+      <details><summary>Videonun başlığına göre arayabilir miyim?</summary><div class="answer"><p>Hayır — TikTok’un dışa aktarımında başlık veya açıklama değil, bağlantılar ve saatler var. Hatırladığın gün ve saate göre daralt, sonra adayları aç.</p></div></details>
+      <details><summary>Ne kadar geriye gider?</summary><div class="answer"><p>TikTok’un hesabın için sakladığı kadar — genellikle aylarca. En eski ve en yeni tarihler tarih seçicide gösterilir.</p></div></details>
+      <details><summary>Gizli mi?</summary><div class="answer"><p>Evet. Dosya tarayıcında okunur, asla yüklenmez ve TikTok’a bildirim gitmez.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

@@ -1,0 +1,60 @@
+<!--page {
+  "route": "/instagram-story-archive/",
+  "nav": "tools",
+  "title": "Ve tus historias y publicaciones antiguas de Instagram · Unwrapped",
+  "description": "Mira cada historia, publicación y reel que compartiste en Instagram, incluso historias que desaparecieron hace años, desde tu propia descarga de datos. Navega por año y guarda los originales. Privado, sin login.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-image"/></svg>Publicaciones e historias · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Cada historia</span></span>
+        <span class="line"><span><span class="serif grad">que publicaste.</span></span></span>
+      </h1>
+      <p class="hero-sub">La descarga de datos de Instagram guarda tus historias, publicaciones y reels, incluso historias que desaparecieron hace años. Suelta el ZIP y míralas como una <b>galería por año</b>, con <b>textos y fechas</b>, y <b>guarda los originales</b>. No se sube nada.</p>
+    </div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Qué obtienes</span><h2 class="h2">Tus recuerdos de Instagram, <span class="serif">en un solo lugar.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Historias</b>: cada historia que compartiste, mucho después de las 24 horas.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Publicaciones y reels</b>, con sus textos, incluidos los carruseles.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Publicaciones archivadas y fotos de perfil antiguas</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Filtra por año y tipo</b>, abre cualquier elemento a tamaño completo y <b>guarda el archivo original</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>También tus chats, en el <a href="/instagram-message-viewer/">Visor de mensajes</a>.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Cómo funciona</span><h2 class="h2">Tres pasos, en tu dispositivo.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Pide tu contenido</b><span>Centro de cuentas → Tu información y permisos → Descargar tu información → elige <b>Contenido</b> (o Toda la información disponible), formato JSON, con multimedia.</span></li>
+      <li><b>Suelta el ZIP aquí</b><span>Tu navegador lo abre localmente, incluso archivos grandes con miles de fotos.</span></li>
+      <li><b>Abre “Tus publicaciones e historias”</b><span>Gratis para ver y guardar, uno por uno.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Preguntas frecuentes</span><h2 class="h2">Historias antiguas, encontradas.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>¿Cómo puedo ver mis historias antiguas de Instagram?</summary><div class="answer"><p>Si el archivo de historias estaba activado, están en el Archivo de la app. En cualquier caso, tu descarga de datos incluye las historias que Instagram guardó de tu cuenta. Suéltala aquí y abre “Tus publicaciones e historias”.</p></div></details>
+      <details><summary>¿Puedo recuperar una publicación que borré?</summary><div class="answer"><p>Las publicaciones borradas recientemente se pueden restaurar en la app durante 30 días. Después, tu descarga solo contiene lo que Instagram aún guarda: a menudo elementos archivados, pero no los borrados definitivamente.</p></div></details>
+      <details><summary>¿Por qué faltan algunas fotos?</summary><div class="answer"><p>Los archivos multimedia solo se incluyen si los pides. Vuelve a solicitar la descarga con multimedia y una calidad más alta.</p></div></details>
+      <details><summary>¿Se suben mis fotos?</summary><div class="answer"><p>No. Todo se muestra desde el ZIP dentro de tu navegador.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
