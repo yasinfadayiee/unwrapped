@@ -401,7 +401,30 @@ function inAppBrowserNotice() {
   document.body.prepend(bar);
 }
 
+/* ---------- 404 in the visitor's language ---------- */
+// There is one 404 page for all languages; pick the language from the URL
+// (/es/…) or, failing that, from the browser.
+const NOT_FOUND = {
+  es: ['Esta página nunca estuvo en la exportación.', 'Quizá nos dejó de seguir. Volvamos al inicio.', 'Ir al inicio', 'Centro de ayuda'],
+  pt: ['Esta página nunca esteve na exportação.', 'Talvez ela tenha deixado de nos seguir. Vamos voltar.', 'Ir para o início', 'Central de ajuda'],
+  tr: ['Bu sayfa hiç dışa aktarımda yoktu.', 'Belki bizi takipten çıktı. Seni geri götürelim.', 'Ana sayfaya git', 'Yardım merkezi'],
+};
+function localizedNotFound() {
+  if (!$('[data-404]')) return;
+  const fromPath = (location.pathname.match(/^\/(es|pt|tr)\//) || [])[1];
+  const code = fromPath || (navigator.language || '').slice(0, 2).toLowerCase();
+  const texts = NOT_FOUND[code];
+  if (!texts) return;
+  const [title, text, home, help] = texts;
+  document.documentElement.lang = code;
+  $('[data-404-title]').textContent = title;
+  $('[data-404-text]').textContent = text;
+  Object.assign($('[data-404-home]'), { textContent: home, href: `/${code}/` });
+  Object.assign($('[data-404-help]'), { textContent: help, href: `/${code}/help/` });
+}
+
 header();
+localizedNotFound();
 inAppBrowserNotice();
 supportContact();
 import('./lib/stats.js').then(({ trackView }) => trackView()).catch(() => {});

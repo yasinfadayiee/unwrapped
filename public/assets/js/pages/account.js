@@ -5,14 +5,15 @@ import { savedOrders, forgetOrder, tronScreen, successScreen } from '../lib/chec
 import { countAllSnapshots, deleteAllSnapshots } from '../app/snapshots.js';
 import { inviteLink } from '../lib/referral.js';
 import { TIER_NAME, TIER_RANK } from '../lib/tiers.js';
+import { t, locale } from '../lib/i18n.js';
 
 const root = document.getElementById('account-root');
 
 const REASONS = {
-  not_found: 'We couldn’t find that key. Check for typos — it looks like UNW-XXXX-XXXX-XXXX-XXXX.',
-  expired: 'This license has expired. Renew it below — your key stays the same.',
-  revoked: 'This license is no longer active.',
-  missing_key: 'Please paste your license key.',
+  not_found: () => t('We couldn’t find that key. Check for typos — it looks like UNW-XXXX-XXXX-XXXX-XXXX.'),
+  expired: () => t('This license has expired. Renew it below — your key stays the same.'),
+  revoked: () => t('This license is no longer active.'),
+  missing_key: () => t('Please paste your license key.'),
 };
 
 let renderSeq = 0;
@@ -28,7 +29,7 @@ async function render() {
   const status = h(
     'section',
     { class: 'panel' },
-    h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Status'), h('p', null, state.pro ? `${TIER_NAME[state.tier]} is active in this browser.` : 'You are on the free plan in this browser.')), state.pro ? h('span', { class: 'badge' }, icon('check'), TIER_NAME[state.tier]) : h('span', { class: 'badge badge--muted' }, 'Free')),
+    h('div', { class: 'panel-head' }, h('div', null, h('h3', null, t('Status')), h('p', null, state.pro ? t('{v0} is active in this browser.', { v0: TIER_NAME[state.tier] }) : t('You are on the free plan in this browser.'))), state.pro ? h('span', { class: 'badge' }, icon('check'), TIER_NAME[state.tier]) : h('span', { class: 'badge badge--muted' }, t('Free'))),
     state.pro
       ? h(
           'div',
@@ -36,31 +37,31 @@ async function render() {
           h(
             'div',
             { class: 'stats' },
-            h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Plan'), h('span', { class: 'value', style: { fontSize: '24px' } }, config.plans.find((p) => p.id === state.plan)?.name || `${TIER_NAME[state.tier]}${state.lifetime ? ' · Lifetime' : ''}`)),
+            h('div', { class: 'stat' }, h('span', { class: 'label' }, t('Plan')), h('span', { class: 'value', style: { fontSize: '24px' } }, `${TIER_NAME[state.tier]}${state.lifetime ? ` · ${t('Lifetime')}` : ''}`)),
             h(
               'div',
               { class: 'stat' },
-              h('span', { class: 'label' }, 'Valid until'),
-              h('span', { class: 'value', style: { fontSize: '24px' } }, state.lifetime ? 'Forever' : new Date(state.expiresAt).toLocaleDateString('en-US', { dateStyle: 'medium' })),
-              !state.lifetime && state.lifetimeTier ? h('span', { class: 'sub' }, `then lifetime ${TIER_NAME[state.lifetimeTier]}`) : null,
+              h('span', { class: 'label' }, t('Valid until')),
+              h('span', { class: 'value', style: { fontSize: '24px' } }, state.lifetime ? t('Forever') : new Date(state.expiresAt).toLocaleDateString(locale, { dateStyle: 'medium' })),
+              !state.lifetime && state.lifetimeTier ? h('span', { class: 'sub' }, t('then lifetime {v0}', { v0: TIER_NAME[state.lifetimeTier] })) : null,
             ),
           ),
           keyRow(keyText),
         )
       : keyText
-        ? h('div', { class: 'stack', style: { '--stack': '10px' } }, h('p', { class: 'small text-2' }, 'A license key is saved here but it isn’t active (expired or revoked).'), keyRow(keyText))
+        ? h('div', { class: 'stack', style: { '--stack': '10px' } }, h('p', { class: 'small text-2' }, t('A license key is saved here but it isn’t active (expired or revoked).')), keyRow(keyText))
         : null,
   );
   root.append(status);
 
-  // Invite friends (Pro only)
+  // Invite friends (paid plans only)
   if (state.pro && state.key) {
-    const box = h('div', { class: 'stack', style: { '--stack': '12px' } }, h('div', { class: 'status-line' }, h('span', { class: 'spinner' }), h('span', null, 'Loading your invite link…')));
+    const box = h('div', { class: 'stack', style: { '--stack': '12px' } }, h('div', { class: 'status-line' }, h('span', { class: 'spinner' }), h('span', null, t('Loading your invite link…'))));
     root.append(
       h(
         'section',
         { class: 'panel', id: 'invite' },
-        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Invite friends, earn free Pro'), h('p', null, `Friends get ${Math.round((config.referral?.discount || 0.1) * 100)}% off. You get ${config.referral?.rewardDays || 30} free days for every friend who buys.`))),
+        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, t('Invite friends, earn free days')), h('p', null, t('Friends get {v0}% off. You get {v1} free days for every friend who buys.', { v0: Math.round((config.referral?.discount || 0.1) * 100), v1: config.referral?.rewardDays || 30 })))),
         box,
       ),
     );
@@ -68,11 +69,11 @@ async function render() {
       .then((ref) => {
         if (!ref.ok) throw new Error(ref.reason);
         const link = inviteLink(ref.code);
-        const copy = h('button', { class: 'copy-btn', type: 'button' }, 'Copy');
+        const copy = h('button', { class: 'copy-btn', type: 'button' }, t('Copy'));
         copy.addEventListener('click', () => copyText(link, copy));
-        const share = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('share'), 'Share');
+        const share = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, icon('share'), t('Share'));
         share.addEventListener('click', async () => {
-          const text = 'I found out who doesn’t follow me back — without giving my password. Get 10% off Pro:';
+          const text = t('I found out who doesn’t follow me back — without giving my password. Get 10% off:');
           if (navigator.share) {
             try {
               await navigator.share({ title: 'Unwrapped', text, url: link });
@@ -82,37 +83,37 @@ async function render() {
           } else copyText(link, copy);
         });
         append(clear(box), [
-          h('div', { class: 'pay-line' }, h('span', { class: 'k' }, 'Link'), h('span', { class: 'v' }, link), copy),
-          h('div', { class: 'stats' }, h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Friends who bought'), h('span', { class: 'value' }, String(ref.uses))), h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Free days earned'), h('span', { class: 'value' }, String(ref.earnedDays)))),
+          h('div', { class: 'pay-line' }, h('span', { class: 'k' }, t('Link')), h('span', { class: 'v' }, link), copy),
+          h('div', { class: 'stats' }, h('div', { class: 'stat' }, h('span', { class: 'label' }, t('Friends who bought')), h('span', { class: 'value' }, String(ref.uses))), h('div', { class: 'stat' }, h('span', { class: 'label' }, t('Free days earned')), h('span', { class: 'value' }, String(ref.earnedDays)))),
           h('div', null, share),
-          state.lifetime ? h('p', { class: 'tiny muted' }, 'You already have lifetime access, so invites earn no extra days — but your friends still save.') : null,
+          state.lifetime ? h('p', { class: 'tiny muted' }, t('You already have lifetime access, so invites earn no extra days — but your friends still save.')) : null,
         ]);
         if (location.hash === '#invite') document.getElementById('invite')?.scrollIntoView({ block: 'start' });
       })
       .catch(() => {
-        clear(box).append(h('p', { class: 'small muted' }, 'Your invite link is not available right now. Try again later.'));
+        clear(box).append(h('p', { class: 'small muted' }, t('Your invite link is not available right now. Try again later.')));
       });
   }
 
   // Activate
-  const input = h('input', { class: 'input mono', placeholder: 'UNW-XXXX-XXXX-XXXX-XXXX', 'aria-label': 'License key', autocomplete: 'off', spellcheck: false });
-  const btn = h('button', { class: 'btn btn--primary', type: 'button' }, 'Activate');
+  const input = h('input', { class: 'input mono', placeholder: 'UNW-XXXX-XXXX-XXXX-XXXX', 'aria-label': t('License key'), autocomplete: 'off', spellcheck: false });
+  const btn = h('button', { class: 'btn btn--primary', type: 'button' }, t('Activate'));
   const msg = h('div', { class: 'small', role: 'status', style: { marginTop: '10px' } });
   const fromHash = new URLSearchParams(location.hash.slice(1)).get('key');
   if (fromHash) input.value = fromHash;
   btn.addEventListener('click', async () => {
     btn.disabled = true;
-    msg.textContent = 'Checking…';
+    msg.textContent = t('Checking…');
     try {
       const res = await activateKey(input.value);
       if (res.ok) {
-        toast('License activated on this device');
+        toast(t('License activated on this device'));
         history.replaceState(null, '', location.pathname);
         return; // the license event re-renders the page
       }
-      msg.textContent = REASONS[res.reason] || 'Could not activate this key.';
+      msg.textContent = REASONS[res.reason]?.() || t('Could not activate this key.');
     } catch {
-      msg.textContent = 'Could not reach the server. Check your connection.';
+      msg.textContent = t('Could not reach the server. Check your connection.');
     } finally {
       btn.disabled = false;
     }
@@ -121,7 +122,7 @@ async function render() {
     h(
       'section',
       { class: 'panel' },
-      h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Activate a license key'), h('p', null, 'Bought a plan on another device? Paste your key here.'))),
+      h('div', { class: 'panel-head' }, h('div', null, h('h3', null, t('Activate a license key')), h('p', null, t('Bought a plan on another device? Paste your key here.')))),
       h('div', { style: { display: 'flex', gap: '10px', flexWrap: 'wrap' } }, h('div', { style: { flex: '1', minWidth: '240px' } }, input), btn),
       msg,
     ),
@@ -139,16 +140,16 @@ async function render() {
         h(
           'div',
           null,
-          h('h3', null, state.pro ? 'Upgrade, renew or extend' : 'Choose a plan'),
-          h('p', null, state.pro ? 'Same tier: new time is added on top. Higher tier: the time you have left is converted at fair value. Your key stays the same.' : 'Pay with crypto, activation is automatic.'),
+          h('h3', null, state.pro ? t('Upgrade, renew or extend') : t('Choose a plan')),
+          h('p', null, state.pro ? t('Same tier: new time is added on top. Higher tier: the time you have left is converted at fair value. Your key stays the same.') : t('Pay with crypto, activation is automatic.')),
         ),
       ),
       h(
         'div',
         { style: { display: 'flex', gap: '10px', flexWrap: 'wrap' } },
         (config.tiers || [])
-          .filter((t) => !state.lifetimeTier || TIER_RANK[t.id] > TIER_RANK[state.lifetimeTier])
-          .map((t) => h('button', { class: `btn ${t.id === 'pro' ? 'btn--primary' : 'btn--ghost'}`, type: 'button', dataset: { checkout: '', tier: t.id } }, state.pro && t.id === state.tier ? `Extend ${t.name}` : t.name)),
+          .filter((tier) => !state.lifetimeTier || TIER_RANK[tier.id] > TIER_RANK[state.lifetimeTier])
+          .map((tier) => h('button', { class: `btn ${tier.id === 'pro' ? 'btn--primary' : 'btn--ghost'}`, type: 'button', dataset: { checkout: '', tier: tier.id } }, state.pro && tier.id === state.tier ? t('Extend {v0}', { v0: tier.name }) : tier.name)),
       ),
     ),
   );
@@ -160,31 +161,31 @@ async function render() {
       h(
         'section',
         { class: 'panel' },
-        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Pending payments'), h('p', null, 'Orders started in this browser.'))),
+        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, t('Pending payments')), h('p', null, t('Orders started in this browser.')))),
         h(
           'div',
           { class: 'rows' },
           orders.map((o) => {
-            const resume = h('button', { class: 'row-btn', type: 'button' }, 'Resume');
+            const resume = h('button', { class: 'row-btn', type: 'button' }, t('Resume'));
             resume.addEventListener('click', async () => {
               try {
                 const res = await api(`/api/order?id=${encodeURIComponent(o.id)}&t=${encodeURIComponent(o.t)}`);
-                const m = modal({ title: 'Payment' });
+                const m = modal({ title: t('Payment') });
                 if (res.order.status === 'paid') successScreen(m, res.order);
                 else if (res.order.method === 'tron') tronScreen(m, res.order, o.t, config);
                 else location.href = `/success/?order=${encodeURIComponent(o.id)}&t=${encodeURIComponent(o.t)}`;
               } catch {
-                toast('This order is no longer available', { iconName: 'info' });
+                toast(t('This order is no longer available'), { iconName: 'info' });
                 forgetOrder(o.id);
                 render();
               }
             });
-            const remove = h('button', { class: 'row-btn', type: 'button', 'aria-label': 'Forget this order' }, icon('trash'));
+            const remove = h('button', { class: 'row-btn', type: 'button', 'aria-label': t('Forget this order') }, icon('trash'));
             remove.addEventListener('click', () => {
               forgetOrder(o.id);
               render();
             });
-            return h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, `Order ${o.id}`), h('span', null, `${o.plan} · ${o.method} · ${new Date(o.createdAt).toLocaleString('en-US')}`)), h('div', { class: 'acts' }, resume, remove));
+            return h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, t('Order {v0}', { v0: o.id })), h('span', null, `${o.plan} · ${o.method} · ${new Date(o.createdAt).toLocaleString(locale)}`)), h('div', { class: 'acts' }, resume, remove));
           }),
         ),
       ),
@@ -192,44 +193,44 @@ async function render() {
   }
 
   // Local data
-  const wipe = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('trash'), 'Delete all local data');
+  const wipe = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('trash'), t('Delete all local data'));
   wipe.addEventListener('click', async () => {
-    if (!confirm('Delete all snapshots, kept-account lists and queue progress stored in this browser? Your license stays.')) return;
+    if (!confirm(t('Delete all snapshots, kept-account lists and queue progress stored in this browser? Your license stays.'))) return;
     await deleteAllSnapshots();
     for (const k of Object.keys(localStorage)) if (/^unw\.(keep|queue)\./.test(k)) localStorage.removeItem(k);
-    toast('Local data deleted');
+    toast(t('Local data deleted'));
     render();
   });
   root.append(
     h(
       'section',
       { class: 'panel', id: 'local-data' },
-      h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Local data'), h('p', null, `${snapshots} follower snapshot${snapshots === 1 ? '' : 's'} stored only in this browser.`)), wipe),
-      h('p', { class: 'small text-2' }, 'Snapshots let us show who unfollowed you next time. They never leave this device and are not part of your license.'),
+      h('div', { class: 'panel-head' }, h('div', null, h('h3', null, t('Local data')), h('p', null, t('{v0} follower snapshots stored only in this browser.', { v0: snapshots }))), wipe),
+      h('p', { class: 'small text-2' }, t('Snapshots let us show who unfollowed you next time. They never leave this device and are not part of your license.')),
     ),
   );
-  if (config.support) root.append(h('p', { class: 'small muted' }, 'Need help? Contact: ', config.support));
+  if (config.support) root.append(h('p', { class: 'small muted' }, t('Need help? Contact:'), ' ', config.support));
 }
 
 function keyRow(key) {
   if (!key) return null;
   const masked = `${key.slice(0, 9)}••••-••••-${key.slice(-4)}`;
   const shown = h('span', { class: 'v' }, masked);
-  const reveal = h('button', { class: 'copy-btn', type: 'button' }, 'Show');
+  const reveal = h('button', { class: 'copy-btn', type: 'button' }, t('Show'));
   reveal.addEventListener('click', () => {
     const on = shown.textContent === masked;
     shown.textContent = on ? key : masked;
-    reveal.textContent = on ? 'Hide' : 'Show';
+    reveal.textContent = on ? t('Hide') : t('Show');
   });
-  const copy = h('button', { class: 'copy-btn', type: 'button' }, 'Copy');
+  const copy = h('button', { class: 'copy-btn', type: 'button' }, t('Copy'));
   copy.addEventListener('click', () => copyText(key, copy));
-  const remove = h('button', { class: 'copy-btn', type: 'button' }, 'Remove');
+  const remove = h('button', { class: 'copy-btn', type: 'button' }, t('Remove'));
   remove.addEventListener('click', () => {
-    if (!confirm('Remove the license from this browser? You can re-activate it later with the key.')) return;
+    if (!confirm(t('Remove the license from this browser? You can re-activate it later with the key.'))) return;
     clearLicense();
     render();
   });
-  return h('div', { class: 'pay-line' }, h('span', { class: 'k' }, 'Key'), shown, reveal, copy, remove);
+  return h('div', { class: 'pay-line' }, h('span', { class: 'k' }, t('Key')), shown, reveal, copy, remove);
 }
 
 render();

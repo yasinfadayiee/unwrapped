@@ -6,7 +6,7 @@ import { proState, storeLicense, storedKey } from './license.js';
 import { qrcode } from '../vendor/qrcode.js';
 import { storedRef, forgetRef } from './referral.js';
 import { TIER_NAME, TIER_RANK, tierFor } from './tiers.js';
-import { t, locale } from './i18n.js';
+import { t, locale, lang } from './i18n.js';
 
 const tr = t; // for loops where `t` is a tier
 
@@ -383,7 +383,7 @@ export function successScreen(m, order) {
       h('p', { class: 'small text-2' }, t('Save this key — it unlocks {tier} on any browser or phone.', { tier: tierName })),
       h('div', { style: { display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' } }, copy, save),
       h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: m.close }, t('Continue')),
-      h('p', { class: 'small text-2' }, t('Invite friends and earn 30 free days for every friend who buys — ') , h('a', { href: '/account/#invite' }, t('get your invite link')), '.'),
+      h('p', { class: 'small text-2' }, t('Invite friends and earn 30 free days for every friend who buys — ') , h('a', { href: `${lang === 'en' ? '' : `/${lang}`}/account/#invite` }, t('get your invite link')), '.'),
     ),
   );
   toast(t('{tier} unlocked', { tier: tierName }));
