@@ -1,6 +1,7 @@
-
-import { t as tl } from './i18n.js';// Tiny DOM toolkit. Untrusted text (usernames, file contents) only ever
+// Tiny DOM toolkit. Untrusted text (usernames, file contents) only ever
 // enters the page through text nodes — never through innerHTML.
+
+import { t as tl } from './i18n.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 

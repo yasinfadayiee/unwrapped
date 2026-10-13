@@ -60,6 +60,12 @@ function botNames(n) {
 
 const sec = (ms) => Math.floor(ms / 1000);
 const DAY = 86_400_000;
+const DEMO_LINES = [
+  'hey! how was the weekend?', 'omg did you see that reel 😂', 'coffee tomorrow?', 'sure, 10am works', 'sending you the photos now',
+  'that typography is so good', 'haha yes', 'can’t wait for the trip ✈️', 'are you coming to the launch on friday?', 'love this',
+  'just landed', 'call me when you’re free', 'the new design looks amazing', 'happy birthday!! 🎉', 'lol same',
+  'thanks so much 🙏', 'what time does it start?', 'see you there', 'that’s hilarious', 'miss you!',
+];
 
 function entry(path, content, mtime) {
   const bytes = new TextEncoder().encode(content);
@@ -154,7 +160,10 @@ export function demoInstagramFiles(now, rand, { followerCount = 1284, followingC
       let ts = new Date(now - ago * DAY).setHours(hour, Math.floor(rand() * 60));
       const length = Math.min(count - messages.length, 2 + Math.floor(rand() * 9));
       for (let k = 0; k < length; k++) {
-        messages.push({ sender_name: rand() < mine ? 'Nova Studio' : u, timestamp_ms: ts, content: 'hey' });
+        const msg = { sender_name: rand() < mine ? 'Nova Studio' : u, timestamp_ms: ts, content: DEMO_LINES[Math.floor(rand() * DEMO_LINES.length)] };
+        if (rand() < 0.04) msg.share = { link: 'https://www.instagram.com/reel/demo/' };
+        if (rand() < 0.06) msg.reactions = [{ reaction: ['❤️', '😂', '🔥', '👍'][Math.floor(rand() * 4)], actor: u }];
+        messages.push(msg);
         ts += Math.floor((0.2 + rand() * 1.6) * pace * 60_000);
       }
     }

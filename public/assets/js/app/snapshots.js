@@ -91,6 +91,30 @@ export async function deleteAllSnapshots() {
   return tx('readwrite', (store) => store.clear());
 }
 
+// Backup file: every snapshot of every account, without the local ids.
+export async function exportSnapshots() {
+  let all = [];
+  try {
+    all = await tx('readonly', (store) => store.getAll());
+  } catch {
+    /* no storage */
+  }
+  return { app: 'unwrapped', kind: 'snapshots', version: 1, exportedAt: Date.now(), snapshots: (all || []).map(({ id, ...rest }) => rest) };
+}
+
+// Restores a backup; snapshots that are already here are skipped by saveSnapshot.
+export async function importSnapshots(backup) {
+  if (backup?.app !== 'unwrapped' || !Array.isArray(backup.snapshots)) throw new Error('Not a backup');
+  let added = 0;
+  for (const s of backup.snapshots) {
+    if (typeof s?.acct !== 'string' || !Array.isArray(s.followers) || !Array.isArray(s.following) || !Number.isFinite(s.takenAt)) continue;
+    const before = (await listSnapshots(s.acct)).length;
+    await saveSnapshot({ acct: s.acct, platform: String(s.platform || ''), account: String(s.account || ''), takenAt: s.takenAt, followers: s.followers.map(String), following: s.following.map(String), labels: s.labels && typeof s.labels === 'object' ? s.labels : {}, removed: Array.isArray(s.removed) ? s.removed.map(String) : [] });
+    if ((await listSnapshots(s.acct)).length > before) added++;
+  }
+  return added;
+}
+
 export async function countAllSnapshots() {
   try {
     return await tx('readonly', (store) => store.count());

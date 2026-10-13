@@ -45,6 +45,7 @@ const CORE = [
   '/assets/js/app/views-friends.js',
   '/assets/js/app/views-instagram.js',
   '/assets/js/app/views-lab.js',
+  '/assets/js/app/views-messages.js',
   '/assets/js/app/views-linkedin.js',
   '/assets/js/app/views-tiktok.js',
   '/assets/js/app/views-wrapped.js',

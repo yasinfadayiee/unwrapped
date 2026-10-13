@@ -152,7 +152,10 @@ async function readMessages(vfs, selfName, progress) {
       sent: 0,
       first: Infinity,
       last: 0,
+      files: [],
     };
+    // Kept so the Message viewer can read the full text later, on demand.
+    t.files.push(file);
     for (const msg of data.messages || []) {
       const sender = fixMeta(msg.sender_name || '');
       senders.set(sender, (senders.get(sender) || 0) + 1);
@@ -216,10 +219,51 @@ async function readMessages(vfs, selfName, progress) {
       recentMine,
       dynamics: isGroup ? null : conversationDynamics(t.log, me, latest),
       chat: isGroup ? null : chatStats(t.log),
+      load: () => loadThread(t.files, vfs),
     });
   }
   list.sort((a, b) => b.count - a.count);
-  return { me, total, sent, received: total - sent, threads: list.slice(0, 50), all: list.filter((t) => !t.isGroup), latest, threadCount: list.length, byHour, inHeat };
+  return { me, total, sent, received: total - sent, threads: list.slice(0, 50), all: list.filter((t) => !t.isGroup), every: list, latest, threadCount: list.length, byHour, inHeat };
+}
+
+// Media in the export is referenced by a path inside the archive.
+function mediaFinder(vfs) {
+  return (uri) => {
+    if (!uri || /^https?:/i.test(uri)) return null;
+    const tail = uri.replace(/\\/g, '/').toLowerCase().split('/').slice(-3).join('/');
+    return vfs.find((e) => e.lower.endsWith(tail)) || null;
+  };
+}
+
+// Every message of one conversation, oldest first, with text and media references.
+async function loadThread(files, vfs) {
+  const findMedia = mediaFinder(vfs);
+  const messages = [];
+  for (const file of files) {
+    let data;
+    try {
+      data = await file.json();
+    } catch {
+      continue;
+    }
+    for (const m of data.messages || []) {
+      const media = [
+        ...(m.photos || []).map((p) => ({ kind: 'photo', entry: findMedia(p.uri) })),
+        ...(m.videos || []).map((p) => ({ kind: 'video', entry: findMedia(p.uri) })),
+        ...(m.audio_files || []).map((p) => ({ kind: 'audio', entry: findMedia(p.uri) })),
+      ];
+      messages.push({
+        ts: toMs(m.timestamp_ms),
+        sender: fixMeta(m.sender_name || ''),
+        text: m.content ? fixMeta(m.content) : '',
+        link: m.share?.link || '',
+        media,
+        reactions: (m.reactions || []).map((r) => fixMeta(r.reaction || '')).filter(Boolean),
+        unsent: Boolean(m.is_unsent),
+      });
+    }
+  }
+  return messages.sort((a, b) => a.ts - b.ts);
 }
 
 async function readActivity(vfs, account, progress) {

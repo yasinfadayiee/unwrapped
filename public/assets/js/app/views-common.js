@@ -1,12 +1,12 @@
 // Views shared by every platform with followers/following.
 
-import { h, icon, clear } from '../lib/ui.js';
+import { h, icon, clear, toast, downloadBlob } from '../lib/ui.js';
 import { fmtInt, pct, dateShort, relTime, plural } from '../lib/format.js';
 import { relationships, diffSnapshots, exposureScore } from '../core/insights.js';
 import { viewHead, stat, panel, insights, userList, emptyState, lockCard, personRow, dataNote, reminderButton } from './components.js';
 import { relationshipOrbit } from './orbit.js';
 import { barChart, splitBar } from './charts.js';
-import { deleteSnapshot } from './snapshots.js';
+import { deleteSnapshot, exportSnapshots, importSnapshots } from './snapshots.js';
 import { openQueue } from './queue.js';
 import { t as tl } from '../lib/i18n.js';
 
@@ -160,6 +160,7 @@ export function unfollowersView(ds, ctx) {
           !ctx.pro && { icon: 'bolt', title: tl('Seeing the names needs Plus'), text: tl('Free shows how many unfollowed you; Plus reveals who.') },
         ]),
       ),
+      backupPanel(ctx),
     );
     return root;
   }
@@ -251,9 +252,40 @@ export function unfollowersView(ds, ctx) {
       }),
     ),
   );
-  root.append(controls, body, timeline, manage);
+  root.append(controls, body, timeline, manage, backupPanel(ctx));
   draw();
   return root;
+}
+
+// Snapshots live only in this browser; a backup file protects the history
+// against cleared site data and lets it move to another device.
+function backupPanel(ctx) {
+  const save = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('download'), tl('Download backup'));
+  const input = h('input', { type: 'file', accept: '.json,application/json', class: 'drop-file', tabindex: '-1', 'aria-hidden': 'true' });
+  const restore = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('upload'), tl('Restore backup'));
+  save.addEventListener('click', async () => {
+    const backup = await exportSnapshots();
+    if (!backup.snapshots.length) return toast(tl('No snapshots to back up yet.'), { iconName: 'info' });
+    downloadBlob(new Blob([JSON.stringify(backup)], { type: 'application/json' }), `unwrapped-history-${new Date().toISOString().slice(0, 10)}.json`);
+    toast(tl('Backup saved — keep the file somewhere safe'));
+  });
+  restore.addEventListener('click', () => input.click());
+  input.addEventListener('change', async () => {
+    const file = input.files[0];
+    input.value = '';
+    if (!file) return;
+    try {
+      const added = await importSnapshots(JSON.parse(await file.text()));
+      toast(tl('{v0} snapshots restored', { v0: fmtInt(added) }));
+      ctx.reloadSnapshots();
+    } catch {
+      toast(tl('That file is not an Unwrapped backup.'), { iconName: 'close' });
+    }
+  });
+  return panel(
+    { title: tl('Back up your history'), text: tl('Your snapshots exist only in this browser. Save a backup file to keep your unfollower history safe if you clear your browser data — or to move it to another device.') },
+    h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } }, save, restore, input),
+  );
 }
 
 export function exposurePanel(parts, tips) {
