@@ -15,9 +15,20 @@ if (lang !== 'en') {
   }
 }
 
+// One-decimal stats arrive as "6.3" (toFixed(1)); show them with the page's
+// decimal mark. Two-decimal values (payment amounts) are left exactly as they are.
+const decimalMark = (() => {
+  try {
+    return (1.5).toLocaleString(locale).charAt(1);
+  } catch {
+    return '.';
+  }
+})();
+const localDecimal = (v) => (decimalMark !== '.' && typeof v === 'string' && /^-?\d+\.\d$/.test(v) ? v.replace('.', decimalMark) : v);
+
 // Placeholders like {name} are filled from `vars` after translating.
 export function t(text, vars) {
   let s = dict[text] ?? text;
-  if (vars) s = s.replace(/\{(\w+)\}/g, (_, k) => (vars[k] ?? ''));
+  if (vars) s = s.replace(/\{(\w+)\}/g, (_, k) => localDecimal(vars[k] ?? ''));
   return s;
 }
