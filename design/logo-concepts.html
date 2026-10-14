@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unwrapped logo concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #07070b; --card: #101017; --line: rgba(255,255,255,.08); --text: #f4f4f6; --muted: #9a9aab; --signal: #d7ff3a; --uv: #8f7dff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: Vazirmatn, sans-serif; padding: 32px 16px 64px; }
+  h1 { text-align: center; font-size: 22px; margin: 0 0 6px; }
+  p.lead { text-align: center; color: var(--muted); margin: 0 0 28px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 18px; max-width: 1100px; margin: 0 auto; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 22px; display: grid; gap: 18px; }
+  .card h2 { margin: 0; font-size: 17px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+  .stage { display: grid; place-items: center; border-radius: 18px; padding: 28px 12px; background: radial-gradient(120% 90% at 50% 0%, rgba(143,125,255,.18), transparent 60%), #0b0b11; }
+  .stage.light { background: #f4f4f6; }
+  .lockup { display: flex; align-items: center; gap: 12px; direction: ltr; }
+  .lockup span { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px; letter-spacing: -0.03em; }
+  .light .lockup span { color: #0a0a0e; }
+  .sizes { display: flex; gap: 14px; align-items: end; justify-content: center; direction: ltr; }
+  .sizes svg:nth-child(1) { width: 64px; } .sizes svg:nth-child(2) { width: 40px; } .sizes svg:nth-child(3) { width: 24px; } .sizes svg:nth-child(4) { width: 16px; }
+</style>
+</head>
+<body>
+<h1>سه طرح لوگو برای Unwrapped</h1>
+<p class="lead">هر طرح در اندازهٔ بزرگ، کنار اسم، روی زمینهٔ روشن و در اندازهٔ کوچک (مثل آیکون مرورگر) نشان داده شده.</p>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8f7dff"/><stop offset="1" stop-color="#5b4bd6"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8f7dff"/><stop offset="1" stop-color="#d7ff3a"/></linearGradient>
+  </defs>
+  <!-- A: gift box opening, ribbon becomes a spark -->
+  <symbol id="logoA" viewBox="0 0 64 64">
+    <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#g1)"/>
+    <path d="M17 30h30v15a5 5 0 0 1-5 5H22a5 5 0 0 1-5-5z" fill="#fff"/>
+    <path d="M14 23.5a3 3 0 0 1 3-3h30a3 3 0 0 1 3 3v3.5H14z" fill="#fff" transform="rotate(-12 14 27)"/>
+    <rect x="29.5" y="30" width="5" height="20" fill="#d7ff3a"/>
+    <path d="M44 9l1.6 4.2L50 15l-4.4 1.8L44 21l-1.6-4.2L38 15l4.4-1.8z" fill="#d7ff3a"/>
+  </symbol>
+  <!-- B: the letter U as an opened wrapper with a data dot -->
+  <symbol id="logoB" viewBox="0 0 64 64">
+    <rect x="4" y="4" width="56" height="56" rx="16" fill="#0f0f16" stroke="rgba(255,255,255,.12)"/>
+    <path d="M19 16v18a13 13 0 0 0 26 0V16" fill="none" stroke="url(#g2)" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="32" cy="16" r="4.5" fill="#d7ff3a"/>
+  </symbol>
+  <!-- C: folded corner (current mark) refined — a file being unwrapped -->
+  <symbol id="logoC" viewBox="0 0 64 64">
+    <rect x="4" y="4" width="56" height="56" rx="16" fill="#d7ff3a"/>
+    <path d="M20 14h16l10 10v22a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V18a4 4 0 0 1 4-4z" fill="#0a0a0e"/>
+    <path d="M36 14v7a3 3 0 0 0 3 3h7z" fill="#8f7dff"/>
+    <circle cx="26" cy="36" r="4" fill="#d7ff3a"/>
+    <path d="M33 33h7M33 39h5" stroke="#d7ff3a" stroke-width="2.6" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<div class="grid">
+  <div class="card">
+    <h2>طرح A: جعبهٔ کادوی باز</h2>
+    <p>مستقیم معنی «Unwrapped» (باز شده از کادو) را می‌رساند. جرقهٔ سبز یعنی چیزی که کشف می‌کنی. رنگی‌ترین و دوستانه‌ترین طرح است.</p>
+    <div class="stage"><svg width="120" height="120"><use href="#logoA"/></svg></div>
+    <div class="stage"><div class="lockup"><svg width="44" height="44"><use href="#logoA"/></svg><span>Unwrapped</span></div></div>
+    <div class="stage light"><div class="lockup"><svg width="44" height="44"><use href="#logoA"/></svg><span>Unwrapped</span></div></div>
+    <div class="stage"><div class="sizes"><svg viewBox="0 0 64 64"><use href="#logoA"/></svg><svg viewBox="0 0 64 64"><use href="#logoA"/></svg><svg viewBox="0 0 64 64"><use href="#logoA"/></svg><svg viewBox="0 0 64 64"><use href="#logoA"/></svg></div></div>
+  </div>
+  <div class="card">
+    <h2>طرح B: حرف U</h2>
+    <p>حرف اول برند، مینیمال و مدرن، با گرادیان بنفش به سبز (رنگ‌های اصلی سایت). نقطهٔ سبز یعنی «داده». بیشتر حس اپ تکنولوژی دارد.</p>
+    <div class="stage"><svg width="120" height="120"><use href="#logoB"/></svg></div>
+    <div class="stage"><div class="lockup"><svg width="44" height="44"><use href="#logoB"/></svg><span>Unwrapped</span></div></div>
+    <div class="stage light"><div class="lockup"><svg width="44" height="44"><use href="#logoB"/></svg><span>Unwrapped</span></div></div>
+    <div class="stage"><div class="sizes"><svg viewBox="0 0 64 64"><use href="#logoB"/></svg><svg viewBox="0 0 64 64"><use href="#logoB"/></svg><svg viewBox="0 0 64 64"><use href="#logoB"/></svg><svg viewBox="0 0 64 64"><use href="#logoB"/></svg></div></div>
+  </div>
+  <div class="card">
+    <h2>طرح C: فایل داده</h2>
+    <p>نسخهٔ حرفه‌ای‌شدهٔ نشان فعلی سایت: فایل خروجی که بازش می‌کنی. روی زمینهٔ سبز خیلی به چشم می‌آید و در اندازهٔ کوچک هم خوانا می‌ماند.</p>
+    <div class="stage"><svg width="120" height="120"><use href="#logoC"/></svg></div>
+    <div class="stage"><div class="lockup"><svg width="44" height="44"><use href="#logoC"/></svg><span>Unwrapped</span></div></div>
+    <div class="stage light"><div class="lockup"><svg width="44" height="44"><use href="#logoC"/></svg><span>Unwrapped</span></div></div>
+    <div class="stage"><div class="sizes"><svg viewBox="0 0 64 64"><use href="#logoC"/></svg><svg viewBox="0 0 64 64"><use href="#logoC"/></svg><svg viewBox="0 0 64 64"><use href="#logoC"/></svg><svg viewBox="0 0 64 64"><use href="#logoC"/></svg></div></div>
+  </div>
+</div>
+</body>
+</html>

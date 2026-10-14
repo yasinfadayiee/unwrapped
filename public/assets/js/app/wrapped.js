@@ -61,12 +61,20 @@ function logoMark(ctx, x, y, size, ink, accent) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(k, k);
-  ctx.lineWidth = 2.4;
-  ctx.lineJoin = 'round';
-  ctx.strokeStyle = ink;
-  ctx.stroke(new Path2D('M8 3h12l9 9v12a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5z'));
+  // The "U" mark: an opened wrapper with a data dot (same as the site logo).
+  ctx.fillStyle = 'rgba(15,15,22,0.85)';
+  ctx.fill(new Path2D('M10 1.5h12a8.5 8.5 0 0 1 8.5 8.5v12a8.5 8.5 0 0 1-8.5 8.5H10A8.5 8.5 0 0 1 1.5 22V10A8.5 8.5 0 0 1 10 1.5z'));
+  const g = ctx.createLinearGradient(10, 23, 22, 8);
+  g.addColorStop(0, '#8f7dff');
+  g.addColorStop(1, accent);
+  ctx.lineWidth = 3.6;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = g;
+  ctx.stroke(new Path2D('M10 8.5v8.5a6 6 0 0 0 12 0V8.5'));
   ctx.fillStyle = accent;
-  ctx.fill(new Path2D('M20 3v6a3 3 0 0 0 3 3h6z'));
+  ctx.beginPath();
+  ctx.arc(16, 8.4, 2.3, 0, Math.PI * 2);
+  ctx.fill();
   ctx.restore();
 }
 
