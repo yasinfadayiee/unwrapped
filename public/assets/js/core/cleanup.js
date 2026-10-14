@@ -12,6 +12,7 @@ export const SCAN_RES = {
     'porra', 'caralho', 'merda', 'foda', 'foder', 'fdp', 'desgraçado', 'arrombado', 'puta que pariu',
     'amk', 'aq', 'siktir', 'sikerim', 'orospu', 'piç', 'yarrak', 'göt', 'ananı', 'amına',
     'putain', 'merde', 'connard', 'connasse', 'salope', 'enculé', 'encule', 'fdp', 'ntm', 'nique', 'niquer', 'bordel', 'pute', 'batard', 'bâtard', 'ta gueule', 'tg',
+    'scheiße', 'scheisse', 'scheiß', 'fick', 'ficken', 'fotze', 'arschloch', 'wichser', 'hurensohn', 'hure', 'verdammt', 'kacke', 'missgeburt', 'halt die fresse',
   ]),
   party: wordRe([
     'drunk', 'wasted', 'hungover', 'hangover', 'weed', 'stoned', 'cocaine', 'mdma', 'shrooms', 'vodka', 'tequila',
@@ -19,6 +20,7 @@ export const SCAN_RES = {
     'bêbado', 'bêbada', 'bebado', 'ressaca', 'maconha', 'baseado', 'chapado', 'cachaça',
     'sarhoş', 'sarhos', 'akşamdan kalma', 'esrar', 'kafam güzel', 'rakı',
     'bourré', 'bourrée', 'bourre', 'gueule de bois', 'cuite', 'défoncé', 'défoncée', 'beuh',
+    'besoffen', 'betrunken', 'kater', 'gekifft', 'kiffen', 'bekifft', 'saufen', 'koks', 'vollgedröhnt',
   ]),
   // E-mail addresses and phone-number-like digit runs (9–15 digits).
   personal: /[\w.+-]+@[\w-]+(?:\.[\w-]+)+|(?<![\w+])\+?\d(?:[\s().-]?\d){8,14}(?!\w)/gu,

@@ -1,0 +1,68 @@
+<!--page {
+  "route": "/guides/download-instagram-data/",
+  "title": "So lädst du deine Instagram-Daten herunter (Follower, Nachrichten, alles) · 2026",
+  "headline": "So lädst du deine Instagram-Daten herunter — Schritt für Schritt",
+  "description": "Schritt für Schritt: Lade deine Instagram-Daten in der Kontenübersicht herunter, welche Optionen du wählst (JSON oder HTML, nur Follower oder alles), wie lange es dauert und was in der ZIP steckt.",
+  "article": "2026-10-11",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Ratgeber · Instagram</span>
+      <h1 class="h1">So lädst du deine Instagram-Daten herunter, <span class="serif grad">Schritt für Schritt.</span></h1>
+      <p class="lead">Instagram lässt dich eine Kopie von fast allem herunterladen, was es über dich speichert: Follower, Gefolgt, Likes, Kommentare, Nachrichten, Anmeldungen und die Werbetreibenden, die deine Informationen haben. So geht’s genau — und welche Optionen du wählst.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Bevor du startest: Welche Daten brauchst du?</h2>
+      <ul>
+        <li><strong>Willst du nur wissen, wer dir nicht zurückfolgt oder wer dir entfolgt ist?</strong> Fordere nur <strong>Follower und Gefolgt</strong> an. Das ist winzig und meist innerhalb von Minuten fertig.</li>
+        <li><strong>Willst du DM-Statistiken, deine meistgelikten Accounts und einen Privatsphäre-Check?</strong> Fordere <strong>Alle verfügbaren Informationen</strong> an. Das ist größer und kann länger dauern.</li>
+      </ul>
+
+      <h2>In der Instagram-App (iPhone oder Android)</h2>
+      <ol>
+        <li>Geh auf dein Profil und tippe auf <strong>☰</strong> (oben rechts).</li>
+        <li>Tippe auf <strong>Kontenübersicht</strong>.</li>
+        <li>Tippe auf <strong>Deine Informationen und Berechtigungen</strong> → <strong>Deine Informationen herunterladen</strong>.</li>
+        <li>Tippe auf <strong>Informationen herunterladen oder übertragen</strong> und wähle deinen Instagram-Account.</li>
+        <li>Wähle <strong>Einige deiner Informationen</strong> (dann <strong>Follower und Gefolgt</strong> anhaken) oder <strong>Alle verfügbaren Informationen</strong>.</li>
+        <li>Wähle <strong>Auf Gerät herunterladen</strong>.</li>
+        <li>Stelle <strong>Zeitraum: Gesamter Zeitraum</strong>, <strong>Format: JSON</strong>, <strong>Medienqualität: Niedrig</strong> ein.</li>
+        <li>Tippe auf <strong>Dateien erstellen</strong>.</li>
+      </ol>
+      <p>Am Computer findest du dasselbe Menü unter Kontenübersicht → Deine Informationen und Berechtigungen → Deine Informationen herunterladen.</p>
+
+      <h2>JSON oder HTML?</h2>
+      <p><strong>JSON</strong> ist ein maschinenlesbares Format und die zuverlässigste Wahl für Tools wie Unwrapped. <strong>HTML</strong> ist zum Lesen im Browser gedacht. Unwrapped versteht beide, aber wenn du die Wahl hast, nimm JSON.</p>
+
+      <h2>Wie lange dauert es?</h2>
+      <p>Kleine Anfragen sind oft in Minuten fertig; große können Stunden dauern, und laut Instagram in seltenen Fällen bis zu einigen Tagen. Du bekommst eine E-Mail und eine Benachrichtigung. Der Download-Link läuft nach ein paar Tagen ab, lade ihn also bald herunter.</p>
+
+      <h2>Was steckt in der ZIP?</h2>
+      <ul>
+        <li><code>connections/followers_and_following/followers_1.json</code> — deine Follower, mit dem Datum, an dem dir jede:r gefolgt ist.</li>
+        <li><code>following.json</code> — alle, denen du folgst.</li>
+        <li><code>pending_follow_requests.json</code>, <code>close_friends.json</code>, <code>blocked_profiles.json</code> und mehr.</li>
+        <li>Mit „Alle Informationen“: Likes, Kommentare, Nachrichten, Anmeldeaktivität und <code>advertisers_using_your_activity_or_information.json</code>.</li>
+      </ul>
+      <p>Sieh dir <a href="/guides/instagram-data-files-explained/">jede wichtige Datei erklärt</a> an. Du musst nichts entpacken. Lege die ZIP einfach so bei <a href="/instagram/">Unwrapped</a> ab — auch mehrere ZIP-Teile auf einmal.</p>
+
+      <h2>Halte es privat</h2>
+      <p>Dein Export enthält persönliche Informationen, auch Namen anderer Menschen und deine Nachrichten. Lade ihn nie auf eine Seite hoch, die ihn an einen Server schickt. Unwrapped verarbeitet ihn komplett in deinem Browser — du kannst sogar den Flugmodus einschalten, bevor du ihn ablegst.</p>
+      <div class="read-next"><h2>Weiterlesen</h2><ul><li><a href="/guides/instagram-data-files-explained/">Dein Instagram-Datendownload, Datei für Datei</a></li><li><a href="/guides/who-unfollowed-me-on-instagram/">So siehst du, wer dir auf Instagram entfolgt ist — sicher</a></li><li><a href="/blog/instagram-wrapped/">Instagram Wrapped 2026</a></li></ul></div>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Warum finde ich „Deine Informationen herunterladen“ nicht?</summary><div class="answer"><p>Instagram hat es in die Kontenübersicht verschoben. Schau unter Kontenübersicht → Deine Informationen und Berechtigungen. Stell sicher, dass deine App aktuell ist.</p></div></details>
+      <details><summary>Meine Follower-Datei scheint unvollständig. Warum?</summary><div class="answer"><p>Der Export kann der App ein paar Stunden hinterherhinken und enthält keine deaktivierten Accounts. Sehr große Accounts werden auf mehrere Follower-Dateien verteilt — sie werden alle automatisch gelesen.</p></div></details>
+      <details><summary>Benachrichtigt der Download jemanden oder beeinflusst er meinen Account?</summary><div class="answer"><p>Nein. Es ist eine offizielle Funktion und nur du bekommst die Datei.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

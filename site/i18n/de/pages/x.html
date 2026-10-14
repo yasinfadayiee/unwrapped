@@ -1,0 +1,70 @@
+<!--page {
+  "route": "/x/",
+  "nav": "x",
+  "title": "X-(Twitter-)Archiv-Viewer — beste Tweets, Unfollower & was X über dich weiß · Unwrapped",
+  "description": "Öffne dein X-/Twitter-Archiv in Sekunden: deine besten Posts aller Zeiten, Posting-Gewohnheiten, Accounts, die nicht zurückfolgen, die Interessen und Werbetreibenden, die X dir zugeordnet hat, und verbundene Apps. Privat, in deinem Browser.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-x"/></svg>X-(Twitter-)Archiv-Explorer</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Dein X-Archiv,</span></span>
+        <span class="line"><span class="serif grad">endlich lesbar.</span></span>
+      </h1>
+      <p class="hero-sub">Jahre an Posts, Likes und Werbung in einer ZIP. Sieh deine <b>besten Posts aller Zeiten</b>, wann du postest, wer <b>nicht zurückfolgt</b>, die <b>Interessen und Werbetreibenden</b>, die X dir zugeordnet hat, und welche <b>Apps noch in deinem Namen handeln können</b>. <b>Auf deinem Gerät verarbeitet.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/posts-cleanup-640.webp" srcset="/assets/img/art/posts-cleanup-320.webp 320w, /assets/img/art/posts-cleanup-640.webp 640w, /assets/img/art/posts-cleanup-800.webp 800w" sizes="(max-width: 760px) 260px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Was du siehst</span>
+      <h2 class="h2">Ein Jahrzehnt Posten, gemessen.</h2>
+      <p class="lead">Das Archiv, das X dir gibt, ist ein Ordner voller kryptischer JavaScript-Dateien. Unwrapped liest sie alle — ohne ein einziges Byte hochzuladen.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Beste Posts aller Zeiten</b>, sortiert nach Likes und Reposts.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Posting-Gewohnheiten</b> — nach Monat, Wochentag und Uhrzeit, Serien, Top-Hashtags und Wörter.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Follower vs. Gefolgt</b> — gegenseitige Follower, Fans und Accounts, die nicht zurückfolgen.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Wer du laut X bist</b> — abgeleitetes Alter, Geschlecht, Sprachen und Interessen.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Werbetreibende &amp; Targeting</b> — wer dich angesprochen hat, und wie.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Verbundene Apps</b> — und welche noch posten oder DMs lesen können.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">So lädst du dein X-Archiv herunter</span><h2 class="h2">Einmal bei X anfragen. Für immer erkunden.</h2></div>
+    <div class="reveal">{{> steps-x}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">X-FAQ</span><h2 class="h2">X-Archive, erklärt.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Wie sehe ich mir mein Twitter-/X-Archiv an?</summary><div class="answer"><p>Fordere es unter Einstellungen und Datenschutz → Dein Account → Archiv deiner Daten herunterladen an. Wenn es fertig ist, lade die ZIP herunter und lege sie hier ab — entpacken ist nicht nötig.</p></div></details>
+      <details><summary>Kann ich meine alten Tweets durchsuchen und welche zum Löschen finden?</summary><div class="answer"><p>Ja. Öffne <b>Suchen &amp; aufräumen</b>, um jeden Post, jede Antwort und jeden Repost nach Wort und Jahr zu durchsuchen. Der Aufräum-Check markiert Fluchen, Party-Posts und persönliche Daten, und jeder Post öffnet sich mit einem Klick auf X, damit du ihn löschen kannst. <a href="/search-old-tweets/">Mehr dazu</a>.</p></div></details>
+      <details><summary>Warum werden Follower als Nummern angezeigt?</summary><div class="answer"><p>Das X-Archiv listet Follower per Account-ID, nicht per Benutzername. Tippe neben einem Eintrag auf „Öffnen“ und X zeigt dir, wer es ist.</p></div></details>
+      <details><summary>Mein Archiv ist mehrere Gigabyte groß. Funktioniert das?</summary><div class="answer"><p>Ja. Unwrapped liest nur die kleinen Datendateien in der ZIP und überspringt deine Fotos und Videos, sodass selbst riesige Archive in Sekunden öffnen.</p></div></details>
+      <details><summary>Kann ich sehen, wer mir auf X entfolgt ist?</summary><div class="answer"><p>Ja, indem du ein neueres Archiv mit einem älteren vergleichst, das du zuvor analysiert hast — der Snapshot wird privat in deinem Browser gespeichert.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:16ch">Jeder Post, den du je gemacht hast, <span class="serif grad">in einer Ansicht.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Mein Archiv öffnen</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Demo ansehen</button></div>
+    </div>
+  </div>
+</section>

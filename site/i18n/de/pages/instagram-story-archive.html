@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/instagram-story-archive/",
+  "nav": "tools",
+  "title": "Deine alten Instagram-Stories & Beiträge aus dem Datendownload ansehen · Unwrapped",
+  "description": "Sieh jede Story, jeden Beitrag und jedes Reel, das du je auf Instagram geteilt hast — auch längst verschwundene Stories — aus deinem eigenen Datendownload. Nach Jahr durchstöbern und Originale speichern. Privat, ohne Login.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-image"/></svg>Beiträge &amp; Stories · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Jede Story,</span></span>
+        <span class="line"><span><span class="serif grad">die du je gepostet hast.</span></span></span>
+      </h1>
+      <p class="hero-sub">Instagrams Datendownload bewahrt deine Stories, Beiträge und Reels auf — auch Stories, die vor Jahren verschwunden sind. Lege die ZIP ab und durchstöbere sie als <b>Galerie nach Jahr</b>, mit <b>Beschreibungen und Daten</b>, und <b>speichere die Originale</b>. Nichts wird hochgeladen.</p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/story-stack-640.webp" srcset="/assets/img/art/story-stack-320.webp 320w, /assets/img/art/story-stack-640.webp 640w, /assets/img/art/story-stack-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Was du bekommst</span><h2 class="h2">Deine Instagram-Erinnerungen, <span class="serif">an einem Ort.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Stories</b> — jede geteilte Story, lange nach den 24 Stunden.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Beiträge und Reels</b> — mit ihren Beschreibungen, inklusive Karussells.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Archivierte Beiträge und alte Profilbilder</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Nach Jahr und Typ filtern</b>, jedes Element groß öffnen und <b>die Originaldatei speichern</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Auch deine Chats, im <a href="/instagram-message-viewer/">Nachrichten-Viewer</a>.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">So funktioniert’s</span><h2 class="h2">Drei Schritte, auf deinem Gerät.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Fordere deine Inhalte an</b><span>Kontenübersicht → Deine Informationen und Berechtigungen → Deine Informationen herunterladen → wähle <b>Inhalte</b> (oder Alle verfügbaren Informationen), Format JSON, mit Medien.</span></li>
+      <li><b>Lege die ZIP hier ab</b><span>Dein Browser öffnet sie lokal — auch große Archive mit Tausenden Fotos.</span></li>
+      <li><b>Öffne „Deine Beiträge &amp; Stories“</b><span>Kostenlos durchstöbern und einzeln speichern.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Alte Stories, gefunden.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Wie sehe ich meine alten Instagram-Stories?</summary><div class="answer"><p>Wenn das Story-Archiv eingeschaltet war, sind sie im Archiv der App. So oder so enthält dein Datendownload die Stories, die Instagram für deinen Account aufbewahrt hat. Lege ihn hier ab und öffne „Deine Beiträge &amp; Stories“.</p></div></details>
+      <details><summary>Kann ich einen gelöschten Beitrag wiederherstellen?</summary><div class="answer"><p>Kürzlich gelöschte Beiträge lassen sich in der App 30 Tage lang wiederherstellen. Danach enthält dein Download nur, was Instagram noch aufbewahrt — oft archivierte Elemente, aber keine endgültig gelöschten.</p></div></details>
+      <details><summary>Warum fehlen manche Fotos?</summary><div class="answer"><p>Medien sind nur enthalten, wenn du sie anforderst. Fordere den Download erneut mit Medien und höherer Qualität an.</p></div></details>
+      <details><summary>Werden meine Fotos hochgeladen?</summary><div class="answer"><p>Nein. Alles wird aus der ZIP in deinem Browser angezeigt.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

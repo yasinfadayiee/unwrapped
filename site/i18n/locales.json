@@ -3,5 +3,6 @@
   { "code": "es", "path": "/es", "hreflang": "es", "name": "Español", "short": "ES", "og": "es_ES" },
   { "code": "pt", "path": "/pt", "hreflang": "pt-BR", "name": "Português", "short": "PT", "og": "pt_BR" },
   { "code": "tr", "path": "/tr", "hreflang": "tr", "name": "Türkçe", "short": "TR", "og": "tr_TR" },
-  { "code": "fr", "path": "/fr", "hreflang": "fr", "name": "Français", "short": "FR", "og": "fr_FR" }
+  { "code": "fr", "path": "/fr", "hreflang": "fr", "name": "Français", "short": "FR", "og": "fr_FR" },
+  { "code": "de", "path": "/de", "hreflang": "de", "name": "Deutsch", "short": "DE", "og": "de_DE" }
 ]

@@ -6,7 +6,7 @@ import { TIERS, PLANS } from '../src/config.js';
 
 const root = path.resolve(import.meta.dirname, '..');
 const jsRoot = path.join(root, 'public/assets/js');
-const LANGS = ['es', 'pt', 'tr', 'fr'];
+const LANGS = ['es', 'pt', 'tr', 'fr', 'de'];
 
 function walk(dir) {
   return readdirSync(dir).flatMap((f) => {

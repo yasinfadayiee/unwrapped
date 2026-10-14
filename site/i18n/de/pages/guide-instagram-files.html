@@ -1,0 +1,79 @@
+<!--page {
+  "route": "/guides/instagram-data-files-explained/",
+  "title": "Die Dateien im Instagram-Datendownload erklärt: followers_1.json & mehr · 2026",
+  "headline": "Dein Instagram-Datendownload, Datei für Datei",
+  "description": "Was in deinem Instagram-Datendownload steckt: followers_1.json, following.json, liked_posts.json, message_1.json, advertisers_using_your_activity_or_information.json und mehr — was jede Datei bedeutet und was du damit machen kannst.",
+  "article": "2026-10-13",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/book-cards-640.webp" srcset="/assets/img/art/book-cards-320.webp 320w, /assets/img/art/book-cards-640.webp 640w, /assets/img/art/book-cards-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Ratgeber · Instagram</span>
+      <h1 class="h1">Dein Instagram-Datendownload, <span class="serif grad">Datei für Datei.</span></h1>
+      <p class="lead">Du hast die ZIP geöffnet und Hunderte Ordner und Dateien mit Namen wie <code>followers_1.json</code> gefunden. Hier steht, was in den wichtigen steckt — und wie du sie liest, ohne eine einzige Datei zu öffnen.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Follower und Gefolgt</h2>
+      <ul>
+        <li><code>connections/followers_and_following/followers_1.json</code> — alle, die dir folgen, mit dem Datum ihres Follows. Große Accounts haben zusätzlich <code>followers_2.json</code>, <code>followers_3.json</code>… — sie gehören zusammen.</li>
+        <li><code>following.json</code> — jeder Account, dem du folgst, mit dem Datum.</li>
+        <li><code>close_friends.json</code> — deine Liste „Enge Freunde“.</li>
+        <li><code>pending_follow_requests.json</code> — Anfragen an private Accounts, die nie angenommen wurden.</li>
+        <li><code>follow_requests_you've_received.json</code> — Menschen, die darauf warten, dass du sie annimmst.</li>
+        <li><code>recently_unfollowed_profiles.json</code> — Accounts, denen <em>du</em> kürzlich entfolgt bist (nicht, wer dir entfolgt ist).</li>
+        <li><code>blocked_profiles.json</code>, <code>restricted_profiles.json</code>, <code>hide_story_from.json</code> — deine Listen für Blockiert, Eingeschränkt und verborgene Stories.</li>
+      </ul>
+      <p>Der Vergleich zweier Downloads dieser Dateien zeigt dir, <a href="/guides/who-unfollowed-me-on-instagram/">wer dir entfolgt ist</a>.</p>
+
+      <h2>Deine Aktivität</h2>
+      <ul>
+        <li><code>likes/liked_posts.json</code> — jeder gelikte Beitrag, mit Account und Datum.</li>
+        <li><code>comments/post_comments_1.json</code> und <code>reels_comments.json</code> — jeder Kommentar, den du geschrieben hast, und wo.</li>
+        <li><code>story_likes.json</code> — Stories, die du gelikt hast.</li>
+        <li><code>saved/saved_posts.json</code> — deine gespeicherten Beiträge.</li>
+        <li><code>recent_searches</code>-Dateien — wonach du gesucht hast.</li>
+      </ul>
+      <p>Durchsuche alle auf einmal im <a href="/instagram-liked-posts/">Likes- &amp; Kommentar-Finder</a>.</p>
+
+      <h2>Deine Nachrichten</h2>
+      <ul>
+        <li><code>messages/inbox/&lt;name&gt;_&lt;nummer&gt;/message_1.json</code> — ein Ordner pro Unterhaltung; lange Chats gehen in <code>message_2.json</code> usw. weiter. Fotos, Videos und Sprachnachrichten liegen im selben Ordner.</li>
+      </ul>
+      <p>Die Texte nutzen eine maskierte Kodierung, daher sehen Emojis und Umlaute in einem Texteditor kaputt aus. Der <a href="/instagram-message-viewer/">Nachrichten-Viewer</a> zeigt jeden Chat wie in einem Messenger.</p>
+
+      <h2>Deine Beiträge, Stories und Reels</h2>
+      <ul>
+        <li><code>media/posts_1.json</code> (ältere Exporte: <code>content/posts_1.json</code>) — deine Beiträge mit Beschreibungen und Daten.</li>
+        <li><code>media/stories.json</code>, <code>reels.json</code>, <code>archived_posts.json</code>, <code>profile_photos.json</code>.</li>
+        <li>Die Fotos und Videos selbst, in <code>media/</code>-Ordnern nach Monat.</li>
+      </ul>
+      <p>Durchstöbere sie als Galerie unter <a href="/instagram-story-archive/">Beiträge &amp; Stories</a>.</p>
+
+      <h2>Werbung und Privatsphäre</h2>
+      <ul>
+        <li><code>advertisers_using_your_activity_or_information.json</code> — Unternehmen, die eine zu dir passende Kundenliste hochgeladen haben oder dich anhand deiner Aktivität ansprechen.</li>
+        <li><code>ads_interests.json</code> / <code>your_topics.json</code> — die Interessen, die Instagram dir zugeordnet hat.</li>
+        <li><code>ads_viewed.json</code>, <code>posts_viewed.json</code>, <code>videos_watched.json</code> — was du gesehen hast.</li>
+        <li><code>login_activity.json</code> — wann und von welchen Geräten und IP-Adressen du dich angemeldet hast.</li>
+      </ul>
+      <p>Das <a href="/instagram/">Privatsphäre-Röntgen</a> macht daraus eine Sichtbarkeitsnote von A bis F.</p>
+
+      <h2>JSON oder HTML?</h2>
+      <p>Beide enthalten dieselben Informationen. JSON lässt sich von Tools zuverlässiger lesen; HTML ist zum Lesen im Browser gedacht. Unwrapped liest beides — lege die ZIP einfach so ab, auch in mehreren Teilen.</p>
+      <div class="read-next"><h2>Weiterlesen</h2><ul><li><a href="/guides/download-instagram-data/">So lädst du deine Instagram-Daten herunter, Schritt für Schritt</a></li><li><a href="/blog/what-instagram-knows-about-you/">Was Instagram über dich weiß — und wie du es siehst</a></li><li><a href="/blog/instagram-close-friends-list/">Enge Freunde, Blockiert &amp; verborgene Listen</a></li></ul></div>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Was ist followers_1.json?</summary><div class="answer"><p>Das ist die Liste aller, die dir folgen, aus deinem Instagram-Datendownload, mit dem Datum, an dem dir jede Person gefolgt ist. Große Accounts werden auf followers_1.json, followers_2.json und mehr aufgeteilt.</p></div></details>
+      <details><summary>Zeigt der Download, wer mir entfolgt ist?</summary><div class="answer"><p>Nicht direkt. Er zeigt, wer dir jetzt folgt. Der Vergleich zweier Downloads zu verschiedenen Zeitpunkten zeigt, wer gegangen ist.</p></div></details>
+      <details><summary>Ist es sicher, meine Instagram-ZIP auf eine Website hochzuladen?</summary><div class="answer"><p>Nur, wenn die Seite sie nie an einen Server schickt — die Dateien enthalten deine Nachrichten und die Namen anderer Menschen. Unwrapped liest alles in deinem Browser; nichts wird hochgeladen.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

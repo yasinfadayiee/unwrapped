@@ -1,0 +1,62 @@
+<!--page {
+  "route": "/instagram-liked-posts/",
+  "nav": "tools",
+  "title": "Gelikte Instagram-Beiträge & deinen Kommentarverlauf finden · Unwrapped",
+  "headline": "Finde jeden gelikten Instagram-Beitrag — und jeden Kommentar, den du geschrieben hast",
+  "description": "Sieh jeden Instagram-Beitrag, den du je gelikt oder gespeichert hast, und jeden Kommentar, den du geschrieben hast. Suche nach Account, Wort oder Jahr und öffne den Beitrag erneut — aus deinem eigenen Datendownload, privat.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-heart"/></svg>Likes &amp; Kommentare · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Finde den Beitrag,</span></span>
+        <span class="line"><span><span class="serif grad">den du gelikt hast.</span></span></span>
+      </h1>
+      <p class="hero-sub">Instagram zeigt nur einen Ausschnitt deiner Likes. Dein Datendownload enthält <b>jeden Beitrag, den du je gelikt oder gespeichert hast</b>, und <b>jeden Kommentar, den du geschrieben hast</b>, mit Datum und Link. Suche nach Account, Wort oder Jahr und öffne den Beitrag erneut.</p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/hearts-640.webp" srcset="/assets/img/art/hearts-320.webp 320w, /assets/img/art/hearts-640.webp 640w, /assets/img/art/hearts-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Was du bekommst</span><h2 class="h2">Deine Instagram-Aktivität, <span class="serif">durchsuchbar.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Gelikte Beiträge</b> — jeder Like, mit Account und Datum, einen Tipp vom Beitrag entfernt.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Gespeicherte Beiträge</b> — deine ganze Sammlung in einer Liste.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Deine Kommentare</b> — durchsuche die Wörter, die du vor Jahren geschrieben hast.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Suche nach @Account</b>, filtere nach Jahr, neueste oder älteste zuerst.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Dazu deine <a href="/instagram-message-viewer/">Nachrichten</a> und <a href="/instagram-story-archive/">alten Stories</a> aus demselben Download.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">So funktioniert’s</span><h2 class="h2">Drei Schritte, auf deinem Gerät.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Fordere deine Aktivität an</b><span>Kontenübersicht → Deine Informationen und Berechtigungen → Deine Informationen herunterladen → wähle <b>Likes</b>, <b>Kommentare</b> und <b>Gespeichert</b> (oder Alle verfügbaren Informationen), Format JSON.</span></li>
+      <li><b>Lege die ZIP hier ab</b><span>Sie wird in deinem Browser geöffnet — nichts wird hochgeladen.</span></li>
+      <li><b>Öffne den „Likes- &amp; Kommentar-Finder“</b><span>Die Suche ist kostenlos. Listen als CSV zu exportieren ist Teil von <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Likes &amp; Kommentare, gefunden.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Wie sehe ich alle Beiträge, die ich auf Instagram gelikt habe?</summary><div class="answer"><p>„Deine Aktivität → Likes“ in der App zeigt nur jüngere Likes. Dein Datendownload listet jeden Like, den Instagram aufbewahrt, mit Account und Datum. Lege ihn hier ab und öffne den Likes- &amp; Kommentar-Finder.</p></div></details>
+      <details><summary>Kann ich jeden Kommentar sehen, den ich geschrieben habe?</summary><div class="answer"><p>Ja — der Download enthält deine Kommentare mit dem jeweiligen Account und dem Datum. Suche nach jedem Wort, an das du dich erinnerst.</p></div></details>
+      <details><summary>Warum lässt sich ein Beitrag nicht mehr öffnen?</summary><div class="answer"><p>Wenn die Person ihn gelöscht, archiviert oder ihren Account auf privat gestellt hat, zeigt Instagram ihn nicht mehr an — auch wenn er noch in deinen Daten steht.</p></div></details>
+      <details><summary>Ist das privat?</summary><div class="answer"><p>Ja. Deine Datei wird in deinem Browser gelesen und nie hochgeladen. Niemand wird benachrichtigt.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

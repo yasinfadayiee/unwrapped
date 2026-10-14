@@ -1,0 +1,373 @@
+<!--page {
+  "route": "/",
+  "title": "Unwrapped — Sieh privat, wer dir auf Instagram nicht zurückfolgt",
+  "description": "Finde heraus, wer dir auf Instagram nicht zurückfolgt und wer dir entfolgt ist, sieh deine echte TikTok-Bildschirmzeit und was Werbetreibende über dich wissen — aus deinem offiziellen Datenexport. Kein Passwort, nichts wird hochgeladen.",
+  "faqSchema": true,
+  "bodyClass": "home"
+}-->
+<div class="aurora" aria-hidden="true"></div>
+
+<section class="hero">
+  <canvas class="hero-canvas" data-hero-orbit aria-hidden="true"></canvas>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <a class="chip chip--link fade-in" style="--d:.05s" href="/instagram-account-age/"><span class="badge">Neu</span>Die Zeitleiste deines digitalen Lebens &amp; ein persönlicher Aktionsplan<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <h1 class="display hero-title">
+        <span class="line"><span>Deine Socials,</span></span>
+        <span class="line"><span><span class="serif grad">ausgepackt.</span></span></span>
+      </h1>
+      <p class="hero-sub">Sieh, wer dir <b>nicht zurückfolgt</b>, wer dir <b>still entfolgt ist</b>, wer dich <b>auf gelesen lässt</b> und wie echt dein Publikum ist — alles aus deinem offiziellen Datenexport. <b>Kein Passwort. Kein Upload. Niemals.</b></p>
+    </div>
+    <div class="hero-art fade-in" style="--d:.35s" aria-hidden="true" data-hero-video="/assets/video/hero-gift.mp4"><img src="/assets/img/art/hero-gift-960.webp" srcset="/assets/img/art/hero-gift-640.webp 640w, /assets/img/art/hero-gift-960.webp 960w, /assets/img/art/hero-gift-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 720px" width="1600" height="960" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">
+{{> dropzone}}
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>followers_1.json</span><span>following.json</span><span>user_data_tiktok.json</span><span>tweets.js</span><span>your_friends.json</span><span>Connections.csv</span><span>pending_follow_requests.json</span><span>advertisers_using_your_activity_or_information.json</span><span>login_activity.json</span><span>personalization.js</span><span>Watch History</span><span>message_1.json</span>
+    <span>followers_1.json</span><span>following.json</span><span>user_data_tiktok.json</span><span>tweets.js</span><span>your_friends.json</span><span>Connections.csv</span><span>pending_follow_requests.json</span><span>advertisers_using_your_activity_or_information.json</span><span>login_activity.json</span><span>personalization.js</span><span>Watch History</span><span>message_1.json</span>
+  </div>
+</div>
+
+<section class="proof" aria-label="Unwrapped auf einen Blick">
+  <div class="container proof-grid">
+    <div class="proof-item reveal"><b>6</b><span>Plattformen in einem Dashboard</span></div>
+    <div class="proof-item reveal" style="--d:.06s"><b>0&nbsp;Bytes</b><span>deiner Daten jemals hochgeladen</span></div>
+    <div class="proof-item reveal" style="--d:.12s"><b>30+</b><span>Tools, 7 davon im Pro Lab</span></div>
+    <div class="proof-item reveal" style="--d:.18s"><b>~60&nbsp;s</b><span>von der Zahlung bis zur Freischaltung</span></div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">01 — So funktioniert’s</span>
+      <h2 class="h2">Drei Minuten deiner Zeit. <span class="serif">Null Risiko.</span></h2>
+      <p class="lead">Jede große Plattform lässt dich eine Kopie deiner eigenen Daten herunterladen — in der EU ist das dein Recht nach der DSGVO. Hier steht genau, wo du tippen musst.</p>
+    </div>
+    <div class="reveal" data-tabs>
+      <div class="tabs" role="tablist" aria-label="Plattform">
+        <button class="tab" role="tab" id="tab-ig" aria-controls="panel-ig" aria-selected="true"><img class="ico3d" src="/assets/img/icons/instagram.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Instagram</button>
+        <button class="tab" role="tab" id="tab-tt" aria-controls="panel-tt" aria-selected="false" tabindex="-1"><img class="ico3d" src="/assets/img/icons/tiktok.webp" width="64" height="64" alt="" loading="lazy" decoding="async">TikTok</button>
+        <button class="tab" role="tab" id="tab-x" aria-controls="panel-x" aria-selected="false" tabindex="-1"><img class="ico3d" src="/assets/img/icons/x.webp" width="64" height="64" alt="" loading="lazy" decoding="async">X</button>
+        <button class="tab" role="tab" id="tab-fb" aria-controls="panel-fb" aria-selected="false" tabindex="-1"><img class="ico3d" src="/assets/img/icons/facebook.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Facebook</button>
+        <button class="tab" role="tab" id="tab-li" aria-controls="panel-li" aria-selected="false" tabindex="-1"><img class="ico3d" src="/assets/img/icons/linkedin.webp" width="64" height="64" alt="" loading="lazy" decoding="async">LinkedIn</button>
+      </div>
+      <div id="panel-ig" role="tabpanel" aria-labelledby="tab-ig">{{> steps-instagram}}</div>
+      <div id="panel-tt" role="tabpanel" aria-labelledby="tab-tt" hidden>{{> steps-tiktok}}</div>
+      <div id="panel-x" role="tabpanel" aria-labelledby="tab-x" hidden>{{> steps-x}}</div>
+      <div id="panel-fb" role="tabpanel" aria-labelledby="tab-fb" hidden>{{> steps-facebook}}</div>
+      <div id="panel-li" role="tabpanel" aria-labelledby="tab-li" hidden>{{> steps-linkedin}}</div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="preview">
+  <div class="container">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">Dein Dashboard</span>
+      <h2 class="h2">Ein ruhiger Ort für <span class="serif grad">alles.</span></h2>
+      <p class="lead">Lege deinen Export ab und das bekommst du: jede Liste, jede Erkenntnis und die Gesundheit deines Accounts — in Sekunden, ohne dass etwas dein Gerät verlässt.</p>
+    </div>
+    <div class="browser reveal" aria-hidden="true">
+      <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url"><svg><use href="#i-shield"/></svg>unwrapped · Ergebnisse</span></div>
+      <div class="mock">
+        <aside class="mock-nav">
+          <span class="mock-group">Instagram</span>
+          <span class="mock-item"><svg><use href="#i-home"/></svg>Übersicht</span>
+          <span class="mock-item is-on"><svg><use href="#i-pulse"/></svg>Account-Gesundheit</span>
+          <span class="mock-item"><svg><use href="#i-user-minus"/></svg>Folgen nicht zurück<em>268</em></span>
+          <span class="mock-item"><svg><use href="#i-ghost"/></svg>Wer dir entfolgt ist</span>
+          <span class="mock-group mock-group--lab">✦ Pro Lab</span>
+          <span class="mock-item"><svg><use href="#i-ghost"/></svg>Ghost-Detektor</span>
+          <span class="mock-item"><svg><use href="#i-heart"/></svg>Engagement-Audit</span>
+          <span class="mock-item"><svg><use href="#i-bot"/></svg>Publikumsqualität</span>
+          <span class="mock-item"><svg><use href="#i-target"/></svg>Beste Posting-Zeit</span>
+        </aside>
+        <div class="mock-main">
+          <div class="mock-head"><b>Account-Gesundheit</b><span>Instagram-Export · @nova.studio</span></div>
+          <div class="mock-hero">
+            <div class="gauge" style="--v:82"><div class="gauge-in"><b>B</b><span>82/100</span></div></div>
+            <div class="mock-copy"><small>DEIN ACCOUNT</small><b>Gesund</b><span>Dein schwächster Bereich ist aktives Folgen: 412 Follows, mit denen du nie interagierst.</span><i class="mock-btn">Aktives Folgen verbessern →</i></div>
+          </div>
+          <div class="mock-factors">
+            <div class="mf"><span>Aktives Folgen</span><i style="--w:58%;--c:var(--warning)"></i><b>58</b></div>
+            <div class="mf"><span>Wechselseitiges Engagement</span><i style="--w:71%;--c:var(--c3)"></i><b>71</b></div>
+            <div class="mf"><span>Follow-back-Balance</span><i style="--w:88%;--c:var(--signal)"></i><b>88</b></div>
+            <div class="mf"><span>Echtheit des Publikums</span><i style="--w:96%;--c:var(--signal)"></i><b>96</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="also-strip also-strip--center reveal"><span class="eyebrow">Neu in deinem Dashboard</span><button type="button" data-demo><svg aria-hidden="true"><use href="#i-check"/></svg>Dein Aktionsplan</button><button type="button" data-demo><img class="ico3d" src="/assets/img/icons/calendar.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Zeitleiste deines digitalen Lebens</button><button type="button" data-demo><img class="ico3d" src="/assets/img/icons/search.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Jemanden nachschlagen</button><button type="button" data-demo><img class="ico3d" src="/assets/img/icons/ghost.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Alter vs. neuer Export, sofort verglichen</button></div>
+    <div class="lab-cta reveal">
+      <button class="btn btn--primary btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Live-Demo öffnen</button>
+      <a class="btn btn--ghost btn--lg" href="#how">So bekomme ich meinen Export</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="promise">
+  <div class="container">
+    <div class="sec-head reveal">
+      <img class="sec-art" src="/assets/img/art/privacy-shield-640.webp" srcset="/assets/img/art/privacy-shield-320.webp 320w, /assets/img/art/privacy-shield-640.webp 640w, /assets/img/art/privacy-shield-800.webp 800w" sizes="260px" width="640" height="640" alt="" loading="lazy" decoding="async">
+      <span class="eyebrow">02 — Das Ohne-Passwort-Versprechen</span>
+      <h2 class="h2">Andere Apps wollen dein Passwort.<br><span class="serif" style="color:var(--text-2)">Wir wollen nicht mal deine Daten.</span></h2>
+      <p class="lead">Unfollower-Apps, die sich als du anmelden, sorgen für gehackte, gedrosselte oder gesperrte Accounts — und viele verkaufen still, was sie sammeln. Unwrapped liest die Datei, die dir die Plattform selbst gibt, direkt hier in deinem Browser. Dieselben Antworten, ohne jedes Risiko.</p>
+    </div>
+    <div class="promise">
+      <div class="card card--pad reveal">
+        <div class="vs" role="table" aria-label="Unwrapped im Vergleich zu Apps mit Login">
+          <div class="vs-row vs-head" role="row"><span role="columnheader">Was mit dir passiert</span><span class="vs-col" role="columnheader">Login-Apps</span><span class="vs-col" role="columnheader">Unwrapped</span></div>
+          <div class="vs-row" role="row"><span role="cell">Fragt nach deinem Passwort</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Ja</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Nie</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Lädt deine Daten auf einen Server</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Ja</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Nie</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Risiko von Sperren</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Hoch</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Keins</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Funktioniert offline</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Nein</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Ja</span></span></div>
+          <div class="vs-row" role="row"><span role="cell">Deckt 6 Plattformen an einem Ort ab</span><span class="vs-col" role="cell"><span class="vs-no"><svg aria-hidden="true"><use href="#i-cross"/></svg>Selten</span></span><span class="vs-col" role="cell"><span class="vs-yes"><svg aria-hidden="true"><use href="#i-check"/></svg>Ja</span></span></div>
+        </div>
+      </div>
+      <div class="card card--pad monitor reveal" style="--d:.1s" data-netmon>
+        <span class="eyebrow">Live-Datenschutzmonitor</span>
+        <div class="monitor-big"><span class="value" data-netmon-during>0</span><span class="text-2">Anfragen während der Analyse deiner Datei</span></div>
+        <div class="monitor-screen" aria-live="polite">
+          <div class="monitor-line"><span>Anfragen seit dem Laden der Seite</span><b data-netmon-total>–</b></div>
+          <div class="monitor-line"><span>Dein Export an einen Server gesendet</span><b>nie</b></div>
+          <div class="monitor-line"><span>Verbindung</span><b data-netmon-online>Online</b></div>
+        </div>
+        <div class="note"><svg aria-hidden="true"><use href="#i-plane"/></svg><span>Glaub uns nicht einfach: Schalte jetzt den Flugmodus ein und lege dann deinen Export ab. Es funktioniert trotzdem — weil alles auf deinem Gerät passiert.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="container">
+    <div class="sec-head reveal">
+      <img class="sec-art" src="/assets/img/art/unfollowers-ghost-640.webp" srcset="/assets/img/art/unfollowers-ghost-320.webp 320w, /assets/img/art/unfollowers-ghost-640.webp 640w, /assets/img/art/unfollowers-ghost-800.webp 800w" sizes="260px" width="640" height="640" alt="" loading="lazy" decoding="async">
+      <span class="eyebrow">03 — Sechs Tools, ein Ablegen</span>
+      <h2 class="h2">Alles, was dein Export weiß, <span class="serif">endlich lesbar.</span></h2>
+      <p class="lead">Lege eine Datei ab — oder die Exporte aller Plattformen auf einmal. Unwrapped erkennt, was drin ist, und baut dein Dashboard in Sekunden.</p>
+    </div>
+    <div class="bento">
+      <article class="card tile b-1 reveal">
+        <div class="tile-art">
+          <div class="art-list" aria-hidden="true"><div class="rows">
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><span class="nm">@milo.design</span><span class="st">folgt nicht zurück</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><span class="nm">@luna_eats</span><span class="st">folgt nicht zurück</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span class="nm">@theo.films</span><span class="st">folgt nicht zurück</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span class="nm">@ivy.codes</span><span class="st">folgt nicht zurück</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><span class="nm">@sage.outdoors</span><span class="st">folgt nicht zurück</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><span class="nm">@milo.design</span><span class="st">folgt nicht zurück</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><span class="nm">@luna_eats</span><span class="st">folgt nicht zurück</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span class="nm">@theo.films</span><span class="st">folgt nicht zurück</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span class="nm">@ivy.codes</span><span class="st">folgt nicht zurück</span></div>
+            <div class="art-row"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><span class="nm">@sage.outdoors</span><span class="st">folgt nicht zurück</span></div>
+          </div></div>
+        </div>
+        <h3 class="h3">Wer dir nicht zurückfolgt</h3>
+        <p>Gegenseitige Follower, Fans und die Accounts, die nie zurückgefolgt sind — auf Instagram, Threads, TikTok und X. Dann räumst du mit einer sicher getakteten Entfolgen-Warteschlange auf.</p>
+      </article>
+      <article class="card tile b-2 reveal" style="--d:.08s">
+        <div class="tile-art">
+          <div class="art-diff" aria-hidden="true">
+            <div class="col"><span class="pill">@kai.makes</span><span class="pill gone">@nia.film</span><span class="pill">@remy</span><span class="pill gone" style="animation-delay:1.2s">@zara.art</span></div>
+            <span class="arrow">Sep → Okt</span>
+            <div class="col"><span class="pill">@kai.makes</span><span class="pill">@remy</span><span class="pill" style="border-color:rgba(26,158,142,.5);color:#7fe0d2">@felix_fit</span></div>
+          </div>
+        </div>
+        <h3 class="h3">Wer dir entfolgt ist</h3>
+        <p>Jeder Export wird zu einem privaten Snapshot auf deinem Gerät. Lege einen neueren ab und sieh genau, wer gegangen ist — und wer dazukam.</p>
+      </article>
+      <article class="card tile b-3 reveal">
+        <div class="tile-art">
+          <div class="art-number" aria-hidden="true">
+            <div class="value">412<span class="unit">Stunden</span></div>
+            <div class="mini-heat">
+              <i style="opacity:.15"></i><i style="opacity:.1"></i><i style="opacity:.08"></i><i style="opacity:.05"></i><i style="opacity:.05"></i><i style="opacity:.06"></i><i style="opacity:.2"></i><i style="opacity:.35"></i><i style="opacity:.3"></i><i style="opacity:.25"></i><i style="opacity:.25"></i><i style="opacity:.3"></i><i style="opacity:.45"></i><i style="opacity:.35"></i><i style="opacity:.3"></i><i style="opacity:.3"></i><i style="opacity:.35"></i><i style="opacity:.45"></i><i style="opacity:.55"></i><i style="opacity:.65"></i><i style="opacity:.8"></i><i style="opacity:1"></i><i style="opacity:.95"></i><i style="opacity:.6"></i>
+            </div>
+          </div>
+        </div>
+        <h3 class="h3">Deine echte Bildschirmzeit</h3>
+        <p>TikToks Wiedergabeverlauf, verwandelt in Stunden, Binges, Serien und deinen Scroll-Typ.</p>
+      </article>
+      <article class="card tile b-4 reveal" style="--d:.08s">
+        <div class="tile-art">
+          <div class="art-radar" aria-hidden="true">
+            <div class="radar"><i style="left:62%;top:26%"></i><i style="left:30%;top:58%"></i><i style="left:70%;top:66%"></i></div>
+            <div class="radar-labels"><span style="left:6%;top:12%">214 Werbetreibende</span><span style="right:4%;top:44%">36 Interessen</span><span style="left:12%;bottom:10%">7 Geräte</span></div>
+          </div>
+        </div>
+        <h3 class="h3">Privatsphäre-Röntgen</h3>
+        <p>Welche Werbetreibenden deine Daten haben, wie du profiliert wurdest, jedes Gerät, das sich angemeldet hat — bewertet von A bis F.</p>
+      </article>
+      <article class="card tile b-5 reveal" style="--d:.16s">
+        <div class="tile-art">
+          <div class="art-cards" aria-hidden="true">
+            <div class="mc"><small>Privatsphäre</small><b>Note<br>D</b></div>
+            <div class="mc"><small>TikTok</small><b>412h</b></div>
+            <div class="mc"><small>Instagram</small><b>74%<br>Follow-back</b></div>
+          </div>
+        </div>
+        <h3 class="h3">Wrapped, an jedem Tag</h3>
+        <p>Story-fertige Karten deiner Stats in vier Designs. Nur Zahlen — nie die Namen deiner Freunde.</p>
+      </article>
+      <article class="card tile b-6 reveal">
+        <div class="tile-art" style="min-height:200px">
+          <div class="art-venn" aria-hidden="true">
+            <div class="venn"><div class="ring a"></div><div class="ring b"></div><span class="lab a">Instagram</span><span class="lab b">TikTok</span><div class="mid">260<div class="tiny muted" style="font-weight:500;letter-spacing:0">auf beiden</div></div></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between">
+          <div class="stack" style="--stack:8px;max-width:620px">
+            <h3 class="h3">Freundschafts-Radar &amp; plattformübergreifende Karte <span class="badge badge--uv" style="vertical-align:middle">Neu</span></h3>
+            <p>Sieh deinen echten engsten Kreis, die Freundschaften, die still verblassen, und wer immer zuerst schreibt — aus deinen eigenen DMs. Lege zwei Exporte ab, um zu sehen, wer dir auf Instagram folgt, dich auf TikTok aber ignoriert.</p>
+          </div>
+          <button class="btn btn--ghost" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>In der Demo ansehen</button>
+        </div>
+      </article>
+    </div>
+    <div class="also-strip reveal"><span class="eyebrow">Außerdem drin</span><a href="/instagram-message-viewer/"><img class="ico3d" src="/assets/img/icons/message.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Nachrichten-Viewer — alte DMs lesen &amp; durchsuchen</a><a href="/instagram-story-archive/"><img class="ico3d" src="/assets/img/icons/image.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Alte Stories &amp; Beiträge</a><a href="/tiktok-watch-history/"><img class="ico3d" src="/assets/img/icons/play.webp" width="64" height="64" alt="" loading="lazy" decoding="async">TikTok-Video-Finder</a><a href="/search-old-tweets/"><img class="ico3d" src="/assets/img/icons/search.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Alte Tweets aufräumen</a><a href="/fake-follower-checker/"><img class="ico3d" src="/assets/img/icons/bot.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Fake-Follower-Check</a><a href="/instagram-account-age/"><img class="ico3d" src="/assets/img/icons/calendar.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Account-Alter &amp; digitales Leben</a><a href="/instagram-audit/"><img class="ico3d" src="/assets/img/icons/pulse.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Kostenloses Account-Audit</a></div>
+  </div>
+</section>
+
+<section class="section lab-section" id="lab">
+  <div class="container">
+    <div class="sec-head reveal">
+      <img class="sec-art" src="/assets/img/art/messages-radar-640.webp" srcset="/assets/img/art/messages-radar-320.webp 320w, /assets/img/art/messages-radar-640.webp 640w, /assets/img/art/messages-radar-800.webp 800w" sizes="260px" width="640" height="640" alt="" loading="lazy" decoding="async">
+      <span class="eyebrow">04 — Das Pro Lab</span>
+      <h2 class="h2">Nicht nur Zahlen. <span class="serif grad">Echte Antworten.</span></h2>
+      <p class="lead">Unfollower-Apps hören bei Zahlen auf. Das Pro Lab liest, was nur dein eigener Export enthält — deine DMs, Likes und Follow-Historie —, um zu zeigen, wer dich ignoriert, wo deine Aufmerksamkeit nicht erwidert wird, wie echt dein Publikum ist und wann du posten solltest.</p>
+    </div>
+    <div class="lab-grid">
+      <article class="card lab-card reveal">
+        <div class="lab-top"><span class="tier-pill tier-pill--pro">Pro</span><img class="ico3d lab-ico" src="/assets/img/icons/ghost.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+        <div class="lab-art art-reply" aria-hidden="true">
+          <div class="rr"><span class="nm">@milo.design</span><i style="--w:8%"></i><b>2 Min.</b></div>
+          <div class="rr"><span class="nm">@luna_eats</span><i style="--w:34%"></i><b>47 Min.</b></div>
+          <div class="rr hot"><span class="nm">@theo.films</span><i style="--w:92%"></i><b>3 Std. 12 Min.</b></div>
+          <span class="read-tag">hat dich ×4 auf gelesen gelassen</span>
+        </div>
+        <h3 class="h4">Ghost-Detektor</h3>
+        <p>Wie schnell dir jede Person wirklich antwortet, wer dich auf gelesen lässt, wer nie ein Gespräch beginnt — und wer immer noch auf deiner letzten Nachricht sitzt.</p>
+      </article>
+      <article class="card lab-card reveal" style="--d:.06s">
+        <div class="lab-top"><span class="tier-pill tier-pill--pro">Pro</span><img class="ico3d lab-ico" src="/assets/img/icons/heart.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+        <div class="lab-art art-audit" aria-hidden="true">
+          <div class="audit-big"><b>38%</b><span>deiner Likes gehen an Accounts, die dir nicht folgen</span></div>
+          <div class="audit-row"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><span>@celebrity.chef</span><em>48 Likes · kein Follow-back</em></div>
+          <div class="audit-row"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><span>412 tote Follows</span><em>nie ein Like</em></div>
+        </div>
+        <h3 class="h4">Engagement-Audit</h3>
+        <p>Die Accounts, die du immer unterstützt und die dich ignorieren, die Follows, mit denen du nie interagierst, und dein echter Kreis — plus wie stark deine Follow-back-Rate nach dem Aufräumen steigt.</p>
+      </article>
+      <article class="card lab-card reveal" style="--d:.12s">
+        <div class="lab-top"><span class="tier-pill tier-pill--pro">Pro</span><img class="ico3d lab-ico" src="/assets/img/icons/trend.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+        <div class="lab-art art-curve" aria-hidden="true">
+          <svg viewBox="0 0 240 90" preserveAspectRatio="none"><defs><linearGradient id="lab-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1a9e8e" stop-opacity=".45"/><stop offset="1" stop-color="#1a9e8e" stop-opacity="0"/></linearGradient></defs><path d="M0 82 C40 78 60 70 90 60 S150 38 180 30 S220 12 240 8 V90 H0z" fill="url(#lab-g)"/><path d="M0 82 C40 78 60 70 90 60 S150 38 180 30 S220 12 240 8" fill="none" stroke="#1a9e8e" stroke-width="2.5"/><circle cx="90" cy="60" r="4" fill="#d7ff3a"/><circle cx="180" cy="30" r="4" fill="#d7ff3a"/></svg>
+          <div class="curve-tags"><span class="up">+124</span><span class="down">−37</span><span>Verlust 2,1 %/Monat</span></div>
+        </div>
+        <h3 class="h4">Wachstums-Zeitmaschine</h3>
+        <p>Dein Publikum Monat für Monat, die Veränderung zwischen jedem Export, monatlicher Verlust, wer dich zuerst gefunden hat und wie schnell Menschen zurückfolgen.</p>
+      </article>
+      <article class="card lab-card reveal">
+        <div class="lab-top"><span class="tier-pill tier-pill--creator">Creator</span><img class="ico3d lab-ico" src="/assets/img/icons/bot.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+        <div class="lab-art art-gauge" aria-hidden="true">
+          <div class="gauge" style="--v:86"><div class="gauge-in"><b>B</b><span>86/100</span></div></div>
+          <div class="gauge-side"><span><i class="dot-r"></i>71 wahrscheinliche Bots</span><span><i class="dot-y"></i>58 verdächtig</span><span><i class="dot-g"></i>2 Follow-Spitzen</span></div>
+        </div>
+        <h3 class="h4">Publikumsqualität</h3>
+        <p>Ein Bot- &amp; Spam-Detektor für deine Follower: eine Qualitätsnote, die wahrscheinlichen Fakes mit Begründung und die Tage, an denen verdächtige Follower-Wellen kamen.</p>
+      </article>
+      <article class="card lab-card reveal" style="--d:.06s">
+        <div class="lab-top"><span class="tier-pill tier-pill--creator">Creator</span><img class="ico3d lab-ico" src="/assets/img/icons/target.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+        <div class="lab-art art-best" aria-hidden="true">
+          <div class="best-heat"><i></i><i></i><i class="m"></i><i></i><i class="m"></i><i class="h"></i><i></i><i></i><i></i><i class="m"></i><i></i><i></i><i class="m"></i><i class="h"></i><i class="x"></i><i class="h"></i><i></i><i></i><i></i><i></i><i class="m"></i><i></i><i class="m"></i><i></i><i></i><i class="m"></i><i class="h"></i><i class="m"></i><i></i><i></i><i></i><i></i><i></i><i class="m"></i><i></i><i></i></div>
+          <div class="best-tag"><b>Di 19–21 Uhr</b><span>2,3× dein durchschnittliches Engagement</span></div>
+        </div>
+        <h3 class="h4">Beste Zeit zum Posten</h3>
+        <p>Deine besten Zwei-Stunden-Fenster, aus dem echten Engagement deiner eigenen Beiträge — oder daraus, wann dein Publikum dir folgt und schreibt.</p>
+      </article>
+      <article class="card lab-card reveal" style="--d:.12s">
+        <div class="lab-top"><span class="tier-pill tier-pill--creator">Creator</span><img class="ico3d lab-ico" src="/assets/img/icons/report.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+        <div class="lab-art art-paper" aria-hidden="true">
+          <div class="paper"><b>DEINE MARKE</b><span class="ln w70"></span><span class="ln w40"></span><div class="bars"><i style="height:40%"></i><i style="height:65%"></i><i style="height:52%"></i><i style="height:88%"></i></div><span class="ln w60"></span></div>
+        </div>
+        <h3 class="h4">White-Label-Kundenbericht</h3>
+        <p>Ein einseitiges Audit mit deiner eigenen Marke — Publikum, Wachstum, Qualität, beste Zeiten und Empfehlungen. Als PDF für Kunden oder Sponsoren herunterladen.</p>
+      </article>
+    </div>
+    <div class="lab-cta reveal">
+      <button class="btn btn--primary btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Alle Tools in der Demo testen</button>
+      <a class="btn btn--ghost btn--lg" href="/pricing/#compare">Pläne vergleichen</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--tight" id="wrapped">
+  <div class="container">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">05 — Wrapped, wann du willst</span>
+      <h2 class="h2">Gemacht zum <span class="serif grad">Teilen.</span></h2>
+      <p class="lead">Dein Jahr muss nicht im Dezember enden. Verwandle deine Stats mit einem Tipp in Story-Karten.</p>
+    </div>
+    <div class="showcase reveal" data-showcase role="group" aria-label="Beispiele für Wrapped-Karten"></div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">06 — Preise</span>
+      <h2 class="h2">Wähle deine Tiefe. <span class="serif">Upgrade jederzeit.</span></h2>
+      <p class="lead">Starte kostenlos. <b>Plus</b> zeigt dir alles, <b>Pro</b> erklärt es, <b>Creator</b> hilft dir zu wachsen. Bezahle in etwa einer Minute mit Krypto — kein Konto, keine automatische Verlängerung. <a href="/pricing/#compare">Alle Funktionen vergleichen →</a></p>
+    </div>
+    <div class="reveal">{{> pricing}}</div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">07 — Fragen</span>
+      <h2 class="h2">Gute Fragen, <span class="serif">klare Antworten.</span></h2>
+    </div>
+    <div class="faq reveal">
+      <details open><summary>Ist das wirklich privat?</summary><div class="answer"><p>Ja. Dein Export wird vollständig in deinem Browser geöffnet und analysiert — er wird nie hochgeladen, und unsere Server sehen ihn nie. Prüf es selbst: Öffne die Entwicklertools deines Browsers (Tab „Netzwerk“) oder schalte nach dem Laden der Seite den Flugmodus ein. Die Analyse funktioniert trotzdem.</p><p>Die Seite spricht nur für Lizenzen und Zahlungen mit dem eigenen Server — nie mit deinen Social-Media-Daten.</p></div></details>
+      <details><summary>Warum fragt ihr nicht wie andere Apps nach meinem Passwort?</summary><div class="answer"><p>Weil die Weitergabe deines Passworts an eine Drittanbieter-App der häufigste Grund ist, warum Accounts gehackt, eingeschränkt oder gesperrt werden — und die Plattformen verbieten es. Der offizielle Datenexport enthält dieselben Informationen, ohne dieses Risiko.</p></div></details>
+      <details><summary>Kann ein einzelner Export zeigen, wer mir entfolgt ist?</summary><div class="answer"><p>Ein Export ist ein Snapshot: Er zeigt, wer dir nicht zurückfolgt, deine Fans, offene Anfragen und vieles mehr. Lege später einen neueren Export ab und Unwrapped vergleicht beide automatisch — so siehst du genau, wer dir entfolgt ist, mit Namen.</p></div></details>
+      <details><summary>Wie lange dauert der Export?</summary><div class="answer"><p>Instagram und Facebook: meist Minuten, höchstens etwa 48 Stunden. TikTok: ein paar Stunden bis einige Tage. X: rund 24 Stunden. LinkedIn: etwa 10 Minuten für Kontakte.</p></div></details>
+      <details><summary>Welche Datei lade ich hoch?</summary><div class="answer"><p>Die ZIP, die dir die Plattform schickt, genau so, wie sie ist. In mehrere ZIP-Dateien aufgeteilt? Wähle alle gleichzeitig aus. Schon entpackt? Wähle den Ordner. JSON, HTML und TikToks TXT-Format funktionieren alle.</p></div></details>
+      <details><summary>Wird mein Account dadurch gesperrt?</summary><div class="answer"><p>Nein — wir rühren deinen Account nie an. Du lädst deine eigenen Daten mit dem offiziellen Tool der Plattform herunter. Die Entfolgen-Warteschlange öffnet nur Profile für dich; auf „Entfolgen“ tippst du selbst, in einem Tempo, mit dem Plattformen kein Problem haben.</p></div></details>
+      <details><summary>Welchen Plan soll ich wählen?</summary><div class="answer"><p><b>Plus</b>, wenn du das komplette Bild deines eigenen Accounts willst: jede Liste vollständig, die Namen derer, die dir entfolgt sind, Suche und CSV. <b>Pro</b>, wenn du deine Beziehungen verstehen willst — Ghost-Detektor, Engagement-Audit, Wachstums-Zeitmaschine, Freundschafts-Radar und die Entfolgen-Warteschlange. <b>Creator</b>, wenn dein Account dein Job ist: Bot-Erkennung, beste Posting-Zeit und White-Label-Berichte für Kunden.</p><p>Unsicher? Öffne die Demo — dort sind alle Tools freigeschaltet.</p></div></details>
+      <details><summary>Kann ich später upgraden, ohne zu verlieren, was ich bezahlt habe?</summary><div class="answer"><p>Ja. Beim Wechsel auf eine höhere Stufe wird deine Restzeit zum fairen Wert umgerechnet und obendrauf gelegt — zum Beispiel werden 100 Tage Plus zu etwa 59 Tagen Pro. Dein Lizenzschlüssel bleibt gleich. Wer Pro lebenslang hat, kann Creator-Zeit hinzufügen und fällt danach auf lebenslanges Pro zurück.</p></div></details>
+      <details><summary>Wie funktionieren Krypto-Zahlungen?</summary><div class="answer"><p>Wähle einen Plan und zahle mit USDT im TRON-Netzwerk — oder, falls verfügbar, mit über 150 anderen Coins. Deine Zahlung wird auf der Blockchain erkannt und dein Plan aktiviert sich automatisch, meist innerhalb einer Minute. Du erhältst einen Lizenzschlüssel, der auf jedem Gerät funktioniert.</p></div></details>
+      <details><summary>Ich habe keine Krypto. Kann ich trotzdem kaufen?</summary><div class="answer"><p>Die meisten Wallet-Apps und Börsen lassen dich in wenigen Minuten USDT per Bankkarte kaufen und dann an die beim Bezahlen angezeigte Adresse senden. Achte darauf, das Netzwerk TRON (TRC20) zu wählen.</p></div></details>
+      <details><summary>Was bekomme ich kostenlos?</summary><div class="answer"><p>Alle Plattformen, jede Übersicht und jedes Diagramm, die ersten 20 Zeilen jeder Liste, wie viele Menschen dir entfolgt sind, die Kernzahlen jedes Pro-Lab-Tools und Wrapped-Karten mit kleinem Wasserzeichen. Bezahlte Pläne zeigen die Namen und Details hinter diesen Zahlen.</p></div></details>
+      <details><summary>Funktioniert es auf meinem Handy?</summary><div class="answer"><p>Ja. Lade die ZIP auf dein Handy herunter, öffne diese Seite und tippe auf „Meinen Export wählen“. Es funktioniert in Safari auf dem iPhone und in Chrome auf Android.</p></div></details>
+      <details><summary>Was wird gespeichert, und wo?</summary><div class="answer"><p>Nur Snapshots von Follower-Listen, in deinem eigenen Browser (IndexedDB), damit wir dir beim nächsten Mal zeigen können, wer dir entfolgt ist. Lösche sie jederzeit unter <a href="/account/">Meine Lizenz → Lokale Daten</a>.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <span class="eyebrow">Bereit?</span>
+      <h2 class="h1" style="max-width:14ch">Deine Daten haben eine Geschichte. <span class="serif grad">Lies sie.</span></h2>
+      <div class="drop-actions">
+        <a class="btn btn--primary btn--lg" href="#start"><svg aria-hidden="true"><use href="#i-upload"/></svg>Meinen Export auspacken</a>
+        <button class="btn btn--ghost btn--lg" type="button" data-demo><svg aria-hidden="true"><use href="#i-play"/></svg>Demo ansehen</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sticky-cta" data-sticky-cta>
+  <a class="btn btn--primary btn--block" href="#start"><svg aria-hidden="true"><use href="#i-upload"/></svg>Meinen Export auspacken — kostenlos</a>
+  <button class="btn btn--ghost" type="button" data-demo aria-label="Demo ansehen"><svg aria-hidden="true"><use href="#i-play"/></svg></button>
+</div>
