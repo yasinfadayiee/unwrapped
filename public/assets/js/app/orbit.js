@@ -65,8 +65,10 @@ export function heroOrbit(canvas) {
     { radius: 0.32, count: 230, color: [26, 158, 142], speed: -0.05 },
     { radius: 0.45, count: 320, color: [244, 244, 246], speed: 0.03 },
   ];
+  // Phones get half the particles: same look on a small canvas, half the work.
+  const density = window.innerWidth < 760 ? 0.5 : 1;
   for (const ring of rings) {
-    for (let i = 0; i < ring.count; i++) {
+    for (let i = 0; i < Math.round(ring.count * density); i++) {
       particles.push({
         ring,
         a: r() * Math.PI * 2,

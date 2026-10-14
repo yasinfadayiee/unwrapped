@@ -391,6 +391,10 @@ function showcase() {
 async function heroCanvas() {
   const canvas = $('[data-hero-orbit]');
   if (!canvas) return;
+  // Decorative only: start once the page has loaded and the browser is idle,
+  // so it never competes with the first paint.
+  if (document.readyState !== 'complete') await new Promise((r) => addEventListener('load', r, { once: true }));
+  await new Promise((r) => (window.requestIdleCallback ? requestIdleCallback(r, { timeout: 2500 }) : setTimeout(r, 1200)));
   const { heroOrbit } = await import('./app/orbit.js');
   heroOrbit(canvas);
 }
