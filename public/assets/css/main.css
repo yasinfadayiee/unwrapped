@@ -1475,3 +1475,4 @@ audio.msg-media { min-height: 0; }
 .footer-grid .f-h { margin-top: 0; line-height: 1.4; }
 .plan-top:has(.plan-ico) { justify-content: flex-start; gap: 10px; } .plan-top:has(.plan-ico) .badge { margin-left: auto; } .plan-ico { width: 40px; height: 40px; }
 .lab-top .lab-ico { width: 44px; height: 44px; }
+.read-next { margin: 36px 0 8px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); } .read-next h2 { margin-top: 0 !important; font-size: 18px; } .read-next ul { margin: 10px 0 0; } .read-next li { margin: 6px 0; }
