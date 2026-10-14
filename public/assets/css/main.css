@@ -1,10 +1,10 @@
-/* ==========================================================================
-   Unwrapped — design system
-   Dark-only by design. Chart colours (--c1…--c4) are a validated categorical
+﻿/* ==========================================================================
+   Unwrapped â€” design system
+   Dark-only by design. Chart colours (--c1â€¦--c4) are a validated categorical
    palette for the dark surfaces below (lightness band, chroma, CVD & contrast).
    ========================================================================== */
 
-/* Basic Latin for every page; Latin Extended (Turkish ğ ş İ, Polish ł…) only
+/* Basic Latin for every page; Latin Extended (Turkish ÄŸ ÅŸ Ä°, Polish Å‚â€¦) only
    downloads on pages that use those letters. */
 @font-face {
   font-family: 'Bricolage';
@@ -242,7 +242,7 @@ ul, ol { margin: 0; padding: 0; }
 .btn:active { transform: scale(0.97); }
 .btn[disabled], .btn[aria-disabled='true'] { opacity: 0.5; pointer-events: none; }
 .link-arrow { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; text-decoration: none; color: var(--text); }
-.link-arrow::after { content: '→'; transition: transform 0.25s var(--ease); }
+.link-arrow::after { content: 'â†’'; transition: transform 0.25s var(--ease); }
 .link-arrow:hover::after { transform: translateX(4px); }
 
 /* ---------- chips / badges ---------- */
@@ -390,7 +390,7 @@ ul, ol { margin: 0; padding: 0; }
 .marquee { position: relative; overflow: hidden; border-block: 1px solid var(--line); padding: 16px 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
 .marquee-track { display: flex; gap: 44px; width: max-content; animation: marquee 48s linear infinite; }
 .marquee-track span { font-family: var(--font-mono); font-size: 13px; color: var(--muted); white-space: nowrap; display: inline-flex; align-items: center; gap: 44px; }
-.marquee-track span::after { content: '✦'; color: var(--line-3); }
+.marquee-track span::after { content: 'âœ¦'; color: var(--line-3); }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---------- section heads ---------- */
@@ -1015,7 +1015,7 @@ button.stat:hover { border-color: var(--line-3); transform: translateY(-2px); }
 /* app: white-label report */
 .report-preview { position: relative; max-height: 760px; overflow: auto; border-radius: 14px; background: #e9e9ee; padding: 18px; }
 .report-preview.is-sample .report-sheet { filter: blur(3px); user-select: none; }
-.report-preview.is-sample::after { content: 'SAMPLE · CREATOR'; position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.2em; color: rgba(86, 68, 168, 0.6); font-size: 22px; pointer-events: none; }
+.report-preview.is-sample::after { content: 'SAMPLE Â· CREATOR'; position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.2em; color: rgba(86, 68, 168, 0.6); font-size: 22px; pointer-events: none; }
 .report-sheet { background: #fff; color: #16161d; border-radius: 6px; padding: 34px 36px; font-family: var(--font-ui); display: grid; gap: 22px; box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.35); max-width: 800px; margin: 0 auto; }
 .rs-head { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; padding-bottom: 18px; border-bottom: 2px solid #16161d; }
 .rs-brand { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #5644a8; font-weight: 700; }
@@ -1453,3 +1453,12 @@ audio.msg-media { min-height: 0; }
 .related-card .ico3d { grid-row: span 2; width: 44px; height: 44px; }
 .tab .ico3d { width: 22px; height: 22px; filter: none; }
 .pf .ico3d { width: 20px; height: 20px; filter: none; }
+
+/* Art beside text-page headings */
+.page-hero > .container { position: relative; }
+.hero-art--side { max-width: 170px; margin: -8px auto 4px; }
+.hero-art--side + * { position: static; }
+@media (min-width: 960px) {
+  .hero-art--side { position: absolute; top: -28px; right: 8px; width: 300px; max-width: none; margin: 0; z-index: 0; }
+  .page-hero > .container:has(.hero-art--side) > :not(.hero-art) { position: relative; z-index: 1; max-width: calc(100% - 320px); }
+}
