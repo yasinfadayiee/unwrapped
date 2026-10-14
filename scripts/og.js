@@ -82,11 +82,15 @@ function draw(card) {
   for (let x = 0; x < W; x += 48) { ctx.beginPath(); ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, H); ctx.stroke(); }
   for (let y = 0; y < H; y += 48) { ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); ctx.stroke(); }
   // Brand.
-  const lg = ctx.createLinearGradient(64, 56, 112, 104);
-  lg.addColorStop(0, '#d7ff3a'); lg.addColorStop(1, '#8f7dff');
-  ctx.fillStyle = lg; ctx.beginPath(); ctx.roundRect(64, 56, 48, 48, 14); ctx.fill();
-  ctx.fillStyle = '#07070b'; ctx.beginPath(); ctx.roundRect(76, 68, 24, 24, 7); ctx.fill();
-  ctx.fillStyle = '#d7ff3a'; ctx.beginPath(); ctx.arc(94, 86, 5, 0, Math.PI * 2); ctx.fill();
+  // The "U" logo: dark tile, gradient U, lime data dot.
+  ctx.fillStyle = '#0f0f16'; ctx.beginPath(); ctx.roundRect(64, 56, 48, 48, 13); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,.14)'; ctx.lineWidth = 1.5; ctx.stroke();
+  const lg = ctx.createLinearGradient(79, 92, 97, 68);
+  lg.addColorStop(0, '#8f7dff'); lg.addColorStop(1, '#d7ff3a');
+  ctx.strokeStyle = lg; ctx.lineWidth = 5.4; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(79, 68.5); ctx.lineTo(79, 81); ctx.arc(88, 81, 9, Math.PI, 0, true); ctx.lineTo(97, 68.5); ctx.stroke();
+  ctx.lineCap = 'butt';
+  ctx.fillStyle = '#d7ff3a'; ctx.beginPath(); ctx.arc(88, 68.4, 3.4, 0, Math.PI * 2); ctx.fill();
   ctx.fillStyle = '#fff'; ctx.font = '700 34px Bricolage'; ctx.fillText('Unwrapped', 128, 92);
   if (card.kicker) {
     ctx.font = '600 20px Inter';
