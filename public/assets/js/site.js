@@ -187,6 +187,7 @@ function tabs() {
 /* ---------- pricing ---------- */
 const money = (n) => `$${Number.isInteger(n) ? n : n.toFixed(2)}`;
 let billing = 'year';
+const PLAN_ICON = { plus: 'search', pro: 'ghost', creator: 'trend' };
 
 function tierCard(config, tier, cycle) {
   const plans = config.plans.filter((p) => p.tier === tier.id);
@@ -199,7 +200,7 @@ function tierCard(config, tier, cycle) {
   return h(
     'div',
     { class: `card plan plan--${tier.id}${featured ? ' is-featured' : ''}` },
-    h('div', { class: 'plan-top' }, h('span', { class: 'plan-name' }, tier.name), featured ? h('span', { class: 'badge' }, t('Most popular')) : tier.id === 'creator' ? h('span', { class: 'badge badge--uv' }, t('For creators')) : null),
+    h('div', { class: 'plan-top' }, PLAN_ICON[tier.id] ? h('img', { class: 'ico3d plan-ico', src: `/assets/img/icons/${PLAN_ICON[tier.id]}.webp`, width: 64, height: 64, alt: '', loading: 'lazy', decoding: 'async' }) : null, h('span', { class: 'plan-name' }, tier.name), featured ? h('span', { class: 'badge' }, t('Most popular')) : tier.id === 'creator' ? h('span', { class: 'badge badge--uv' }, t('For creators')) : null),
     h('p', { class: 'plan-tagline' }, t(tier.tagline)),
     h(
       'div',

@@ -1473,3 +1473,4 @@ audio.msg-media { min-height: 0; }
 .lock-art { display: block; width: 120px; height: 120px; margin: -10px auto 2px; -webkit-mask-image: radial-gradient(circle, #000 50%, transparent 70%); mask-image: radial-gradient(circle, #000 50%, transparent 70%); }
 .empty .empty-art { width: 56px; height: 56px; margin: 0 auto 10px; }
 .footer-grid .f-h { margin-top: 0; line-height: 1.4; }
+.plan-top:has(.plan-ico) { justify-content: flex-start; gap: 10px; } .plan-top:has(.plan-ico) .badge { margin-left: auto; } .plan-ico { width: 40px; height: 40px; }
