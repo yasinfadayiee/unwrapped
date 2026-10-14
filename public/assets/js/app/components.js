@@ -49,7 +49,7 @@ export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tie
     h(
       'div',
       { class: 'lock-inner' },
-      h('img', { class: 'lock-art', src: '/assets/img/art/padlock-check-640.webp', width: 640, height: 640, alt: '', loading: 'lazy', decoding: 'async' }),
+      h('img', { class: 'lock-art', src: '/assets/img/art/padlock-check-320.webp', width: 320, height: 320, alt: '', loading: 'lazy', decoding: 'async' }),
       h('h4', null, title || (count ? tl('{v0} more {v1}', { v0: fmtInt(count), v1: what }) : tl('Unlock with {v0}', { v0: TIER_NAME[tier] }))),
       h('p', null, text || tl('Unlock the full list, search, CSV export and your unfollower history with {v0}.', { v0: TIER_NAME[tier] })),
       h('button', { class: 'btn btn--primary', type: 'button', onClick: onUpgrade }, icon('bolt'), tl('Unlock with {v0}', { v0: TIER_NAME[tier] })),
