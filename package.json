@@ -7,6 +7,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "og": "node scripts/og.js",
+    "indexnow": "node scripts/indexnow.js",
     "dev": "node scripts/build.js && wrangler dev",
     "deploy": "node scripts/build.js && wrangler deploy",
     "db:create": "wrangler d1 create unwrapped",
