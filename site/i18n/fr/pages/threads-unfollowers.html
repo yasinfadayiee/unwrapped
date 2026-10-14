@@ -1,0 +1,81 @@
+<!--page {
+  "route": "/threads-unfollowers/",
+  "nav": "tools",
+  "title": "Unfollowers Threads — vois qui t’a unfollow sur Threads, sans connexion · Unwrapped",
+  "description": "Vois qui ne te suit pas en retour sur Threads et qui t’a unfollow, depuis ton téléchargement officiel de données Threads. Sans mot de passe, sans appli risquée, rien n’est envoyé.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-threads"/></svg>Threads · vérification gratuite</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Qui t’a unfollow</span></span>
+        <span class="line"><span><span class="serif grad">sur Threads ?</span></span></span>
+      </h1>
+      <p class="hero-sub">Threads ne te dit pas qui est parti. Ton téléchargement de données Threads contient tes <b>listes complètes de followers et d’abonnements</b> : tu vois qui ne te suit pas en retour, et qui t’a unfollow depuis la dernière fois. <b>Sans mot de passe. Rien n’est envoyé.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/unfollowers-ghost-640.webp" srcset="/assets/img/art/unfollowers-ghost-320.webp 320w, /assets/img/art/unfollowers-ghost-640.webp 640w, /assets/img/art/unfollowers-ghost-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Ce que tu vois</span>
+      <h2 class="h2">Chaque follower Threads, trié.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Ne te suivent pas en retour</b> : les comptes que tu suis et qui ne te suivent pas.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Fans</b> : ceux qui te suivent sans que tu les suives.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Qui t’a unfollow</b> : par nom, quand tu ajoutes un export plus récent.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Détection des faux followers</b> : bots et spam parmi tes followers.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Un toucher pour ouvrir</b> chaque profil sur Threads.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><b>maya.creates</b><em>Ne te suit pas en retour</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><b>jonas_k</b><em>T’a unfollow</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2f9e8f,#123d37)"></span><b>studio.lumen</b><em>Fan</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><b>ana.ribeiro</b><em>Ne te suit pas en retour</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment ça marche</span><h2 class="h2">Trois étapes, environ trois minutes.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Télécharge tes données Threads</b><span>Espace Comptes → Vos informations et autorisations → Télécharger vos informations → choisis ton profil Threads → Followers et abonnements, format JSON.</span></li>
+      <li><b>Dépose le ZIP ici</b><span>Il est ouvert dans ton navigateur et enregistré comme instantané privé sur ton appareil.</span></li>
+      <li><b>Revérifie plus tard</b><span>Dépose un export plus récent dans une ou deux semaines : tous ceux qui sont partis apparaissent. Les chiffres sont gratuits ; les noms font partie de <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Unfollowers Threads, expliqué.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Puis-je voir qui m’a unfollow sur Threads ?</summary><div class="answer"><p>Threads ne l’affiche pas dans l’appli. Comparer deux de tes propres téléchargements Threads montre exactement qui est parti.</p></div></details>
+      <details><summary>Les applis d’unfollowers Threads sont-elles sûres ?</summary><div class="answer"><p>Les applis qui demandent ton mot de passe Instagram ou Threads mettent ton compte en danger. Unwrapped lit seulement le fichier que Threads te donne.</p></div></details>
+      <details><summary>La personne sait-elle que j’ai vérifié ?</summary><div class="answer"><p>Non. Tu lis seulement tes propres données téléchargées.</p></div></details>
+      <details><summary>C’est gratuit ?</summary><div class="answer"><p>Oui : l’analyse et les chiffres sont gratuits. Plus affiche chaque nom et garde tout ton historique.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Vois qui est parti <span class="serif grad">sur Threads.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Vérifier mon Threads</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Voir dans la démo</button></div>
+    </div>
+  </div>
+</section>

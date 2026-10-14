@@ -1,0 +1,81 @@
+<!--page {
+  "route": "/threads-unfollowers/",
+  "nav": "tools",
+  "title": "Threads unfollowers — see who unfollowed you on Threads, no login · Unwrapped",
+  "description": "See who doesn’t follow you back on Threads and who unfollowed you — from your official Threads data download. No password, no risky app, nothing uploaded.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-threads"/></svg>Threads · free check</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Who unfollowed you</span></span>
+        <span class="line"><span><span class="serif grad">on Threads?</span></span></span>
+      </h1>
+      <p class="hero-sub">Threads won’t tell you who left. Your Threads data download has your <b>full followers and following lists</b> — so you can see who doesn’t follow back, and who unfollowed you since last time. <b>No password. Nothing uploaded.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/unfollowers-ghost-640.webp" srcset="/assets/img/art/unfollowers-ghost-320.webp 320w, /assets/img/art/unfollowers-ghost-640.webp 640w, /assets/img/art/unfollowers-ghost-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">What you see</span>
+      <h2 class="h2">Every Threads follower, sorted.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Not following back</b> — accounts you follow that don’t follow you.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Fans</b> — people who follow you but you don’t follow back.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Who unfollowed you</b> — by name, when you add a newer export.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Fake follower check</b> — bots and spam among your followers.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>One tap to open</b> each profile on Threads.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><b>maya.creates</b><em>Not following back</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><b>jonas_k</b><em>Unfollowed you</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2f9e8f,#123d37)"></span><b>studio.lumen</b><em>Fan</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><b>ana.ribeiro</b><em>Not following back</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2 class="h2">Three steps, about three minutes.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Download your Threads data</b><span>Accounts Center → Your information and permissions → Download your information → choose your Threads profile → Followers and following, format JSON.</span></li>
+      <li><b>Drop the ZIP here</b><span>It’s opened in your browser and saved as a private snapshot on your device.</span></li>
+      <li><b>Check again later</b><span>Drop a newer export in a week or two: everyone who left is listed. Counts are free; the names are part of <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Threads unfollowers, explained.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Can I see who unfollowed me on Threads?</summary><div class="answer"><p>Threads doesn’t show it in the app. Comparing two of your own Threads data downloads shows exactly who left.</p></div></details>
+      <details><summary>Are Threads unfollower apps safe?</summary><div class="answer"><p>Apps that ask for your Instagram or Threads password put your account at risk. Unwrapped only reads the file Threads gives you.</p></div></details>
+      <details><summary>Does the person know I checked?</summary><div class="answer"><p>No. You only read your own downloaded data.</p></div></details>
+      <details><summary>Is it free?</summary><div class="answer"><p>Yes — the analysis and the counts are free. Plus shows every name and keeps your full history.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">See who left you <span class="serif grad">on Threads.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Check my Threads</a><button class="btn btn--ghost btn--lg" type="button" data-demo>See it in the demo</button></div>
+    </div>
+  </div>
+</section>

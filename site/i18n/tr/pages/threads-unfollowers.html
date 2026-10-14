@@ -1,0 +1,81 @@
+<!--page {
+  "route": "/threads-unfollowers/",
+  "nav": "tools",
+  "title": "Threads’te takibi bırakanlar — kimin bıraktığını gör, girişsiz · Unwrapped",
+  "description": "Threads’te seni geri takip etmeyenleri ve takibi bırakanları resmi Threads veri indirmenden gör. Şifre yok, riskli uygulama yok, hiçbir şey yüklenmez.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-threads"/></svg>Threads · ücretsiz kontrol</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Threads’te seni</span></span>
+        <span class="line"><span><span class="serif grad">kim takipten çıktı?</span></span></span>
+      </h1>
+      <p class="hero-sub">Threads kimin ayrıldığını söylemez. Threads veri indirmen <b>tam takipçi ve takip listelerini</b> içerir; böylece kimin geri takip etmediğini ve son seferden beri kimin takibi bıraktığını görürsün. <b>Şifre yok. Hiçbir şey yüklenmez.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/unfollowers-ghost-640.webp" srcset="/assets/img/art/unfollowers-ghost-320.webp 320w, /assets/img/art/unfollowers-ghost-640.webp 640w, /assets/img/art/unfollowers-ghost-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Ne görürsün</span>
+      <h2 class="h2">Her Threads takipçisi, düzenli.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Geri takip etmeyenler</b>: takip ettiğin ama seni takip etmeyen hesaplar.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Hayranlar</b>: seni takip eden ama senin takip etmediğin kişiler.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Takibi bırakanlar</b>: daha yeni bir dışa aktarma eklediğinde isim isim.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Sahte takipçi kontrolü</b>: takipçilerin arasındaki botlar ve spam.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tek dokunuşla</b> her profili Threads’te aç.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><b>maya.creates</b><em>Geri takip etmiyor</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><b>jonas_k</b><em>Takibi bıraktı</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2f9e8f,#123d37)"></span><b>studio.lumen</b><em>Hayran</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><b>ana.ribeiro</b><em>Geri takip etmiyor</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Nasıl çalışır</span><h2 class="h2">Üç adım, yaklaşık üç dakika.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Threads verilerini indir</b><span>Hesaplar Merkezi → Bilgilerin ve izinlerin → Bilgilerini indir → Threads profilini seç → Takipçiler ve takip edilenler, biçim JSON.</span></li>
+      <li><b>ZIP’i buraya bırak</b><span>Tarayıcında açılır ve cihazında özel bir anlık görüntü olarak kaydedilir.</span></li>
+      <li><b>Sonra tekrar kontrol et</b><span>Bir iki hafta sonra daha yeni bir dışa aktarma bırak: ayrılan herkes listelenir. Sayılar ücretsiz; isimler <a href="/pricing/">Plus</a>’ın parçası.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Threads’te takibi bırakanlar, açıklandı.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Threads’te beni kimin takipten çıktığını görebilir miyim?</summary><div class="answer"><p>Threads bunu uygulamada göstermez. Kendi iki Threads veri indirmeni karşılaştırmak tam olarak kimin ayrıldığını gösterir.</p></div></details>
+      <details><summary>Threads takipçi uygulamaları güvenli mi?</summary><div class="answer"><p>Instagram veya Threads şifreni isteyen uygulamalar hesabını riske atar. Unwrapped yalnızca Threads’in sana verdiği dosyayı okur.</p></div></details>
+      <details><summary>Kişi kontrol ettiğimi anlar mı?</summary><div class="answer"><p>Hayır. Yalnızca kendi indirdiğin verileri okursun.</p></div></details>
+      <details><summary>Ücretsiz mi?</summary><div class="answer"><p>Evet, analiz ve sayılar ücretsiz. Plus her ismi gösterir ve tüm geçmişini saklar.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Threads’te kimin <span class="serif grad">ayrıldığını gör.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Threads’imi kontrol et</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Demoda gör</button></div>
+    </div>
+  </div>
+</section>
