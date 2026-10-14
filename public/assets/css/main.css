@@ -1460,7 +1460,9 @@ audio.msg-media { min-height: 0; }
 .hero-art--side + * { position: static; }
 @media (min-width: 960px) {
   .hero-art--side { position: absolute; top: -28px; right: 8px; width: 300px; max-width: none; margin: 0; z-index: 0; }
-  .page-hero > .container:has(.hero-art--side) > :not(.hero-art) { position: relative; z-index: 1; max-width: calc(100% - 320px); }
+  .page-hero > .container:has(.hero-art--side) > :not(.hero-art) { position: relative; z-index: 1; }
+  .page-hero > .container:has(.hero-art--side) > :is(.sec-head, .stack, .eyebrow, h1, .lead, .meta, p) { max-width: calc(100% - 320px); }
+  .page-hero > .container:has(.hero-art--side) > .sec-head > * { max-width: 100%; }
 }
 .ds-btn .ico3d { width: 20px; height: 20px; filter: none; flex: none; }
 .also-strip .ico3d { width: 22px; height: 22px; filter: none; flex: none; }
