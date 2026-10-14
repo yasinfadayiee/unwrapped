@@ -1,0 +1,81 @@
+<!--page {
+  "route": "/instagram-follower-tracker/",
+  "nav": "tools",
+  "title": "Instagram follower tracker — followers gained & lost over time, no login · Unwrapped",
+  "description": "Track your Instagram followers over time: new followers, who unfollowed you and your follower growth chart — from your own data exports, saved privately on your device. No password, nothing uploaded.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-trend"/></svg>Follower tracker · private</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Track your Instagram</span></span>
+        <span class="line"><span><span class="serif grad">followers over time.</span></span></span>
+      </h1>
+      <p class="hero-sub">See <b>who followed and who left</b> between any two exports, your <b>follower growth chart</b> and your new followers per month — saved as private snapshots on your own device. <b>No password. Nothing uploaded.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/health-gauge-640.webp" srcset="/assets/img/art/health-gauge-320.webp 320w, /assets/img/art/health-gauge-640.webp 640w, /assets/img/art/health-gauge-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">What you track</span>
+      <h2 class="h2">Your follower history, in one place.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Followers over time</b> — a chart of every snapshot you’ve saved.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>New followers</b> — who followed you, and how many in the last 30 and 90 days.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Who unfollowed you</b> — by name, between any two exports.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Your biggest years</b> — follow dates go back to the day you joined.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Backups</b> — save your history to a file and move it to another device.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><b>+38</b><em>New followers since last export</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><b>−12</b><em>Unfollowed you</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2f9e8f,#123d37)"></span><b>maya.creates</b><em>Followed you · this week</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><b>jonas_k</b><em>Left · you still follow them</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2 class="h2">One export now, one later.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Download your data</b><span>Instagram: Accounts Center → Your information and permissions → Download your information → Followers and following, format JSON.</span></li>
+      <li><b>Drop the ZIP here</b><span>Your first snapshot is saved in this browser. Nothing is uploaded.</span></li>
+      <li><b>Repeat every week or two</b><span>Each new export is compared automatically. Counts and the chart are free; every name and your full history are part of <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Follower tracking, explained.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>How can I track who follows and unfollows me on Instagram?</summary><div class="answer"><p>Download your followers from Instagram now and again in a week or two, and drop each ZIP here. Unwrapped compares the snapshots and lists who followed and who left.</p></div></details>
+      <details><summary>Does it track in real time?</summary><div class="answer"><p>No. We never log in to your account, so tracking works from the exports you download. Most people repeat it every one or two weeks.</p></div></details>
+      <details><summary>Where is my history stored?</summary><div class="answer"><p>Only in your browser. You can save a backup file at any time and restore it on another device.</p></div></details>
+      <details><summary>Is it free?</summary><div class="answer"><p>Yes — the analysis, the counts and the growth chart are free. Plus shows every name and keeps your full history.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Start your follower <span class="serif grad">history today.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Save my first snapshot</a><button class="btn btn--ghost btn--lg" type="button" data-demo>See it in the demo</button></div>
+    </div>
+  </div>
+</section>

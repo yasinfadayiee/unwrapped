@@ -1,0 +1,81 @@
+<!--page {
+  "route": "/instagram-follower-tracker/",
+  "nav": "tools",
+  "title": "Rastreador de seguidores de Instagram — ganados y perdidos con el tiempo, sin login · Unwrapped",
+  "description": "Sigue tus seguidores de Instagram con el tiempo: nuevos seguidores, quién dejó de seguirte y tu gráfico de crecimiento, a partir de tus exportaciones, guardado en privado en tu dispositivo. Sin contraseña y sin subir nada.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-trend"/></svg>Rastreador de seguidores · privado</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Sigue tus seguidores</span></span>
+        <span class="line"><span><span class="serif grad">de Instagram con el tiempo.</span></span></span>
+      </h1>
+      <p class="hero-sub">Mira <b>quién te siguió y quién se fue</b> entre dos exportaciones, tu <b>gráfico de crecimiento</b> y tus nuevos seguidores por mes, guardado como instantáneas privadas en tu dispositivo. <b>Sin contraseña. Sin subir nada.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/health-gauge-640.webp" srcset="/assets/img/art/health-gauge-320.webp 320w, /assets/img/art/health-gauge-640.webp 640w, /assets/img/art/health-gauge-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Lo que sigues</span>
+      <h2 class="h2">Tu historial de seguidores, en un solo lugar.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Seguidores con el tiempo</b>: un gráfico de cada instantánea guardada.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Nuevos seguidores</b>: quién te siguió y cuántos en los últimos 30 y 90 días.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Quién dejó de seguirte</b>: con nombre, entre dos exportaciones cualesquiera.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tus mejores años</b>: las fechas de seguimiento llegan hasta el día en que te uniste.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Copias de seguridad</b>: guarda tu historial en un archivo y pásalo a otro dispositivo.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><b>+38</b><em>Nuevos desde la última exportación</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><b>−12</b><em>Dejó de seguirte</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2f9e8f,#123d37)"></span><b>maya.creates</b><em>Te siguió · esta semana</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><b>jonas_k</b><em>Se fue · aún lo sigues</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Cómo funciona</span><h2 class="h2">Una exportación ahora, otra después.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Descarga tus datos</b><span>Instagram: Centro de cuentas → Tu información y permisos → Descargar tu información → Seguidores y seguidos, formato JSON.</span></li>
+      <li><b>Suelta el ZIP aquí</b><span>Tu primera instantánea se guarda en este navegador. No se sube nada.</span></li>
+      <li><b>Repite cada una o dos semanas</b><span>Cada nueva exportación se compara automáticamente. Los números y el gráfico son gratis; cada nombre y tu historial completo son parte de <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Seguimiento de seguidores, explicado.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>¿Cómo puedo saber quién me sigue y me deja de seguir en Instagram?</summary><div class="answer"><p>Descarga tus seguidores de Instagram ahora y otra vez en una o dos semanas, y suelta cada ZIP aquí. Unwrapped compara las instantáneas y muestra quién te siguió y quién se fue.</p></div></details>
+      <details><summary>¿Funciona en tiempo real?</summary><div class="answer"><p>No. Nunca iniciamos sesión en tu cuenta, así que el seguimiento usa las exportaciones que descargas. La mayoría lo repite cada una o dos semanas.</p></div></details>
+      <details><summary>¿Dónde se guarda mi historial?</summary><div class="answer"><p>Solo en tu navegador. Puedes guardar una copia de seguridad cuando quieras y restaurarla en otro dispositivo.</p></div></details>
+      <details><summary>¿Es gratis?</summary><div class="answer"><p>Sí: el análisis, los números y el gráfico de crecimiento son gratis. Plus muestra cada nombre y guarda tu historial completo.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Empieza tu historial de <span class="serif grad">seguidores hoy.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Guardar mi primera instantánea</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Verlo en la demo</button></div>
+    </div>
+  </div>
+</section>
