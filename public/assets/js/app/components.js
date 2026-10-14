@@ -38,7 +38,8 @@ export function insights(items) {
 }
 
 export function emptyState(text, iconName = 'inbox') {
-  return h('div', { class: 'empty' }, icon(iconName), h('div', null, text));
+  const art = iconName === 'inbox' ? h('img', { class: 'ico3d empty-art', src: '/assets/img/icons/ghost.webp', width: 64, height: 64, alt: '' }) : icon(iconName);
+  return h('div', { class: 'empty' }, art, h('div', null, text));
 }
 
 export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tier = 'plus' }) {
@@ -48,7 +49,7 @@ export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tie
     h(
       'div',
       { class: 'lock-inner' },
-      h('span', { class: 'ico' }, icon('lock')),
+      h('img', { class: 'lock-art', src: '/assets/img/art/padlock-check-640.webp', width: 640, height: 640, alt: '', loading: 'lazy', decoding: 'async' }),
       h('h4', null, title || (count ? tl('{v0} more {v1}', { v0: fmtInt(count), v1: what }) : tl('Unlock with {v0}', { v0: TIER_NAME[tier] }))),
       h('p', null, text || tl('Unlock the full list, search, CSV export and your unfollower history with {v0}.', { v0: TIER_NAME[tier] })),
       h('button', { class: 'btn btn--primary', type: 'button', onClick: onUpgrade }, icon('bolt'), tl('Unlock with {v0}', { v0: TIER_NAME[tier] })),

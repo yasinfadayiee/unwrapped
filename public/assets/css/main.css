@@ -1468,3 +1468,5 @@ audio.msg-media { min-height: 0; }
 .tile-art { position: absolute; right: -14px; top: 50%; width: 140px; height: 140px; transform: translateY(-50%); pointer-events: none; -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 72%); mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 72%); transition: transform .4s cubic-bezier(.2,.8,.2,1); }
 .card.tile:hover .tile-art { transform: translateY(-50%) scale(1.08) rotate(-4deg); }
 @media (max-width: 520px) { .card.tile:has(.tile-art) { padding-right: 96px; } .tile-art { width: 110px; height: 110px; right: -16px; } }
+.lock-art { display: block; width: 120px; height: 120px; margin: -10px auto 2px; -webkit-mask-image: radial-gradient(circle, #000 50%, transparent 70%); mask-image: radial-gradient(circle, #000 50%, transparent 70%); }
+.empty .empty-art { width: 56px; height: 56px; margin: 0 auto 10px; }
