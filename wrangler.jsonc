@@ -7,8 +7,18 @@
     "directory": "./public",
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Pages on the old workers.dev address go through the worker so it can 301 them to SITE_URL.
+    "run_worker_first": true
   },
+  // The custom domain (Cloudflare creates the DNS records and certificate).
+  // Keep the old workers.dev address alive: it 301-redirects pages to SITE_URL.
+  "workers_dev": true,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "myunwrapped.com", "custom_domain": true },
+    { "pattern": "www.myunwrapped.com", "custom_domain": true }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
@@ -22,7 +32,7 @@
     "crons": ["* * * * *", "0 9 * * *"]
   },
   "vars": {
-    "SITE_URL": "https://unwrapped.unwrapped.workers.dev",
+    "SITE_URL": "https://myunwrapped.com",
     "BRAND": "Unwrapped",
     // Your own USDT (TRC20) receiving address. Leave empty to disable direct USDT.
     "TRON_ADDRESS": "TSEJswyoKTWcRp5x1JFffYr8owDEtXiBA6",

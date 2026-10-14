@@ -8,4 +8,4 @@ Disallow: /es/account/
 Disallow: /pt/account/
 Disallow: /tr/account/
 
-Sitemap: https://unwrapped.unwrapped.workers.dev/sitemap.xml
+Sitemap: https://myunwrapped.com/sitemap.xml

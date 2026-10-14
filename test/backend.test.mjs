@@ -250,6 +250,8 @@ test('the old workers.dev address redirects pages to the custom domain, not the 
   assert.equal(res.headers.get('location'), 'https://shop.test/es/pricing/?a=1');
   const api = await worker.fetch(new Request('https://unwrapped.someone.workers.dev/api/config'), env, ctx());
   assert.equal(api.status, 200);
+  const www = await worker.fetch(new Request('https://www.shop.test/blog/'), env, ctx());
+  assert.equal(www.headers.get('location'), 'https://shop.test/blog/');
 });
 
 test('anonymous site stats count views, referrers and funnel events', async () => {
