@@ -1,0 +1,62 @@
+<!--page {
+  "route": "/search-old-tweets/",
+  "nav": "tools",
+  "title": "Recherche tes anciens tweets et trouve ceux à supprimer · Unwrapped",
+  "headline": "Recherche tes anciens tweets et fais le ménage dans ton historique X",
+  "description": "Recherche chaque tweet, réponse et repost que tu as publiés, filtre par année et lance une vérification de nettoyage (grossièretés, posts de soirée, infos personnelles) — depuis ton archive X, en privé. Sans connexion.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-search"/></svg>Rechercher et nettoyer · X</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Retrouve les tweets</span></span>
+        <span class="line"><span><span class="serif grad">que tu as oubliés.</span></span></span>
+      </h1>
+      <p class="hero-sub">Avant qu’un recruteur, un client ou un nouveau patron ne remonte ton historique X, fais-le toi-même. Recherche <b>chaque post que tu as publié</b>, filtre par année — et laisse la <b>vérification de nettoyage</b> signaler les grossièretés, les posts de soirée et les infos personnelles comme les numéros de téléphone et les adresses e-mail.</p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/posts-cleanup-640.webp" srcset="/assets/img/art/posts-cleanup-320.webp 320w, /assets/img/art/posts-cleanup-640.webp 640w, /assets/img/art/posts-cleanup-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Ce que tu obtiens</span><h2 class="h2">Tout ton historique X, <span class="serif">consultable en quelques secondes.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Recherche plein texte</b> dans chaque post, réponse et repost — avec les mots trouvés surlignés.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Vérification de nettoyage</b> — grossièretés, alcool et drogues, infos personnelles, en français, anglais, espagnol, portugais et turc.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tes propres mots</b> — le nom d’un ex, un ancien employeur, tout ce que tu préférerais ne pas retrouver plus tard.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Filtre par année et par type</b>, trie par date ou par nombre de likes.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Un clic pour ouvrir</b> chaque post sur X, où tu peux le supprimer.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment ça marche</span><h2 class="h2">Trois étapes, sur ton appareil.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Demande ton archive X</b><span>X → Paramètres → Votre compte → <b>Télécharger une archive de vos données</b>. Elle arrive généralement en une journée.</span></li>
+      <li><b>Dépose le ZIP ici</b><span>Il est ouvert dans ton navigateur — tes posts ne sont jamais envoyés.</span></li>
+      <li><b>Ouvre « Rechercher et nettoyer »</b><span>La recherche et la vérification de nettoyage sont gratuites. L’export des résultats en CSV fait partie de <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Les anciens tweets, triés.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Comment rechercher dans tous mes anciens tweets ?</summary><div class="answer"><p>La recherche de X manque souvent les anciens posts. Ton archive les contient tous. Dépose-la ici, ouvre « Rechercher et nettoyer » et tape n’importe quel mot — les résultats apparaissent instantanément, avec les correspondances surlignées.</p></div></details>
+      <details><summary>Unwrapped peut-il supprimer mes tweets ?</summary><div class="answer"><p>Non — il faudrait ton mot de passe, et nous ne le demandons jamais. Chaque résultat s’ouvre sur X en un clic, où tu le supprimes toi-même. Ton compte reste en sécurité.</p></div></details>
+      <details><summary>Que recherche la vérification de nettoyage ?</summary><div class="answer"><p>Les grossièretés, les références à l’alcool et aux drogues, et les infos personnelles comme les numéros de téléphone et les adresses e-mail — en cinq langues. Ajoute tes propres mots pour le reste. C’est un point de départ, pas un verdict : relis chaque post toi-même.</p></div></details>
+      <details><summary>Les réponses et les reposts sont-ils inclus ?</summary><div class="answer"><p>Oui. Filtre par posts, réponses ou reposts. La vérification de nettoyage ne compte que tes propres mots, pas les reposts des autres.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

@@ -1,0 +1,71 @@
+<!--page {
+  "route": "/tiktok/",
+  "nav": "tiktok",
+  "title": "Combien d’heures passes-tu sur TikTok ? Historique, unfollowers et Wrapped · Unwrapped",
+  "description": "Transforme ton téléchargement de données TikTok en vrai temps d’écran : heures regardées, plus longues sessions, heures de pointe, recherches, followers qui ne te suivent pas en retour et un Wrapped TikTok à partager. Privé — rien n’est envoyé.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-tiktok"/></svg>Outil TikTok · ton Wrapped, n’importe quel jour</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Combien d’heures</span></span>
+        <span class="line"><span>TikTok t’a-t-il <span class="serif grad">pris ?</span></span></span>
+      </h1>
+      <p class="hero-sub">Ton téléchargement de données TikTok contient chaque vidéo regardée, avec l’heure. Unwrapped reconstitue tes sessions pour montrer tes <b>vraies heures</b>, <b>ta plus longue session</b>, <b>quand tu scrolles</b> — plus tes followers, tes recherches et une carte <b>Wrapped TikTok</b>. <b>Rien ne quitte ton téléphone.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/screen-time-640.webp" srcset="/assets/img/art/screen-time-320.webp 320w, /assets/img/art/screen-time-640.webp 640w, /assets/img/art/screen-time-800.webp 800w" sizes="(max-width: 760px) 260px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Ce que tu verras</span>
+      <h2 class="h2">Le rapport de temps d’écran que TikTok ne te montre jamais.</h2>
+      <p class="lead">Nous regroupons ton historique de visionnage en sessions (un écart de plus de 10 minutes en commence une nouvelle) — une estimation bien plus honnête que de compter les vidéos.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Heures au total</b> et minutes par jour sur tout ton historique.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tes plus longues sessions</b> — date, durée et vidéos par session.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Carte de chaleur jour × heure</b> et ton profil de scrolleur (Oiseau de nuit ? Accro de la pause déj ?).</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Followers qui ne te suivent pas en retour</b>, fans et mutuels.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tes recherches</b> les plus fréquentes, tes likes et favoris dans le temps.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Radiographie de la vie privée</b> — appareils de connexion, IP, intérêts publicitaires, activité hors TikTok.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment télécharger tes données TikTok</span><h2 class="h2">Demande-les une fois, déballe-les quand tu veux.</h2></div>
+    <div class="reveal">{{> steps-tiktok}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ TikTok</span><h2 class="h2">Les données TikTok, expliquées.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Comment voir combien de temps je passe sur TikTok ?</summary><div class="answer"><p>Demande tes données TikTok (Paramètres et confidentialité → Compte → Télécharger tes données, choisis « Toutes les données » et JSON), puis dépose le ZIP ici. Unwrapped reconstitue tes sessions à partir de l’historique de visionnage et additionne le temps.</p></div></details>
+      <details><summary>Puis-je retrouver une vidéo TikTok déjà regardée ?</summary><div class="answer"><p>Oui. Ouvre <b>Retrouver une vidéo</b> : chaque vidéo regardée, likée, enregistrée ou partagée est listée avec sa date et son heure. Choisis le jour et le moment dont tu te souviens et rouvre la vidéo. L’export ne contient pas de titres, donc la date et l’heure sont tes meilleurs indices.</p></div></details>
+      <details><summary>Existe-t-il un Wrapped TikTok officiel ?</summary><div class="answer"><p>TikTok ne propose pas de Wrapped complet de tes habitudes de visionnage. Unwrapped en crée un à partir de ton propre export — heures, sessions, heure de pointe et profil — sous forme de carte story à partager.</p></div></details>
+      <details><summary>Pourquoi mon historique de visionnage manque-t-il ?</summary><div class="answer"><p>Vérifie que tu as demandé <b>Toutes les données</b>. Une sélection personnalisée peut exclure l’historique. Les exports ne contiennent aussi que l’historique que TikTok conserve encore.</p></div></details>
+      <details><summary>Quelle est la précision de l’estimation du temps ?</summary><div class="answer"><p>L’export indique quand chaque vidéo a commencé, pas combien de temps tu l’as regardée. Nous considérons les vues espacées de moins de 10 minutes comme une seule session, mesurons de la première à la dernière vue et ajoutons une courte durée pour la dernière vidéo. C’est une estimation — mais cohérente et honnête.</p></div></details>
+      <details><summary>Avez-vous besoin de ma connexion TikTok ?</summary><div class="answer"><p>Jamais. Tout est calculé à partir de ton fichier téléchargé, dans ton navigateur.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:16ch">Regarde le chiffre en face. <span class="serif grad">Puis partage-le.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Analyser mon TikTok</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Voir la démo</button></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,56 @@
+<!--page {
+  "route": "/guides/tiktok-screen-time/",
+  "title": "Combien de temps passes-tu sur TikTok ? Ton vrai temps de visionnage · 2026",
+  "headline": "Combien de temps passes-tu vraiment sur TikTok ?",
+  "description": "Trouve ton vrai temps d’écran TikTok à partir de ton propre historique de visionnage : heures au total, plus longue session, heures de pointe et comment créer ton propre Wrapped TikTok — en privé.",
+  "article": "2026-10-11",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/screen-time-640.webp" srcset="/assets/img/art/screen-time-320.webp 320w, /assets/img/art/screen-time-640.webp 640w, /assets/img/art/screen-time-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Guide · TikTok</span>
+      <h1 class="h1">Combien de temps passes-tu vraiment sur <span class="serif grad">TikTok ?</span></h1>
+      <p class="lead">Le rapport de temps d’écran de ton téléphone ne remonte qu’à quelques semaines. Le téléchargement de données de TikTok remonte bien plus loin — il liste chaque vidéo regardée, avec la date et l’heure. C’est assez pour reconstituer tes vraies habitudes.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Étape 1 — Demande tes données TikTok</h2>
+      <ol>
+        <li>Ouvre TikTok → profil → <strong>☰</strong> → <strong>Paramètres et confidentialité</strong> → <strong>Compte</strong> → <strong>Télécharger tes données</strong>.</li>
+        <li>Choisis <strong>Toutes les données</strong>. Ton historique de visionnage n’est inclus que là.</li>
+        <li>Choisis le format <strong>JSON</strong> (TXT fonctionne aussi) et touche <strong>Demander les données</strong>.</li>
+        <li>Quand c’est prêt (de quelques heures à quelques jours), ouvre l’onglet <strong>Télécharger les données</strong> et enregistre le ZIP.</li>
+      </ol>
+
+      <h2>Étape 2 — Transforme l’historique en heures</h2>
+      <p>Dépose le ZIP sur l’<a href="/tiktok/">outil TikTok</a>. L’historique n’enregistre que le moment où chaque vidéo a <em>commencé</em>, donc Unwrapped regroupe les vues en sessions : les vues espacées de moins de 10 minutes appartiennent à la même session. Chaque session va de sa première à sa dernière vidéo, plus une courte durée pour la dernière. Additionne-les et tu obtiens une estimation honnête de ton temps total.</p>
+
+      <h2>Ce que tu vas découvrir</h2>
+      <ul>
+        <li><strong>Les heures au total</strong> et les minutes par jour sur ton historique.</li>
+        <li><strong>Ta plus longue session</strong> — le jour, la durée, le nombre de vidéos.</li>
+        <li><strong>Quand tu scrolles</strong> — une carte de chaleur jour × heure, et ce qui se passe après minuit.</li>
+        <li><strong>Ton profil de scrolleur</strong> — Oiseau de nuit, Accro de la pause déj, Doomscrolleur de minuit…</li>
+        <li>Tes <strong>recherches</strong> les plus fréquentes, tes likes dans le temps et les appareils qui se sont connectés.</li>
+      </ul>
+
+      <h2>Crée ton propre Wrapped TikTok</h2>
+      <p>TikTok ne fait pas de Wrapped annuel de ton visionnage. Unwrapped transforme tes stats en carte au format story (1080×1920) à partager sur TikTok, Instagram ou WhatsApp — avec uniquement des chiffres, jamais le nom des autres.</p>
+
+      <h2>Que faire de ce chiffre</h2>
+      <p>Voir « plus de 300 heures » peut faire l’effet d’un électrochoc. Regarde ta carte de chaleur : si l’essentiel du visionnage a lieu tard le soir, une limite du soir dans les réglages <strong>Temps d’écran</strong> de TikTok ou le mode concentration de ton téléphone est la victoire la plus facile.</p>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>TikTok affiche-t-il mon temps de visionnage total ?</summary><div class="answer"><p>TikTok affiche le temps d’écran quotidien récent dans ses réglages, mais pas de total sur le long terme. Ton téléchargement de données contient tout l’historique de visionnage, et c’est ce que nous utilisons.</p></div></details>
+      <details><summary>Quelle est la précision de l’estimation ?</summary><div class="answer"><p>Comme l’export n’enregistre pas combien de temps tu as regardé chaque vidéo, tout total est une estimation. Regrouper les vues en sessions est cohérent et évite la forte surestimation qu’on obtient en multipliant le nombre de vidéos par une durée moyenne.</p></div></details>
+      <details><summary>Mon historique est-il envoyé quelque part ?</summary><div class="answer"><p>Non. Le fichier est traité dans ton navigateur et ne quitte jamais ton appareil.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

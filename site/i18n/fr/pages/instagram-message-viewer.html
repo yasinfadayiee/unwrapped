@@ -1,0 +1,72 @@
+<!--page {
+  "route": "/instagram-message-viewer/",
+  "nav": "tools",
+  "title": "Lecteur de messages Instagram : lis et recherche tes DM depuis ton téléchargement · Unwrapped",
+  "description": "Ouvre les messages de ton téléchargement Instagram comme une vraie messagerie : lis tes anciennes conversations avec les photos, recherche dans toutes les conversations à la fois et enregistre une conversation en texte. Privé — tout se passe dans ton navigateur.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-message"/></svg>Lecteur de messages · Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Relis tes anciens</span></span>
+        <span class="line"><span><span class="serif grad">messages Instagram.</span></span></span>
+      </h1>
+      <p class="hero-sub">Le téléchargement de données d’Instagram stocke tes conversations dans des fichiers bruts illisibles. Dépose le ZIP ici et chaque conversation s’ouvre comme dans une messagerie — <b>avec photos, messages vocaux et liens</b>, une <b>recherche dans toutes les conversations</b> et un <b>enregistrement en texte</b> en un clic. Rien n’est envoyé.</p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/messages-radar-640.webp" srcset="/assets/img/art/messages-radar-320.webp 320w, /assets/img/art/messages-radar-640.webp 640w, /assets/img/art/messages-radar-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Ce que tu peux faire</span><h2 class="h2">Tout ton historique de DM, <span class="serif">de nouveau lisible.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Lire n’importe quelle conversation</b> — du plus ancien au plus récent, avec dates, heures, réactions et marqueurs de messages retirés.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Photos, vidéos et messages vocaux</b> — affichés directement dans la conversation quand ils sont inclus dans ton téléchargement.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Rechercher dans toutes les conversations</b> — retrouve l’adresse, le lien ou la date que quelqu’un t’a envoyé il y a des années.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Enregistrer une conversation</b> dans un fichier texte propre — une sauvegarde personnelle facile à garder.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Les groupes aussi</b> — avec le nom de chaque expéditeur au-dessus de ses messages.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment ça marche</span><h2 class="h2">Trois étapes, toutes sur ton appareil.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Demande tes messages</b><span>Instagram → Espace Comptes → Vos informations et autorisations → Télécharger vos informations → choisis <b>Messages</b> (JSON). Choisis une qualité de média plus élevée si tu veux les photos dans tes conversations.</span></li>
+      <li><b>Dépose le ZIP ici</b><span>Ton navigateur ouvre l’archive localement. Tu peux activer le mode avion avant — ça marche quand même.</span></li>
+      <li><b>Ouvre « Lecteur de messages »</b><span>Lire toutes les conversations est gratuit. Rechercher dans toutes à la fois et les enregistrer fait partie de <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Les messages Instagram, ouverts.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Comment lire les messages de mon téléchargement Instagram ?</summary><div class="answer"><p>Le téléchargement garde chaque conversation en fichiers JSON ou HTML, dans un dossier par conversation. Dépose le ZIP entier sur Unwrapped et ouvre « Lecteur de messages » — chaque conversation est listée et s’ouvre comme dans une messagerie.</p></div></details>
+      <details><summary>Puis-je récupérer des messages Instagram supprimés ?</summary><div class="answer"><p>Ton téléchargement contient les messages qu’Instagram conserve encore pour ton compte. Les messages que tu as supprimés ou retirés n’y sont généralement pas, donc le lecteur ne peut pas les faire revenir — mais des conversations introuvables dans l’app y sont souvent. <a href="/blog/recover-deleted-instagram-messages/">En savoir plus sur les messages supprimés</a>.</p></div></details>
+      <details><summary>Mes messages sont-ils envoyés quelque part ?</summary><div class="answer"><p>Non. L’archive est ouverte et affichée dans ton navigateur. Rien n’est envoyé à un serveur, et personne — nous compris — ne peut voir tes conversations.</p></div></details>
+      <details><summary>Pourquoi je ne vois pas les photos ?</summary><div class="answer"><p>Les photos et vidéos ne sont dans le téléchargement que si tu as inclus les médias. Refais la demande avec les médias et une qualité plus élevée.</p></div></details>
+      <details><summary>Est-ce que ça marche avec Facebook Messenger ?</summary><div class="answer"><p>Oui. Dépose ton ZIP « Télécharger vos informations » de Facebook (avec les messages) et ouvre le Lecteur de messages dans l’onglet Facebook — tes conversations Messenger s’ouvrent de la même façon.</p></div></details>
+      <details><summary>Est-ce gratuit ?</summary><div class="answer"><p>Oui — lire toutes les conversations est gratuit. Plus ajoute la recherche dans toutes les conversations et l’enregistrement en fichiers texte.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Ouvre tes conversations. <span class="serif grad">En privé.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Ouvrir mes messages</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Le voir dans la démo</button></div>
+    </div>
+  </div>
+</section>

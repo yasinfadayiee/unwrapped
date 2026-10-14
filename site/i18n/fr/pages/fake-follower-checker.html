@@ -1,0 +1,97 @@
+<!--page {
+  "route": "/fake-follower-checker/",
+  "nav": "tools",
+  "title": "Détecteur de faux followers Instagram et TikTok — audit des bots gratuit, sans connexion · Unwrapped",
+  "description": "Vérifie combien de tes followers Instagram ou TikTok sont des bots, du spam ou achetés. Obtiens une note de qualité d’audience, les signaux d’alerte et les comptes exacts — depuis ton export officiel. Sans mot de passe, rien n’est envoyé.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-bot"/></svg>Qualité de l’audience · note gratuite</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Combien de tes</span></span>
+        <span class="line"><span>followers sont <span class="serif grad">faux ?</span></span></span>
+      </h1>
+      <p class="hero-sub">Obtiens une <b>note de qualité d’audience</b>, vois les <b>bots, le spam et les followers achetés</b> — et les jours où ils sont arrivés par vagues. Calculé à partir de ton export officiel Instagram ou TikTok. <b>Sans mot de passe. Rien n’est envoyé.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/bot-finder-640.webp" srcset="/assets/img/art/bot-finder-320.webp 320w, /assets/img/art/bot-finder-640.webp 640w, /assets/img/art/bot-finder-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Ce qui est vérifié</span>
+      <h2 class="h2">Chaque follower, passé au crible.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Noms d’utilisateur suspects</b> — longues suites de chiffres, lettres qui semblent aléatoires, noms du type « user12345 ».</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Mots de spam et de promo</b> — crypto, giveaway, follow4follow, likes-for-likes et similaires.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Pics de follows</b> — des jours avec bien plus de nouveaux followers que d’habitude, typiques des followers achetés.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Une note de qualité de A à F</b> — la part de ton audience qui semble réelle.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Les comptes exacts et pourquoi</b> — consultables, exportables en CSV, chaque profil à un clic.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="lab-art art-gauge">
+        <div class="gauge" style="--v:86"><div class="gauge-in"><b>B</b><span>86/100</span></div></div>
+        <div class="gauge-side"><span><i class="dot-r"></i>71 bots probables</span><span><i class="dot-y"></i>58 suspects</span><span><i class="dot-g"></i>2 pics de follows</span></div>
+      </div>
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#e0574a,#4a1c18)"></span><b>user8273645</b><em>Long nombre · Nom générique</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#b8820f,#3b2a06)"></span><b>crypto.gains.daily</b><em>Mot de promo · Pic de follows</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#6d5acb,#2e2457)"></span><b>xkqzvbt_77</b><em>Lettres aléatoires</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Pourquoi c’est important</span><h2 class="h2">Les faux followers te coûtent discrètement de la portée.</h2></div>
+    <div class="how3 reveal">
+      <div class="card card--pad"><svg aria-hidden="true"><use href="#i-trend"/></svg><b>Un taux d’engagement plus bas</b><p>Les bots ne likent ni ne commentent jamais, donc chaque faux follower fait baisser ton taux d’engagement — et avec lui, la diffusion de tes publications.</p></div>
+      <div class="card card--pad"><svg aria-hidden="true"><use href="#i-briefcase"/></svg><b>Les marques vérifient</b><p>Les sponsors regardent la qualité de l’audience avant de payer. Une audience propre et une bonne note rendent tes tarifs plus faciles à défendre.</p></div>
+      <div class="card card--pad"><svg aria-hidden="true"><use href="#i-shield"/></svg><b>Aucune app risquée</b><p>La plupart des vérificateurs veulent ton mot de passe. Unwrapped lit l’export qu’Instagram et TikTok te donnent — ton compte n’est jamais touché.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment ça marche</span><h2 class="h2">Trois étapes, environ trois minutes.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Télécharge tes données</b><span>Instagram : Espace Comptes → Vos informations → Télécharger vos informations → Followers et abonnements (JSON). TikTok : Paramètres → Compte → Télécharger tes données (JSON).</span></li>
+      <li><b>Dépose le ZIP ici</b><span>Il est ouvert dans ton navigateur. Rien n’est envoyé — essaie en mode avion.</span></li>
+      <li><b>Obtiens ta note</b><span>La note et les chiffres sont gratuits. La liste des comptes, les raisons, les pics et le CSV font partie de <a href="/pricing/">Creator</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Les faux followers, expliqués.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Comment vérifier si mes followers sont faux ?</summary><div class="answer"><p>Télécharge ta liste de followers depuis Instagram ou TikTok (l’export de données officiel), puis dépose le ZIP sur cette page. Unwrapped passe chaque follower au crible pour repérer les noms suspects et les vagues soudaines de nouveaux followers, puis te donne une note de qualité d’audience.</p></div></details>
+      <details><summary>Quelle est la précision de la vérification ?</summary><div class="answer"><p>C’est une estimation à partir de signaux publics de ton propre export — noms d’utilisateur, mots de spam et moment des follows. Les comptes avec plusieurs signaux d’alerte sont listés comme « probables », ceux avec un ou deux comme « suspects ». Certaines vraies personnes ont des noms inhabituels, alors vérifie avant de retirer quelqu’un.</p></div></details>
+      <details><summary>Est-ce gratuit ?</summary><div class="answer"><p>Oui — la note de qualité et le nombre de followers probables et suspects sont gratuits. Les comptes exacts, les raisons, le graphique des pics et l’export CSV font partie de l’offre Creator.</p></div></details>
+      <details><summary>Est-ce que ça retire les faux followers automatiquement ?</summary><div class="answer"><p>Non. Nous ne nous connectons jamais à ton compte, donc rien ne se passe sans toi. Chaque compte listé a un bouton « Ouvrir » ; retire-le toi-même de tes followers dans l’app.</p></div></details>
+      <details><summary>Avez-vous besoin de mon mot de passe ?</summary><div class="answer"><p>Jamais. Tout est calculé à partir du fichier que la plateforme te donne, dans ton propre navigateur.</p></div></details>
+      <details><summary>Est-ce que ça marche pour TikTok et Threads ?</summary><div class="answer"><p>Oui — tout export contenant les noms d’utilisateur des followers : Instagram, Threads et TikTok.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Connais ta vraie audience <span class="serif grad">dès aujourd’hui.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Vérifier mes followers</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Le voir dans la démo</button></div>
+    </div>
+  </div>
+</section>

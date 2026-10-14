@@ -1,0 +1,67 @@
+<!--page {
+  "route": "/guides/download-instagram-data/",
+  "title": "Comment télécharger tes données Instagram (followers, messages, tout) · 2026",
+  "headline": "Comment télécharger tes données Instagram — pas à pas",
+  "description": "Pas à pas : télécharge tes données Instagram depuis l’Espace Comptes, quelles options choisir (JSON ou HTML, followers seulement ou tout), combien de temps ça prend et ce que contient le ZIP.",
+  "article": "2026-10-11",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Guide · Instagram</span>
+      <h1 class="h1">Comment télécharger tes données Instagram, <span class="serif grad">pas à pas.</span></h1>
+      <p class="lead">Instagram te permet de télécharger une copie de presque tout ce qu’il stocke sur toi : followers, abonnements, likes, commentaires, messages, connexions et les annonceurs qui ont tes informations. Voici exactement comment faire — et quelles options choisir.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Avant de commencer : de quelles données as-tu besoin ?</h2>
+      <ul>
+        <li><strong>Tu veux juste savoir qui ne te suit pas en retour ou qui t’a unfollow ?</strong> Demande uniquement <strong>Followers et abonnements</strong>. C’est minuscule et généralement prêt en quelques minutes.</li>
+        <li><strong>Tu veux les stats de DM, les comptes que tu likes le plus et une vérification de ta vie privée ?</strong> Demande <strong>Toutes les informations disponibles</strong>. C’est plus lourd et peut prendre plus de temps.</li>
+      </ul>
+
+      <h2>Dans l’app Instagram (iPhone ou Android)</h2>
+      <ol>
+        <li>Va sur ton profil et touche <strong>☰</strong> (en haut à droite).</li>
+        <li>Touche <strong>Espace Comptes</strong>.</li>
+        <li>Touche <strong>Vos informations et autorisations</strong> → <strong>Télécharger vos informations</strong>.</li>
+        <li>Touche <strong>Télécharger ou transférer des informations</strong> et sélectionne ton compte Instagram.</li>
+        <li>Choisis <strong>Certaines de vos informations</strong> (puis coche <strong>Followers et abonnements</strong>) ou <strong>Toutes les informations disponibles</strong>.</li>
+        <li>Choisis <strong>Télécharger sur l’appareil</strong>.</li>
+        <li>Règle <strong>Période : depuis le début</strong>, <strong>Format : JSON</strong>, <strong>Qualité des médias : faible</strong>.</li>
+        <li>Touche <strong>Créer les fichiers</strong>.</li>
+      </ol>
+      <p>Sur ordinateur, le même menu se trouve dans Espace Comptes → Vos informations et autorisations → Télécharger vos informations.</p>
+
+      <h2>JSON ou HTML ?</h2>
+      <p>Le <strong>JSON</strong> est un format lisible par les machines et le choix le plus fiable pour des outils comme Unwrapped. Le <strong>HTML</strong> est fait pour être lu dans un navigateur. Unwrapped comprend les deux, mais si tu peux choisir, prends JSON.</p>
+
+      <h2>Combien de temps ça prend ?</h2>
+      <p>Les petites demandes sont souvent prêtes en quelques minutes ; les grandes peuvent prendre des heures, et Instagram indique jusqu’à quelques jours dans de rares cas. Tu reçois un e-mail et une notification. Le lien de téléchargement expire au bout de quelques jours, alors télécharge-le vite.</p>
+
+      <h2>Que contient le ZIP ?</h2>
+      <ul>
+        <li><code>connections/followers_and_following/followers_1.json</code> — tes followers, avec la date à laquelle chacun t’a suivi.</li>
+        <li><code>following.json</code> — tous les comptes que tu suis.</li>
+        <li><code>pending_follow_requests.json</code>, <code>close_friends.json</code>, <code>blocked_profiles.json</code> et plus.</li>
+        <li>Avec « Toutes les informations » : likes, commentaires, messages, activité de connexion et <code>advertisers_using_your_activity_or_information.json</code>.</li>
+      </ul>
+      <p>Vois <a href="/guides/instagram-data-files-explained/">chaque fichier important expliqué</a>. Tu n’as rien à décompresser. Dépose le ZIP tel quel dans <a href="/instagram/">Unwrapped</a> — même plusieurs parties ZIP à la fois.</p>
+
+      <h2>Garde-le privé</h2>
+      <p>Ton export contient des informations personnelles, y compris les noms d’autres personnes et tes messages. Ne l’importe jamais sur un site qui l’envoie à un serveur. Unwrapped le traite entièrement dans ton navigateur — tu peux même activer le mode avion avant de le déposer.</p>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Pourquoi je ne trouve pas « Télécharger vos informations » ?</summary><div class="answer"><p>Instagram l’a déplacé dans l’Espace Comptes. Regarde dans Espace Comptes → Vos informations et autorisations. Vérifie que ton app est à jour.</p></div></details>
+      <details><summary>Mon fichier de followers semble incomplet. Pourquoi ?</summary><div class="answer"><p>L’export peut avoir quelques heures de retard sur l’app et n’inclut pas les comptes désactivés. Les très gros comptes peuvent être répartis sur plusieurs fichiers de followers — ils sont tous lus automatiquement.</p></div></details>
+      <details><summary>Télécharger mes données prévient-il quelqu’un ou affecte-t-il mon compte ?</summary><div class="answer"><p>Non. C’est une fonction officielle et toi seul reçois le fichier.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

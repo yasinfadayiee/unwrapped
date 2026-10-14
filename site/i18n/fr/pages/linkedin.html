@@ -1,0 +1,57 @@
+<!--page {
+  "route": "/linkedin/",
+  "nav": "linkedin",
+  "title": "Analyseur de relations LinkedIn — ton réseau par entreprise et par métier · Unwrapped",
+  "description": "Transforme ton export de données LinkedIn en carte de ton réseau : entreprises principales, métiers, recruteurs et fondateurs de ton réseau, et sa croissance année après année. Privé — dans ton navigateur.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-linkedin"/></svg>Carte de ton réseau LinkedIn</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Qui y a-t-il vraiment</span></span>
+        <span class="line"><span>dans ton <span class="serif grad">réseau ?</span></span></span>
+      </h1>
+      <p class="hero-sub">Dépose ton export LinkedIn et découvre <b>dans quelles entreprises</b> travaillent tes relations, <b>combien de recruteurs et de fondateurs</b> tu connais, et comment ton réseau a grandi — en quelques secondes, <b>sans rien envoyer</b>.</p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/network-briefcase-640.webp" srcset="/assets/img/art/network-briefcase-320.webp 320w, /assets/img/art/network-briefcase-640.webp 640w, /assets/img/art/network-briefcase-800.webp 800w" sizes="(max-width: 760px) 260px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Ce que tu verras</span>
+      <h2 class="h2">Ton prochain emploi est déjà dans ce fichier.</h2>
+      <p class="lead">Connections.csv liste chaque relation avec son entreprise, son poste et la date. Nous en faisons une carte exploitable.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Entreprises principales</b> de ton réseau.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Métiers</b> — recruteurs, fondateurs, ingénieurs, designers, investisseurs…</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Croissance du réseau</b> année après année, et les nouvelles relations récentes.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Liste consultable</b> avec export CSV (Plus).</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment télécharger tes données LinkedIn</span><h2 class="h2">Dix minutes, du début à la fin.</h2></div>
+    <div class="reveal">{{> steps-linkedin}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ LinkedIn</span><h2 class="h2">Les exports LinkedIn, expliqués.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Comment exporter mes relations LinkedIn ?</summary><div class="answer"><p>Vous → Préférences et confidentialité → Confidentialité des données → Obtenir une copie de vos données → choisis Relations → Demander l’archive. LinkedIn t’envoie un lien de téléchargement par e-mail, généralement en une dizaine de minutes.</p></div></details>
+      <details><summary>Pourquoi la plupart des adresses e-mail manquent-elles ?</summary><div class="answer"><p>LinkedIn n’inclut l’e-mail que des relations qui l’ont autorisé dans leurs propres paramètres de confidentialité.</p></div></details>
+      <details><summary>Mes données professionnelles sont-elles envoyées ?</summary><div class="answer"><p>Non. Le CSV est analysé dans ton navigateur et ne quitte jamais ton appareil.</p></div></details>
+    </div>
+  </div>
+</section>

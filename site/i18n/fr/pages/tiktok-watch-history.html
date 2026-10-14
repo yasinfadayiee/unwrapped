@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/tiktok-watch-history/",
+  "nav": "tools",
+  "title": "Historique TikTok : retrouve une vidéo déjà regardée · Unwrapped",
+  "description": "Tu as perdu un TikTok que tu as regardé ? Ouvre tout ton historique de visionnage TikTok par jour et par heure, plus chaque vidéo likée, enregistrée ou partagée — depuis ton propre téléchargement, en privé.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-play"/></svg>Retrouver une vidéo · TikTok</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Retrouve ce TikTok</span></span>
+        <span class="line"><span><span class="serif grad">que tu as regardé.</span></span></span>
+      </h1>
+      <p class="hero-sub">Tu as fait défiler une vidéo et tu ne la retrouves plus ? Ton téléchargement de données TikTok garde <b>chaque vidéo regardée</b>, avec la date et l’heure. Choisis le jour et le moment dont tu te souviens et rouvre-la — plus <b>tout ce que tu as liké, enregistré et partagé</b>.</p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/watch-reel-640.webp" srcset="/assets/img/art/watch-reel-320.webp 320w, /assets/img/art/watch-reel-640.webp 640w, /assets/img/art/watch-reel-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Ce que tu obtiens</span><h2 class="h2">Ton historique TikTok, <span class="serif">consultable par heure.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Historique de visionnage</b> — chaque vidéo avec l’heure exacte de visionnage, regroupée par jour.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Likées, favoris et partagées</b> — chacune dans son propre onglet.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Filtre par jour et moment de la journée</b> — matin, après-midi, soir ou nuit.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Une touche pour rouvrir</b> la vidéo dans TikTok.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Ton vrai temps d’écran</b> — heures, sessions et ton profil de scrolleur, sur le même tableau de bord.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment ça marche</span><h2 class="h2">Trois étapes, sur ton appareil.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Demande tes données TikTok</b><span>Profil → ☰ → Paramètres et confidentialité → Compte → Télécharger tes données → <b>Toutes les données</b>, format <b>JSON</b>.</span></li>
+      <li><b>Dépose le ZIP ici</b><span>Il est ouvert dans ton navigateur — rien n’est envoyé.</span></li>
+      <li><b>Ouvre « Retrouver une vidéo »</b><span>La consultation est gratuite. L’export d’une liste en CSV fait partie de <a href="/pricing/">Plus</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">L’historique TikTok, expliqué.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Comment voir tout mon historique de visionnage TikTok ?</summary><div class="answer"><p>L’app n’affiche que l’historique récent. Ton téléchargement de données contient toute la liste conservée par TikTok, avec la date et l’heure de chaque vidéo. Dépose-le ici et ouvre l’outil pour retrouver une vidéo.</p></div></details>
+      <details><summary>Puis-je rechercher par titre de vidéo ?</summary><div class="answer"><p>Non — l’export de TikTok contient des liens et des heures, pas de titres ni de légendes. Affine selon le jour et l’heure dont tu te souviens, puis ouvre les vidéos candidates.</p></div></details>
+      <details><summary>Jusqu’où remonte-t-il ?</summary><div class="answer"><p>Aussi loin que TikTok le conserve pour ton compte — généralement plusieurs mois. Les dates la plus ancienne et la plus récente s’affichent dans le sélecteur de date.</p></div></details>
+      <details><summary>Est-ce privé ?</summary><div class="answer"><p>Oui. Le fichier est lu dans ton navigateur et n’est jamais envoyé, et TikTok n’est pas prévenu.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}

@@ -1,0 +1,57 @@
+<!--page {
+  "route": "/facebook/",
+  "nav": "facebook",
+  "title": "Qui m’a retiré de ses amis sur Facebook ? Suivi gratuit depuis tes données · Unwrapped",
+  "description": "Découvre qui t’a retiré de ses amis sur Facebook, tes demandes d’ami en attente et quels annonceurs détiennent tes données — grâce à ton téléchargement officiel Facebook. Sans connexion, rien n’est envoyé.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-facebook"/></svg>Suivi des amis retirés sur Facebook</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Qui t’a retiré</span></span>
+        <span class="line"><span>de ses amis ? <span class="serif grad">Tu vas le savoir.</span></span></span>
+      </h1>
+      <p class="hero-sub">Dépose ton téléchargement de données Facebook pour voir tes amis, tes <b>demandes en attente</b>, les personnes que tu as retirées et — d’un instantané à l’autre — <b>exactement qui t’a retiré de ses amis</b>. Plus les annonceurs et entreprises qui partagent ton activité. <b>Sans connexion. Rien n’est envoyé.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/friends-network-640.webp" srcset="/assets/img/art/friends-network-320.webp 320w, /assets/img/art/friends-network-640.webp 640w, /assets/img/art/friends-network-800.webp 800w" sizes="(max-width: 760px) 260px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Ce que tu verras</span>
+      <h2 class="h2">Ta liste d’amis, avec de la mémoire.</h2>
+      <p class="lead">Facebook ne te dit jamais quand quelqu’un te retire de ses amis. Deux exports à quelques semaines d’intervalle, si — et Unwrapped sait ignorer les personnes que <i>tu</i> as retirées.</p>
+    </div>
+    <ul class="checklist reveal" style="--d:.1s">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Qui t’a retiré de ses amis</b> entre deux exports.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Demandes d’ami envoyées</b> toujours en attente.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Amis ajoutés par an</b> et depuis combien de temps tu connais chacun.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Annonceurs qui détiennent tes données</b> et activité hors Facebook.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment télécharger tes données Facebook</span><h2 class="h2">Deux minutes dans l’Espace Comptes.</h2></div>
+    <div class="reveal">{{> steps-facebook}}</div>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ Facebook</span><h2 class="h2">Les amis retirés, expliqués.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Comment voir qui m’a retiré de ses amis sur Facebook ?</summary><div class="answer"><p>Télécharge tes informations Facebook (Amis et followers, JSON) et dépose-les ici — c’est ton premier instantané. Recommence dans quelques semaines : Unwrapped compare les deux et liste toutes les personnes disparues, sans compter celles que tu as retirées toi-même.</p></div></details>
+      <details><summary>La personne saura-t-elle que j’ai vérifié ?</summary><div class="answer"><p>Non. Personne n’est prévenu — tu lis seulement ton propre téléchargement de données, sur ton propre appareil.</p></div></details>
+      <details><summary>Pourquoi quelqu’un pourrait-il apparaître à tort comme m’ayant retiré ?</summary><div class="answer"><p>Les comptes désactivés ou supprimés disparaissent aussi des listes d’amis, et une personne qui change de nom d’affichage peut ressembler à une nouvelle personne. Vérifie le profil avant de tirer des conclusions.</p></div></details>
+    </div>
+  </div>
+</section>

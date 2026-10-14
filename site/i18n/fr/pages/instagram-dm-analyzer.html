@@ -1,0 +1,88 @@
+<!--page {
+  "route": "/instagram-dm-analyzer/",
+  "nav": "tools",
+  "title": "Analyseur de DM Instagram : qui te laisse en vu, temps de réponse et qui écrit en premier · Unwrapped",
+  "description": "Analyse tes DM Instagram en privé : vois qui te laisse en vu, à quelle vitesse chacun répond vraiment, qui écrit toujours en premier et quelles amitiés s’éteignent — depuis ton export officiel. Sans connexion, rien n’est envoyé.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-ghost"/></svg>Détecteur de ghosting · DM Instagram</span>
+      <h1 class="h1 hero-title" style="max-width:15ch">
+        <span class="line"><span>Qui te laisse</span></span>
+        <span class="line"><span><span class="serif grad">en vu ?</span></span></span>
+      </h1>
+      <p class="hero-sub">Tes messages Instagram, mesurés : <b>temps de réponse</b> de chaque ami, qui <b>te laisse en vu</b>, qui <b>écrit toujours en premier</b> et quelles amitiés <b>s’éteignent</b>. Privé par conception — <b>personne n’est prévenu et rien n’est envoyé.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/messages-radar-640.webp" srcset="/assets/img/art/messages-radar-320.webp 320w, /assets/img/art/messages-radar-640.webp 640w, /assets/img/art/messages-radar-800.webp 800w" sizes="(max-width: 760px) 260px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Ce que tu verras</span>
+      <h2 class="h2">Les schémas derrière tes conversations.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Temps de réponse</b> — combien de temps chaque personne met d’habitude à te répondre, et à quelle vitesse tu lui réponds.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Qui te laisse en vu</b> — les fois où tu as écrit, sans réponse pendant un jour ou plus, et où tu as dû réécrire.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Jamais répondu</b> — les conversations où le dernier mot est le tien et où ils n’ont pas écrit depuis.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Qui écrit en premier</b> — les conversations que toi seul lances.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Radar d’amitié</b> — ton cercle proche et les amitiés qui s’éteignent ou grandissent.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Friendship Wrapped</b> — une carte story pour toi et un ami : séries, vitesse de réponse, votre type d’amitié.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="lab-art art-reply">
+        <div class="rr"><span class="nm">@milo.design</span><i style="--w:8%"></i><b>2 min</b></div>
+        <div class="rr"><span class="nm">@luna_eats</span><i style="--w:34%"></i><b>47 min</b></div>
+        <div class="rr hot"><span class="nm">@theo.films</span><i style="--w:92%"></i><b>3 h 12 min</b></div>
+        <span class="read-tag">t’a laissé en vu ×4</span>
+      </div>
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#1a9e8e,#0f3d37)"></span><b>Tu lances 71 % des conversations</b><em>avec 6 amis</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#8f7dff,#2a1f6b)"></span><b>Ton dernier message : il y a 3 semaines</b><em>toujours sans réponse</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment ça marche</span><h2 class="h2">Tes messages ne quittent jamais ton téléphone ni ton ordinateur.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Demande tes messages</b><span>Instagram → Espace Comptes → Vos informations et autorisations → Télécharger vos informations → choisis <b>Messages</b> (JSON). C’est généralement prêt en quelques heures.</span></li>
+      <li><b>Dépose le ZIP ici</b><span>Il est analysé dans ton navigateur. Les stats n’utilisent que qui a écrit et quand ; rien n’est envoyé.</span></li>
+      <li><b>Les chiffres, puis les noms</b><span>Tes temps de réponse et les totaux sont gratuits. Les noms, les listes et les cartes Friendship Wrapped font partie de <a href="/pricing/">Pro</a>.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Les DM Instagram, décodés.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Puis-je voir qui me laisse en vu sur Instagram ?</summary><div class="answer"><p>Instagram ne le montre pas, mais ton historique de messages, si. Unwrapped compte les fois où tu as écrit, sans réponse pendant un jour ou plus, puis réécrit, et liste les conversations où ton dernier message est toujours sans réponse après une semaine.</p></div></details>
+      <details><summary>L’autre personne le saura-t-elle ?</summary><div class="answer"><p>Non. Personne n’est prévenu et rien n’est envoyé — l’analyse se fait sur ton propre appareil à partir du fichier qu’Instagram te donne.</p></div></details>
+      <details><summary>Lisez-vous mes messages ?</summary><div class="answer"><p>Non. Les stats n’utilisent que l’expéditeur de chaque message et l’heure. Si tu ouvres le <a href="/instagram-message-viewer/">Lecteur de messages</a>, tes conversations s’affichent pour toi sur ton propre appareil — elles ne sont jamais stockées sur un serveur ni envoyées.</p></div></details>
+      <details><summary>Quelles données dois-je télécharger ?</summary><div class="answer"><p>Choisis « Messages » (ou « Toutes les informations disponibles ») dans Télécharger vos informations d’Instagram, au format JSON.</p></div></details>
+      <details><summary>Les conversations de groupe sont-elles incluses ?</summary><div class="answer"><p>Les temps de réponse et « laissé en vu » ne sont mesurés que dans les conversations en tête-à-tête, où ils ont du sens. Les groupes comptent quand même dans tes totaux de messages.</p></div></details>
+      <details><summary>Est-ce gratuit ?</summary><div class="answer"><p>Ton propre temps de réponse, leur temps de réponse moyen et les totaux sont gratuits. Les noms derrière chaque liste, le Radar d’amitié et les cartes Friendship Wrapped font partie de Pro.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Découvre qui est <span class="serif grad">vraiment là.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Analyser mes DM</a><button class="btn btn--ghost btn--lg" type="button" data-demo>Le voir dans la démo</button></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+<!--page {
+  "route": "/instagram-account-age/",
+  "nav": "tools",
+  "title": "Quand ai-je créé mon compte Instagram ? Trouve ta date d’inscription · Unwrapped",
+  "headline": "Quand as-tu créé ton compte Instagram ?",
+  "description": "Trouve le jour exact de ton inscription sur Instagram, ton plus ancien follower, ta première publication encore en ligne et chaque étape depuis — une seule frise depuis ton propre téléchargement, en privé.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-calendar"/></svg>Âge du compte · Instagram, TikTok, X, Facebook</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Quand tout</span></span>
+        <span class="line"><span><span class="serif grad">a-t-il commencé ?</span></span></span>
+      </h1>
+      <p class="hero-sub">Ton téléchargement de données connaît le <b>jour exact de ton inscription</b>, ton <b>plus ancien follower</b>, ta <b>première publication encore en ligne</b> et le moment où tu as atteint 100 et 1 000 followers. Unwrapped met tout sur une seule frise.</p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/account-cake-640.webp" srcset="/assets/img/art/account-cake-320.webp 320w, /assets/img/art/account-cake-640.webp 640w, /assets/img/art/account-cake-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Ce que tu obtiens</span><h2 class="h2">Ta vie numérique, <span class="serif">dans l’ordre.</span></h2></div>
+    <ul class="checklist reveal" style="max-width:760px">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Le jour de ton inscription</b> sur chaque plateforme, d’après l’enregistrement présent dans ton export.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Ton plus ancien follower</b> et le plus ancien compte que tu suis encore.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Les étapes</b> — le jour où tu as atteint 100, 1 000 ou 10 000 de tes followers actuels, et ta plus grosse année.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Les premières fois</b> — première publication encore en ligne, plus ancien like et commentaire, premier post sur X.</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Une carte story à partager</b> — uniquement tes chiffres, jamais le nom des autres. Gratuit.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Comment ça marche</span><h2 class="h2">Trois étapes, sur ton appareil.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Demande tes données</b><span>Espace Comptes → Vos informations et autorisations → Télécharger vos informations → <b>Toutes les informations disponibles</b>, format JSON. <a href="/guides/download-instagram-data/">Guide pas à pas</a>.</span></li>
+      <li><b>Dépose le ZIP ici</b><span>Ajoute aussi ton export TikTok, X ou Facebook — une seule frise pour tous. Rien n’est envoyé.</span></li>
+      <li><b>Ouvre « Ta vie numérique »</b><span>Dans le menu du tableau de bord. C’est gratuit.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Ton anniversaire Instagram, <span class="serif">expliqué.</span></h2></div>
+    <div class="faq reveal">
+      <details open><summary>Comment voir quand j’ai créé mon compte Instagram ?</summary><div class="answer"><p>Instagram affiche le mois et l’année d’inscription d’un profil dans « À propos de ce compte ». Ton téléchargement de données contient la date d’inscription exacte — Unwrapped la lit et ajoute toutes tes autres étapes autour.</p></div></details>
+      <details><summary>Pourquoi la date de mon plus ancien follower est-elle postérieure à mon inscription ?</summary><div class="answer"><p>Ton export ne liste que les personnes qui te suivent aujourd’hui. Les followers partis ou ayant supprimé leur compte n’y sont plus, donc le plus ancien restant peut dater de plusieurs années après ton inscription.</p></div></details>
+      <details><summary>Est-ce que ça marche pour TikTok, X et Facebook ?</summary><div class="answer"><p>Oui. Dépose plusieurs exports à la fois et chaque plateforme apparaît sur la même frise.</p></div></details>
+      <details><summary>Est-ce privé ?</summary><div class="answer"><p>Oui. Tes fichiers sont lus dans ton navigateur et ne sont jamais envoyés. Personne n’est prévenu.</p></div></details>
+    </div>
+  </div>
+</section>
+{{> related-tools}}
