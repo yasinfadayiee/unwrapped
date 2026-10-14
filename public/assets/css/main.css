@@ -305,7 +305,7 @@ ul, ol { margin: 0; padding: 0; }
 .menu-open .menu-btn span::before { transform: translateY(5px) rotate(45deg); }
 .menu-open .menu-btn span::after { transform: translateY(-5px) rotate(-45deg); }
 .mobile-nav {
-  position: fixed; inset: var(--header-h) 0 0; z-index: 49; background: rgba(7, 7, 11, 0.96); backdrop-filter: blur(20px);
+  position: fixed; inset: var(--header-h) 0 0; z-index: 49; background: rgb(7, 7, 11); backdrop-filter: blur(20px);
   padding: 24px var(--gutter); display: flex; flex-direction: column; gap: 4px; transform: translateY(-8px); opacity: 0; pointer-events: none;
   transition: opacity 0.25s, transform 0.3s var(--ease);
 }
@@ -1476,3 +1476,4 @@ audio.msg-media { min-height: 0; }
 .plan-top:has(.plan-ico) { justify-content: flex-start; gap: 10px; } .plan-top:has(.plan-ico) .badge { margin-left: auto; } .plan-ico { width: 40px; height: 40px; }
 .lab-top .lab-ico { width: 44px; height: 44px; }
 .read-next { margin: 36px 0 8px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); } .read-next h2 { margin-top: 0 !important; font-size: 18px; } .read-next ul { margin: 10px 0 0; } .read-next li { margin: 6px 0; }
+.mobile-nav a:has(.mnav-ico) { display: flex; align-items: center; gap: 14px; } .mnav-ico { width: 34px; height: 34px; flex: none; filter: none; }
