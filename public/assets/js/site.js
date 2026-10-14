@@ -399,6 +399,25 @@ async function heroCanvas() {
   heroOrbit(canvas);
 }
 
+/* ---------- hero video ---------- */
+// The hero picture becomes a short looping clip on wider screens, once the page
+// is idle. Phones, data-saver and reduced-motion users keep the still image.
+async function heroVideo() {
+  const box = $('[data-hero-video]');
+  if (!box || innerWidth < 760 || navigator.connection?.saveData || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (document.readyState !== 'complete') await new Promise((r) => addEventListener('load', r, { once: true }));
+  await new Promise((r) => (window.requestIdleCallback ? requestIdleCallback(r, { timeout: 3000 }) : setTimeout(r, 1500)));
+  const img = box.querySelector('img');
+  const v = h('video', { muted: true, loop: true, playsInline: true, autoplay: true, preload: 'auto', poster: img.currentSrc, width: img.width, height: img.height });
+  v.muted = true;
+  v.src = box.dataset.heroVideo;
+  v.className = 'hero-video';
+  // Sits on top of the picture and fades in once it actually plays.
+  v.addEventListener('playing', () => v.classList.add('is-playing'), { once: true });
+  box.append(v);
+  v.play().catch(() => v.remove());
+}
+
 /* ---------- misc ---------- */
 function misc() {
   $$('[data-year]').forEach((el) => (el.textContent = String(new Date().getFullYear())));
@@ -486,6 +505,7 @@ tabs();
 checkoutTriggers();
 misc();
 heroCanvas();
+heroVideo();
 showcase();
 netMonitor();
 stickyCta();
