@@ -1462,3 +1462,4 @@ audio.msg-media { min-height: 0; }
   .hero-art--side { position: absolute; top: -28px; right: 8px; width: 300px; max-width: none; margin: 0; z-index: 0; }
   .page-hero > .container:has(.hero-art--side) > :not(.hero-art) { position: relative; z-index: 1; max-width: calc(100% - 320px); }
 }
+.ds-btn .ico3d { width: 20px; height: 20px; filter: none; flex: none; }

@@ -18,6 +18,8 @@ import { facebookViews } from './views-facebook.js';
 import { linkedinViews } from './views-linkedin.js';
 import { crossView } from './views-cross.js';
 import { timelineView } from './views-timeline.js';
+
+const ICONS_3D = new Set(['instagram', 'tiktok', 'x', 'facebook', 'linkedin', 'orbit']);
 import { playStory } from './story.js';
 import { t as tl, lang } from '../lib/i18n.js';
 import { track } from '../lib/stats.js';
@@ -292,7 +294,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
     clear(dsSwitch);
     if (tabs.length > 1) {
       tabs.forEach((t, i) => {
-        const b = h('button', { class: 'ds-btn', type: 'button', 'aria-pressed': String(i === tabIndex) }, icon(t.icon), t.label);
+        const b = h('button', { class: 'ds-btn', type: 'button', 'aria-pressed': String(i === tabIndex) }, ICONS_3D.has(t.icon) ? h('img', { class: 'ico3d', src: `/assets/img/icons/${t.icon}.webp`, width: 64, height: 64, alt: '' }) : icon(t.icon), t.label);
         b.addEventListener('click', () => {
           tabIndex = i;
           viewId = 'overview';
