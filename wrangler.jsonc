@@ -38,7 +38,7 @@
     "TRON_ADDRESS": "TSEJswyoKTWcRp5x1JFffYr8owDEtXiBA6",
     "SUPPORT_CONTACT": "Telegram: @socialstore_support · WhatsApp: +447352488046 · Discord: Socialstore_pro",
     // Optional e-mail sender for license + renewal e-mails (needs RESEND_API_KEY secret).
-    "EMAIL_FROM": ""
+    "EMAIL_FROM": "Unwrapped <license@myunwrapped.com>"
   },
   "observability": {
     "enabled": true
