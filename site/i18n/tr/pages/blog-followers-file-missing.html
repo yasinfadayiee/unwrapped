@@ -1,0 +1,48 @@
+<!--page {
+  "route": "/blog/instagram-followers-file-missing/",
+  "title": "Instagram İndirmesinde Takipçi Dosyası Yok mu (followers_1.json)? Çözüm",
+  "headline": "Instagram indirmende takipçi dosyası yok mu? İşte çözüm",
+  "description": "Instagram veri indirmende followers_1.json veya following.json’u bulamıyor musun? Yaygın nedenler (HTML biçimi, yanlış kategori, çok parçalı ZIP, yanlış hesap) ve her birinin dakikalar içinde çözümü.",
+  "article": "2026-10-15",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/help-ring-640.webp" srcset="/assets/img/art/help-ring-320.webp 320w, /assets/img/art/help-ring-640.webp 640w, /assets/img/art/help-ring-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Sorun giderme</span>
+      <h1 class="h1">İndirmende takipçi <span class="serif grad">dosyası yok mu?</span></h1>
+      <p class="lead">Instagram verilerini bekledin, ZIP’i açtın… ve takipçi listesi yok. Neredeyse her zaman şu beş şeyden biridir.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+<h2>Dosya nerede olmalı</h2>
+      <p>JSON indirmesinde listelerin <code>connections/followers_and_following/</code> klasöründedir: <code>followers_1.json</code> (takipçiler; büyük hesaplarda <code>followers_2.json</code> da olur) ve <code>following.json</code>. Eski indirmeler aynı dosyaları bir üst klasöre koyar. <a href="/guides/instagram-data-files-explained/">Her dosyanın açıklamasına</a> bak.</p>
+      <h2>Beş yaygın neden</h2>
+      <ol>
+        <li><b>JSON yerine HTML seçtin.</b> HTML dosyaları aynı kişileri içerir ama birçok araç bunları okuyamaz. Unwrapped ikisini de okur; başka bir araç kullanıyorsan JSON iste.</li>
+        <li><b>“Takipçiler ve takip edilenler” seçilmedi.</b> Yalnızca mesajları veya medyayı seçtiysen listeler gelmez. <b>Bilgilerinin bir kısmı → Takipçiler ve takip edilenler</b> ile yeniden iste.</li>
+        <li><b>İndirme birkaç parça halinde geldi.</b> Büyük indirmeler birden fazla ZIP’e bölünür; listeler başka bir parçada olabilir. Tüm parçaları sakla ve birlikte bırak.</li>
+        <li><b>Başka bir hesabı indirdin.</b> Hesaplar Merkezi’nde birkaç profil olabilir; hangisini seçtiğini kontrol et.</li>
+        <li><b>ZIP telefonda açıldı.</b> Bazı telefon uygulamaları klasörleri düzleştirir veya kaybeder. Açılmış klasör yerine orijinal ZIP’i bırak.</li>
+      </ol>
+      <h2>İşe yarayan en hızlı istek</h2>
+      <ol>
+        <li>Hesaplar Merkezi → Bilgilerin ve izinlerin → Bilgilerini indir.</li>
+        <li><b>Bilgilerinin bir kısmı → Takipçiler ve takip edilenler</b>’i seç.</li>
+        <li>Biçim <b>JSON</b>, tarih aralığı <b>Tüm zamanlar</b>.</li>
+        <li>ZIP’i <a href="/instagram/">Unwrapped</a>’a bırak: hâlâ bir şey eksikse sana tam olarak neyin ve neden eksik olduğunu söyler.</li>
+      </ol>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>followers_1.json nedir?</summary><div class="answer"><p>Instagram veri indirmendeki, seni takip eden tüm hesapları ve her birinin seni takip ettiği tarihi listeleyen dosyadır.</p></div></details>
+      <details><summary>following.json neden eksik?</summary><div class="answer"><p>Genellikle “Takipçiler ve takip edilenler” seçilmediği ya da bölünmüş bir indirmenin başka parçasında olduğu için. O kategoriyle JSON olarak yeniden iste.</p></div></details>
+      <details><summary>Yeni bir istek ne kadar sürer?</summary><div class="answer"><p>Yalnızca takipçi isteği çoğu zaman dakikalar içinde hazır olur. <a href="/blog/instagram-data-download-how-long/">İndirmenin ne kadar sürdüğüne</a> bak.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

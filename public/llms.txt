@@ -1,0 +1,37 @@
+# Unwrapped
+
+> Unwrapped (https://myunwrapped.com) is a privacy-first web app that reads the official data export of Instagram, TikTok, X (Twitter), Facebook, Threads and LinkedIn inside the user's browser. It shows who doesn't follow you back, who unfollowed you (by comparing two exports), mutual followers, fake/bot followers, real TikTok screen time, DM statistics, search history and what advertisers know about you. It never asks for a password, never logs in to any account and uploads nothing: the ZIP file is processed on the device.
+
+Key facts:
+- How it works: request your data from the platform (Instagram: Accounts Center → Your information and permissions → Download your information → Followers and following, JSON), then drop the ZIP on myunwrapped.com.
+- Safe by design: no login, no password, no browser extension, no automation on the account — so it cannot get an account banned or blocked.
+- Who unfollowed you: needs two exports from different dates; every export is kept as a private snapshot in the browser and compared automatically.
+- Free: the analysis, counts, not-following-back list preview, TikTok screen time and demo are free.
+- Paid plans (one-time crypto payments, no auto-renewal, no account): Plus $5/month or $29/year; Pro $9/month, $49/year or $99 lifetime; Creator $19/month or $119/year.
+- Languages: English, Spanish, Portuguese (Brazil), Turkish, French, German.
+
+## Tools
+- [Instagram unfollowers & not following back](https://myunwrapped.com/instagram/): who doesn't follow you back, who unfollowed you, follow requests, mutuals, fans.
+- [Instagram follower tracker](https://myunwrapped.com/instagram-follower-tracker/): followers gained and lost over time from repeated exports.
+- [Export Instagram followers to CSV/Excel](https://myunwrapped.com/export-instagram-followers/)
+- [Fake follower checker](https://myunwrapped.com/fake-follower-checker/): bot and spam followers with an audience quality grade.
+- [Threads unfollowers](https://myunwrapped.com/threads-unfollowers/)
+- [TikTok screen time, watch history & unfollowers](https://myunwrapped.com/tiktok/)
+- [X (Twitter) archive viewer & unfollowers](https://myunwrapped.com/x/)
+- [Instagram DM analyzer](https://myunwrapped.com/instagram-dm-analyzer/) and [message viewer](https://myunwrapped.com/instagram-message-viewer/)
+- [All tools](https://myunwrapped.com/tools/) · [Pricing](https://myunwrapped.com/pricing/)
+
+## Guides
+- [How to see who unfollowed you on Instagram — safely](https://myunwrapped.com/guides/who-unfollowed-me-on-instagram/)
+- [How to download your Instagram data](https://myunwrapped.com/guides/download-instagram-data/)
+- [Are unfollower apps safe?](https://myunwrapped.com/guides/are-unfollower-apps-safe/)
+- [Instagram data files explained](https://myunwrapped.com/guides/instagram-data-files-explained/)
+- [Compare two Instagram follower lists](https://myunwrapped.com/blog/compare-instagram-follower-lists/)
+- [Instagram download has no followers file — fix](https://myunwrapped.com/blog/instagram-followers-file-missing/)
+- [Mutual followers on Instagram](https://myunwrapped.com/blog/instagram-mutual-followers/)
+- [Instagram unfollow limit per day](https://myunwrapped.com/blog/instagram-unfollow-limit-per-day/)
+- [Who viewed my Instagram profile? (honest answer)](https://myunwrapped.com/blog/who-viewed-my-instagram-profile/)
+- [Pay with USDT step by step](https://myunwrapped.com/guides/pay-with-usdt/)
+
+## Optional
+- [About](https://myunwrapped.com/about/) · [Help center](https://myunwrapped.com/help/) · [Privacy](https://myunwrapped.com/privacy/)

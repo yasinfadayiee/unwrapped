@@ -1,0 +1,48 @@
+<!--page {
+  "route": "/blog/instagram-followers-file-missing/",
+  "title": "¿Tu descarga de Instagram no tiene el archivo de seguidores? Solución · 2026",
+  "headline": "¿Tu descarga de Instagram no trae seguidores? La solución",
+  "description": "¿No encuentras followers_1.json o following.json en tu descarga de Instagram? Las causas habituales (formato HTML, categoría equivocada, ZIP en varias partes, otra cuenta) y cómo arreglar cada una.",
+  "article": "2026-10-15",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/help-ring-640.webp" srcset="/assets/img/art/help-ring-320.webp 320w, /assets/img/art/help-ring-640.webp 640w, /assets/img/art/help-ring-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Solución de problemas</span>
+      <h1 class="h1">¿Sin archivo de seguidores <span class="serif grad">en tu descarga?</span></h1>
+      <p class="lead">Esperaste tus datos de Instagram, abriste el ZIP… y no hay lista de seguidores. Casi siempre es una de estas cinco cosas.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+<h2>Dónde debería estar el archivo</h2>
+      <p>En una descarga JSON, tus listas están en <code>connections/followers_and_following/</code>: <code>followers_1.json</code> (seguidores; las cuentas grandes tienen también <code>followers_2.json</code>) y <code>following.json</code>. Las descargas antiguas ponen los mismos archivos una carpeta más arriba. Mira <a href="/guides/instagram-data-files-explained/">cada archivo explicado</a>.</p>
+      <h2>Las cinco causas habituales</h2>
+      <ol>
+        <li><b>Elegiste HTML en vez de JSON.</b> Los archivos HTML tienen las mismas personas, pero muchas herramientas no los leen. Unwrapped lee ambos; si usas otra herramienta, pide JSON.</li>
+        <li><b>No marcaste “Seguidores y seguidos”.</b> Si elegiste solo mensajes o contenido, las listas no vienen. Pide de nuevo con <b>Parte de tu información → Seguidores y seguidos</b>.</li>
+        <li><b>La descarga llegó en varias partes.</b> Las descargas grandes se dividen en varios ZIP; las listas pueden estar en otra parte. Guarda todas y suéltalas juntas.</li>
+        <li><b>Descargaste otra cuenta.</b> El Centro de cuentas puede tener varios perfiles: revisa cuál elegiste.</li>
+        <li><b>Descomprimiste el ZIP en el móvil.</b> Algunas apps aplanan o pierden carpetas. Suelta el ZIP original, no la carpeta descomprimida.</li>
+      </ol>
+      <h2>La petición más rápida que funciona</h2>
+      <ol>
+        <li>Centro de cuentas → Tu información y permisos → Descargar tu información.</li>
+        <li>Elige <b>Parte de tu información → Seguidores y seguidos</b>.</li>
+        <li>Formato <b>JSON</b>, intervalo <b>Desde el principio</b>.</li>
+        <li>Suelta el ZIP en <a href="/instagram/">Unwrapped</a>: si aún falta algo, te dice exactamente qué y por qué.</li>
+      </ol>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>¿Qué es followers_1.json?</summary><div class="answer"><p>Es el archivo de tu descarga de Instagram que lista todas las cuentas que te siguen, con la fecha en que te siguió cada una.</p></div></details>
+      <details><summary>¿Por qué falta following.json?</summary><div class="answer"><p>Normalmente porque no se marcó “Seguidores y seguidos” o está en otra parte de una descarga dividida. Pide de nuevo con esa categoría en JSON.</p></div></details>
+      <details><summary>¿Cuánto tarda una nueva petición?</summary><div class="answer"><p>Una petición solo de seguidores suele estar lista en minutos. Mira <a href="/blog/instagram-data-download-how-long/">cuánto tarda la descarga</a>.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
