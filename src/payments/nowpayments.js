@@ -49,7 +49,8 @@ export async function createNowpaymentsOrder(env, request, { plan, priceUsd = pl
       ipn_callback_url: `${site}/api/webhook/nowpayments`,
       success_url: `${site}/success/?order=${order.id}&t=${order.token}`,
       cancel_url: `${site}/#pricing`,
-      is_fixed_rate: true,
+      // Fixed-rate quotes raise NOWPayments' per-coin minimums above our $5 plans.
+      is_fixed_rate: false,
       is_fee_paid_by_user: false,
     }),
     signal: AbortSignal.timeout(15000),
@@ -100,7 +101,11 @@ export async function handleNowpaymentsIpn(request, env) {
   const expected = await signIpnBody(env.NOWPAYMENTS_IPN_SECRET, body);
   if (!signature || !timingSafeEqual(expected, signature)) {
     await logEvent(env, 'nowpayments.bad_signature', String(body.order_id || ''), null);
-    return fail(401, 'bad_signature');
+    // Unsigned or mis-signed (e.g. a rotated IPN secret): trust nothing from the
+    // body except the payment id, and take every field from the API instead.
+    const verified = body.payment_id ? await fetchPayment(env, body.payment_id).catch(() => null) : null;
+    if (!verified || !verified.order_id) return fail(401, 'bad_signature');
+    body = verified;
   }
   await logEvent(env, 'nowpayments.ipn', String(body.order_id || ''), {
     payment_id: body.payment_id,

@@ -187,8 +187,13 @@ test('NOWPayments IPN is verified, double-checked and idempotent', async () => {
   };
   npPayments['5551'] = { ...ipn };
 
-  const forged = await call('POST', '/api/webhook/nowpayments', ipn, { 'x-nowpayments-sig': 'deadbeef' });
+  // A bad signature for a payment the API doesn't know is rejected outright.
+  const forged = await call('POST', '/api/webhook/nowpayments', { ...ipn, payment_id: 9999 }, { 'x-nowpayments-sig': 'deadbeef' });
   assert.equal(forged.status, 401);
+  // A forged body can't lie about the price: unsigned IPNs use only the API's data.
+  npPayments['5552'] = { ...ipn, payment_id: 5552, payment_status: 'waiting' };
+  const lying = await call('POST', '/api/webhook/nowpayments', { ...ipn, payment_id: 5552 }, { 'x-nowpayments-sig': 'deadbeef' });
+  assert.equal(lying.body.waiting, 'waiting');
 
   const sig = await signIpnBody(env.NOWPAYMENTS_IPN_SECRET, ipn);
   const ok = await call('POST', '/api/webhook/nowpayments', JSON.stringify(ipn), { 'x-nowpayments-sig': sig });
