@@ -224,7 +224,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       discount ? h('div', { class: 'note' }, icon('sparkles'), h('span', null, t('Friend invite applied — {n}% off.', { n: Math.round(discount * 100) }))) : null,
       errorBox,
       go,
-      h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, t('Activates in about a minute · no account · no auto-renewal · your social data is never uploaded')),
+      h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, t('Activates automatically once the payment confirms · no account · no auto-renewal · your social data is never uploaded')),
     ),
   );
   drawTier();

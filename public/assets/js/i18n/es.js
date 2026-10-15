@@ -782,7 +782,7 @@ export default {
   "Pay with": "Pagar con",
   "E-mail for your license & renewal reminder": "Correo para tu licencia y el recordatorio de renovación",
   "Friend invite applied — {n}% off.": "Invitación de un amigo aplicada: {n}% de descuento.",
-  "Activates in about a minute · no account · no auto-renewal · your social data is never uploaded": "Se activa en un minuto · sin cuenta · sin renovación automática · tus datos sociales nunca se suben",
+  "Activates automatically once the payment confirms · no account · no auto-renewal · your social data is never uploaded": "Se activa sola en cuanto se confirma el pago · sin cuenta · sin renovación automática · tus datos sociales nunca se suben",
   "Creating your order…": "Creando tu pedido…",
   "Opening the payment page…": "Abriendo la página de pago…",
   "Could not reach the server. Check your connection.": "No se pudo conectar con el servidor. Revisa tu conexión.",

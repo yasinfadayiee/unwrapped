@@ -782,7 +782,7 @@ export default {
   "Pay with": "Şununla öde",
   "E-mail for your license & renewal reminder": "Lisansın ve yenileme hatırlatıcın için e-posta",
   "Friend invite applied — {n}% off.": "Arkadaş daveti uygulandı — %{n} indirim.",
-  "Activates in about a minute · no account · no auto-renewal · your social data is never uploaded": "Yaklaşık bir dakikada etkinleşir · hesap yok · otomatik yenileme yok · sosyal verilerin asla yüklenmez",
+  "Activates automatically once the payment confirms · no account · no auto-renewal · your social data is never uploaded": "Ödeme onaylanınca otomatik etkinleşir · hesap yok · otomatik yenileme yok · sosyal verilerin asla yüklenmez",
   "Creating your order…": "Siparişin oluşturuluyor…",
   "Opening the payment page…": "Ödeme sayfası açılıyor…",
   "Could not reach the server. Check your connection.": "Sunucuya ulaşılamadı. Bağlantını kontrol et.",
