@@ -7,7 +7,7 @@ import { HttpError, fail, json, rateLimit, readJson, visitorId } from './http.js
 import { activateLicense, getSigningKeys, lifetimeTier } from './license.js';
 import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
-import { createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
+import { checkNowpaymentsPayments, createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
 import { emailEnabled, sendRenewalReminders } from './email.js';
 import { handleAdmin } from './admin.js';
 import { attachReferral, discounted, getReferralForLicense, validReferral } from './referrals.js';
@@ -197,6 +197,7 @@ export default {
       (async () => {
         await cleanup(env);
         await checkTronPayments(env).catch((err) => console.error('tron check', err));
+        await checkNowpaymentsPayments(env).catch((err) => console.error('nowpayments check', err));
         await env.DB.prepare(
           "INSERT INTO meta (k, v) VALUES ('cron_last', ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v",
         )

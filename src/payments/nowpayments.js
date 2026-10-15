@@ -87,6 +87,31 @@ function decide(env, order, payment) {
   return false;
 }
 
+// The payment id only reaches us through an IPN. Keeping it lets the cron
+// finish the order even if every later IPN is lost.
+async function rememberPayment(env, order, paymentId) {
+  if (!paymentId || order.provider_ref === `p:${paymentId}`) return;
+  await env.DB.prepare('UPDATE orders SET provider_ref = ? WHERE id = ?').bind(`p:${paymentId}`, order.id).run();
+}
+
+// Cron: re-check open NOWPayments orders that have a known payment id.
+export async function checkNowpaymentsPayments(env) {
+  if (!nowpaymentsEnabled(env)) return;
+  const { results } = await env.DB.prepare(
+    "SELECT * FROM orders WHERE method = 'nowpayments' AND status IN ('pending', 'expired') AND provider_ref LIKE 'p:%' AND created_at > ? ORDER BY created_at DESC LIMIT 20",
+  )
+    .bind(Date.now() - 3 * 86_400_000)
+    .all();
+  for (const order of results || []) {
+    const payment = await fetchPayment(env, order.provider_ref.slice(2)).catch(() => null);
+    if (!payment || String(payment.order_id) !== order.id) continue;
+    const priceOk = Math.abs(Number(payment.price_amount) - order.price_usd) < 0.01 && String(payment.price_currency || '').toLowerCase() === 'usd';
+    if (!priceOk || !decide(env, order, payment)) continue;
+    await logEvent(env, 'nowpayments.cron_paid', order.id, { payment_id: payment.payment_id, status: payment.payment_status });
+    await fulfillOrder(env, order, { providerRef: String(payment.payment_id) });
+  }
+}
+
 export async function handleNowpaymentsIpn(request, env) {
   if (!nowpaymentsEnabled(env)) return fail(404, 'not_enabled');
   const raw = await request.text();
@@ -117,6 +142,7 @@ export async function handleNowpaymentsIpn(request, env) {
   const order = await getOrder(env, String(body.order_id || ''));
   if (!order || order.method !== 'nowpayments') return json({ ok: true, ignored: 'unknown_order' });
   if (order.status === 'paid') return json({ ok: true, already: true });
+  await rememberPayment(env, order, body.payment_id);
 
   const priceOk =
     Math.abs(Number(body.price_amount) - order.price_usd) < 0.01 &&

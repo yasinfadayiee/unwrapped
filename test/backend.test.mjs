@@ -206,6 +206,21 @@ test('NOWPayments IPN is verified, double-checked and idempotent', async () => {
   assert.equal(status.body.order.license.lifetime, true);
 });
 
+test('NOWPayments orders finish from the cron when the final IPN never arrives', async () => {
+  const { body: co } = await call('POST', '/api/checkout', { plan: 'life', method: 'nowpayments' });
+  const ipn = { payment_id: 6661, payment_status: 'confirming', price_amount: 99, price_currency: 'usd', order_id: co.order.id };
+  npPayments['6661'] = { ...ipn };
+  const sig = await signIpnBody(env.NOWPAYMENTS_IPN_SECRET, ipn);
+  const first = await call('POST', '/api/webhook/nowpayments', JSON.stringify(ipn), { 'x-nowpayments-sig': sig });
+  assert.equal(first.body.waiting, 'confirming');
+
+  npPayments['6661'].payment_status = 'finished'; // ...and the "finished" IPN is lost
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+  const status = await call('GET', `/api/order?id=${co.order.id}&t=${co.token}`);
+  assert.equal(status.body.order.status, 'paid');
+});
+
 test('NOWPayments price mismatches and unfinished payments do not activate', async () => {
   const { body: co } = await call('POST', '/api/checkout', { plan: 'month', method: 'nowpayments' });
   const base = { payment_id: 77, price_currency: 'usd', order_id: co.order.id };
