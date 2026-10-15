@@ -428,6 +428,8 @@ function misc() {
     }),
   );
   if (location.hash === '#demo') launchDemo();
+  // Same-page "#demo" links (e.g. the footer) only change the hash.
+  addEventListener('hashchange', () => location.hash === '#demo' && launchDemo());
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
     window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
   }
