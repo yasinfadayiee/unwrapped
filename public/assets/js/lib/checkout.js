@@ -215,6 +215,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
           h('li', null, t('Send it to the address on the next screen and choose the TRON (TRC20) network.')),
           h('li', null, t('Your plan unlocks automatically about a minute after the payment arrives.')),
         ),
+        h('p', { class: 'small' }, h('a', { href: `${lang === 'en' ? '' : `/${lang}`}/guides/pay-with-usdt/`, target: '_blank', rel: 'noopener' }, t('Full step-by-step guide →'))),
         h('p', { class: 'tiny muted' }, t('Not sure? The free version stays free — try everything first.')),
       ),
       config.email
@@ -270,6 +271,7 @@ function line(k, v, { big = false, copy } = {}) {
 export function tronScreen(m, order, token, config) {
   m.setTitle(t('Pay with USDT (TRC20)'));
   clear(m.body);
+  import('./stats.js').then(({ track }) => track('pay')).catch(() => {});
   const qr = h('div', { class: 'pay-qr', 'aria-label': t('QR code of the wallet address') });
   qr.innerHTML = qrSvg(order.address);
   const timer = h('span', { class: 'mono' });
@@ -286,6 +288,18 @@ export function tronScreen(m, order, token, config) {
       qr,
       line(t('Amount'), `${order.amount} USDT`, { big: true, copy: order.amount }),
       line(t('Address'), order.address, { copy: order.address }),
+      h(
+        'a',
+        {
+          class: 'btn btn--ghost btn--block',
+          href: `https://link.trustwallet.com/send?asset=c195_tTR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t&address=${encodeURIComponent(order.address)}&amount=${encodeURIComponent(order.amount)}`,
+          target: '_blank',
+          rel: 'noopener',
+          onClick: () => import('./stats.js').then(({ track }) => track('wallet')).catch(() => {}),
+        },
+        icon('external'),
+        t('Open in Trust Wallet'),
+      ),
       h('p', { class: 'small text-2' }, t('This exact amount is unique to your order — that’s how we match your payment instantly. Paying from an exchange? Make sure the amount that arrives is {amount} USDT (add the withdrawal fee on top).', { amount: order.amount })),
       status,
       h('div', { class: 'small muted' }, t('Order expires in') + ' ', timer, ' · ', h('span', { class: 'mono' }, order.id)),

@@ -1254,6 +1254,8 @@ export default {
   "How to download": "Cómo descargarla",
   "Free shows how many — Plus shows exactly who.": "La versión gratis muestra cuántos; Plus muestra exactamente quiénes.",
   "New to crypto? How to pay in a few minutes": "¿Nuevo en cripto? Cómo pagar en pocos minutos",
+  "Full step-by-step guide →": "Guía completa paso a paso →",
+  "Open in Trust Wallet": "Abrir en Trust Wallet",
   "Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).": "Usa un exchange o una app de billetera que venda USDT con tarjeta o transferencia (por ejemplo Binance, OKX o Trust Wallet; la disponibilidad depende de tu país).",
   "Buy a little more USDT than the price, to cover the network fee.": "Compra un poco más de USDT que el precio, para cubrir la comisión de red.",
   "Send it to the address on the next screen and choose the TRON (TRC20) network.": "Envíalo a la dirección de la siguiente pantalla y elige la red TRON (TRC20).",

@@ -1254,6 +1254,8 @@ export default {
   "How to download": "Nasıl indirilir",
   "Free shows how many — Plus shows exactly who.": "Ücretsiz sürüm kaç kişi olduğunu, Plus tam olarak kim olduğunu gösterir.",
   "New to crypto? How to pay in a few minutes": "Kriptoda yeni misin? Birkaç dakikada nasıl ödenir",
+  "Full step-by-step guide →": "Adım adım tam rehber →",
+  "Open in Trust Wallet": "Trust Wallet’ta aç",
   "Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).": "Kartla veya banka havalesiyle USDT satan bir borsa ya da cüzdan uygulaması kullan (örneğin Binance, OKX veya Trust Wallet — kullanılabilirlik ülkene bağlıdır).",
   "Buy a little more USDT than the price, to cover the network fee.": "Ağ ücretini karşılamak için fiyattan biraz fazla USDT al.",
   "Send it to the address on the next screen and choose the TRON (TRC20) network.": "Bir sonraki ekrandaki adrese gönder ve TRON (TRC20) ağını seç.",

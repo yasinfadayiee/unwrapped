@@ -4,7 +4,7 @@
 import { HttpError, json, readJson } from './http.js';
 import { DAY } from './util.js';
 
-const EVENTS = new Set(['view', 'analyze', 'demo', 'checkout', 'nodata', 'tool']);
+const EVENTS = new Set(['view', 'analyze', 'demo', 'checkout', 'nodata', 'tool', 'pay', 'wallet']);
 // Dashboard section ids ("notBack", "timeline"…): which tools people open.
 const TOOL = /^[a-z][a-zA-Z]{1,30}$/;
 const PATH = /^\/[a-z0-9\-/]{0,100}$/;
