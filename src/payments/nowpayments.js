@@ -67,7 +67,7 @@ export async function createNowpaymentsOrder(env, request, { plan, priceUsd = pl
   return { ...order, provider_ref: String(data.id || ''), redirect_url: data.invoice_url };
 }
 
-async function fetchPayment(env, paymentId) {
+export async function fetchPayment(env, paymentId) {
   const res = await fetch(`${API}/payment/${encodeURIComponent(paymentId)}`, {
     headers: { 'x-api-key': env.NOWPAYMENTS_API_KEY },
     signal: AbortSignal.timeout(15000),

@@ -6,7 +6,7 @@ import { HttpError, fail, json, rateLimit, readJson, visitorId } from './http.js
 import { grantLicense } from './license.js';
 import { fulfillOrder } from './orders.js';
 import { tronEnabled } from './payments/tron.js';
-import { nowpaymentsEnabled } from './payments/nowpayments.js';
+import { fetchPayment, nowpaymentsEnabled } from './payments/nowpayments.js';
 import { emailEnabled } from './email.js';
 import { statsSummary } from './stats.js';
 import { DAY, formatUsdt, isEmail, maskEmail, normalizeLicenseKey, timingSafeEqual } from './util.js';
@@ -40,6 +40,14 @@ export async function handleAdmin(request, env, url) {
       return listEvents(env);
     case 'GET /api/admin/stats':
       return statsSummary(env);
+    case 'GET /api/admin/nowpayments': {
+      // Support helper: the live status of one NOWPayments payment.
+      const id = String(url.searchParams.get('payment') || '').replace(/\D/g, '');
+      if (!id || !nowpaymentsEnabled(env)) return fail(400, 'invalid_payment');
+      const p = await fetchPayment(env, id).catch(() => null);
+      if (!p) return fail(404, 'not_found');
+      return json({ ok: true, payment: { id: p.payment_id, order: p.order_id, status: p.payment_status, payCurrency: p.pay_currency, payAmount: p.pay_amount, actuallyPaid: p.actually_paid, priceUsd: p.price_amount, updatedAt: p.updated_at } });
+    }
     default:
       return fail(404, 'not_found');
   }
