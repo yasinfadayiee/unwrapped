@@ -91,6 +91,7 @@ async function load() {
           h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Demos opened'), h('span', { class: 'value' }, fmtInt(ev.demo || 0)), h('span', { class: 'sub' }, `${pctOf(ev.demo || 0, ev.view || 0)} of views`)),
           h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Exports analyzed'), h('span', { class: 'value' }, fmtInt(ev.analyze || 0)), h('span', { class: 'sub' }, `${pctOf(ev.analyze || 0, ev.view || 0)} of views · ${fmtInt(ev.nodata || 0)} failed uploads`)),
           h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Checkouts opened'), h('span', { class: 'value' }, fmtInt(ev.checkout || 0)), h('span', { class: 'sub' }, `${pctOf(ev.checkout || 0, ev.analyze || 0)} of analyses`)),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Reached payment screen'), h('span', { class: 'value' }, fmtInt(ev.pay || 0)), h('span', { class: 'sub' }, `${pctOf(ev.pay || 0, ev.checkout || 0)} of checkouts · ${fmtInt(ev.wallet || 0)} opened a wallet`)),
           h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Orders paid'), h('span', { class: 'value' }, fmtInt(s.funnel30d.paid)), h('span', { class: 'sub' }, `${pctOf(s.funnel30d.paid, ev.checkout || 0)} of checkouts`)),
         ),
         barChart(vdays, { title: 'Page views', ariaLabel: 'Page views per day' }),
@@ -152,6 +153,32 @@ async function load() {
     drawOrders((await api(`/api/admin/orders?limit=200${q}`, { headers: auth() })).orders);
   });
   root.append(h('section', { class: 'panel' }, h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Orders'), h('p', null, Object.entries(s.statuses).map(([k, v]) => `${k}: ${v}`).join(' · '))), statusSel), tableBox));
+
+  // NOWPayments support lookup ("I paid but nothing happened")
+  if (hl.nowpayments) {
+    const npInput = h('input', { class: 'input mono', placeholder: 'Payment ID, e.g. 4608804435', inputmode: 'numeric', 'aria-label': 'NOWPayments payment ID' });
+    const npBtn = h('button', { class: 'btn btn--ghost', type: 'button' }, 'Check');
+    const npOut = h('div', { class: 'small text-2' });
+    npBtn.addEventListener('click', async () => {
+      if (!npInput.value.trim()) return;
+      npOut.textContent = 'Checking…';
+      try {
+        const { payment: p } = await api(`/api/admin/nowpayments?payment=${encodeURIComponent(npInput.value.trim())}`, { headers: auth() });
+        const order = orders.orders.find((o) => o.id === p.order);
+        clear(npOut).append(
+          h('div', { class: 'rows' },
+            healthRow('Status', p.status === 'finished', p.status, !['failed', 'expired', 'refunded'].includes(p.status)),
+            healthRow('Paid', Number(p.actuallyPaid) >= Number(p.payAmount), `${p.actuallyPaid} of ${p.payAmount} ${String(p.payCurrency).toUpperCase()} · price ${usd(p.priceUsd)}`, true),
+            healthRow('Order', order?.status === 'paid', `${p.order}${order ? ` — ${order.status}` : ''}`, true),
+          ),
+          h('p', { class: 'tiny muted' }, 'Finished payments activate automatically within a minute. If the order stays pending after that, use “Mark paid” above.'),
+        );
+      } catch {
+        npOut.textContent = 'Payment not found at NOWPayments.';
+      }
+    });
+    root.append(h('section', { class: 'panel' }, h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Check a NOWPayments payment'), h('p', null, 'For buyers who say “I paid but nothing happened”. They find the Payment ID on the NOWPayments page.'))), h('div', { style: { display: 'flex', gap: '8px' } }, npInput, npBtn), npOut));
+  }
 
   // License tools
   const planSel = h('select', { class: 'select', 'aria-label': 'Plan' }, s.plans.map((p) => h('option', { value: p.id }, `${p.name} — $${p.priceUsd}`)));
