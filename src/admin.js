@@ -7,7 +7,7 @@ import { grantLicense } from './license.js';
 import { fulfillOrder } from './orders.js';
 import { tronEnabled } from './payments/tron.js';
 import { fetchPayment, nowpaymentsEnabled } from './payments/nowpayments.js';
-import { emailEnabled } from './email.js';
+import { emailEnabled, sendLicenseEmail } from './email.js';
 import { statsSummary } from './stats.js';
 import { DAY, formatUsdt, isEmail, maskEmail, normalizeLicenseKey, timingSafeEqual } from './util.js';
 
@@ -34,6 +34,8 @@ export async function handleAdmin(request, env, url) {
       return createLicense(env, await readJson(request));
     case 'POST /api/admin/licenses/revoke':
       return revokeLicense(env, await readJson(request));
+    case 'POST /api/admin/licenses/email':
+      return emailLicense(env, await readJson(request));
     case 'POST /api/admin/orders/mark-paid':
       return markPaid(env, await readJson(request));
     case 'GET /api/admin/events':
@@ -151,6 +153,18 @@ async function createLicense(env, body) {
   });
   await logEvent(env, 'license.manual', license.key, { days, note: body.note || null });
   return json({ ok: true, license });
+}
+
+// Support: (re)send a license key by e-mail, e.g. to a buyer who lost it.
+async function emailLicense(env, body) {
+  if (!emailEnabled(env)) throw new HttpError(400, 'email_disabled');
+  const license = await getLicense(env, normalizeLicenseKey(body.key));
+  if (!license) throw new HttpError(404, 'license_not_found');
+  const to = body.email && isEmail(String(body.email)) ? String(body.email).toLowerCase() : license.email;
+  if (!to) throw new HttpError(400, 'invalid_email');
+  await sendLicenseEmail(env, { to, license, plan: getPlan(license.plan) });
+  await logEvent(env, 'license.emailed', license.key, { to: maskEmail(to) });
+  return json({ ok: true, to: maskEmail(to) });
 }
 
 async function revokeLicense(env, body) {

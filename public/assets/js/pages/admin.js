@@ -203,6 +203,25 @@ async function load() {
       toast('License not found', { iconName: 'warning' });
     }
   });
+  const mailKey = h('input', { class: 'input mono', placeholder: 'UNW-XXXX-XXXX-XXXX-XXXX', 'aria-label': 'License to e-mail' });
+  const mailTo = h('input', { class: 'input', type: 'email', placeholder: 'E-mail (empty = the one on the license)', 'aria-label': 'Send to' });
+  const mailBtn = h('button', { class: 'btn btn--ghost', type: 'button', disabled: !hl.email }, hl.email ? 'Send license e-mail' : 'E-mail not configured');
+  mailBtn.addEventListener('click', async () => {
+    if (!mailKey.value.trim()) return;
+    try {
+      const res = await api('/api/admin/licenses/email', { method: 'POST', headers: auth(), body: { key: mailKey.value.trim(), email: mailTo.value.trim() || undefined } });
+      toast(`Sent to ${res.to}`);
+    } catch (err) {
+      toast(err?.code === 'license_not_found' ? 'License not found' : err?.code === 'invalid_email' ? 'No e-mail on this license — enter one' : 'Could not send', { iconName: 'warning' });
+    }
+  });
+  root.append(
+    h(
+      'div',
+      { class: 'panels panels--2' },
+      h('section', { class: 'panel' }, h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'E-mail a license'), h('p', null, 'For buyers who lost their key.'))), h('div', { class: 'stack', style: { '--stack': '10px' } }, mailKey, mailTo, mailBtn)),
+    ),
+  );
   root.append(
     h(
       'div',
