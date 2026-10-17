@@ -1267,5 +1267,6 @@ export default {
   "Start here": "Empieza aquí",
   "Followers & people": "Seguidores y personas",
   "Your posts & activity": "Tus publicaciones y actividad",
-  "Privacy": "Privacidad"
+  "Privacy": "Privacidad",
+  "This is a real Instagram/Facebook export — but it doesn’t include your followers or activity. Request it again and tick “Followers and following” (or choose “All available information”).": "Es una exportación real de Instagram/Facebook, pero no incluye tus seguidores ni tu actividad. Pídela de nuevo y marca “Seguidores y seguidos” (o elige “Toda la información disponible”).",
 };

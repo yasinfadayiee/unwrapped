@@ -10,6 +10,7 @@ const OTHER_EXPORTS = [
   { name: 'Pinterest', test: (e) => /pinterest/i.test(e.path) },
 ];
 
+const META = /(^|\/)(personal_information|ads_information|logged_information|security_and_login_information|preferences|apps_and_websites_off_of_instagram|your_instagram_activity|your_facebook_activity|connections)\//i;
 const MEDIA = /\.(jpe?g|png|webp|heic|gif|mp4|mov|m4a|mp3|webm)$/i;
 const DATA = /\.(json|html?|js|txt|csv)$/i;
 
@@ -29,6 +30,8 @@ export function diagnose(vfs, files = []) {
   const data = entries.filter((e) => DATA.test(e.name)).length;
   if (media > 0 && data === 0) hints.push({ id: 'media' });
   if (entries.some((e) => /\.pdf$/i.test(e.name)) && !data) hints.push({ id: 'pdf' });
+  // A real Meta export, just without the parts we read (followers, activity…).
+  if (!other && data && entries.some((e) => META.test(e.path))) hints.push({ id: 'meta-partial' });
   if (!hints.length && entries.length < 4) hints.push({ id: 'few', vars: { v0: entries.map((e) => e.name).slice(0, 3).join(', ') } });
   return hints;
 }

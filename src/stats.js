@@ -10,6 +10,7 @@ const TOOL = /^[a-z][a-zA-Z]{1,30}$/;
 const PATH = /^\/[a-z0-9\-/]{0,100}$/;
 const HOST = /^[a-z0-9.-]{3,60}$/;
 const LANG = /^[a-z]{2}$/;
+const REASON = /^[a-z][a-z-]{1,40}$/;
 
 export async function recordHit(request, env) {
   const body = await readJson(request, 1024);
@@ -32,6 +33,11 @@ export async function recordHit(request, env) {
     if (!TOOL.test(tool)) throw new HttpError(400, 'bad_tool');
     rows.push(['tool', tool]);
   }
+  // Why a dropped file had no usable data ("media", "parts", "meta-partial"…).
+  if (kind === 'nodata') {
+    const reason = String(body.r || 'unknown');
+    rows.push(['nodata', REASON.test(reason) ? reason : 'unknown']);
+  }
   const stmt = env.DB.prepare('INSERT INTO stats (day, kind, key, n) VALUES (?, ?, ?, 1) ON CONFLICT(day, kind, key) DO UPDATE SET n = n + 1');
   await env.DB.batch(rows.map(([k, v]) => stmt.bind(day, k, v)));
   return new Response(null, { status: 204 });
@@ -41,13 +47,14 @@ export async function recordHit(request, env) {
 export async function statsSummary(env) {
   const from = Math.floor(Date.now() / DAY) - 29;
   const db = env.DB;
-  const [daily, pages, refs, langs, events, tools] = await db.batch([
+  const [daily, pages, refs, langs, events, tools, nodata] = await db.batch([
     db.prepare("SELECT day, n FROM stats WHERE kind = 'event' AND key = 'view' AND day >= ? ORDER BY day").bind(from),
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'page' AND day >= ? GROUP BY key ORDER BY n DESC LIMIT 20").bind(from),
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'ref' AND day >= ? GROUP BY key ORDER BY n DESC LIMIT 15").bind(from),
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'lang' AND day >= ? GROUP BY key ORDER BY n DESC").bind(from),
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'event' AND day >= ? GROUP BY key").bind(from),
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'tool' AND day >= ? GROUP BY key ORDER BY n DESC LIMIT 30").bind(from),
+    db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'nodata' AND day >= ? GROUP BY key ORDER BY n DESC LIMIT 20").bind(from),
   ]);
   return json({
     ok: true,
@@ -57,5 +64,6 @@ export async function statsSummary(env) {
     langs: langs.results,
     events: Object.fromEntries(events.results.map((r) => [r.key, r.n])),
     tools: tools.results,
+    nodata: nodata.results,
   });
 }

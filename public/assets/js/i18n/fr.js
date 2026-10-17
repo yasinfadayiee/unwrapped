@@ -1280,4 +1280,5 @@ export default {
   "Followers & people": "Followers et personnes",
   "Your posts & activity": "Tes publications et ton activité",
   "Privacy": "Vie privée",
+  "This is a real Instagram/Facebook export — but it doesn’t include your followers or activity. Request it again and tick “Followers and following” (or choose “All available information”).": "C’est bien un export Instagram/Facebook, mais il ne contient ni tes followers ni ton activité. Redemande-le en cochant « Followers et abonnements » (ou choisis « Toutes les informations disponibles »).",
 };

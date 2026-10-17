@@ -81,6 +81,7 @@ const HINTS = {
   other: (v) => tl('This looks like a {v0} export. Unwrapped reads Instagram, TikTok, X, Facebook, Threads and LinkedIn exports.', v),
   media: () => tl('This download only contains photos or videos. Request your data again and choose “Followers and following” (Instagram) or “All data” (TikTok) in JSON format.'),
   pdf: () => tl('PDF files can’t be analyzed. Request the download in JSON (or HTML) format instead.'),
+  'meta-partial': () => tl('This is a real Instagram/Facebook export — but it doesn’t include your followers or activity. Request it again and tick “Followers and following” (or choose “All available information”).'),
   few: (v) => tl('Only a few files were found ({v0}). Drop the whole ZIP exactly as the platform sent it, not single files from inside it.', v),
 };
 
@@ -426,8 +427,9 @@ export async function openApp({ files = [], demo = false } = {}) {
     if (!result.datasets.length) {
       load.close();
       const { diagnose } = await import('../core/diagnose.js');
-      noDataHelp(result, diagnose(vfs, files));
-      track('nodata');
+      const hints = diagnose(vfs, files);
+      noDataHelp(result, hints);
+      track('nodata', { r: hints[0]?.id || 'unknown' });
       return;
     }
     load.set(tl('Saving a private snapshot on this device…'), 0.97);

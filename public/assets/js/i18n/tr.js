@@ -1267,5 +1267,6 @@ export default {
   "Start here": "Buradan başla",
   "Followers & people": "Takipçiler ve kişiler",
   "Your posts & activity": "Gönderilerin ve etkinliğin",
-  "Privacy": "Gizlilik"
+  "Privacy": "Gizlilik",
+  "This is a real Instagram/Facebook export — but it doesn’t include your followers or activity. Request it again and tick “Followers and following” (or choose “All available information”).": "Bu gerçek bir Instagram/Facebook dışa aktarması, ama takipçilerini veya etkinliğini içermiyor. Yeniden iste ve “Takipçiler ve takip edilenler”i işaretle (ya da “Tüm mevcut bilgiler”i seç).",
 };

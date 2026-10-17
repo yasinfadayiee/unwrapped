@@ -95,7 +95,7 @@ async function load() {
           h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Orders paid'), h('span', { class: 'value' }, fmtInt(s.funnel30d.paid)), h('span', { class: 'sub' }, `${pctOf(s.funnel30d.paid, ev.checkout || 0)} of checkouts`)),
         ),
         barChart(vdays, { title: 'Page views', ariaLabel: 'Page views per day' }),
-        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginTop: '18px' } }, list('Top pages', st.pages), list('Where visitors come from', st.refs), list('Languages', st.langs), list('Dashboard tools opened', st.tools || [])),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginTop: '18px' } }, list('Top pages', st.pages), list('Where visitors come from', st.refs), list('Languages', st.langs), list('Dashboard tools opened', st.tools || []), list('Why files had no data', st.nodata || [])),
       ),
     );
   }
