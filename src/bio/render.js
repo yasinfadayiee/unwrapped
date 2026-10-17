@@ -28,7 +28,24 @@ const SOCIAL = {
 
 const okHref = (u) => (/^(https?:|mailto:|tg:)/i.test(u) ? u : '#');
 
-export function renderBioPage({ handle, data, pro, site, avatarUrl = '' }) {
+function leadForm(handle, lead, state) {
+  if (!lead?.on) return '';
+  if (state === 'thanks') return `<section class="lead" id="lead"><p class="lead-ok">✓ Thanks — you’re on the list!</p></section>`;
+  const msg = { invalid: 'Please enter a valid e-mail or phone number.', slow: 'Too many tries — please wait a moment.', error: 'Something went wrong — please try again.' }[state];
+  return `<section class="lead" id="lead">
+<h2>${e(lead.title)}</h2>
+<form method="post" action="/api/bio/lead/${e(handle)}">
+<input name="name" placeholder="Name" autocomplete="name" maxlength="80" aria-label="Name">
+<input name="email" type="email" placeholder="E-mail" autocomplete="email" maxlength="200" aria-label="E-mail" ${lead.phone ? '' : 'required'}>
+${lead.phone ? '<input name="phone" type="tel" placeholder="WhatsApp / phone" autocomplete="tel" maxlength="20" aria-label="Phone">' : ''}
+<input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+<button type="submit">${e(lead.button)}</button>
+</form>
+${msg ? `<p class="lead-err" role="alert">${msg}</p>` : ''}
+</section>`;
+}
+
+export function renderBioPage({ handle, data, pro, site, avatarUrl = '', leadState = '' }) {
   const t = THEME[data.theme] || THEME.midnight;
   const name = data.name || handle;
   const initials = data.emoji || name.replace(/[^\p{L}\p{N}]/gu, '').slice(0, 2).toUpperCase() || '★';
@@ -64,6 +81,14 @@ h1{font:750 26px/1.15 Brico,sans-serif;letter-spacing:-.02em;margin:6px 0 0}
 .link:first-child{background:${t.accent};color:${t.accentInk};border-color:transparent}
 .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:8px}
 .soc{padding:8px 14px;border-radius:999px;border:1px solid ${t.border};color:${t.text};text-decoration:none;font-size:14px;background:${t.card}}
+.lead{width:100%;margin-top:14px;padding:18px;border-radius:20px;background:${t.card};border:1px solid ${t.border};text-align:left}
+.lead h2{font:700 18px Brico,sans-serif;margin:0 0 12px;text-align:center}
+.lead form{display:flex;flex-direction:column;gap:10px}
+.lead input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid ${t.border};background:transparent;color:${t.text};font:inherit}
+.lead input::placeholder{color:${t.muted}}
+.lead button{padding:14px;border:0;border-radius:12px;background:${t.accent};color:${t.accentInk};font:700 16px Inter,sans-serif;cursor:pointer}
+.lead .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.lead-ok{margin:0;text-align:center;font-weight:700}.lead-err{margin:10px 0 0;color:#ff8a7e;font-size:14px;text-align:center}
 .badge{margin-top:28px;font-size:13px;color:${t.muted};text-decoration:none;opacity:.85}
 .badge b{color:${t.text}}
 @media (prefers-reduced-motion:reduce){.link{transition:none}}
@@ -75,6 +100,7 @@ ${avatarUrl ? `<img class="av" src="${e(avatarUrl)}" width="96" height="96" alt=
 ${data.bio ? `<p class="bio">${e(data.bio)}</p>` : ''}
 ${data.cta ? `<a class="cta${/t\.me|telegram/i.test(data.cta.url) ? ' tg' : /wa\.me|whatsapp/i.test(data.cta.url) ? ' wa' : ''}" href="${e(okHref(data.cta.url))}" rel="noopener">${e(data.cta.label)}</a>` : ''}
 <nav class="links" aria-label="Links">${links.map((l) => `<a class="link" href="/api/bio/go/${e(handle)}/${e(l.id)}" rel="noopener">${e(l.title)}</a>`).join('')}</nav>
+${leadForm(handle, data.lead, leadState)}
 ${socials.length ? `<div class="socials">${socials.map(([k, v]) => `<a class="soc" href="${e(okHref(SOCIAL[k][1](v)))}" rel="noopener me">${SOCIAL[k][0]}</a>`).join('')}</div>` : ''}
 ${pro ? '' : `<a class="badge" href="${e(site)}/bio/">Made with <b>Unwrapped Bio</b> · get your free page</a>`}
 </main></body></html>`;

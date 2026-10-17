@@ -2,6 +2,7 @@
 import { h, clear, icon, toast, copyText } from '../lib/ui.js';
 import { api, ApiError } from '../lib/api.js';
 import { t, lang } from '../lib/i18n.js';
+import { qrcode } from '../vendor/qrcode.js';
 
 const KEY = 'unw.bio.token';
 const root = document.getElementById('bio-app');
@@ -23,6 +24,92 @@ async function shrink(file) {
   c.getContext('2d').drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) / 2, side, side, 0, 0, size, size);
   const webp = c.toDataURL('image/webp', 0.85);
   return webp.startsWith('data:image/webp') ? webp : c.toDataURL('image/jpeg', 0.85);
+}
+
+const SOURCE_NAMES = { instagram: 'Instagram', tiktok: 'TikTok', x: 'X', youtube: 'YouTube', facebook: 'Facebook', telegram: 'Telegram', whatsapp: 'WhatsApp', threads: 'Threads', linkedin: 'LinkedIn', google: 'Google', bing: 'Bing', direct: '', other: '' };
+const sourceName = (k) => SOURCE_NAMES[k] || (k === 'direct' ? t('Direct / unknown') : t('Other'));
+const regionName = (cc) => { try { return cc === 'XX' ? t('Unknown') : new Intl.DisplayNames([document.documentElement.lang || 'en'], { type: 'region' }).of(cc); } catch { return cc; } };
+
+// Horizontal bars: [{ key, n }] → small chart rows.
+function bars(rows, label) {
+  const max = Math.max(1, ...rows.map((r) => r.n));
+  return h('div', { class: 'stack', style: { '--stack': '6px' } }, rows.length ? rows.map((r) => h('div', null, h('div', { class: 'small', style: { display: 'flex', justifyContent: 'space-between' } }, h('span', null, label(r.key)), h('b', null, String(r.n))), h('div', { style: { height: '6px', borderRadius: '6px', background: 'rgba(255,255,255,.08)' } }, h('i', { style: { display: 'block', height: '100%', width: `${(r.n / max) * 100}%`, borderRadius: '6px', background: 'var(--signal)' } })))) : h('p', { class: 'small text-2' }, t('No visits yet.')));
+}
+
+function insightsSection(page) {
+  const box = h('div', { class: 'stack', style: { '--stack': '16px' } });
+  const days = page.stats.daily;
+  if (days.length > 1) {
+    const max = Math.max(1, ...days.map((d) => d.n));
+    box.append(h('div', { style: { display: 'flex', gap: '3px', alignItems: 'flex-end', height: '60px' }, 'aria-label': t('Views per day') }, days.map((d) => h('i', { title: `${new Date(d.day).toLocaleDateString()} · ${d.n}`, style: { flex: '1', height: `${Math.max(6, (d.n / max) * 100)}%`, background: 'var(--uv)', borderRadius: '3px' } }))));
+  }
+  if (page.insights) {
+    box.append(
+      h('div', { style: { display: 'grid', gap: '18px', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' } },
+        h('div', null, h('b', { class: 'small' }, t('Where visitors come from')), bars(page.insights.sources, sourceName)),
+        h('div', null, h('b', { class: 'small' }, t('Countries')), bars(page.insights.countries, regionName)),
+        h('div', null, h('b', { class: 'small' }, t('Devices')), bars(page.insights.devices, (k) => (k === 'mobile' ? t('Mobile') : t('Desktop'))))),
+    );
+  } else {
+    box.append(h('div', { class: 'note' }, icon('lock'), h('span', null, t('Pro shows where your visitors come from (Instagram, TikTok, Telegram…), their countries and devices, and clicks per link.'))));
+  }
+  return box;
+}
+
+function leadsSection(page, d) {
+  d.lead = d.lead || { on: false, title: '', button: '', phone: false };
+  const on = h('input', { type: 'checkbox', checked: !!d.lead.on, 'aria-label': t('Show a sign-up form on my page') });
+  const phone = h('input', { type: 'checkbox', checked: !!d.lead.phone, 'aria-label': t('Also ask for a WhatsApp / phone number') });
+  const title = h('input', { class: 'input', value: d.lead.title || '', maxlength: 80, placeholder: t('Form title, e.g. Get 10% off — join my list'), 'aria-label': t('Form title') });
+  const button = h('input', { class: 'input', value: d.lead.button || '', maxlength: 30, placeholder: t('Button, e.g. Join'), 'aria-label': t('Form button') });
+  on.addEventListener('change', () => (d.lead.on = on.checked));
+  phone.addEventListener('change', () => (d.lead.phone = phone.checked));
+  title.addEventListener('input', () => (d.lead.title = title.value));
+  button.addEventListener('input', () => (d.lead.button = button.value));
+  const list = h('div', { class: 'stack', style: { '--stack': '8px' } }, h('p', { class: 'small text-2' }, t('Loading…')));
+  const csv = h('button', { class: 'btn btn--ghost btn--sm', type: 'button', disabled: !page.pro }, icon('download'), page.pro ? t('Export CSV') : t('CSV export is Pro'));
+  let rows = [];
+  csv.addEventListener('click', () => {
+    const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+    const text = ['date,name,email,phone', ...rows.map((r) => [new Date(r.ts).toISOString(), r.name, r.email, r.phone].map(esc).join(','))].join('\n');
+    const a = h('a', { href: URL.createObjectURL(new Blob([text], { type: 'text/csv' })), download: `${page.handle}-contacts.csv` });
+    a.click();
+  });
+  const draw = (res) => {
+    rows = res.leads;
+    clear(list).append(
+      ...(rows.length
+        ? rows.map((r) => {
+            const del = h('button', { class: 'row-btn', type: 'button', 'aria-label': t('Remove') }, '✕');
+            del.addEventListener('click', async () => draw(await api('/api/bio/leads/delete', { method: 'POST', headers: auth(), body: { id: r.id } })));
+            return h('div', { class: 'card card--pad', style: { display: 'flex', gap: '10px', justifyContent: 'space-between', alignItems: 'center' } }, h('div', { class: 'small' }, h('b', null, r.name || r.email || r.phone), h('div', { class: 'text-2' }, [r.email, r.phone].filter(Boolean).join(' · ')), h('div', { class: 'tiny muted' }, new Date(r.ts).toLocaleString())), del);
+          })
+        : [h('p', { class: 'small text-2' }, t('No contacts yet. Turn on the form and share your page.'))]),
+      !res.pro && res.total > rows.length ? h('div', { class: 'note' }, icon('lock'), h('span', null, t('{n} more contacts are waiting — unlock Pro to see all of them.', { n: res.total - rows.length }))) : '',
+    );
+  };
+  api('/api/bio/leads', { headers: auth() }).then(draw).catch(() => clear(list));
+  return [
+    h('p', { class: 'small text-2' }, t('Turn visitors into your own customer list — e-mails and WhatsApp numbers that don’t depend on any app. We e-mail you each new contact.')),
+    h('label', { style: { display: 'flex', gap: '10px', alignItems: 'center' } }, on, t('Show a sign-up form on my page')),
+    title,
+    button,
+    h('label', { style: { display: 'flex', gap: '10px', alignItems: 'center' } }, phone, t('Also ask for a WhatsApp / phone number')),
+    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '6px' } }, h('b', null, t('Contacts: {n}', { n: page.leads.total })), csv),
+    list,
+  ];
+}
+
+function qrSection(page) {
+  const url = `${location.origin}/@${page.handle}`;
+  const qr = qrcode(0, 'M');
+  qr.addData(url);
+  qr.make();
+  const svg = qr.createSvgTag({ cellSize: 6, margin: 2, scalable: true });
+  const box = h('div', { style: { width: '160px', background: '#fff', borderRadius: '12px', padding: '8px' } });
+  box.innerHTML = svg;
+  const dl = h('a', { class: 'btn btn--ghost btn--sm', href: URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })), download: `${page.handle}-qr.svg` }, icon('download'), t('Download QR code'));
+  return [h('p', { class: 'small text-2' }, t('Print it on business cards, packaging or your shop window — it opens your page.')), box, h('div', null, dl)];
 }
 
 // ---------- claim ----------
@@ -185,14 +272,17 @@ function editor(page) {
       { class: 'stack', style: { '--stack': '18px', maxWidth: '680px' } },
       h('div', { class: 'card card--pad', style: { display: 'flex', gap: '12px', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' } }, h('div', null, h('div', { class: 'small text-2' }, t('Your page')), h('a', { href: `/@${page.handle}`, target: '_blank', rel: 'noopener', class: 'h3', style: { overflowWrap: 'anywhere' } }, `myunwrapped.com/@${page.handle}`)), h('div', { style: { display: 'flex', gap: '8px' } }, copy, h('a', { class: 'btn btn--ghost btn--sm', href: `/@${page.handle}`, target: '_blank', rel: 'noopener' }, icon('external'), t('View')))),
       h('div', { class: 'card card--pad', style: { display: 'flex', gap: '28px', flexWrap: 'wrap', alignItems: 'center' } }, h('div', null, h('b', { class: 'h2' }, String(page.stats.views30)), h('div', { class: 'small text-2' }, t('views · 30 days'))), h('div', null, h('b', { class: 'h2' }, String(page.stats.clicks30)), h('div', { class: 'small text-2' }, t('link clicks · 30 days'))), pro ? h('span', { class: 'badge badge--uv' }, 'Pro') : ''),
+      section(t('Insights · 30 days'), insightsSection(page)),
       section(t('Profile'), h('div', { style: { display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' } }, photoPreview, pick, unpick, file), h('div', { style: { display: 'flex', gap: '10px' } }, emoji, name), bio),
       section(t('Theme'), themeBox),
       section(t('Featured button'), h('p', { class: 'small text-2' }, t('A big button above your links — perfect for your Telegram channel, WhatsApp or newest offer.')), ctaLabel, ctaUrl),
       section(t('Links'), linkBox),
       section(t('Socials'), ...socialInputs),
+      section(t('Collect contacts'), ...leadsSection(page, d)),
+      section(t('QR code'), ...qrSection(page)),
       section(t('E-mail'), h('p', { class: 'small text-2' }, t('We send your private edit link here — so you can edit from any device.')), email),
       h('div', { style: { position: 'sticky', bottom: '12px', zIndex: 2 } }, save),
-      pro ? '' : section(t('Unlock Pro'), h('p', { class: 'small text-2' }, t('Unlimited links, per-link click analytics and no “Made with” badge — included in every Unwrapped plan.')), licKey, h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } }, licBtn, h('a', { class: 'btn btn--primary', href: pricing }, t('See plans')))),
+      pro ? '' : section(t('Unlock Pro'), h('p', { class: 'small text-2' }, t('Unlimited links and contacts, full visitor insights, CSV export and no “Made with” badge — included in every Unwrapped plan.')), licKey, h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } }, licBtn, h('a', { class: 'btn btn--primary', href: pricing }, t('See plans')))),
       h('div', null, logout),
     ),
   );

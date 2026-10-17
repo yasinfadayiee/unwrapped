@@ -28,6 +28,34 @@ test('handles and links are validated', () => {
   assert.equal(safeUrl('mailto:a@b.co'), 'mailto:a@b.co');
 });
 
+test('lead form collects contacts, blocks bots, and analytics see the source', async () => {
+  const { body } = await api('POST', '/api/bio/create', { handle: 'shop.owner' });
+  const token = body.token;
+  await api('POST', '/api/bio/save', { data: { name: 'Shop', links: [], lead: { on: true, title: 'Join the list', button: 'Join', phone: true } } }, token);
+  const page = await (await raw('GET', '/@shop.owner', { headers: { 'user-agent': 'Mozilla/5.0 (iPhone) Instagram 300.0' } })).text();
+  assert.match(page, /<form method="post" action="\/api\/bio\/lead\/shop\.owner">/);
+  const post = (fields) => worker.fetch(new Request('https://shop.test/api/bio/lead/shop.owner', { method: 'POST', body: new URLSearchParams(fields), headers: { 'cf-connecting-ip': '203.0.113.77' }, redirect: 'manual' }), env, { waitUntil() {}, passThroughOnException() {} });
+  let res = await post({ name: 'Ana', email: 'ana@example.com' });
+  assert.equal(res.status, 303);
+  assert.match(res.headers.get('location'), /thanks=1/);
+  assert.match(await (await raw('GET', '/@shop.owner?thanks=1')).text(), /you’re on the list/);
+  assert.match((await post({ email: 'nope' })).headers.get('location'), /lead=invalid/);
+  await post({ email: 'bot@spam.co', website: 'http://spam' }); // honeypot → silently dropped
+  await post({ phone: '+90 555 123 4567' });
+  const leads = await api('GET', '/api/bio/leads', undefined, token);
+  assert.equal(leads.body.total, 2);
+  assert.deepEqual(leads.body.leads.map((l) => l.email || l.phone).sort(), ['+905551234567', 'ana@example.com']);
+  const mine = await api('GET', '/api/bio/mine', undefined, token);
+  assert.equal(mine.body.page.leads.total, 2);
+  assert.equal(mine.body.page.insights, null); // detailed analytics are Pro
+  const lic = await api('POST', '/api/admin/licenses', { plan: 'plus-month' }, 'admin-token-123456');
+  const pro = await api('POST', '/api/bio/license', { key: lic.body.license.key }, token);
+  const src = Object.fromEntries(pro.body.page.insights.sources.map((s) => [s.key, s.n]));
+  assert.deepEqual(src, { instagram: 1, direct: 1 }); // in-app browser seen by its user agent
+  const dev = Object.fromEntries(pro.body.page.insights.devices.map((s) => [s.key, s.n]));
+  assert.deepEqual(dev, { mobile: 1, desktop: 1 });
+});
+
 test('create → edit → public page → click tracking → Pro via license', async () => {
   const made = await api('POST', '/api/bio/create', { handle: 'nova.studio', name: 'Nova <Studio>' });
   assert.equal(made.status, 200);

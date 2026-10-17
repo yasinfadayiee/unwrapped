@@ -24,6 +24,9 @@ export const BIO_SCHEMA = [
   'CREATE TABLE IF NOT EXISTS bio_stats (handle TEXT NOT NULL, day INTEGER NOT NULL, key TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (handle, day, key))',
   // Profile photos, resized in the browser to ~320px (a few dozen KB).
   'CREATE TABLE IF NOT EXISTS bio_avatars (handle TEXT PRIMARY KEY, mime TEXT NOT NULL, data TEXT NOT NULL, updated_at INTEGER NOT NULL)',
+  // Contacts a visitor chose to leave on the page's form (owner's own list).
+  'CREATE TABLE IF NOT EXISTS bio_leads (id INTEGER PRIMARY KEY AUTOINCREMENT, handle TEXT NOT NULL, ts INTEGER NOT NULL, name TEXT, email TEXT, phone TEXT, source TEXT)',
+  'CREATE INDEX IF NOT EXISTS bio_leads_handle ON bio_leads (handle, ts)',
 ];
 const AVATAR_MAX = 180_000; // base64 characters
 const MAGIC = { 'image/webp': (b) => b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50, 'image/jpeg': (b) => b[0] === 0xff && b[1] === 0xd8, 'image/png': (b) => b[0] === 0x89 && b[1] === 0x50 };
@@ -36,6 +39,7 @@ async function ensureBioSchema(env) {
 }
 
 export const FREE_LINKS = 5;
+export const FREE_LEADS = 25;
 export const MAX_LINKS = 30;
 export const THEMES = ['midnight', 'aurora', 'sunset', 'mint', 'paper', 'mono'];
 const HANDLE = /^[a-z0-9](?:[a-z0-9._]{1,28}[a-z0-9])$/;
@@ -75,7 +79,9 @@ export function cleanData(input, pro) {
     if (v) socials[k] = v;
   }
   const ctaUrl = safeUrl(d.cta?.url);
+  const lead = d.lead && d.lead.on ? { on: true, title: String(d.lead.title || '').trim().slice(0, 80) || 'Get updates', button: String(d.lead.button || '').trim().slice(0, 30) || 'Subscribe', phone: !!d.lead.phone } : null;
   return {
+    lead,
     cta: ctaUrl ? { label: String(d.cta?.label || '').trim().slice(0, 60) || 'Join my channel', url: ctaUrl } : null,
     name: String(d.name || '').trim().slice(0, 60),
     bio: String(d.bio || '').trim().slice(0, 240),
@@ -92,6 +98,33 @@ async function licenseActive(env, key) {
   if (!lic || lic.status !== 'active') return null;
   if (lic.expires_at && lic.expires_at < Date.now()) return null;
   return lic;
+}
+
+// Anonymous visit facts — no IPs, no cookies, just daily counters.
+const SOURCES = [['instagram', /instagram\.com/], ['tiktok', /tiktok\.com/], ['x', /(^|\.)t\.co$|twitter\.com|x\.com/], ['youtube', /youtube\.com|youtu\.be/], ['facebook', /facebook\.com|fb\.me/], ['telegram', /t\.me|telegram/], ['whatsapp', /whatsapp|wa\.me/], ['threads', /threads\.net/], ['linkedin', /linkedin\.com|lnkd\.in/], ['google', /google\./], ['bing', /bing\.com/]];
+export function sourceOf(request) {
+  const ref = request.headers.get('referer') || '';
+  const ua = request.headers.get('user-agent') || '';
+  // In-app browsers often send no referrer but name themselves in the UA.
+  if (/Instagram/.test(ua)) return 'instagram';
+  if (/musical_ly|TikTok|BytedanceWebview/i.test(ua)) return 'tiktok';
+  if (/FBAN|FBAV/.test(ua)) return 'facebook';
+  if (/Telegram/i.test(ua)) return 'telegram';
+  let host = '';
+  try {
+    host = new URL(ref).hostname.replace(/^www\./, '');
+  } catch {
+    return 'direct';
+  }
+  if (host.endsWith('myunwrapped.com')) return 'direct';
+  return (SOURCES.find(([, re]) => re.test(host)) || ['other'])[0];
+}
+const countryOf = (request) => (/^[A-Z]{2}$/.test(request.cf?.country || request.headers.get('cf-ipcountry') || '') ? request.cf?.country || request.headers.get('cf-ipcountry') : 'XX');
+const deviceOf = (request) => (/Mobi|Android|iPhone|iPad/i.test(request.headers.get('user-agent') || '') ? 'mobile' : 'desktop');
+
+async function bumpMany(env, handle, keys) {
+  const stmt = env.DB.prepare('INSERT INTO bio_stats (handle, day, key, n) VALUES (?, ?, ?, 1) ON CONFLICT(handle, day, key) DO UPDATE SET n = n + 1');
+  await env.DB.batch(keys.map((k) => stmt.bind(handle, today(), k)));
 }
 
 async function bump(env, handle, key) {
@@ -114,7 +147,15 @@ async function view(env, page) {
   const clicks = {};
   for (const r of results) if (r.key.startsWith('c:')) clicks[r.key.slice(2)] = (clicks[r.key.slice(2)] || 0) + r.n;
   const av = await env.DB.prepare('SELECT updated_at FROM bio_avatars WHERE handle = ?').bind(page.handle).first();
+  const group = (prefix) => {
+    const out = {};
+    for (const r of results) if (r.key.startsWith(prefix)) out[r.key.slice(prefix.length)] = (out[r.key.slice(prefix.length)] || 0) + r.n;
+    return Object.entries(out).sort((a, b) => b[1] - a[1]).map(([key, n]) => ({ key, n }));
+  };
+  const leads = await env.DB.prepare('SELECT COUNT(*) AS n, SUM(CASE WHEN ts > ? THEN 1 ELSE 0 END) AS recent FROM bio_leads WHERE handle = ?').bind(Date.now() - 30 * DAY, page.handle).first();
   return {
+    leads: { total: leads?.n || 0, recent: leads?.recent || 0, limit: lic ? null : FREE_LEADS },
+    insights: lic ? { sources: group('src:'), countries: group('cc:').slice(0, 10), devices: group('dev:') } : null,
     avatar: av ? `/api/bio/avatar/${page.handle}?v=${av.updated_at}` : '',
     handle: page.handle,
     email: page.email ? page.email.replace(/^(.).*(@.*)$/, '$1***$2') : '',
@@ -152,6 +193,7 @@ export async function handleBio(request, env, url) {
   const route = `${request.method} ${path}`;
   if (request.method === 'GET' && path.startsWith('/api/bio/go/')) return go(env, path);
   if (request.method === 'GET' && path.startsWith('/api/bio/avatar/')) return avatar(env, path);
+  if (request.method === 'POST' && path.startsWith('/api/bio/lead/')) return submitLead(request, env, path);
   switch (route) {
     case 'GET /api/bio/check':
       return check(env, url);
@@ -169,6 +211,10 @@ export async function handleBio(request, env, url) {
       return remove(request, env);
     case 'POST /api/bio/avatar':
       return uploadAvatar(request, env);
+    case 'GET /api/bio/leads':
+      return listLeads(request, env);
+    case 'POST /api/bio/leads/delete':
+      return deleteLead(request, env);
   }
   return fail(404, 'not_found');
 }
@@ -239,7 +285,7 @@ async function attachLicense(request, env) {
 
 async function remove(request, env) {
   const page = await owned(env, request);
-  await env.DB.batch([env.DB.prepare('DELETE FROM bio_pages WHERE handle = ?').bind(page.handle), env.DB.prepare('DELETE FROM bio_stats WHERE handle = ?').bind(page.handle), env.DB.prepare('DELETE FROM bio_avatars WHERE handle = ?').bind(page.handle)]);
+  await env.DB.batch(['bio_pages', 'bio_stats', 'bio_avatars', 'bio_leads'].map((tbl) => env.DB.prepare(`DELETE FROM ${tbl} WHERE handle = ?`).bind(page.handle)));
   await logEvent(env, 'bio.deleted', page.handle, null);
   return json({ ok: true });
 }
@@ -267,6 +313,64 @@ async function avatar(env, path) {
   return new Response(Uint8Array.from(atob(row.data), (c) => c.charCodeAt(0)), { headers: { 'content-type': row.mime, 'cache-control': 'public, max-age=31536000, immutable', 'x-content-type-options': 'nosniff' } });
 }
 
+// ---------- lead form ----------
+
+// Public form post (no JS): /api/bio/lead/<handle> → back to the page.
+async function submitLead(request, env, path) {
+  const handle = path.split('/')[4] || '';
+  const page = await env.DB.prepare('SELECT * FROM bio_pages WHERE handle = ?').bind(handle).first();
+  const back = (q) => new Response(null, { status: 303, headers: { location: `/@${handle}?${q}#lead`, 'cache-control': 'no-store' } });
+  if (!page) return fail(404, 'not_found');
+  const cfg = JSON.parse(page.data).lead;
+  if (!cfg?.on) return back('lead=off');
+  const form = await request.formData().catch(() => null);
+  if (!form) return back('lead=error');
+  if (String(form.get('website') || '')) return back('thanks=1'); // honeypot: bots fill every field
+  try {
+    await rateLimit(env, 'bio-lead', await visitorId(request, env), 8);
+  } catch {
+    return back('lead=slow');
+  }
+  const email = String(form.get('email') || '').trim().toLowerCase().slice(0, 200);
+  const phone = cfg.phone ? String(form.get('phone') || '').replace(/[^\d+]/g, '').slice(0, 20) : '';
+  const name = String(form.get('name') || '').trim().slice(0, 80);
+  if (!isEmail(email) && phone.replace(/\D/g, '').length < 7) return back('lead=invalid');
+  await env.DB.prepare('INSERT INTO bio_leads (handle, ts, name, email, phone, source) VALUES (?, ?, ?, ?, ?, ?)').bind(handle, Date.now(), name || null, isEmail(email) ? email : null, phone || null, sourceOf(request)).run();
+  await bump(env, handle, 'lead').catch(() => {});
+  await notifyLead(env, request, page, { name, email, phone }).catch(() => {});
+  return back('thanks=1');
+}
+
+// One e-mail per new lead, at most 20 a day per page.
+async function notifyLead(env, request, page, lead) {
+  if (!emailEnabled(env) || !page.email) return;
+  const sent = await env.DB.prepare("SELECT n FROM bio_stats WHERE handle = ? AND day = ? AND key = 'leadmail'").bind(page.handle, today()).first();
+  if ((sent?.n || 0) >= 20) return;
+  await bump(env, page.handle, 'leadmail');
+  const who = [lead.name, lead.email, lead.phone].filter(Boolean).map(escapeHtml).join(' · ');
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
+    body: JSON.stringify({ from: env.EMAIL_FROM, to: [page.email], subject: `New contact on myunwrapped.com/@${page.handle}`, text: `New contact from your page: ${[lead.name, lead.email, lead.phone].filter(Boolean).join(' · ')}\n\nSee all: ${siteUrl(env, request)}/bio/`, html: `<p>New contact from your page <b>@${escapeHtml(page.handle)}</b>:</p><p style="font-size:16px"><b>${who}</b></p><p><a href="${escapeHtml(siteUrl(env, request))}/bio/">See all contacts</a></p>` }),
+    signal: AbortSignal.timeout(10000),
+  });
+}
+
+async function listLeads(request, env) {
+  const page = await owned(env, request);
+  const pro = !!(await licenseActive(env, page.license_key));
+  const { results } = await env.DB.prepare(`SELECT id, ts, name, email, phone, source FROM bio_leads WHERE handle = ? ORDER BY ts ${pro ? 'DESC LIMIT 2000' : `ASC LIMIT ${FREE_LEADS}`}`).bind(page.handle).all();
+  const total = await env.DB.prepare('SELECT COUNT(*) AS n FROM bio_leads WHERE handle = ?').bind(page.handle).first();
+  return json({ ok: true, pro, total: total?.n || 0, leads: pro ? results : results.reverse() });
+}
+
+async function deleteLead(request, env) {
+  const page = await owned(env, request);
+  const body = await readJson(request);
+  await env.DB.prepare('DELETE FROM bio_leads WHERE id = ? AND handle = ?').bind(Number(body.id) || 0, page.handle).run();
+  return listLeads(request, env);
+}
+
 // Click tracking: /api/bio/go/<handle>/<linkId> → 302 to the link.
 async function go(env, path) {
   const [, , , , handle, id] = path.split('/');
@@ -284,14 +388,18 @@ export async function servePublicBio(request, env, handle) {
   const page = await env.DB.prepare('SELECT * FROM bio_pages WHERE handle = ?').bind(handle).first();
   if (!page) return null;
   const pro = !!(await licenseActive(env, page.license_key));
-  if (request.method === 'GET') await bump(env, handle, 'view').catch(() => {});
+  if (request.method === 'GET' && !/bot|crawl|spider|preview|facebookexternalhit/i.test(request.headers.get('user-agent') || '')) {
+    await bumpMany(env, handle, ['view', `src:${sourceOf(request)}`, `cc:${countryOf(request)}`, `dev:${deviceOf(request)}`]).catch(() => {});
+  }
   const av = await env.DB.prepare('SELECT updated_at FROM bio_avatars WHERE handle = ?').bind(handle).first();
   const avatarUrl = av ? `/api/bio/avatar/${handle}?v=${av.updated_at}` : '';
-  return new Response(renderBioPage({ handle, data: JSON.parse(page.data), pro, site: siteUrl(env, request), avatarUrl }), {
+  const q = new URL(request.url).searchParams;
+  const leadState = q.get('thanks') === '1' ? 'thanks' : ['invalid', 'slow', 'error'].includes(q.get('lead')) ? q.get('lead') : '';
+  return new Response(renderBioPage({ handle, data: JSON.parse(page.data), pro, site: siteUrl(env, request), avatarUrl, leadState }), {
     headers: {
       'content-type': 'text/html; charset=utf-8',
       'cache-control': 'no-store',
-      'content-security-policy': "default-src 'none'; style-src 'unsafe-inline' https://myunwrapped.com; img-src 'self' data: https:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+      'content-security-policy': "default-src 'none'; style-src 'unsafe-inline' https://myunwrapped.com; img-src 'self' data: https:; font-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
       'x-content-type-options': 'nosniff',
       'referrer-policy': 'strict-origin-when-cross-origin',
     },
