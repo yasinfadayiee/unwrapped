@@ -28,7 +28,7 @@ const SOCIAL = {
 
 const okHref = (u) => (/^(https?:|mailto:|tg:)/i.test(u) ? u : '#');
 
-export function renderBioPage({ handle, data, pro, site }) {
+export function renderBioPage({ handle, data, pro, site, avatarUrl = '' }) {
   const t = THEME[data.theme] || THEME.midnight;
   const name = data.name || handle;
   const initials = data.emoji || name.replace(/[^\p{L}\p{N}]/gu, '').slice(0, 2).toUpperCase() || '★';
@@ -52,7 +52,9 @@ export function renderBioPage({ handle, data, pro, site }) {
 *{box-sizing:border-box}html,body{margin:0}
 body{min-height:100vh;background:${t.bg};background-image:${t.bg2};background-attachment:fixed;color:${t.text};font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 main{max-width:560px;margin:0 auto;padding:56px 18px 40px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
-.av{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font:700 38px Brico,sans-serif;background:${t.card};border:1px solid ${t.border};box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.cta{width:100%;display:block;padding:16px 20px;border-radius:999px;font-weight:700;text-decoration:none;background:${t.accent};color:${t.accentInk};box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.cta.tg{background:#229ED9;color:#fff}.cta.wa{background:#25D366;color:#073b1d}
+.av{object-fit:cover;width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font:700 38px Brico,sans-serif;background:${t.card};border:1px solid ${t.border};box-shadow:0 10px 40px rgba(0,0,0,.25)}
 h1{font:750 26px/1.15 Brico,sans-serif;letter-spacing:-.02em;margin:6px 0 0}
 .handle{color:${t.muted};font-size:14px;margin-top:-8px}
 .bio{color:${t.muted};max-width:44ch;margin:0;white-space:pre-line}
@@ -67,10 +69,11 @@ h1{font:750 26px/1.15 Brico,sans-serif;letter-spacing:-.02em;margin:6px 0 0}
 @media (prefers-reduced-motion:reduce){.link{transition:none}}
 </style></head>
 <body><main>
-<div class="av" aria-hidden="true">${e(initials)}</div>
+${avatarUrl ? `<img class="av" src="${e(avatarUrl)}" width="96" height="96" alt="${e(name)}">` : `<div class="av" aria-hidden="true">${e(initials)}</div>`}
 <h1>${e(name)}</h1>
 <div class="handle">@${e(handle)}</div>
 ${data.bio ? `<p class="bio">${e(data.bio)}</p>` : ''}
+${data.cta ? `<a class="cta${/t\.me|telegram/i.test(data.cta.url) ? ' tg' : /wa\.me|whatsapp/i.test(data.cta.url) ? ' wa' : ''}" href="${e(okHref(data.cta.url))}" rel="noopener">${e(data.cta.label)}</a>` : ''}
 <nav class="links" aria-label="Links">${links.map((l) => `<a class="link" href="/api/bio/go/${e(handle)}/${e(l.id)}" rel="noopener">${e(l.title)}</a>`).join('')}</nav>
 ${socials.length ? `<div class="socials">${socials.map(([k, v]) => `<a class="soc" href="${e(okHref(SOCIAL[k][1](v)))}" rel="noopener me">${SOCIAL[k][0]}</a>`).join('')}</div>` : ''}
 ${pro ? '' : `<a class="badge" href="${e(site)}/bio/">Made with <b>Unwrapped Bio</b> · get your free page</a>`}

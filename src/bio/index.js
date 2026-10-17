@@ -22,7 +22,11 @@ export const BIO_SCHEMA = [
   )`,
   'CREATE INDEX IF NOT EXISTS bio_pages_email ON bio_pages (email)',
   'CREATE TABLE IF NOT EXISTS bio_stats (handle TEXT NOT NULL, day INTEGER NOT NULL, key TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (handle, day, key))',
+  // Profile photos, resized in the browser to ~320px (a few dozen KB).
+  'CREATE TABLE IF NOT EXISTS bio_avatars (handle TEXT PRIMARY KEY, mime TEXT NOT NULL, data TEXT NOT NULL, updated_at INTEGER NOT NULL)',
 ];
+const AVATAR_MAX = 180_000; // base64 characters
+const MAGIC = { 'image/webp': (b) => b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50, 'image/jpeg': (b) => b[0] === 0xff && b[1] === 0xd8, 'image/png': (b) => b[0] === 0x89 && b[1] === 0x50 };
 
 const ready = new WeakMap();
 async function ensureBioSchema(env) {
@@ -70,7 +74,9 @@ export function cleanData(input, pro) {
     const v = String(d.socials?.[k] || '').trim().slice(0, 200);
     if (v) socials[k] = v;
   }
+  const ctaUrl = safeUrl(d.cta?.url);
   return {
+    cta: ctaUrl ? { label: String(d.cta?.label || '').trim().slice(0, 60) || 'Join my channel', url: ctaUrl } : null,
     name: String(d.name || '').trim().slice(0, 60),
     bio: String(d.bio || '').trim().slice(0, 240),
     emoji: [...String(d.emoji || '').trim()].slice(0, 2).join(''),
@@ -107,7 +113,9 @@ async function view(env, page) {
   const views = results.filter((r) => r.key === 'view');
   const clicks = {};
   for (const r of results) if (r.key.startsWith('c:')) clicks[r.key.slice(2)] = (clicks[r.key.slice(2)] || 0) + r.n;
+  const av = await env.DB.prepare('SELECT updated_at FROM bio_avatars WHERE handle = ?').bind(page.handle).first();
   return {
+    avatar: av ? `/api/bio/avatar/${page.handle}?v=${av.updated_at}` : '',
     handle: page.handle,
     email: page.email ? page.email.replace(/^(.).*(@.*)$/, '$1***$2') : '',
     url: `/@${page.handle}`,
@@ -143,6 +151,7 @@ export async function handleBio(request, env, url) {
   const path = url.pathname.replace(/\/+$/, '');
   const route = `${request.method} ${path}`;
   if (request.method === 'GET' && path.startsWith('/api/bio/go/')) return go(env, path);
+  if (request.method === 'GET' && path.startsWith('/api/bio/avatar/')) return avatar(env, path);
   switch (route) {
     case 'GET /api/bio/check':
       return check(env, url);
@@ -158,6 +167,8 @@ export async function handleBio(request, env, url) {
       return attachLicense(request, env);
     case 'POST /api/bio/delete':
       return remove(request, env);
+    case 'POST /api/bio/avatar':
+      return uploadAvatar(request, env);
   }
   return fail(404, 'not_found');
 }
@@ -228,9 +239,32 @@ async function attachLicense(request, env) {
 
 async function remove(request, env) {
   const page = await owned(env, request);
-  await env.DB.batch([env.DB.prepare('DELETE FROM bio_pages WHERE handle = ?').bind(page.handle), env.DB.prepare('DELETE FROM bio_stats WHERE handle = ?').bind(page.handle)]);
+  await env.DB.batch([env.DB.prepare('DELETE FROM bio_pages WHERE handle = ?').bind(page.handle), env.DB.prepare('DELETE FROM bio_stats WHERE handle = ?').bind(page.handle), env.DB.prepare('DELETE FROM bio_avatars WHERE handle = ?').bind(page.handle)]);
   await logEvent(env, 'bio.deleted', page.handle, null);
   return json({ ok: true });
+}
+
+// Photo arrives as a small data: URL; we check the type by its magic bytes.
+async function uploadAvatar(request, env) {
+  const page = await owned(env, request);
+  const body = await readJson(request, 200_000);
+  if (body.remove) {
+    await env.DB.prepare('DELETE FROM bio_avatars WHERE handle = ?').bind(page.handle).run();
+    return json({ ok: true, page: await view(env, page) });
+  }
+  const m = String(body.data || '').match(/^data:(image\/(?:webp|jpeg|png));base64,([A-Za-z0-9+/=]+)$/);
+  if (!m || m[2].length > AVATAR_MAX) throw new HttpError(400, 'bad_image');
+  const head = Uint8Array.from(atob(m[2].slice(0, 32)), (c) => c.charCodeAt(0));
+  if (!MAGIC[m[1]](head)) throw new HttpError(400, 'bad_image');
+  await env.DB.prepare('INSERT INTO bio_avatars (handle, mime, data, updated_at) VALUES (?, ?, ?, ?) ON CONFLICT(handle) DO UPDATE SET mime = excluded.mime, data = excluded.data, updated_at = excluded.updated_at').bind(page.handle, m[1], m[2], Date.now()).run();
+  return json({ ok: true, page: await view(env, page) });
+}
+
+async function avatar(env, path) {
+  const handle = path.split('/')[4] || '';
+  const row = await env.DB.prepare('SELECT mime, data FROM bio_avatars WHERE handle = ?').bind(handle).first();
+  if (!row) return fail(404, 'not_found');
+  return new Response(Uint8Array.from(atob(row.data), (c) => c.charCodeAt(0)), { headers: { 'content-type': row.mime, 'cache-control': 'public, max-age=31536000, immutable', 'x-content-type-options': 'nosniff' } });
 }
 
 // Click tracking: /api/bio/go/<handle>/<linkId> → 302 to the link.
@@ -251,7 +285,9 @@ export async function servePublicBio(request, env, handle) {
   if (!page) return null;
   const pro = !!(await licenseActive(env, page.license_key));
   if (request.method === 'GET') await bump(env, handle, 'view').catch(() => {});
-  return new Response(renderBioPage({ handle, data: JSON.parse(page.data), pro, site: siteUrl(env, request) }), {
+  const av = await env.DB.prepare('SELECT updated_at FROM bio_avatars WHERE handle = ?').bind(handle).first();
+  const avatarUrl = av ? `/api/bio/avatar/${handle}?v=${av.updated_at}` : '';
+  return new Response(renderBioPage({ handle, data: JSON.parse(page.data), pro, site: siteUrl(env, request), avatarUrl }), {
     headers: {
       'content-type': 'text/html; charset=utf-8',
       'cache-control': 'no-store',

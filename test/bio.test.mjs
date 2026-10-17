@@ -69,6 +69,16 @@ test('create → edit → public page → click tracking → Pro via license', a
   mine = await api('GET', '/api/bio/mine', undefined, token);
   assert.deepEqual(mine.body.page.stats.clicks, { [id]: 1 });
 
+  // Photo: only real images by magic bytes, served back with long caching.
+  const fake = `data:image/png;base64,${Buffer.from('<script>alert(1)</script>').toString('base64')}`;
+  assert.equal((await api('POST', '/api/bio/avatar', { data: fake }, token)).status, 400);
+  const png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+  const up = await api('POST', '/api/bio/avatar', { data: `data:image/png;base64,${png}` }, token);
+  assert.match(up.body.page.avatar, /^\/api\/bio\/avatar\/nova\.studio\?v=\d+$/);
+  const img = await raw('GET', up.body.page.avatar);
+  assert.equal(img.headers.get('content-type'), 'image/png');
+  assert.match(await (await raw('GET', '/@nova.studio')).text(), /<img class="av"/);
+
   assert.equal((await api('GET', '/api/bio/mine', undefined, 'f'.repeat(48))).status, 401);
   assert.equal((await api('POST', '/api/bio/login', { handle: 'nova.studio', email: 'who@x.co' })).status, 200);
   await api('POST', '/api/bio/delete', {}, token);
