@@ -8,6 +8,7 @@ import { activateLicense, getSigningKeys, lifetimeTier } from './license.js';
 import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
 import { checkNowpaymentsPayments, createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
+import { growthMaintenance, handleGrowth } from './growth/index.js';
 import { emailEnabled, sendRenewalReminders } from './email.js';
 import { handleAdmin } from './admin.js';
 import { attachReferral, discounted, getReferralForLicense, validReferral } from './referrals.js';
@@ -161,6 +162,7 @@ async function route(request, env, ctx, url) {
       break;
   }
   if (url.pathname.startsWith('/api/admin/')) return handleAdmin(request, env, url);
+  if (url.pathname.startsWith('/api/growth/')) return handleGrowth(request, env, url, ctx);
   return fail(404, 'not_found');
 }
 
@@ -191,6 +193,7 @@ export default {
     await ensureSchema(env);
     if (controller.cron === '0 9 * * *') {
       ctx.waitUntil(sendRenewalReminders(env).catch((err) => console.error('reminders', err)));
+      ctx.waitUntil(growthMaintenance(env).catch((err) => console.error('growth', err)));
       return;
     }
     ctx.waitUntil(
