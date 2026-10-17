@@ -3,11 +3,5 @@ Allow: /
 Disallow: /admin/
 Disallow: /success/
 Disallow: /api/
-Disallow: /account/
-Disallow: /es/account/
-Disallow: /pt/account/
-Disallow: /tr/account/
-Disallow: /fr/account/
-Disallow: /de/account/
 
 Sitemap: https://myunwrapped.com/sitemap.xml

@@ -117,6 +117,21 @@ function shortTitle(title, max = 65) {
 }
 const TRAILING = /^(a|an|the|of|from|your|my|to|and|or|with|in|on|for|de|da|do|des|du|la|le|les|el|los|las|tu|tus|ta|tes|seu|sua|seus|suas|e|y|et|und|oder|von|aus|dein|deine|deinen|der|die|das|mit|für|ve|ile|için|bir)$/i;
 
+// Decorative images keep their meaning out of screen readers (aria-hidden) but
+// get a short descriptive alt from the file name, which image search and
+// crawlers like Bing expect ("instagram-640.webp" → "Instagram icon").
+function describeImages(html) {
+  return html.replace(/<img\b([^>]*?)\salt=""([^>]*)>/g, (tag, before, after) => {
+    const src = (tag.match(/\ssrc="([^"]+)"/) || [])[1] || '';
+    const base = src.split('/').pop().replace(/\.[a-z0-9]+$/i, '').replace(/-\d+$/, '').replace(/-/g, ' ');
+    if (!base) return tag;
+    const kind = src.includes('/icons/') ? 'icon' : 'illustration';
+    const label = `${base.replace(/^\w/, (c) => c.toUpperCase())} ${kind}`;
+    const hidden = /aria-hidden=/.test(tag) ? '' : ' aria-hidden="true"';
+    return `<img${before} alt="${label}"${hidden}${after}>`;
+  });
+}
+
 function shortDescription(text, max = 160) {
   const d = String(text || '');
   if (d.length <= max) return d;
@@ -273,7 +288,7 @@ for (const { loc, file, meta, body } of pages) {
     .replaceAll('{{langLinks}}', links);
 
   const out = url.endsWith('.html') ? `public${url}` : `public${url}index.html`;
-  write(out, html);
+  write(out, describeImages(html));
   if (!meta.noindex && !meta.route.endsWith('.html')) {
     const alternates = translations.length > 1 ? [...translations.map((l) => ({ hreflang: l.hreflang, href: `${origin}${urlOf(l, meta.route)}` })), { hreflang: 'x-default', href: `${origin}${meta.route}` }] : [];
     sitemap.push({ loc: canonical, lastmod: lastModified(file, meta), priority: meta.route === '/' ? '1.0' : meta.article ? '0.6' : '0.8', alternates });
@@ -286,7 +301,9 @@ write(
     .map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.lastmod}</lastmod><priority>${u.priority}</priority>${u.alternates.map((a) => `<xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}"/>`).join('')}</url>`)
     .join('\n')}\n</urlset>\n`,
 );
-const privatePaths = ['/admin/', '/success/', '/api/', ...locales.map((l) => `${l.path}/account/`)];
+// Account pages stay crawlable: they carry `noindex`, which crawlers can only
+// see if robots.txt lets them in (and Bing reports blocked linked pages).
+const privatePaths = ['/admin/', '/success/', '/api/'];
 write('public/robots.txt', `User-agent: *\nAllow: /\n${[...new Set(privatePaths)].map((p) => `Disallow: ${p}`).join('\n')}\n\nSitemap: ${origin}/sitemap.xml\n`);
 
 // Texts for the share-image renderer (scripts/og.js), one card per page.
