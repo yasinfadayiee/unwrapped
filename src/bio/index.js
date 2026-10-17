@@ -69,8 +69,18 @@ export function safeUrl(raw) {
 
 export function cleanData(input, pro) {
   const d = input && typeof input === 'object' ? input : {};
+  const when = (v) => (Number.isFinite(Number(v)) && Number(v) > 0 ? Math.round(Number(v)) : null);
   const links = (Array.isArray(d.links) ? d.links : [])
-    .map((l) => ({ id: String(l.id || '').replace(/[^a-z0-9]/gi, '').slice(0, 12) || newToken().slice(0, 8), title: String(l.title || '').trim().slice(0, 80), url: safeUrl(l.url), on: l.on !== false }))
+    .map((l) => ({
+      id: String(l.id || '').replace(/[^a-z0-9]/gi, '').slice(0, 12) || newToken().slice(0, 8),
+      title: String(l.title || '').trim().slice(0, 80),
+      url: safeUrl(l.url),
+      on: l.on !== false,
+      // Pro: show only between start and end; pulse to draw the eye.
+      ...(pro && when(l.start) ? { start: when(l.start) } : {}),
+      ...(pro && when(l.end) ? { end: when(l.end) } : {}),
+      ...(pro && l.hot ? { hot: true } : {}),
+    }))
     .filter((l) => l.title && l.url)
     .slice(0, pro ? MAX_LINKS : FREE_LINKS);
   const socials = {};
@@ -80,7 +90,17 @@ export function cleanData(input, pro) {
   }
   const ctaUrl = safeUrl(d.cta?.url);
   const lead = d.lead && d.lead.on ? { on: true, title: String(d.lead.title || '').trim().slice(0, 80) || 'Get updates', button: String(d.lead.button || '').trim().slice(0, 30) || 'Subscribe', phone: !!d.lead.phone } : null;
+  const s = d.style || {};
+  const style = {
+    buttons: ['rounded', 'pill', 'square'].includes(s.buttons) ? s.buttons : 'rounded',
+    outline: !!s.outline,
+    font: ['modern', 'elegant', 'classic', 'mono'].includes(s.font) ? s.font : 'modern',
+    // Custom brand colour is Pro.
+    ...(pro && /^#[0-9a-f]{6}$/i.test(s.accent || '') ? { accent: s.accent.toLowerCase() } : {}),
+    ...(pro && /^#[0-9a-f]{6}$/i.test(s.background || '') ? { background: s.background.toLowerCase() } : {}),
+  };
   return {
+    style,
     lead,
     cta: ctaUrl ? { label: String(d.cta?.label || '').trim().slice(0, 60) || 'Join my channel', url: ctaUrl } : null,
     name: String(d.name || '').trim().slice(0, 60),
@@ -377,6 +397,8 @@ async function go(env, path) {
   const page = handle && (await env.DB.prepare('SELECT data FROM bio_pages WHERE handle = ?').bind(handle).first());
   const link = page && JSON.parse(page.data).links.find((l) => l.id === id && l.on);
   if (!link) return fail(404, 'not_found');
+  const now = Date.now();
+  if ((link.start && link.start > now) || (link.end && link.end <= now)) return new Response(null, { status: 302, headers: { location: `/@${handle}` } });
   await bump(env, handle, `c:${id}`);
   return new Response(null, { status: 302, headers: { location: link.url, 'cache-control': 'no-store', 'referrer-policy': 'no-referrer-when-downgrade' } });
 }

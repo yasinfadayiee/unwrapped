@@ -97,6 +97,18 @@ test('create → edit → public page → click tracking → Pro via license', a
   mine = await api('GET', '/api/bio/mine', undefined, token);
   assert.deepEqual(mine.body.page.stats.clicks, { [id]: 1 });
 
+  // Pro styling and scheduling: custom colour with readable text, expired links hidden.
+  const past = Date.now() - 1000;
+  const styled = await api('POST', '/api/bio/save', { data: { name: 'Nova', style: { accent: '#FFE600', buttons: 'pill', font: 'elegant', outline: false }, links: [{ title: 'Sale', url: 'https://example.com/sale', end: past }, { title: 'Hot', url: 'https://example.com/hot', hot: true }] } }, token);
+  assert.equal(styled.body.page.data.style.accent, '#ffe600');
+  const sale = styled.body.page.data.links[0];
+  const live = await (await raw('GET', '/@nova.studio')).text();
+  assert.doesNotMatch(live, />Sale</);
+  assert.match(live, /class="link hot"/);
+  assert.match(live, /color:#0a0a0e/); // dark text on yellow
+  assert.match(live, /border-radius:999px/);
+  assert.equal((await raw('GET', `/api/bio/go/nova.studio/${sale.id}`)).headers.get('location'), '/@nova.studio');
+
   // Photo: only real images by magic bytes, served back with long caching.
   const fake = `data:image/png;base64,${Buffer.from('<script>alert(1)</script>').toString('base64')}`;
   assert.equal((await api('POST', '/api/bio/avatar', { data: fake }, token)).status, 400);

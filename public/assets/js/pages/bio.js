@@ -100,6 +100,47 @@ function leadsSection(page, d) {
   ];
 }
 
+function styleSection(d, pro) {
+  d.style = d.style || {};
+  const s = d.style;
+  const seg = (options, key, fallback) => {
+    const box = h('div', { style: { display: 'flex', gap: '6px', flexWrap: 'wrap' }, role: 'radiogroup' });
+    const draw = () =>
+      clear(box).append(
+        ...options.map(([v, label]) => {
+          const b = h('button', { type: 'button', role: 'radio', class: `btn btn--sm ${(s[key] || fallback) === v ? 'btn--primary' : 'btn--ghost'}`, 'aria-checked': String((s[key] || fallback) === v) }, label);
+          b.addEventListener('click', () => { s[key] = v; draw(); });
+          return b;
+        }),
+      );
+    draw();
+    return box;
+  };
+  const outline = h('input', { type: 'checkbox', checked: !!s.outline });
+  outline.addEventListener('change', () => (s.outline = outline.checked));
+  const color = (key, label) => {
+    const inp = h('input', { type: 'color', value: s[key] || (key === 'accent' ? '#d7ff3a' : '#07070b'), disabled: !pro, 'aria-label': label, style: { width: '48px', height: '36px', border: 0, background: 'none' } });
+    inp.addEventListener('input', () => (s[key] = inp.value));
+    const reset = h('button', { class: 'row-btn', type: 'button', disabled: !pro }, t('Theme default'));
+    reset.addEventListener('click', () => { delete s[key]; inp.value = key === 'accent' ? '#d7ff3a' : '#07070b'; });
+    return h('label', { style: { display: 'flex', gap: '10px', alignItems: 'center' } }, inp, h('span', null, label), reset);
+  };
+  return [
+    h('b', { class: 'small' }, t('Buttons')),
+    seg([['rounded', t('Rounded')], ['pill', t('Pill')], ['square', t('Square')]], 'buttons', 'rounded'),
+    h('label', { style: { display: 'flex', gap: '10px', alignItems: 'center' } }, outline, t('Outline buttons')),
+    h('b', { class: 'small' }, t('Font')),
+    seg([['modern', t('Modern')], ['elegant', t('Elegant')], ['classic', t('Classic')], ['mono', t('Mono')]], 'font', 'modern'),
+    h('b', { class: 'small' }, t('Your brand colours')),
+    color('accent', t('Button colour')),
+    color('background', t('Background colour')),
+    pro ? '' : h('div', { class: 'note' }, icon('lock'), h('span', null, t('Custom brand colours are part of Pro.'))),
+  ];
+}
+
+const toLocal = (ms) => (ms ? new Date(ms - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16) : '');
+const fromLocal = (v) => (v ? new Date(v).getTime() : null);
+
 function qrSection(page) {
   const url = `${location.origin}/@${page.handle}`;
   const qr = qrcode(0, 'M');
@@ -214,7 +255,20 @@ function editor(page) {
       up.addEventListener('click', () => { [d.links[i - 1], d.links[i]] = [d.links[i], d.links[i - 1]]; drawLinks(); });
       del.addEventListener('click', () => { d.links.splice(i, 1); drawLinks(); });
       const clicks = page.stats.clicks && l.id ? h('span', { class: 'tiny muted' }, t('{n} clicks / 30 days', { n: page.stats.clicks[l.id] || 0 })) : '';
-      linkBox.append(h('div', { class: 'card card--pad stack', style: { '--stack': '8px' } }, ti, u, h('div', { style: { display: 'flex', gap: '8px', alignItems: 'center' } }, up, del, clicks)));
+      const hot = h('input', { type: 'checkbox', checked: !!l.hot, disabled: !pro });
+      hot.addEventListener('change', () => (l.hot = hot.checked));
+      const start = h('input', { class: 'input', type: 'datetime-local', value: toLocal(l.start), disabled: !pro, 'aria-label': t('Show from') });
+      const end = h('input', { class: 'input', type: 'datetime-local', value: toLocal(l.end), disabled: !pro, 'aria-label': t('Hide after') });
+      start.addEventListener('change', () => (l.start = fromLocal(start.value)));
+      end.addEventListener('change', () => (l.end = fromLocal(end.value)));
+      const expired = l.end && l.end < Date.now();
+      const extras = h(
+        'details',
+        null,
+        h('summary', { class: 'small' }, expired ? t('Scheduled — ended') : l.start || l.end ? t('Scheduled') : t('Highlight & schedule'), pro ? '' : ' · Pro'),
+        h('div', { class: 'stack', style: { '--stack': '8px', marginTop: '8px' } }, h('label', { class: 'small', style: { display: 'flex', gap: '8px', alignItems: 'center' } }, hot, t('Highlight this link (gentle pulse)')), h('label', { class: 'small' }, t('Show from'), start), h('label', { class: 'small' }, t('Hide after'), end)),
+      );
+      linkBox.append(h('div', { class: 'card card--pad stack', style: { '--stack': '8px', opacity: expired ? '.6' : '1' } }, ti, u, extras, h('div', { style: { display: 'flex', gap: '8px', alignItems: 'center' } }, up, del, clicks)));
     });
     const limit = pro ? page.limits.max : page.limits.free;
     const full = d.links.length >= limit;
@@ -274,7 +328,7 @@ function editor(page) {
       h('div', { class: 'card card--pad', style: { display: 'flex', gap: '28px', flexWrap: 'wrap', alignItems: 'center' } }, h('div', null, h('b', { class: 'h2' }, String(page.stats.views30)), h('div', { class: 'small text-2' }, t('views · 30 days'))), h('div', null, h('b', { class: 'h2' }, String(page.stats.clicks30)), h('div', { class: 'small text-2' }, t('link clicks · 30 days'))), pro ? h('span', { class: 'badge badge--uv' }, 'Pro') : ''),
       section(t('Insights · 30 days'), insightsSection(page)),
       section(t('Profile'), h('div', { style: { display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' } }, photoPreview, pick, unpick, file), h('div', { style: { display: 'flex', gap: '10px' } }, emoji, name), bio),
-      section(t('Theme'), themeBox),
+      section(t('Theme'), themeBox, ...styleSection(d, pro)),
       section(t('Featured button'), h('p', { class: 'small text-2' }, t('A big button above your links — perfect for your Telegram channel, WhatsApp or newest offer.')), ctaLabel, ctaUrl),
       section(t('Links'), linkBox),
       section(t('Socials'), ...socialInputs),

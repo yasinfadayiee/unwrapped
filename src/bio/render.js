@@ -45,11 +45,33 @@ ${msg ? `<p class="lead-err" role="alert">${msg}</p>` : ''}
 </section>`;
 }
 
-export function renderBioPage({ handle, data, pro, site, avatarUrl = '', leadState = '' }) {
-  const t = THEME[data.theme] || THEME.midnight;
+// Black or white text, whichever reads better on a custom colour.
+function ink(hex) {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.4 ? '#0a0a0e' : '#ffffff';
+}
+const FONTS = {
+  modern: { head: '750 26px/1.15 Brico,sans-serif', body: 'Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif' },
+  elegant: { head: 'italic 400 34px/1.1 Serif,Georgia,serif', body: 'Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif' },
+  classic: { head: '700 28px/1.15 Georgia,"Times New Roman",serif', body: 'Georgia,"Times New Roman",serif' },
+  mono: { head: '700 24px/1.2 Mono,ui-monospace,Consolas,monospace', body: 'Mono,ui-monospace,Consolas,monospace' },
+};
+const RADIUS = { rounded: '16px', pill: '999px', square: '6px' };
+
+export function renderBioPage({ handle, data, pro, site, avatarUrl = '', leadState = '', now = Date.now() }) {
+  const base = THEME[data.theme] || THEME.midnight;
+  const st = data.style || {};
+  const t = { ...base };
+  if (st.accent) Object.assign(t, { accent: st.accent, accentInk: ink(st.accent) });
+  if (st.background) {
+    const light = ink(st.background) === '#0a0a0e';
+    Object.assign(t, { bg: st.background, bg2: `linear-gradient(180deg, ${st.background} 0%, ${st.background} 60%, ${light ? 'rgba(0,0,0,.06)' : 'rgba(255,255,255,.06)'} 100%), ${st.background}`, text: light ? '#111114' : '#ffffff', muted: light ? '#55555f' : '#c9c9d4', card: light ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.08)', border: light ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.16)' });
+  }
+  const font = FONTS[st.font] || FONTS.modern;
+  const radius = RADIUS[st.buttons] || RADIUS.rounded;
   const name = data.name || handle;
   const initials = data.emoji || name.replace(/[^\p{L}\p{N}]/gu, '').slice(0, 2).toUpperCase() || '★';
-  const links = (data.links || []).filter((l) => l.on);
+  const links = (data.links || []).filter((l) => l.on && (!l.start || l.start <= now) && (!l.end || l.end > now));
   const socials = Object.entries(data.socials || {}).filter(([k]) => SOCIAL[k]);
   const desc = data.bio || `${name} — links and contact`;
   const url = `${site}/@${handle}`;
@@ -66,19 +88,25 @@ export function renderBioPage({ handle, data, pro, site, avatarUrl = '', leadSta
 <style>
 @font-face{font-family:Brico;src:url(/assets/fonts/bricolage-wght.woff2) format('woff2');font-weight:200 800;font-display:swap}
 @font-face{font-family:Inter;src:url(/assets/fonts/inter-wght.woff2) format('woff2');font-weight:100 900;font-display:swap}
+${st.font === 'elegant' ? "@font-face{font-family:Serif;src:url(/assets/fonts/instrument-serif-italic.woff2) format('woff2');font-style:italic;font-display:swap}" : ''}
+${st.font === 'mono' ? "@font-face{font-family:Mono;src:url(/assets/fonts/jetbrains-mono-wght.woff2) format('woff2');font-weight:100 800;font-display:swap}" : ''}
 *{box-sizing:border-box}html,body{margin:0}
-body{min-height:100vh;background:${t.bg};background-image:${t.bg2};background-attachment:fixed;color:${t.text};font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;background:${t.bg};background-image:${t.bg2};background-attachment:fixed;color:${t.text};font:16px/1.5 ${font.body};-webkit-font-smoothing:antialiased}
 main{max-width:560px;margin:0 auto;padding:56px 18px 40px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
 .cta{width:100%;display:block;padding:16px 20px;border-radius:999px;font-weight:700;text-decoration:none;background:${t.accent};color:${t.accentInk};box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .cta.tg{background:#229ED9;color:#fff}.cta.wa{background:#25D366;color:#073b1d}
 .av{object-fit:cover;width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font:700 38px Brico,sans-serif;background:${t.card};border:1px solid ${t.border};box-shadow:0 10px 40px rgba(0,0,0,.25)}
-h1{font:750 26px/1.15 Brico,sans-serif;letter-spacing:-.02em;margin:6px 0 0}
+h1{font:${font.head};letter-spacing:-.01em;margin:6px 0 0}
 .handle{color:${t.muted};font-size:14px;margin-top:-8px}
 .bio{color:${t.muted};max-width:44ch;margin:0;white-space:pre-line}
 .links{width:100%;display:flex;flex-direction:column;gap:12px;margin-top:10px}
-.link{display:block;padding:16px 20px;border-radius:16px;background:${t.card};border:1px solid ${t.border};color:${t.text};text-decoration:none;font-weight:600;backdrop-filter:blur(8px);transition:transform .15s ease,background .15s ease}
+.link{display:block;padding:16px 20px;border-radius:${radius};background:${t.card};border:1px solid ${t.border};color:${t.text};text-decoration:none;font-weight:600;backdrop-filter:blur(8px);transition:transform .15s ease,background .15s ease}
 .link:hover{transform:translateY(-2px)}.link:active{transform:scale(.98)}
-.link:first-child{background:${t.accent};color:${t.accentInk};border-color:transparent}
+${st.outline ? `.link{background:transparent;border:2px solid ${t.accent}}.link:first-child{background:transparent;color:${t.text};border-color:${t.accent}}` : `.link:first-child{background:${t.accent};color:${t.accentInk};border-color:transparent}`}
+.cta{border-radius:${st.buttons === 'square' ? '6px' : '999px'}}
+.link.hot{animation:pulse 2.2s ease-in-out infinite;border-color:${t.accent}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 ${t.accent}55}50%{box-shadow:0 0 0 8px ${t.accent}00;transform:scale(1.02)}}
+@media (prefers-reduced-motion:reduce){.link.hot{animation:none}}
 .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:8px}
 .soc{padding:8px 14px;border-radius:999px;border:1px solid ${t.border};color:${t.text};text-decoration:none;font-size:14px;background:${t.card}}
 .lead{width:100%;margin-top:14px;padding:18px;border-radius:20px;background:${t.card};border:1px solid ${t.border};text-align:left}
@@ -99,7 +127,7 @@ ${avatarUrl ? `<img class="av" src="${e(avatarUrl)}" width="96" height="96" alt=
 <div class="handle">@${e(handle)}</div>
 ${data.bio ? `<p class="bio">${e(data.bio)}</p>` : ''}
 ${data.cta ? `<a class="cta${/t\.me|telegram/i.test(data.cta.url) ? ' tg' : /wa\.me|whatsapp/i.test(data.cta.url) ? ' wa' : ''}" href="${e(okHref(data.cta.url))}" rel="noopener">${e(data.cta.label)}</a>` : ''}
-<nav class="links" aria-label="Links">${links.map((l) => `<a class="link" href="/api/bio/go/${e(handle)}/${e(l.id)}" rel="noopener">${e(l.title)}</a>`).join('')}</nav>
+<nav class="links" aria-label="Links">${links.map((l) => `<a class="link${l.hot ? ' hot' : ''}" href="/api/bio/go/${e(handle)}/${e(l.id)}" rel="noopener">${e(l.title)}</a>`).join('')}</nav>
 ${leadForm(handle, data.lead, leadState)}
 ${socials.length ? `<div class="socials">${socials.map(([k, v]) => `<a class="soc" href="${e(okHref(SOCIAL[k][1](v)))}" rel="noopener me">${SOCIAL[k][0]}</a>`).join('')}</div>` : ''}
 ${pro ? '' : `<a class="badge" href="${e(site)}/bio/">Made with <b>Unwrapped Bio</b> · get your free page</a>`}
