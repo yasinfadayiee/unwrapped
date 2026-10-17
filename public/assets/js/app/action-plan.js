@@ -283,7 +283,43 @@ export function planSteps(ds, ctx) {
   return [...usable.filter((s) => !s.late), ...usable.filter((s) => s.late)].slice(0, MAX_STEPS);
 }
 
+// The plan, plus a one-line pointer to Unwrapped Bio for creator platforms.
 export function actionPlan(ds, ctx) {
+  const plan = planPanel(ds, ctx);
+  const promo = bioPromo(ds);
+  if (!promo) return plan;
+  return h('div', { class: 'stack', style: { '--stack': '16px' } }, plan, promo);
+}
+
+const PROMO_OFF = 'unw.bioPromo.off';
+function bioPromo(ds) {
+  if (!['instagram', 'tiktok', 'threads', 'x'].includes(ds.platform)) return null;
+  try {
+    if (localStorage.getItem(PROMO_OFF)) return null;
+  } catch {
+    /* private mode */
+  }
+  const lang = (document.documentElement.lang || 'en').slice(0, 2);
+  const href = `${lang === 'en' ? '' : `/${lang}`}/bio/`;
+  const close = h('button', { class: 'row-btn', type: 'button', 'aria-label': tl('Hide') }, '✕');
+  const card = h(
+    'div',
+    { class: 'card card--pad', style: { display: 'flex', gap: '14px', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' } },
+    h('div', { style: { display: 'flex', gap: '12px', alignItems: 'center', flex: '1 1 260px' } }, h('span', { 'aria-hidden': 'true', style: { fontSize: '28px' } }, '🔗'), h('div', null, h('b', null, tl('New: your free link-in-bio page')), h('div', { class: 'small text-2' }, tl('All your links on one page at myunwrapped.com/@you — with click stats. Ready in a minute.')))),
+    h('div', { style: { display: 'flex', gap: '8px', alignItems: 'center' } }, h('a', { class: 'btn btn--primary btn--sm', href }, tl('Create my page')), close),
+  );
+  close.addEventListener('click', () => {
+    try {
+      localStorage.setItem(PROMO_OFF, '1');
+    } catch {
+      /* private mode */
+    }
+    card.remove();
+  });
+  return card;
+}
+
+function planPanel(ds, ctx) {
   const steps = planSteps(ds, ctx);
   if (!steps.length) return null;
   const acct = `${ds.platform}:${ds.account?.username || ds.account?.name || 'me'}`;

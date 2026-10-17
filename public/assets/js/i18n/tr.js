@@ -1340,4 +1340,7 @@ export default {
   "Unlimited links, per-link click analytics and no “Made with” badge — included in every Unwrapped plan.": "Sınırsız bağlantı, bağlantı başına tıklama analizi ve “Made with” rozeti yok — tüm Unwrapped planlarına dahil.",
   "See plans": "Planları gör",
   "Could not load your page. Please refresh.": "Sayfan yüklenemedi. Lütfen yenile.",
+  "New: your free link-in-bio page": "Yeni: ücretsiz link in bio sayfan",
+  "All your links on one page at myunwrapped.com/@you — with click stats. Ready in a minute.": "Tüm bağlantıların myunwrapped.com/@sen adresinde tek sayfada, tıklama istatistikleriyle. Bir dakikada hazır.",
+  "Create my page": "Sayfamı oluştur",
 };

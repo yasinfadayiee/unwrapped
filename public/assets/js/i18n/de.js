@@ -1352,4 +1352,7 @@ export default {
   "Unlimited links, per-link click analytics and no “Made with” badge — included in every Unwrapped plan.": "Unbegrenzte Links, Klickanalyse pro Link und kein „Made with“-Badge — in jedem Unwrapped-Plan enthalten.",
   "See plans": "Pläne ansehen",
   "Could not load your page. Please refresh.": "Deine Seite konnte nicht geladen werden. Bitte neu laden.",
+  "New: your free link-in-bio page": "Neu: deine kostenlose Link-in-Bio-Seite",
+  "All your links on one page at myunwrapped.com/@you — with click stats. Ready in a minute.": "Alle Links auf einer Seite unter myunwrapped.com/@du — mit Klickstatistik. In einer Minute fertig.",
+  "Create my page": "Meine Seite erstellen",
 };
