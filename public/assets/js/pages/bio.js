@@ -3,6 +3,20 @@ import { h, clear, icon, toast, copyText } from '../lib/ui.js';
 import { api, ApiError } from '../lib/api.js';
 import { t, lang } from '../lib/i18n.js';
 import { qrcode } from '../vendor/qrcode.js';
+import { storedKey } from '../lib/license.js';
+
+// Bought a plan in this browser? Attach it to the page without copy-paste.
+async function autoPro(page) {
+  const key = storedKey();
+  if (page.pro || !key) return page;
+  try {
+    const res = await api('/api/bio/license', { method: 'POST', headers: auth(), body: { key } });
+    toast(t('Pro unlocked'));
+    return res.page;
+  } catch {
+    return page; // expired or revoked license: stay on the free page
+  }
+}
 
 const KEY = 'unw.bio.token';
 const root = document.getElementById('bio-app');
@@ -336,7 +350,7 @@ function editor(page) {
       section(t('QR code'), ...qrSection(page)),
       section(t('E-mail'), h('p', { class: 'small text-2' }, t('We send your private edit link here — so you can edit from any device.')), email),
       h('div', { style: { position: 'sticky', bottom: '12px', zIndex: 2 } }, save),
-      pro ? '' : section(t('Unlock Pro'), h('p', { class: 'small text-2' }, t('Unlimited links and contacts, full visitor insights, CSV export and no “Made with” badge — included in every Unwrapped plan.')), licKey, h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } }, licBtn, h('a', { class: 'btn btn--primary', href: pricing }, t('See plans')))),
+      pro ? '' : section(t('Unlock Pro'), h('p', { class: 'small text-2' }, t('Up to 100 links, unlimited contacts, full visitor insights, CSV export and no “Made with” badge — included in every Unwrapped plan.')), licKey, h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } }, licBtn, h('button', { class: 'btn btn--primary', type: 'button', 'data-checkout': '', 'data-tier': 'plus' }, t('Get Pro — from $2.42/month')), h('a', { class: 'btn btn--ghost', href: pricing }, t('See plans')))),
       h('div', null, logout),
     ),
   );
@@ -350,7 +364,7 @@ async function load() {
   }
   if (!getToken()) return claimView();
   try {
-    editor((await api('/api/bio/mine', { headers: auth() })).page);
+    editor(await autoPro((await api('/api/bio/mine', { headers: auth() })).page));
   } catch (e) {
     if (e instanceof ApiError && e.status === 401) {
       setToken('');

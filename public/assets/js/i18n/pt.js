@@ -1371,7 +1371,7 @@ export default {
   "Insights · 30 days": "Estatísticas · 30 dias",
   "Collect contacts": "Captar contatos",
   "QR code": "QR code",
-  "Unlimited links and contacts, full visitor insights, CSV export and no “Made with” badge — included in every Unwrapped plan.": "Links e contatos ilimitados, estatísticas completas de visitantes, exportação CSV e sem o selo “Made with” — incluído em todos os planos do Unwrapped.",
+  "Up to 100 links, unlimited contacts, full visitor insights, CSV export and no “Made with” badge — included in every Unwrapped plan.": "Até 100 links, contatos ilimitados, estatísticas completas de visitantes, exportação CSV e sem o selo “Made with” — incluído em todos os planos do Unwrapped.",
   "Theme default": "Padrão do tema",
   "Buttons": "Botões",
   "Rounded": "Arredondados",
@@ -1393,4 +1393,5 @@ export default {
   "Scheduled": "Agendado",
   "Highlight & schedule": "Destacar e agendar",
   "Highlight this link (gentle pulse)": "Destacar este link (pulso suave)",
+  "Get Pro — from $2.42/month": "Quero o Pro — a partir de US$ 2,42/mês",
 };

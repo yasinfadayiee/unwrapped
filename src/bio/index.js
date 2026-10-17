@@ -40,7 +40,7 @@ async function ensureBioSchema(env) {
 
 export const FREE_LINKS = 5;
 export const FREE_LEADS = 25;
-export const MAX_LINKS = 30;
+export const MAX_LINKS = 100;
 export const THEMES = ['midnight', 'aurora', 'sunset', 'mint', 'paper', 'mono'];
 const HANDLE = /^[a-z0-9](?:[a-z0-9._]{1,28}[a-z0-9])$/;
 const RESERVED = new Set(['admin', 'api', 'assets', 'about', 'account', 'blog', 'bio', 'guides', 'help', 'pricing', 'tools', 'growth', 'success', 'support', 'unwrapped', 'myunwrapped', 'instagram', 'tiktok', 'facebook', 'linkedin', 'threads', 'twitter', 'x', 'login', 'signup', 'root', 'null', 'undefined']);

@@ -413,7 +413,8 @@ export function successScreen(m, order) {
       h('div', { class: 'license-key' }, key),
       h('p', { class: 'small text-2' }, t('Save this key — it unlocks {tier} on any browser or phone.', { tier: tierName })),
       h('div', { style: { display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' } }, copy, save),
-      h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: m.close }, t('Continue')),
+      // On the Bio editor, reload so the new license unlocks Pro on the page at once.
+      h('button', { class: 'btn btn--primary btn--lg', type: 'button', onClick: () => (/\/bio\/$/.test(location.pathname) ? location.reload() : m.close()) }, t('Continue')),
       h('p', { class: 'small text-2' }, t('Invite friends and earn 30 free days for every friend who buys — ') , h('a', { href: `${lang === 'en' ? '' : `/${lang}`}/account/#invite` }, t('get your invite link')), '.'),
     ),
   );

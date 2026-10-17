@@ -1371,7 +1371,7 @@ export default {
   "Insights · 30 days": "İstatistikler · 30 gün",
   "Collect contacts": "Kişi topla",
   "QR code": "QR kodu",
-  "Unlimited links and contacts, full visitor insights, CSV export and no “Made with” badge — included in every Unwrapped plan.": "Sınırsız bağlantı ve kişi, tam ziyaretçi istatistikleri, CSV dışa aktarma ve “Made with” rozeti yok — tüm Unwrapped planlarına dahil.",
+  "Up to 100 links, unlimited contacts, full visitor insights, CSV export and no “Made with” badge — included in every Unwrapped plan.": "100’e kadar bağlantı, sınırsız kişi, tam ziyaretçi istatistikleri, CSV dışa aktarma ve “Made with” rozeti yok — tüm Unwrapped planlarına dahil.",
   "Theme default": "Tema varsayılanı",
   "Buttons": "Düğmeler",
   "Rounded": "Yuvarlak",
@@ -1393,4 +1393,5 @@ export default {
   "Scheduled": "Zamanlandı",
   "Highlight & schedule": "Öne çıkar ve zamanla",
   "Highlight this link (gentle pulse)": "Bu bağlantıyı öne çıkar (hafif nabız)",
+  "Get Pro — from $2.42/month": "Pro’yu al — ayda 2,42 $’dan",
 };
