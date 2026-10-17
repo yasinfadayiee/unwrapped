@@ -9,6 +9,7 @@ import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
 import { checkNowpaymentsPayments, createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
 import { growthMaintenance, handleGrowth } from './growth/index.js';
+import { handleBio, servePublicBio } from './bio/index.js';
 import { emailEnabled, sendRenewalReminders } from './email.js';
 import { handleAdmin } from './admin.js';
 import { attachReferral, discounted, getReferralForLicense, validReferral } from './referrals.js';
@@ -163,6 +164,7 @@ async function route(request, env, ctx, url) {
   }
   if (url.pathname.startsWith('/api/admin/')) return handleAdmin(request, env, url);
   if (url.pathname.startsWith('/api/growth/')) return handleGrowth(request, env, url, ctx);
+  if (url.pathname.startsWith('/api/bio/')) return handleBio(request, env, url);
   return fail(404, 'not_found');
 }
 
@@ -177,6 +179,17 @@ export default {
       const target = new URL(canonical);
       const alias = url.hostname.endsWith('.workers.dev') || url.hostname === `www.${target.hostname}`;
       if (alias && target.hostname !== url.hostname) return Response.redirect(`${target.origin}${url.pathname}${url.search}`, 301);
+    }
+    // Public "link in bio" pages: /@handle
+    const bio = url.pathname.match(/^\/@([a-z0-9._]{3,30})\/?$/i);
+    if (bio && (request.method === 'GET' || request.method === 'HEAD')) {
+      try {
+        await ensureSchema(env);
+        const res = await servePublicBio(request, env, bio[1].toLowerCase());
+        if (res) return res;
+      } catch (err) {
+        console.error('bio page', err);
+      }
     }
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     try {
