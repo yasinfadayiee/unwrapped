@@ -105,10 +105,17 @@ function shortTitle(title, max = 65) {
   }
   if (t.length <= max) return t;
   const cut = t.slice(0, max);
-  const brk = Math.max(cut.lastIndexOf(' — '), cut.lastIndexOf(': '), cut.lastIndexOf(' ('), cut.lastIndexOf(', '));
-  if (brk > 30) return cut.slice(0, brk).replace(/[\s,:—(]+$/, '');
-  return `${cut.slice(0, cut.lastIndexOf(' '))}…`;
+  // A question is a complete title on its own: keep the "?".
+  const q = Math.max(cut.lastIndexOf('? '), cut.lastIndexOf(' ? '));
+  if (q > 15) return cut.slice(0, cut.indexOf('?', q) + 1);
+  const brk = Math.max(cut.lastIndexOf(' — '), cut.lastIndexOf(': '), cut.lastIndexOf(' : '), cut.lastIndexOf(' ('), cut.lastIndexOf(', '));
+  if (brk > 25) return cut.slice(0, brk).replace(/[\s,:—(]+$/, '');
+  // Otherwise end on a whole word — no "…", and no dangling little word.
+  let words = cut.slice(0, cut.lastIndexOf(' ')).split(' ');
+  while (words.length > 3 && TRAILING.test(words[words.length - 1])) words.pop();
+  return words.join(' ').replace(/[\s,:—(&]+$/, '');
 }
+const TRAILING = /^(a|an|the|of|from|your|my|to|and|or|with|in|on|for|de|da|do|des|du|la|le|les|el|los|las|tu|tus|ta|tes|seu|sua|seus|suas|e|y|et|und|oder|von|aus|dein|deine|deinen|der|die|das|mit|für|ve|ile|için|bir)$/i;
 
 function shortDescription(text, max = 160) {
   const d = String(text || '');
