@@ -143,11 +143,58 @@ function privacyView(ds, ctx) {
   return root;
 }
 
+function interactionsView(ds, ctx) {
+  const full = ctx.pro || ctx.demo;
+  const reach = ds.reach || [];
+  const dm = ds.dms || {};
+  const lastTwo = reach.slice(-2);
+  const trend = lastTwo.length === 2 && lastTwo[0].avgLikes > 0 ? (lastTwo[1].avgLikes - lastTwo[0].avgLikes) / lastTwo[0].avgLikes : null;
+  const userLink = (id) => h('a', { class: 'row-btn', href: `https://x.com/i/user/${encodeURIComponent(id)}`, target: '_blank', rel: 'noopener noreferrer nofollow' }, icon('external'), tl('Open'));
+  const root = h('div', { class: 'app-content' }, viewHead(tl('Circle & reach'), tl('Who you really talk to on X, your DMs, and whether your reach is growing.')));
+  root.append(
+    h(
+      'div',
+      { class: 'stats' },
+      stat({ label: tl('People you interact with'), value: fmtInt(ds.circle?.length || 0) }),
+      stat({ label: tl('DM conversations'), value: fmtInt(dm.conversations || 0) }),
+      stat({ label: tl('DMs sent'), value: fmtInt(dm.sent || 0), sub: tl('of {v0}', { v0: fmtInt(dm.messages || 0) }) }),
+      stat({ label: tl('DMs never answered'), value: fmtInt(dm.unanswered?.length || 0) }),
+    ),
+  );
+  if (reach.length > 1) {
+    root.append(
+      panel(
+        { title: tl('Average likes per post, by year'), text: trend == null ? '' : trend >= 0 ? tl('Up {v0}% on the year before.', { v0: Math.round(trend * 100) }) : tl('Down {v0}% on the year before.', { v0: Math.round(-trend * 100) }) },
+        barChart(reach.map((r) => ({ label: r.year, value: Math.round(r.avgLikes * 10) / 10 })), { title: tl('Likes per post'), ariaLabel: tl('Average likes per post, by year') }),
+      ),
+    );
+  }
+  root.append(
+    h(
+      'div',
+      { class: 'panels panels--2' },
+      panel({ title: tl('Your circle'), text: tl('Accounts you reply to and mention most.') }, ds.circle?.length ? rankList(ds.circle, { limit: full ? 25 : 5 }) : emptyState(tl('No replies or mentions yet.'), 'users')),
+      panel(
+        { title: tl('Top DM partners'), text: tl('X archives only list account IDs — “Open” shows who it is.') },
+        dm.partners?.length
+          ? h('div', { class: 'rows' }, dm.partners.slice(0, full ? 20 : 3).map((p) => h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, tl('{v0} messages', { v0: fmtInt(p.messages) })), h('span', null, tl('You sent {v0} · last {v1}', { v0: fmtInt(p.sent), v1: dateShort(p.ts) }))), userLink(p.id))))
+          : emptyState(tl('No direct messages in this archive.'), 'message'),
+      ),
+    ),
+  );
+  if (dm.unanswered?.length) {
+    root.append(panel({ title: tl('DMs you never answered'), text: tl('They wrote, you never replied. Newest first.') }, h('div', { class: 'rows' }, dm.unanswered.slice(0, full ? 50 : 3).map((p) => h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, tl('{v0} messages', { v0: fmtInt(p.messages) })), h('span', null, tl('Wrote {v0}', { v0: dateShort(p.ts) }))), userLink(p.id))))));
+  }
+  if (!full) root.append(h('p', { class: 'text-2' }, tl('Plus shows your full circle, every DM partner and every unanswered DM.')));
+  return root;
+}
+
 export function xViews(ds, ctx) {
   const keepKey = `x:${ds.account?.username || 'me'}`;
   const views = [{ id: 'overview', label: tl('Overview'), icon: 'home', render: () => overview(ds, ctx) }];
   if (ds.tweets.length) views.push({ id: 'posts', label: tl('Your posts'), icon: 'message', count: ds.tweets.length, render: () => postsView(ds, ctx) });
   if (ds.tweets.length) views.push({ id: 'search', label: tl('Search & clean up'), icon: 'search', render: () => tweetsView(ds, ctx) });
+  if (ds.circle?.length || ds.dms?.conversations || ds.reach?.length > 1) views.push({ id: 'circle', label: tl('Circle & reach'), icon: 'users', render: () => interactionsView(ds, ctx) });
   if (ds.hasRelationships) views.push(...relationshipViews(ds, ctx, { keepKey }));
   views.push({ id: 'privacy', label: tl('Privacy X-ray'), icon: 'fingerprint', render: () => privacyView(ds, ctx) });
   views.push({ id: 'wrapped', label: tl('Wrapped cards'), icon: 'sparkles', render: () => wrappedView(ds, ctx) });

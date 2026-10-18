@@ -27,6 +27,65 @@ async function readAll(vfs, name) {
 
 const n = (v) => Number(v) || 0;
 
+// One-to-one DMs: per partner (by account ID — the archive has no names), who
+// wrote how much, and chats where they wrote last and you never replied.
+export function dmStats(rows, myId) {
+  const partners = [];
+  let sent = 0;
+  for (const row of rows) {
+    const msgs = (row.dmConversation?.messages || []).map((m) => m.messageCreate).filter(Boolean);
+    if (!msgs.length) continue;
+    const ids = String(row.dmConversation?.conversationId || '').split('-');
+    const other = ids.find((id) => id !== myId) || msgs.find((m) => m.senderId !== myId)?.senderId || '';
+    let mine = 0;
+    let last = null;
+    for (const m of msgs) {
+      if (m.senderId === myId) mine++;
+      const ts = parseDate(m.createdAt);
+      if (!last || ts > last.ts) last = { ts, mine: m.senderId === myId };
+    }
+    sent += mine;
+    partners.push({ id: other, messages: msgs.length, sent: mine, received: msgs.length - mine, ts: last.ts, unanswered: !last.mine && mine === 0 });
+  }
+  partners.sort((a, b) => b.messages - a.messages);
+  return { sent, partners, unanswered: partners.filter((p) => p.unanswered).sort((a, b) => b.ts - a.ts) };
+}
+
+// The accounts you reply to and mention most: your real circle on X.
+export function circleOf(tweets, me = '') {
+  const self = String(me).toLowerCase();
+  const counts = new Map();
+  const add = (u, kind) => {
+    const k = String(u || '').toLowerCase();
+    if (!k || k === self) return;
+    const v = counts.get(k) || { key: `@${u}`, count: 0, replies: 0, mentions: 0 };
+    v.count++;
+    v[kind]++;
+    counts.set(k, v);
+  };
+  for (const t of tweets) {
+    if (t.isRT) continue;
+    if (t.replyTo) add(t.replyTo, 'replies');
+    for (const m of new Set(t.mentions)) if (String(m).toLowerCase() !== String(t.replyTo).toLowerCase()) add(m, 'mentions');
+  }
+  return [...counts.values()].sort((a, b) => b.count - a.count).slice(0, 50);
+}
+
+// Average likes per own post, per year: is your reach growing?
+export function reachByYear(tweets) {
+  const years = new Map();
+  for (const t of tweets) {
+    if (t.isRT || t.isReply || !t.ts) continue;
+    const y = String(new Date(t.ts).getFullYear());
+    const v = years.get(y) || { posts: 0, likes: 0, rts: 0 };
+    v.posts++;
+    v.likes += t.likes;
+    v.rts += t.rts;
+    years.set(y, v);
+  }
+  return [...years.entries()].sort().map(([year, v]) => ({ year, posts: v.posts, avgLikes: v.posts ? v.likes / v.posts : 0, avgRts: v.posts ? v.rts / v.posts : 0 }));
+}
+
 export async function parseX(vfs, progress) {
   progress?.('Opening your X archive…', 0.15);
   const accountRow = (await readAll(vfs, 'account'))[0]?.account || {};
@@ -54,6 +113,7 @@ export async function parseX(vfs, progress) {
       likes: n(t.favorite_count),
       rts: n(t.retweet_count),
       isReply: Boolean(t.in_reply_to_status_id_str || t.in_reply_to_screen_name),
+      replyTo: t.in_reply_to_screen_name || '',
       isRT: text.startsWith('RT @'),
       hashtags: (t.entities?.hashtags || []).map((h) => h.text).filter(Boolean),
       mentions: (t.entities?.user_mentions || []).map((m) => m.screen_name).filter(Boolean),
@@ -107,12 +167,15 @@ export async function parseX(vfs, progress) {
 
   let dmConversations = 0;
   let dmMessages = 0;
+  const dmRows = [];
   for (const name of ['direct-messages', 'direct-messages-group']) {
     for (const row of await readAll(vfs, name)) {
       dmConversations++;
       dmMessages += (row.dmConversation?.messages || []).length;
+      if (name === 'direct-messages') dmRows.push(row);
     }
   }
+  const myId = String(accountRow.accountId || '');
 
   return {
     platform: 'x',
@@ -136,7 +199,9 @@ export async function parseX(vfs, progress) {
     adImpressions,
     logins,
     apps,
-    dms: { conversations: dmConversations, messages: dmMessages },
+    dms: { conversations: dmConversations, messages: dmMessages, ...dmStats(dmRows, myId) },
+    circle: circleOf(tweets, accountRow.username),
+    reach: reachByYear(tweets),
     hasRelationships: followers.length > 0 || following.length > 0,
   };
 }

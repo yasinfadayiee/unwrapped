@@ -35,6 +35,55 @@ async function readJson(vfs, re) {
   }
 }
 
+const yearOf = (sec) => (sec ? String(new Date(sec * 1000).getFullYear()) : '');
+
+// Your own activity: posts, comments, reactions (by type) and groups joined.
+export async function activityOf(vfs) {
+  const out = { posts: 0, comments: 0, reactions: 0, groups: [], reactionTypes: {}, byYear: {}, firstPost: null };
+  const year = (sec, kind) => {
+    const y = yearOf(sec);
+    if (!y) return;
+    out.byYear[y] = out.byYear[y] || { posts: 0, comments: 0, reactions: 0 };
+    out.byYear[y][kind]++;
+  };
+  for (const e of vfs.all((x) => isFacebook(x.lower) && /(^|\/)your_posts[^/]*\.json$/.test(x.lower))) {
+    let json;
+    try {
+      json = await e.json();
+    } catch {
+      continue;
+    }
+    for (const p of Array.isArray(json) ? json : firstArray(json)) {
+      out.posts++;
+      year(p.timestamp, 'posts');
+      const text = fixMeta((p.data || []).map((d) => d.post).filter(Boolean).join(' '));
+      if (p.timestamp && text && (!out.firstPost || p.timestamp < out.firstPost.ts / 1000)) out.firstPost = { ts: p.timestamp * 1000, text: text.slice(0, 200) };
+    }
+  }
+  const comments = await readJson(vfs, /(^|\/)comments\.json$/);
+  for (const c of comments ? firstArray(comments) : []) {
+    out.comments++;
+    year(c.timestamp, 'comments');
+  }
+  for (const e of vfs.all((x) => isFacebook(x.lower) && /(^|\/)(likes_and_reactions|posts_and_comments)(_\d+)?\.json$/.test(x.lower))) {
+    let json;
+    try {
+      json = await e.json();
+    } catch {
+      continue;
+    }
+    for (const r of Array.isArray(json) ? json : firstArray(json)) {
+      out.reactions++;
+      year(r.timestamp, 'reactions');
+      const type = String(r.data?.[0]?.reaction?.reaction || metaRecords([r])[0]?.values?.Reaction || '').toUpperCase();
+      if (type) out.reactionTypes[type] = (out.reactionTypes[type] || 0) + 1;
+    }
+  }
+  const groups = await readJson(vfs, /(^|\/)your_group_membership_activity\.json$/);
+  if (groups) out.groups = firstArray(groups).map((g) => ({ name: fixMeta(g.title || g.name || metaRecords([g])[0]?.title || ''), ts: (g.timestamp || 0) * 1000 })).filter((g) => g.name);
+  return out;
+}
+
 export async function parseFacebook(vfs, progress) {
   progress?.('Reading your Facebook friends…', 0.3);
   const lists = {};
@@ -66,7 +115,11 @@ export async function parseFacebook(vfs, progress) {
   progress?.('Reading your Messenger chats…', 0.85);
   const messages = await readMessages(vfs, name, null, { facebook: true });
 
+  progress?.('Reading your posts and reactions…', 0.92);
+  const posted = await activityOf(vfs);
+
   return {
+    posted,
     platform: 'facebook',
     label: 'Facebook',
     account: { name, createdAt },

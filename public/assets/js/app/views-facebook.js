@@ -4,7 +4,7 @@ import { fmtInt, dateShort, monthLabel, relTime, yearsSince } from '../lib/forma
 import { byMonth } from '../core/insights.js';
 import { viewHead, stat, panel, insights, userList, emptyState, dataNote } from './components.js';
 import { unfollowersView, exposurePanel, tagCloud } from './views-common.js';
-import { barChart } from './charts.js';
+import { barChart, rankList } from './charts.js';
 import { wrappedView } from './views-wrapped.js';
 import { privacyParts } from './wrapped.js';
 import { messagesView } from './views-messages.js';
@@ -46,10 +46,51 @@ function overview(ds, ctx) {
   );
 }
 
+const REACTION = { LIKE: '👍', LOVE: '❤️', HAHA: '😆', WOW: '😮', SORRY: '😢', SAD: '😢', ANGER: '😡', ANGRY: '😡', CARE: '🤗' };
+
+function activityView(ds, ctx) {
+  const a = ds.posted;
+  const full = ctx.pro || ctx.demo;
+  const years = Object.entries(a.byYear).sort();
+  const peak = years.slice().sort((x, y) => y[1].posts - x[1].posts)[0];
+  const types = Object.entries(a.reactionTypes).sort((x, y) => y[1] - x[1]).map(([k, v]) => ({ key: `${REACTION[k] || ''} ${k[0]}${k.slice(1).toLowerCase()}`.trim(), count: v }));
+  const oldest = [...ds.lists.friends].filter((f) => f.ts).sort((x, y) => x.ts - y.ts).slice(0, full ? 10 : 3);
+  return h(
+    'div',
+    { class: 'app-content' },
+    viewHead(tl('Your Facebook life'), tl('Everything you posted, commented and reacted to — year by year.')),
+    h(
+      'div',
+      { class: 'stats' },
+      stat({ label: tl('Posts'), value: fmtInt(a.posts) }),
+      stat({ label: tl('Comments'), value: fmtInt(a.comments) }),
+      stat({ label: tl('Reactions given'), value: fmtInt(a.reactions) }),
+      stat({ label: tl('Groups joined'), value: fmtInt(a.groups.length) }),
+    ),
+    years.length > 1 ? panel({ title: tl('Posts per year') }, barChart(years.map(([label, v]) => ({ label, value: v.posts })), { title: tl('Posts'), ariaLabel: tl('Posts per year') })) : null,
+    panel(
+      null,
+      insights([
+        peak && peak[1].posts && { icon: 'star', title: tl('Your most active year: {v0}', { v0: peak[0] }), text: tl('{v0} posts that year.', { v0: fmtInt(peak[1].posts) }) },
+        a.firstPost && { icon: 'calendar', title: tl('First post: {v0}', { v0: dateShort(a.firstPost.ts) }), text: a.firstPost.text },
+        types[0] && { icon: 'heart', title: tl('Your go-to reaction: {v0}', { v0: types[0].key }), text: tl('{v0} times.', { v0: fmtInt(types[0].count) }) },
+      ]),
+    ),
+    h(
+      'div',
+      { class: 'panels panels--2' },
+      types.length ? panel({ title: tl('How you react') }, rankList(types, { limit: 8, color: 'var(--c2)' })) : null,
+      oldest.length ? panel({ title: tl('Your oldest friendships') }, h('div', { class: 'rows' }, oldest.map((f) => h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, f.name), h('span', null, tl('Friends since {v0}', { v0: dateShort(f.ts) }))))))) : null,
+    ),
+    a.groups.length ? panel({ title: tl('Groups you joined') }, userList({ platform: 'facebook', items: a.groups, ctx, subFor: (g) => (g.ts ? tl('Joined {v0}', { v0: dateShort(g.ts) }) : ''), exportName: 'facebook-groups' })) : null,
+  );
+}
+
 export function facebookViews(ds, ctx) {
   const L = ds.lists;
   const views = [
     { id: 'overview', label: tl('Overview'), icon: 'home', render: () => overview(ds, ctx) },
+    ...(ds.posted && (ds.posted.posts || ds.posted.comments || ds.posted.reactions || ds.posted.groups.length) ? [{ id: 'activity', label: tl('Your Facebook life'), icon: 'calendar', render: () => activityView(ds, ctx) }] : []),
     {
       id: 'friends',
       label: tl('Friends'),
