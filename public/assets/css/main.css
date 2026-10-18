@@ -190,6 +190,16 @@
 .tools-nav a:hover { color: var(--text); background: rgba(var(--fg-rgb), 0.06); }
 .tools-group[id] { scroll-margin-top: calc(var(--header-h) + 80px); }
 @media (max-width: 640px) { .tools-nav { border-radius: 18px; } }
+/* Home: pick your platform */
+.plat-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
+.plat-card { position: relative; display: grid; grid-template-columns: 64px 1fr; grid-template-rows: auto 1fr; column-gap: 16px; row-gap: 4px; align-items: start; padding: 20px 44px 20px 20px; text-decoration: none; color: inherit; transition: transform .2s var(--ease), border-color .2s; }
+.plat-card .ico3d { grid-row: span 2; width: 64px; height: 64px; transition: transform .3s var(--ease-spring); }
+.plat-card b { font-family: var(--font-display); font-size: 19px; letter-spacing: -0.01em; }
+.plat-card span { color: var(--text-2); font-size: 14px; line-height: 1.45; }
+.plat-go { position: absolute; right: 18px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); color: var(--muted); transition: transform .2s, color .2s; }
+.plat-card:hover { transform: translateY(-3px); border-color: var(--line-3); }
+.plat-card:hover .ico3d { transform: rotate(-6deg) scale(1.08); }
+.plat-card:hover .plat-go { color: var(--signal); transform: translate(3px, -50%); }
 #what .tools-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
 
 /* Theme picker */

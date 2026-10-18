@@ -24,7 +24,7 @@ import { pickYear } from '../core/year.js';
 import { crossView } from './views-cross.js';
 import { timelineView } from './views-timeline.js';
 
-const ICONS_3D = new Set(['instagram', 'tiktok', 'x', 'facebook', 'linkedin', 'orbit']);
+const ICONS_3D = new Set(['instagram', 'tiktok', 'x', 'facebook', 'linkedin', 'threads', 'whatsapp', 'telegram', 'spotify', 'orbit']);
 import { playStory } from './story.js';
 import { t as tl, lang } from '../lib/i18n.js';
 import { track } from '../lib/stats.js';
