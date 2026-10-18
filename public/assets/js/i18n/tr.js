@@ -1394,4 +1394,10 @@ export default {
   "Highlight & schedule": "Öne çıkar ve zamanla",
   "Highlight this link (gentle pulse)": "Bu bağlantıyı öne çıkar (hafif nabız)",
   "Get Pro — from $2.42/month": "Pro’yu al — ayda 2,42 $’dan",
+  "+ {n} more": "+ {n} tane daha",
+  "Continue · {price}": "Devam et · {price}",
+  "No account, no card details": "Hesap yok, kart bilgisi yok",
+  "Key unlocks right after payment": "Anahtar ödemeden hemen sonra açılır",
+  "Human support on Telegram": "Telegram’da gerçek destek",
+  "Also send my key by e-mail (optional)": "Anahtarımı e-postayla da gönder (isteğe bağlı)",
 };

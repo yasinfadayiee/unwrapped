@@ -1406,4 +1406,10 @@ export default {
   "Highlight & schedule": "Hervorheben & planen",
   "Highlight this link (gentle pulse)": "Diesen Link hervorheben (sanftes Pulsieren)",
   "Get Pro — from $2.42/month": "Pro holen — ab 2,42 $/Monat",
+  "+ {n} more": "+ {n} weitere",
+  "Continue · {price}": "Weiter · {price}",
+  "No account, no card details": "Kein Konto, keine Kartendaten",
+  "Key unlocks right after payment": "Schlüssel direkt nach der Zahlung aktiv",
+  "Human support on Telegram": "Echter Support auf Telegram",
+  "Also send my key by e-mail (optional)": "Schlüssel zusätzlich per E-Mail senden (optional)",
 };

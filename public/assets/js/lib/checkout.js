@@ -152,13 +152,16 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
         'div',
         { class: 'tier-detail' },
         h('div', { class: 'small' }, h('b', null, t(tier?.tagline || '')), rank > 1 ? h('span', { class: 'muted' }, ` · ${t('everything in {tier}, plus:', { tier: TIER_NAME[tiers.find((x) => x.rank === rank - 1)?.id] })}`) : null),
-        h('ul', { class: 'checklist small text-2' }, (tier?.features || []).map((f) => h('li', null, icon('check'), t(f)))),
+        featureList(tier?.features || []),
       ),
     );
     clear(planBox);
     for (const p of options) {
       const input = h('input', { type: 'radio', name: 'plan', value: p.id, checked: p.id === planId });
-      input.addEventListener('change', () => (planId = p.id));
+      input.addEventListener('change', () => {
+        planId = p.id;
+        goLabel();
+      });
       planBox.append(
         h(
           'label',
@@ -172,6 +175,24 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
     }
     const credit = creditText(state, tierId, plans);
     clear(creditBox).append(credit ? h('div', { class: 'note' }, icon('info'), h('span', null, credit)) : '');
+    goLabel();
+  }
+  // Four features up front; the rest one tap away, so the plan stays readable.
+  function featureList(items) {
+    const ul = h('ul', { class: 'checklist small text-2' }, items.slice(0, 4).map((f) => h('li', null, icon('check'), t(f))));
+    if (items.length <= 4) return ul;
+    const more = h('button', { class: 'link-btn small', type: 'button', style: { background: 'none', border: 0, padding: 0, color: 'var(--signal)', cursor: 'pointer' } }, t('+ {n} more', { n: items.length - 4 }));
+    more.addEventListener('click', () => {
+      ul.append(...items.slice(4).map((f) => h('li', null, icon('check'), t(f))));
+      more.remove();
+    });
+    return h('div', null, ul, more);
+  }
+  function goLabel() {
+    const p = plans.find((x) => x.id === planId);
+    if (!p || go.disabled) return;
+    const price = discount ? Math.round(p.priceUsd * (1 - discount) * 100) / 100 : p.priceUsd;
+    go.textContent = t('Continue · {price}', { price: money(price) });
   }
   const methodBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': t('Payment method') });
   for (const meth of config.methods) {
@@ -192,10 +213,19 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
   const errorBox = h('div', { class: 'err-box', hidden: true, role: 'alert' });
   const go = h('button', { class: 'btn btn--primary btn--lg btn--block', type: 'button' }, t('Continue to payment'));
 
+  // What worries first-time buyers, answered before they have to ask.
+  const trust = h(
+    'div',
+    { class: 'small text-2', style: { display: 'flex', flexWrap: 'wrap', gap: '6px 14px', justifyContent: 'center' } },
+    h('span', null, '🔒 ', t('No account, no card details')),
+    h('span', null, '⚡ ', t('Key unlocks right after payment')),
+    h('span', null, '💬 ', t('Human support on Telegram')),
+  );
   m.body.append(
     h(
       'div',
       { class: 'stack', style: { '--stack': '18px' } },
+      trust,
       tierBox,
       featureBox,
       planBox,
@@ -219,17 +249,18 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
         h('p', { class: 'tiny muted' }, t('Not sure? The free version stays free — try everything first.')),
       ),
       config.email
-        ? h('div', { class: 'field' }, h('label', { for: 'co-email' }, t('E-mail for your license & renewal reminder')), email)
+        ? h('details', { class: 'small' }, h('summary', null, t('Also send my key by e-mail (optional)')), h('div', { class: 'field', style: { marginTop: '8px' } }, h('label', { for: 'co-email', class: 'sr-only' }, t('E-mail for your license & renewal reminder')), email))
         : null,
       discount ? h('div', { class: 'note' }, icon('sparkles'), h('span', null, t('Friend invite applied — {n}% off.', { n: Math.round(discount * 100) }))) : null,
       errorBox,
-      go,
+      h('div', { style: { position: 'sticky', bottom: '0', paddingTop: '8px', background: 'linear-gradient(transparent, var(--surface, #101017) 30%)' } }, go),
       h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, t('Activates automatically once the payment confirms · no account · no auto-renewal · your social data is never uploaded')),
     ),
   );
   drawTier();
 
   go.addEventListener('click', async () => {
+    import('./stats.js').then(({ track }) => track('cont', { p: planId })).catch(() => {});
     go.disabled = true;
     errorBox.hidden = true;
     go.textContent = t('Creating your order…');
@@ -249,7 +280,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       errorBox.textContent = err instanceof ApiError ? errText(err) : t('Could not reach the server. Check your connection.');
       errorBox.hidden = false;
       go.disabled = false;
-      go.textContent = t('Continue to payment');
+      goLabel();
     }
   });
   return m;
