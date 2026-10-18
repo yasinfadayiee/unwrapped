@@ -18,6 +18,7 @@ Key facts:
 - [Threads unfollowers](https://myunwrapped.com/threads-unfollowers/)
 - [WhatsApp chat analyzer](https://myunwrapped.com/whatsapp-chat-analyzer/)
 - [Telegram chat analyzer](https://myunwrapped.com/telegram-chat-analyzer/)
+- [Spotify stats — Wrapped any time](https://myunwrapped.com/spotify-stats/)
 - [TikTok screen time, watch history & unfollowers](https://myunwrapped.com/tiktok/)
 - [X (Twitter) archive viewer & unfollowers](https://myunwrapped.com/x/)
 - [Instagram DM analyzer](https://myunwrapped.com/instagram-dm-analyzer/) and [message viewer](https://myunwrapped.com/instagram-message-viewer/)

@@ -42,7 +42,7 @@ function overview(chat, ctx) {
     panel(
       null,
       insights([
-        fastest && people.length > 1 && { icon: 'zap', title: tl('{v0} replies fastest', { v0: fastest.name }), text: tl('Typical reply time: {v0}.', { v0: duration(fastest.replyMs) }) },
+        fastest && people.length > 1 && { icon: 'clock', title: tl('{v0} replies fastest', { v0: fastest.name }), text: tl('Typical reply time: {v0}.', { v0: duration(fastest.replyMs) }) },
         starter && people.length > 1 && { icon: 'send', title: tl('{v0} starts most conversations', { v0: starter.name }), text: tl('{v0} times after a quiet spell of 6+ hours.', { v0: fmtInt(starter.starts) }) },
         chat.busiestDay && { icon: 'calendar', title: tl('Busiest day: {v0}', { v0: dateShort(new Date(`${chat.busiestDay.day}T12:00:00`).getTime()) }), text: tl('{v0} messages in one day.', { v0: fmtInt(chat.busiestDay.count) }) },
         owl && owl.nightShare > 0.05 && { icon: 'moon', title: tl('Night owl: {v0}', { v0: owl.name }), text: tl('{v0}% of their messages are sent between midnight and 5 am.', { v0: Math.round(owl.nightShare * 100) }) },

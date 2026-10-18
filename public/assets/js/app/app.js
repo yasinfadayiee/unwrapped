@@ -17,6 +17,7 @@ import { xViews } from './views-x.js';
 import { facebookViews } from './views-facebook.js';
 import { linkedinViews } from './views-linkedin.js';
 import { whatsappViews } from './views-whatsapp.js';
+import { spotifyViews } from './views-spotify.js';
 import { crossView } from './views-cross.js';
 import { timelineView } from './views-timeline.js';
 
@@ -34,10 +35,11 @@ const VIEW_BUILDERS = {
   linkedin: linkedinViews,
   whatsapp: whatsappViews,
   telegram: whatsappViews,
+  spotify: spotifyViews,
 };
 
-// Chat exports get the chat dashboard only: no timeline or intro story.
-const CHAT_PLATFORMS = new Set(['whatsapp', 'telegram']);
+// Chat and listening exports get their own dashboard only: no timeline or intro story.
+const CHAT_PLATFORMS = new Set(['whatsapp', 'telegram', 'spotify']);
 
 const SECTIONS = ['start', 'people', 'content', 'privacy', 'lab', 'share'];
 const SECTION_TITLE = { start: () => tl('Start here'), people: () => tl('Followers & people'), content: () => tl('Your posts & activity'), privacy: () => tl('Privacy'), lab: () => tl('Pro Lab'), share: () => tl('Share') };

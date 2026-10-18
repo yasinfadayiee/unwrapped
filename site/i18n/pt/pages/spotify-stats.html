@@ -1,0 +1,81 @@
+<!--page {
+  "route": "/spotify-stats/",
+  "nav": "tools",
+  "title": "Estatísticas do Spotify quando quiser — seu histórico completo, privado · Unwrapped",
+  "description": "Seu Spotify Wrapped em qualquer dia do ano: artistas e músicas principais, minutos ouvidos, o número um de cada ano, podcasts e hábitos — a partir do download de dados do Spotify. Nada é enviado.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-music"/></svg>Spotify · estatísticas</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Spotify Wrapped,</span></span>
+        <span class="line"><span><span class="serif grad">no dia que você quiser.</span></span></span>
+      </h1>
+      <p class="hero-sub">Não espere dezembro. O download de dados do Spotify tem <b>cada música que você ouviu</b> — veja artistas principais, minutos e hábitos, até <b>cada ano desde que entrou</b>. <b>Lido no seu aparelho, nunca enviado.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/messages-radar-640.webp" srcset="/assets/img/art/messages-radar-320.webp 320w, /assets/img/art/messages-radar-640.webp 640w, /assets/img/art/messages-radar-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">O que você vê</span>
+      <h2 class="h2">Sua música, revelada.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Artistas e músicas principais</b> — por minutos reais, não só reproduções.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Wrapped de cada ano</b> — seu artista número um em cada ano (histórico estendido).</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Quando você ouve</b> — por hora, dia e mês.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Músicas puladas, podcasts e novas descobertas</b>.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Funciona com os dois arquivos</b> — o anual rápido e o histórico estendido completo.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#1db954,#0a3d1d)"></span><b>Minutos ouvidos</b><em>18,240</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#1db954,#0a3d1d)"></span><b>Artista top</b><em>Taylor Swift</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#1db954,#0a3d1d)"></span><b>Músicas</b><em>2,931</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#1db954,#0a3d1d)"></span><b>Puladas</b><em>14%</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Como funciona</span><h2 class="h2">Peça uma vez, explore sempre.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Peça seus dados</b><span>spotify.com → Conta → <b>Configurações de privacidade</b> → Baixar seus dados. Marque <b>Histórico de streaming estendido</b> para todos os anos (ou Dados da conta para o último ano).</span></li>
+      <li><b>Espere o e-mail</b><span>Os dados da conta costumam chegar em dias; o histórico estendido pode levar até 30 dias.</span></li>
+      <li><b>Solte o ZIP aqui</b><span>Ele é aberto no seu navegador. Nada sai do seu aparelho.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Estatísticas do Spotify, explicadas.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Posso ver meu Wrapped antes de dezembro?</summary><div class="answer"><p>Sim. Seu download de dados tem o mesmo histórico, então você vê seus artistas e músicas principais quando quiser.</p></div></details>
+      <details><summary>Preciso entrar com o Spotify?</summary><div class="answer"><p>Não. O Unwrapped nunca se conecta à sua conta — só lê o arquivo que o Spotify envia.</p></div></details>
+      <details><summary>Dados da conta ou histórico estendido?</summary><div class="answer"><p>Os dados da conta cobrem o último ano e chegam mais rápido. O histórico estendido cobre a conta inteira e libera o Wrapped de cada ano.</p></div></details>
+      <details><summary>É grátis?</summary><div class="answer"><p>O resumo com seu top 5 é grátis. O Pro mostra seu top 50, o Wrapped de cada ano e novas descobertas.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Seu Wrapped, <span class="serif grad">agora mesmo.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Ver minhas estatísticas do Spotify</a></div>
+    </div>
+  </div>
+</section>
