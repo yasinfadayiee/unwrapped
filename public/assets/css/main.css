@@ -154,7 +154,7 @@
   --bg: #f5f5f8; --bg-2: #eeeef3; --surface: #ffffff; --surface-2: #f6f6fa; --surface-3: #ececf3;
   --fg-rgb: 20, 20, 40; --shade-rgb: 236, 236, 243;
   --line: rgba(20, 20, 40, 0.1); --line-2: rgba(20, 20, 40, 0.16); --line-3: rgba(20, 20, 40, 0.26);
-  --text: #121218; --text-2: #4a4a5c; --muted: #6e6e82;
+  --text: #121218; --text-2: #4a4a5c; --muted: #626274;
   --signal: #5b3df5; --signal-2: #4a2fe0; --signal-ink: #ffffff; --signal-rgb: 91, 61, 245;
   --uv: #7a5cff; --uv-rgb: 122, 92, 255; --uv-glow: rgba(122, 92, 255, 0.25);
   --c1: #5b3df5; --grid: #e2e2ea; --grad-mid: #e0567a;
@@ -168,6 +168,9 @@
   box-shadow: 0 30px 60px -28px rgba(30, 20, 80, 0.45), 0 0 0 1px rgba(20, 20, 40, 0.08);
 }
 :root[data-theme='light'] .hero-art--sq img { border-radius: 50%; }
+:root[data-theme='light'] .badge--uv,
+:root[data-theme='light'] .tier-pill--pro,
+:root[data-theme='light'] .demo-banner { color: #4e3bc4; }
 :root[data-theme='light'] .sec-art,
 :root[data-theme='light'] img.tile-art,
 :root[data-theme='light'] .lock-art {
@@ -903,6 +906,7 @@ button.stat:hover { border-color: var(--line-3); transform: translateY(-2px); }
 .data-table th { color: var(--muted); font-weight: 500; font-size: 12.5px; }
 .data-table td:last-child, .data-table th:last-child { text-align: right; }
 .table-wrap { max-height: 320px; overflow: auto; }
+.table-wrap--flat { max-height: none; }
 
 .split-bar { display: flex; gap: 2px; height: 14px; border-radius: 6px; overflow: hidden; }
 .split-bar i { display: block; height: 100%; min-width: 2px; }

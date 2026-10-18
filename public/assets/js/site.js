@@ -619,11 +619,23 @@ if (document.readyState === 'complete') setTimeout(featuredPlanFirst, 50);
 else window.addEventListener('load', () => setTimeout(featuredPlanFirst, 50), { once: true });
 // Phones show the plans as a swipe row: start on the featured one.
 function featuredPlanFirst() {
+  swipeRowsFocusable();
   $$('.pricing--tiers').forEach((row) => {
     const featured = $('.is-featured', row);
     if (!featured || row.scrollWidth <= row.clientWidth) return;
     const delta = featured.getBoundingClientRect().left - row.getBoundingClientRect().left - (row.clientWidth - featured.offsetWidth) / 2;
     row.scrollLeft += delta;
+  });
+}
+// A swipe row or wide table with nothing focusable inside can't be scrolled from the keyboard,
+// so it becomes a tab stop itself.
+function swipeRowsFocusable() {
+  $$('.lab-grid, .pricing--tiers, #tools .bento, #how .steps, .table-wrap, .compare-wrap, .card--pad').forEach((row) => {
+    if (row.scrollWidth <= row.clientWidth || row.querySelector('a[href], button, input, select, textarea, [tabindex]')) return;
+    const head = row.closest('section')?.querySelector('h2');
+    row.setAttribute('tabindex', '0');
+    row.setAttribute('role', 'region');
+    if (head) row.setAttribute('aria-label', head.textContent.trim());
   });
 }
 getConfig().then(() => {
