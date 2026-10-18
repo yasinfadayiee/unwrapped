@@ -57,6 +57,11 @@ export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tie
   );
 }
 
+// A stand-alone upgrade card, for places with no locked list behind it.
+export function upsell(opts) {
+  return h('div', { class: 'lock-solo' }, lockCard(opts));
+}
+
 export function profileUrl(platform, item) {
   switch (platform) {
     case 'instagram':

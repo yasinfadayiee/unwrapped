@@ -14,6 +14,8 @@ export const TIERS = [
     features: [
       'Full lists on every platform — no 20-row limit',
       'The names of everyone who unfollowed you',
+      'Full WhatsApp & Telegram chat stats for every person',
+      'Spotify: your top 50 and a Wrapped for every year',
       'Search and CSV export of any list',
       'Search every chat and save conversations',
       'Deep insights for TikTok, X, Facebook & LinkedIn',

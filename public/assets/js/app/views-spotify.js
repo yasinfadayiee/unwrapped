@@ -1,6 +1,6 @@
 import { h } from '../lib/ui.js';
 import { fmtInt, dateShort } from '../lib/format.js';
-import { viewHead, stat, panel, insights } from './components.js';
+import { viewHead, stat, panel, insights, upsell } from './components.js';
 import { barChart, rankList } from './charts.js';
 import { t as tl } from '../lib/i18n.js';
 
@@ -42,7 +42,7 @@ function overview(ds, ctx) {
       panel({ title: tl('Top artists') }, rankList(s.topArtists, { limit: full ? 50 : 5, valueLabel: minutes })),
       panel({ title: tl('Top songs') }, rankList(s.topTracks, { limit: full ? 50 : 5, valueLabel: minutes, color: 'var(--c3)' })),
     ),
-    full ? null : h('p', { class: 'text-2' }, tl('Pro shows your top 50 artists and songs, every year’s Wrapped and your new discoveries.')),
+    full ? null : upsell({ title: tl('Unlock your full Spotify story'), text: tl('Your top 50 artists and songs, a Wrapped for every year and your new discoveries.'), onUpgrade: () => ctx.upgrade('spotify') }),
     months.length > 1 ? panel({ title: tl('Minutes per month') }, barChart(months, { title: tl('Minutes'), ariaLabel: tl('Minutes per month') })) : null,
     h(
       'div',
@@ -60,9 +60,11 @@ function yearsView(ds, ctx) {
     'div',
     { class: 'app-content' },
     viewHead(tl('Wrapped, every year'), tl('Your most played artist in each year on file.')),
-    panel(null, full ? rankList(s.yearTop.map((y) => ({ key: `${y.year} · ${y.key}`, count: y.count })), { limit: 30, valueLabel: minutes }) : h('p', { class: 'text-2' }, tl('Unlock Pro to see your number one artist for every year.'))),
+    // Free: the latest year as a taste; every earlier year is locked.
+    panel(null, rankList((full ? s.yearTop : s.yearTop.slice(-1)).map((y) => ({ key: `${y.year} · ${y.key}`, count: y.count })), { limit: 30, valueLabel: minutes })),
+    !full && s.yearTop.length > 1 ? upsell({ title: tl('{v0} more years of Wrapped', { v0: fmtInt(s.yearTop.length - 1) }), text: tl('Your top 50 artists and songs, a Wrapped for every year and your new discoveries.'), onUpgrade: () => ctx.upgrade('spotify') }) : null,
     s.discoveries.length
-      ? panel({ title: tl('New discoveries'), text: tl('Artists you first played in the last 90 days.') }, full ? rankList(s.discoveries, { valueLabel: minutes, color: 'var(--c2)' }) : h('p', { class: 'text-2' }, tl('{v0} new artists — unlock Pro to see them.', { v0: fmtInt(s.discoveries.length) })))
+      ? panel({ title: tl('New discoveries'), text: tl('Artists you first played in the last 90 days.') }, full ? rankList(s.discoveries, { valueLabel: minutes, color: 'var(--c2)' }) : upsell({ title: tl('{v0} new artists you discovered', { v0: fmtInt(s.discoveries.length) }), text: tl('Your top 50 artists and songs, a Wrapped for every year and your new discoveries.'), onUpgrade: () => ctx.upgrade('spotify') }))
       : null,
     s.topShows.length ? panel({ title: tl('Top podcasts') }, rankList(s.topShows, { limit: full ? 20 : 3, valueLabel: minutes, color: 'var(--c4)' })) : null,
   );

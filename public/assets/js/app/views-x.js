@@ -1,7 +1,7 @@
 import { h, icon } from '../lib/ui.js';
 import { fmtInt, dateShort, compact, hourLabel, monthLabel, yearsSince } from '../lib/format.js';
 import { tweetStats } from '../core/insights.js';
-import { viewHead, stat, panel, insights, emptyState, dataNote } from './components.js';
+import { viewHead, stat, panel, insights, emptyState, dataNote, upsell } from './components.js';
 import { relationshipViews, relationshipStats, networkPanel, relationshipInsights, exposurePanel, tagCloud } from './views-common.js';
 import { barChart, heatmapChart, rankList, splitBar } from './charts.js';
 import { wrappedView } from './views-wrapped.js';
@@ -185,7 +185,7 @@ function interactionsView(ds, ctx) {
   if (dm.unanswered?.length) {
     root.append(panel({ title: tl('DMs you never answered'), text: tl('They wrote, you never replied. Newest first.') }, h('div', { class: 'rows' }, dm.unanswered.slice(0, full ? 50 : 3).map((p) => h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, tl('{v0} messages', { v0: fmtInt(p.messages) })), h('span', null, tl('Wrote {v0}', { v0: dateShort(p.ts) }))), userLink(p.id))))));
   }
-  if (!full) root.append(h('p', { class: 'text-2' }, tl('Plus shows your full circle, every DM partner and every unanswered DM.')));
+  if (!full) root.append(upsell({ title: tl('Unlock your full circle'), text: tl('Plus shows your full circle, every DM partner and every unanswered DM.'), onUpgrade: () => ctx.upgrade('circle') }));
   return root;
 }
 

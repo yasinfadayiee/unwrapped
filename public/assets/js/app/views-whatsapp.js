@@ -1,6 +1,6 @@
 import { h } from '../lib/ui.js';
 import { fmtInt, dateShort } from '../lib/format.js';
-import { viewHead, stat, panel, insights } from './components.js';
+import { viewHead, stat, panel, insights, upsell } from './components.js';
 import { barChart, rankList, splitBar } from './charts.js';
 import { t as tl } from '../lib/i18n.js';
 
@@ -62,7 +62,7 @@ function overview(chat, ctx) {
       panel({ title: tl('Most used words') }, chat.topWords.length ? rankList(chat.topWords, { limit: full ? 20 : 5 }) : h('p', { class: 'text-2' }, tl('Not enough text yet.'))),
       panel({ title: tl('Favourite emojis') }, chat.topEmojis.length ? rankList(chat.topEmojis, { limit: full ? 12 : 5, color: 'var(--c2)' }) : h('p', { class: 'text-2' }, tl('No emojis in this chat.'))),
     ),
-    full ? null : h('p', { class: 'text-2' }, tl('Pro shows the full word and emoji rankings and a detailed card for every person.')),
+    full ? null : upsell({ title: tl('Unlock the whole chat'), text: tl('Full word and emoji rankings, a detailed card for every person and every chat you drop.'), onUpgrade: () => ctx.upgrade('chat') }),
   );
 }
 
@@ -89,16 +89,17 @@ function peopleView(chat, ctx) {
         p.topEmojis.length ? h('p', { class: 'text-2' }, `${tl('Top emojis')}: ${p.topEmojis.map((e) => e.key).join(' ')}`) : null,
       ),
     ),
-    !full && chat.people.length > 2 ? h('p', { class: 'text-2' }, tl('Unlock Pro to see all {v0} people.', { v0: fmtInt(chat.people.length) })) : null,
+    !full && chat.people.length > 2 ? upsell({ title: tl('{v0} more people in this chat', { v0: fmtInt(chat.people.length - 2) }), text: tl('See how every person writes: reply times, words, media and emojis.'), onUpgrade: () => ctx.upgrade('chat') }) : null,
   );
 }
 
-function chatsView(ds) {
+function chatsView(ds, ctx) {
   return h(
     'div',
     { class: 'app-content' },
     viewHead(tl('All chats'), tl('{v0} chats in what you dropped.', { v0: fmtInt(ds.chats.length) })),
-    panel(null, rankList(ds.chats.map((c) => ({ key: c.title, count: c.total })), { limit: 50 })),
+    panel(null, rankList(ds.chats.map((c) => ({ key: c.title, count: c.total })), { limit: ctx.pro || ctx.demo ? 50 : 3 })),
+    ctx.pro || ctx.demo || ds.chats.length <= 3 ? null : upsell({ title: tl('{v0} more chats', { v0: fmtInt(ds.chats.length - 3) }), text: tl('Full word and emoji rankings, a detailed card for every person and every chat you drop.'), onUpgrade: () => ctx.upgrade('chat') }),
   );
 }
 
@@ -108,6 +109,6 @@ export function whatsappViews(ds, ctx) {
     { id: 'overview', label: tl('Chat overview'), icon: 'home', render: () => overview(chat, ctx) },
     { id: 'people', label: tl('Person by person'), icon: 'users', count: chat.people.length, render: () => peopleView(chat, ctx) },
   ];
-  if (ds.chats.length > 1) views.push({ id: 'chats', label: tl('All chats'), icon: 'message', count: ds.chats.length, render: () => chatsView(ds) });
+  if (ds.chats.length > 1) views.push({ id: 'chats', label: tl('All chats'), icon: 'message', count: ds.chats.length, render: () => chatsView(ds, ctx) });
   return views;
 }
