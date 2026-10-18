@@ -54,6 +54,8 @@ export const TIERS = [
 export const PLANS = [
   { id: 'plus-month', tier: 'plus', cycle: 'month', name: 'Plus · 30 days', short: 'Monthly', priceUsd: 5, days: 30 },
   { id: 'plus-year', tier: 'plus', cycle: 'year', name: 'Plus · 12 months', short: 'Yearly', priceUsd: 29, days: 365 },
+  // A one-off week of Pro for people who won't subscribe: try everything once.
+  { id: 'pro-week', tier: 'pro', cycle: 'week', name: 'Pro · 7 days', short: 'One week', priceUsd: 3, days: 7 },
   { id: 'pro-month', tier: 'pro', cycle: 'month', name: 'Pro · 30 days', short: 'Monthly', priceUsd: 9, days: 30 },
   { id: 'pro-year', tier: 'pro', cycle: 'year', name: 'Pro · 12 months', short: 'Yearly', priceUsd: 49, days: 365, badge: 'Most popular' },
   { id: 'pro-life', tier: 'pro', cycle: 'life', name: 'Pro · Lifetime', short: 'Lifetime', priceUsd: 99, days: null, badge: 'Pay once' },

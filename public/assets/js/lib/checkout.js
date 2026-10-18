@@ -133,7 +133,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
     clear(tierBox);
     for (const t of tiers) {
       // Cheapest monthly equivalent, computed like the pricing cards (yearly ÷ 12).
-      const from = plans.filter((p) => p.tier === t.id && p.days).map((p) => (p.cycle === 'year' ? p.priceUsd / 12 : p.priceUsd)).sort((a, b) => a - b)[0];
+      const from = plans.filter((p) => p.tier === t.id && p.days && p.cycle !== 'week').map((p) => (p.cycle === 'year' ? p.priceUsd / 12 : p.priceUsd)).sort((a, b) => a - b)[0];
       const b = h(
         'button',
         { class: 'tier-opt', type: 'button', role: 'radio', 'aria-checked': String(t.id === tierId), disabled: !buyable(t) },

@@ -1587,4 +1587,5 @@ export default {
   "minutes on Spotify": "Spotify’da dakika",
   "Your year online across every export you dropped — as a card for your story.": "Yüklediğin tüm dışa aktarımlardan internetteki yılın — hikâyen için bir kart.",
   "Nothing dated in {v0} in these exports yet.": "Bu dışa aktarımlarda henüz {v0} tarihli bir şey yok.",
+  "One week": "Bir hafta",
 };

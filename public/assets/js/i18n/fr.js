@@ -1599,4 +1599,5 @@ export default {
   "minutes on Spotify": "minutes sur Spotify",
   "Your year online across every export you dropped — as a card for your story.": "Votre année en ligne à partir de tous vos exports — en carte pour votre story.",
   "Nothing dated in {v0} in these exports yet.": "Rien de daté en {v0} dans ces exports pour l’instant.",
+  "One week": "Une semaine",
 };
