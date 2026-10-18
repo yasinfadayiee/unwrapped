@@ -668,8 +668,9 @@ ul, ol { margin: 0; padding: 0; }
 @media (min-width: 860px) { .footer-grid { grid-template-columns: 1.4fr repeat(4, 1fr); } }
 @media (min-width: 560px) and (max-width: 859px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > :first-child { grid-column: 1 / -1; } }
 .footer-grid h4, .footer-grid .f-h { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 14px; }
-.footer-grid ul { list-style: none; display: grid; gap: 9px; }
-.footer-grid a { text-decoration: none; color: var(--text-2); font-size: 14.5px; }
+.footer-grid ul { list-style: none; display: grid; gap: 1px; }
+/* 25px tall touch targets (WCAG 2.5.8) with the same visual rhythm as before. */
+.footer-grid a { display: inline-block; padding: 4px 0; text-decoration: none; color: var(--text-2); font-size: 14.5px; }
 .footer-grid a:hover { color: var(--text); }
 .wordmark { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.06em; line-height: 0.8; font-size: clamp(64px, 17vw, 240px); margin-top: 56px; color: transparent; -webkit-text-stroke: 1px var(--line-3); user-select: none; text-align: center; white-space: nowrap; overflow: hidden; }
 .legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 30px; color: var(--muted); font-size: 13px; }
@@ -1305,7 +1306,7 @@ button.stat:hover { border-color: var(--line-3); transform: translateY(-2px); }
 .mobile-langs { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 16px; margin-top: 8px; border-top: 1px solid var(--line); }
 .mobile-nav .mobile-langs a { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--text-2); font-size: 14px; text-decoration: none; }
 .footer-langs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; color: var(--text-2); font-size: 13px; }
-.footer-langs a { color: inherit; text-decoration: none; }
+.footer-langs a { display: inline-block; padding: 5px 2px; color: inherit; text-decoration: none; }
 .footer-langs a:hover { color: var(--text); }
 @media (max-width: 860px) { .header-actions .lang-switch { display: none; } }
 
