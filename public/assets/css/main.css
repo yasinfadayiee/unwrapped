@@ -898,6 +898,7 @@ button.stat:hover { border-color: var(--line-3); transform: translateY(-2px); }
 .chart .hit { fill: transparent; cursor: default; }
 .chart .hit:focus { outline: none; }
 .chart .hit:focus + .bar, .chart .hit:hover + .bar { filter: brightness(1.3); }
+.chart .hit:focus-visible { fill: rgba(var(--fg-rgb), 0.06); stroke: var(--signal); stroke-width: 1.5; }
 .tooltip { position: absolute; z-index: 5; pointer-events: none; padding: 9px 12px; border-radius: 12px; background: var(--surface-3); border: 1px solid var(--line-2); box-shadow: 0 16px 40px -12px rgba(var(--shade-rgb), 0.8); font-size: 12.5px; white-space: nowrap; transform: translate(-50%, calc(-100% - 12px)); opacity: 0; transition: opacity 0.12s; }
 .tooltip.is-on { opacity: 1; }
 .tooltip b { display: block; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
