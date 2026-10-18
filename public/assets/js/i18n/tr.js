@@ -1588,4 +1588,11 @@ export default {
   "Your year online across every export you dropped — as a card for your story.": "Yüklediğin tüm dışa aktarımlardan internetteki yılın — hikâyen için bir kart.",
   "Nothing dated in {v0} in these exports yet.": "Bu dışa aktarımlarda henüz {v0} tarihli bir şey yok.",
   "One week": "Bir hafta",
+  "Colour theme": "Renk teması",
+  "Lime": "Limon",
+  "Ocean": "Okyanus",
+  "Sunset": "Gün batımı",
+  "Rose": "Gül",
+  "Mint": "Nane",
+  "Light": "Açık",
 };

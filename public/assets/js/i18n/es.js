@@ -1588,4 +1588,11 @@ export default {
   "Your year online across every export you dropped — as a card for your story.": "Tu año online con todas las exportaciones que subiste, en una tarjeta para tu historia.",
   "Nothing dated in {v0} in these exports yet.": "Aún no hay nada fechado en {v0} en estas exportaciones.",
   "One week": "Una semana",
+  "Colour theme": "Tema de color",
+  "Lime": "Lima",
+  "Ocean": "Océano",
+  "Sunset": "Atardecer",
+  "Rose": "Rosa",
+  "Mint": "Menta",
+  "Light": "Claro",
 };

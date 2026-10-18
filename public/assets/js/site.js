@@ -23,6 +23,58 @@ function header() {
   $$('.mobile-nav a').forEach((a) => a.addEventListener('click', () => document.body.classList.remove('menu-open')));
 }
 
+/* ---------- colour themes ---------- */
+// [id, label, swatch background, browser bar colour]; theme-init.js applies the saved one early.
+const THEMES = [
+  ['lime', 'Lime', 'linear-gradient(135deg,#d7ff3a 50%,#07070b 50%)', '#07070b'],
+  ['ocean', 'Ocean', 'linear-gradient(135deg,#43d9ff 50%,#050a12 50%)', '#050a12'],
+  ['sunset', 'Sunset', 'linear-gradient(135deg,#ffb444 50%,#0d0806 50%)', '#0d0806'],
+  ['rose', 'Rose', 'linear-gradient(135deg,#ff7ec4 50%,#0c060b 50%)', '#0c060b'],
+  ['mint', 'Mint', 'linear-gradient(135deg,#4dffb8 50%,#040b09 50%)', '#040b09'],
+  ['light', 'Light', 'linear-gradient(135deg,#5b3df5 50%,#f5f5f8 50%)', '#f5f5f8'],
+];
+
+function applyTheme(id) {
+  const theme = THEMES.find((x) => x[0] === id) || THEMES[0];
+  if (theme[0] === 'lime') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', theme[0]);
+  $('meta[name="theme-color"]')?.setAttribute('content', theme[3]);
+  try {
+    localStorage.setItem('unw.theme', theme[0]);
+  } catch {}
+}
+
+function themePicker() {
+  const btn = $('.theme-btn');
+  if (!btn) return;
+  const current = () => document.documentElement.getAttribute('data-theme') || 'lime';
+  $('meta[name="theme-color"]')?.setAttribute('content', (THEMES.find((x) => x[0] === current()) || THEMES[0])[3]);
+  const menu = h('div', { class: 'theme-menu', role: 'radiogroup', 'aria-label': t('Colour theme'), hidden: true });
+  const draw = () => {
+    clear(menu);
+    for (const [id, label, swatch] of THEMES) {
+      const b = h('button', { class: 'theme-sw', type: 'button', role: 'radio', 'aria-checked': String(id === current()) }, h('i', { style: { background: swatch } }), t(label));
+      b.addEventListener('click', () => {
+        applyTheme(id);
+        draw();
+      });
+      menu.append(b);
+    }
+  };
+  draw();
+  btn.after(menu);
+  const toggle = (open) => {
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+  };
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggle(menu.hidden);
+  });
+  document.addEventListener('click', (e) => !menu.contains(e.target) && toggle(false));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && toggle(false));
+}
+
 /* ---------- reveal + spotlight ---------- */
 function reveals() {
   const items = $$('.reveal');
@@ -496,6 +548,7 @@ function localizedNotFound() {
 }
 
 header();
+themePicker();
 localizedNotFound();
 inAppBrowserNotice();
 supportContact();

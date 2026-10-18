@@ -15,7 +15,8 @@
 <link rel="alternate" hreflang="de" href="https://myunwrapped.com/de/">
 <link rel="alternate" hreflang="x-default" href="https://myunwrapped.com/">
 <meta name="theme-color" content="#07070b">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="dark light">
+<script src="/assets/js/theme-init.js?v=mvdsrnbd"></script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Unwrapped">
 <meta property="og:locale" content="en_US">
@@ -35,8 +36,8 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="preload" href="/assets/fonts/bricolage-wght.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-wght.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/css/main.css?v=mvds8r9z">
-<link rel="modulepreload" href="/assets/js/site.js?v=mvds8r9z">
+<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/css/main.css?v=mvdsrnbd">
+<link rel="modulepreload" href="/assets/js/site.js?v=mvdsrnbd">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Unwrapped","url":"https://myunwrapped.com/","inLanguage":"en","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (runs in the browser)","description":"Find who doesn't follow you back and who unfollowed you on Instagram, see your real TikTok screen time and what advertisers know about you — from your official data export. No password, nothing uploaded.","offers":{"@type":"AggregateOffer","priceCurrency":"USD","lowPrice":"0","highPrice":"119"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Unwrapped","url":"https://myunwrapped.com/","logo":"https://myunwrapped.com/assets/img/icon-512.png"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Unwrapped","url":"https://myunwrapped.com/","inLanguage":"en"}</script>
@@ -91,7 +92,8 @@
     <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
     <symbol id="i-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 8h7M12 8v9M8 11.5c1.2.6 2.5.9 4 .9s2.8-.3 4-.9"/></symbol>
-    <symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.7 1.8-1.7H17a4 4 0 0 0 4-4c0-4.6-4-8.2-9-8.2z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.2" r="1.2"/><circle cx="15" cy="7.6" r="1.2"/></symbol>
+    <symbol id="i-music"viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol>
     <symbol id="i-message"viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5z"/></symbol>
     <symbol id="i-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 9h14M5 15h14M10 4 8 20M16 4l-2 16"/></symbol>
     <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
@@ -128,6 +130,7 @@
       <a href="/pricing/" data-nav="pricing">Pricing</a>
     </nav>
     <div class="header-actions">
+      <div class="theme-pick"><button class="icon-btn theme-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Colour theme" title="Colour theme"><svg aria-hidden="true"><use href="#i-palette"/></svg></button></div>
       <details class="lang-switch"><summary aria-label="Language: English"><svg aria-hidden="true"><use href="#i-globe"/></svg>EN</summary><div class="lang-menu"><a href="/" hreflang="en" lang="en" aria-current="true">English</a><a href="/es/" hreflang="es" lang="es">Español</a><a href="/pt/" hreflang="pt-BR" lang="pt-BR">Português</a><a href="/tr/" hreflang="tr" lang="tr">Türkçe</a><a href="/fr/" hreflang="fr" lang="fr">Français</a><a href="/de/" hreflang="de" lang="de">Deutsch</a></div></details>
       <a class="btn btn--ghost btn--sm get-pro" href="/pricing/">Plans</a>
       <a class="badge pro-pill" href="/account/" style="text-decoration:none"><svg aria-hidden="true" style="width:14px;height:14px"><use href="#i-check"/></svg><span data-tier-name>Pro</span></a>
@@ -142,6 +145,9 @@
   <a href="/x/"><img class="ico3d mnav-ico" src="/assets/img/icons/x.webp" width="64" height="64" alt="X icon" aria-hidden="true" loading="lazy" decoding="async">X (Twitter)</a>
   <a href="/facebook/"><img class="ico3d mnav-ico" src="/assets/img/icons/facebook.webp" width="64" height="64" alt="Facebook icon" aria-hidden="true" loading="lazy" decoding="async">Facebook</a>
   <a href="/linkedin/"><img class="ico3d mnav-ico" src="/assets/img/icons/linkedin.webp" width="64" height="64" alt="Linkedin icon" aria-hidden="true" loading="lazy" decoding="async">LinkedIn</a>
+  <a href="/whatsapp-chat-analyzer/"><img class="ico3d mnav-ico" src="/assets/img/icons/message.webp" width="64" height="64" alt="Message icon" aria-hidden="true" loading="lazy" decoding="async">WhatsApp</a>
+  <a href="/telegram-chat-analyzer/"><img class="ico3d mnav-ico" src="/assets/img/icons/orbit.webp" width="64" height="64" alt="Orbit icon" aria-hidden="true" loading="lazy" decoding="async">Telegram</a>
+  <a href="/spotify-stats/"><img class="ico3d mnav-ico" src="/assets/img/icons/play.webp" width="64" height="64" alt="Play icon" aria-hidden="true" loading="lazy" decoding="async">Spotify</a>
   <a href="/tools/"><img class="ico3d mnav-ico" src="/assets/img/icons/report.webp" width="64" height="64" alt="Report icon" aria-hidden="true" loading="lazy" decoding="async">All tools</a>
   <a href="/guides/"><img class="ico3d mnav-ico" src="/assets/img/icons/search.webp" width="64" height="64" alt="Search icon" aria-hidden="true" loading="lazy" decoding="async">Guides</a>
   <a href="/pricing/"><img class="ico3d mnav-ico" src="/assets/img/icons/trend.webp" width="64" height="64" alt="Trend icon" aria-hidden="true" loading="lazy" decoding="async">Pricing</a>
@@ -156,12 +162,13 @@
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="container">
     <div class="hero-top">
-      <a class="chip chip--link fade-in" style="--d:.05s" href="/instagram-account-age/"><span class="badge">New</span>Your digital life timeline &amp; a personal action plan<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="chip chip--link fade-in" style="--d:.05s" href="/tools/"><span class="badge">New</span>New: WhatsApp, Telegram & Spotify — plus “Who cares more?”<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <h1 class="display hero-title">
         <span class="line"><span>Who unfollowed you?</span></span>
         <span class="line"><span><span class="serif grad">Find out privately.</span></span></span>
       </h1>
-      <p class="hero-sub">See who <b>doesn’t follow you back</b>, who <b>quietly unfollowed you</b>, who <b>leaves you on read</b> and how real your audience is — all from your official data export. <b>No password. Nothing uploaded. Ever.</b></p>
+      <p class="hero-sub">Every app lets you download your own data. Unwrapped turns that file into clear answers: <b>who unfollowed you</b>, <b>who you really talk to</b>, your <b>Spotify Wrapped</b> and <b>what advertisers know</b>. <b>No password. Nothing uploaded. Ever.</b></p>
+      <nav class="works-with fade-in" style="--d:.2s" aria-label="Works with"><span>Works with</span><a href="/instagram/">Instagram</a><a href="/tiktok/">TikTok</a><a href="/x/">X</a><a href="/facebook/">Facebook</a><a href="/linkedin/">LinkedIn</a><a href="/threads-unfollowers/">Threads</a><a href="/whatsapp-chat-analyzer/">WhatsApp</a><a href="/telegram-chat-analyzer/">Telegram</a><a href="/spotify-stats/">Spotify</a></nav>
     </div>
     <div class="hero-art fade-in" style="--d:.35s" aria-hidden="true" data-hero-video="/assets/video/hero-gift.mp4"><img src="/assets/img/art/hero-gift-960.webp" srcset="/assets/img/art/hero-gift-640.webp 640w, /assets/img/art/hero-gift-960.webp 960w, /assets/img/art/hero-gift-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 720px" width="1600" height="960" alt="Hero gift illustration" aria-hidden="true" decoding="async" fetchpriority="high"></div>
     <div style="margin-top:40px">
@@ -213,6 +220,24 @@
     <div class="proof-item reveal" style="--d:.06s"><b>0&nbsp;bytes</b><span>of your data ever uploaded</span></div>
     <div class="proof-item reveal" style="--d:.12s"><b>30+</b><span>tools, 7 of them in the Pro Lab</span></div>
     <div class="proof-item reveal" style="--d:.18s"><b>150+</b><span>coins accepted at checkout</span></div>
+  </div>
+</section>
+
+<section class="section section--tight" id="what">
+  <div class="container">
+    <div class="sec-head sec-head--center reveal">
+      <span class="eyebrow">What you can do</span>
+      <h2 class="h2">One file in. <span class="serif grad">Answers out.</span></h2>
+      <p class="lead">Download your data from any of 9 platforms, drop it here and get clear answers in seconds — without a password and without uploading anything.</p>
+    </div>
+    <div class="tools-grid">
+      <a class="card tool-tile reveal" style="--d:0.00s" href="/instagram/"><div class="tool-top"><img class="ico3d" src="/assets/img/icons/ghost.webp" width="64" height="64" alt="Ghost icon" aria-hidden="true" loading="lazy" decoding="async"><span class="tier-pill tier-pill--free">Free to start</span></div><b>Find who unfollowed you</b><p>Who doesn’t follow back, who left and who never accepted — on Instagram, TikTok, X, Threads and Facebook.</p></a>
+      <a class="card tool-tile reveal" style="--d:0.05s" href="/whatsapp-chat-analyzer/"><div class="tool-top"><img class="ico3d" src="/assets/img/icons/message.webp" width="64" height="64" alt="Message icon" aria-hidden="true" loading="lazy" decoding="async"><span class="tier-pill tier-pill--free">Free to start</span></div><b>Analyze any chat</b><p>WhatsApp and Telegram: who texts more, reply times, active hours, words and emojis.</p></a>
+      <a class="card tool-tile reveal" style="--d:0.10s" href="/whatsapp-chat-analyzer/"><div class="tool-top"><img class="ico3d" src="/assets/img/icons/heart.webp" width="64" height="64" alt="Heart icon" aria-hidden="true" loading="lazy" decoding="async"><span class="tier-pill tier-pill--free">Free to start</span></div><b>Who cares more?</b><p>An effort score for every one-to-one chat — and your closest people across all apps.</p></a>
+      <a class="card tool-tile reveal" style="--d:0.15s" href="/spotify-stats/"><div class="tool-top"><img class="ico3d" src="/assets/img/icons/trend.webp" width="64" height="64" alt="Trend icon" aria-hidden="true" loading="lazy" decoding="async"><span class="tier-pill tier-pill--free">Free to start</span></div><b>Your Wrapped, any day</b><p>Spotify top artists and songs, every year’s number one, and shareable cards.</p></a>
+      <a class="card tool-tile reveal" style="--d:0.20s" href="/instagram-audit/"><div class="tool-top"><img class="ico3d" src="/assets/img/icons/target.webp" width="64" height="64" alt="Target icon" aria-hidden="true" loading="lazy" decoding="async"><span class="tier-pill tier-pill--free">Free to start</span></div><b>See what apps know</b><p>Advertisers, interests and logins from your own data — and how to switch them off.</p></a>
+      <a class="card tool-tile reveal" style="--d:0.25s" href="/tools/"><div class="tool-top"><img class="ico3d" src="/assets/img/icons/calendar.webp" width="64" height="64" alt="Calendar icon" aria-hidden="true" loading="lazy" decoding="async"><span class="tier-pill tier-pill--free">Free to start</span></div><b>Track it over time</b><p>Drop a new export each month: who left, who came back and how you grew.</p></a>
+    </div>
   </div>
 </section>
 
@@ -714,6 +739,9 @@
           <li><a href="/x/">X archive explorer</a></li>
           <li><a href="/facebook/">Facebook unfriend tracker</a></li>
           <li><a href="/linkedin/">LinkedIn network map</a></li>
+          <li><a href="/whatsapp-chat-analyzer/">WhatsApp</a></li>
+          <li><a href="/telegram-chat-analyzer/">Telegram</a></li>
+          <li><a href="/spotify-stats/">Spotify</a></li>
         </ul>
       </div>
       <div>
@@ -763,6 +791,6 @@
     </div>
   </div>
 </footer>
-<script type="module" src="/assets/js/site.js?v=mvds8r9z"></script>
+<script type="module" src="/assets/js/site.js?v=mvdsrnbd"></script>
 </body>
 </html>
