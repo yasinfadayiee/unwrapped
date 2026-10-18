@@ -20,8 +20,8 @@ function fold(line) {
   return out.join('\r\n');
 }
 
-// An all-day event `days` from today with a 9:00 alert.
-export function icsReminder({ title, description, url, days = 14, now = new Date() }) {
+// An all-day event `days` from today with a 9:00 alert; `monthly` repeats it every month.
+export function icsReminder({ title, description, url, days = 14, monthly = false, now = new Date() }) {
   const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() + days);
   const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1);
   const uid = `${stamp(now)}-${Math.random().toString(36).slice(2, 10)}@unwrapped`;
@@ -35,6 +35,7 @@ export function icsReminder({ title, description, url, days = 14, now = new Date
     `DTSTAMP:${stamp(now)}`,
     `DTSTART;VALUE=DATE:${ymd(start)}`,
     `DTEND;VALUE=DATE:${ymd(end)}`,
+    monthly ? 'RRULE:FREQ=MONTHLY' : null,
     `SUMMARY:${esc(title)}`,
     `DESCRIPTION:${esc(description)}`,
     url ? `URL:${url}` : null,

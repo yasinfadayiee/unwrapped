@@ -221,14 +221,15 @@ export function userList({ platform, items, ctx, subFor, exportName = 'list', ke
 
 // Saves a calendar reminder to download a fresh export, so the next one can be
 // compared with today's snapshot.
-export function reminderButton(ds, { days = 14, label = tl('Remind me in 2 weeks') } = {}) {
+export function reminderButton(ds, { days = 14, monthly = false, label = monthly ? tl('Monthly check-up') : tl('Remind me in 2 weeks') } = {}) {
   const btn = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('calendar'), label);
   btn.addEventListener('click', () => {
     const ics = icsReminder({
       title: tl('Download a fresh {v0} export', { v0: ds.label }),
       description: tl('Request your {v0} data again and drop it on {v1}. Unwrapped compares it with your snapshot from {v2} and shows exactly who unfollowed you.', { v0: ds.label, v1: location.origin, v2: dateShort(ds.exportedAt) }),
       url: `${location.origin}/#how`,
-      days,
+      days: monthly ? 30 : days,
+      monthly,
     });
     downloadBlob(new Blob([ics], { type: 'text/calendar' }), 'unwrapped-reminder.ics');
     toast(tl('Reminder saved — open it to add it to your calendar'), { iconName: 'calendar', timeout: 4200 });

@@ -147,7 +147,7 @@ export function unfollowersView(ds, ctx) {
   const snaps = ctx.snapshots || [];
   const fb = ds.platform === 'facebook';
   const leftLabel = fb ? tl('Unfriended you') : tl('Unfollowed you');
-  root.append(viewHead(fb ? tl('Who unfriended you') : tl('Who unfollowed you'), tl('Every export you analyze is saved as a private snapshot in this browser. Comparing snapshots shows exactly who left — no login, no tracking.'), reminderButton(ds)));
+  root.append(viewHead(fb ? tl('Who unfriended you') : tl('Who unfollowed you'), tl('Every export you analyze is saved as a private snapshot in this browser. Comparing snapshots shows exactly who left — no login, no tracking.'), reminderButton(ds), reminderButton(ds, { monthly: true })));
 
   if (snaps.length < 2) {
     root.append(

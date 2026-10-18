@@ -99,6 +99,54 @@ export function drawChatCard(chat, effort, { watermark = true } = {}) {
   return c;
 }
 
+// "My year" card: a big year and up to six lines of numbers.
+export function drawYearCard(year, lines, { watermark = true } = {}) {
+  const c = document.createElement('canvas');
+  c.width = W;
+  c.height = H;
+  const x = c.getContext('2d');
+  const g = x.createLinearGradient(0, 0, W, H);
+  g.addColorStop(0, '#0b1f3a');
+  g.addColorStop(0.6, '#0d0d14');
+  g.addColorStop(1, '#3a0b2b');
+  x.fillStyle = g;
+  x.fillRect(0, 0, W, H);
+  x.fillStyle = '#c9ff3c';
+  x.font = '700 34px Inter, system-ui, sans-serif';
+  x.fillText(tl('MY YEAR ONLINE'), 80, 120);
+  x.fillStyle = '#fff';
+  x.font = '900 220px Inter, system-ui, sans-serif';
+  x.fillText(String(year), 70, 330);
+  lines.slice(0, 6).forEach(([big, small], i) => {
+    const cy = 420 + i * 135;
+    x.fillStyle = 'rgba(255,255,255,.06)';
+    x.beginPath();
+    x.roundRect(80, cy, W - 160, 115, 22);
+    x.fill();
+    x.fillStyle = '#fff';
+    fit(x, big, 330, 64);
+    x.fillText(big, 112, cy + 78);
+    x.fillStyle = 'rgba(255,255,255,.7)';
+    fit(x, small, W - 160 - 420, 34, 500);
+    x.fillText(small, 470, cy + 72);
+  });
+  x.fillStyle = 'rgba(255,255,255,.55)';
+  x.font = '600 30px Inter, system-ui, sans-serif';
+  x.fillText('myunwrapped.com', 80, H - 70);
+  if (watermark) {
+    x.save();
+    x.translate(W / 2, H / 2 + 120);
+    x.rotate(-0.42);
+    x.fillStyle = 'rgba(255,255,255,.09)';
+    x.font = '900 120px Inter, system-ui, sans-serif';
+    x.textAlign = 'center';
+    x.fillText('UNWRAPPED', 0, 0);
+    x.fillText('FREE PREVIEW', 0, 150);
+    x.restore();
+  }
+  return c;
+}
+
 export function downloadCanvas(canvas, name) {
   canvas.toBlob((blob) => {
     const a = document.createElement('a');
