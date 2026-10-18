@@ -159,6 +159,23 @@
   --uv: #7a5cff; --uv-rgb: 122, 92, 255; --uv-glow: rgba(122, 92, 255, 0.25);
   --c1: #5b3df5; --grid: #e2e2ea; --grad-mid: #e0567a;
 }
+/* The 3D art is rendered on black and fades out into a dark page. On the light theme
+   that fade would leave a smudge, so the art sits in a crisp dark frame instead. */
+:root[data-theme='light'] .hero-art img,
+:root[data-theme='light'] .hero-video {
+  -webkit-mask-image: none; mask-image: none;
+  border-radius: 28px; background: #07070b;
+  box-shadow: 0 30px 60px -28px rgba(30, 20, 80, 0.45), 0 0 0 1px rgba(20, 20, 40, 0.08);
+}
+:root[data-theme='light'] .hero-art--sq img { border-radius: 50%; }
+:root[data-theme='light'] .sec-art,
+:root[data-theme='light'] .tile-art,
+:root[data-theme='light'] .lock-art {
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 63%, transparent 64.5%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 63%, transparent 64.5%);
+  filter: drop-shadow(0 14px 22px rgba(30, 20, 80, 0.28));
+  background: radial-gradient(circle, #07070b 60%, transparent 65%);
+}
 :root[data-theme='light'] .lock-card { background: linear-gradient(180deg, rgba(245, 245, 248, 0) 0%, rgba(245, 245, 248, 0.88) 35%, rgba(245, 245, 248, 0.98) 100%); }
 
 /* Home: the platforms we read, right under the headline */
