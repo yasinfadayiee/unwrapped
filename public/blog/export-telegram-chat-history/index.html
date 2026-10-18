@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How to export Telegram chat history (JSON or HTML) · 2026 guide</title>
+<meta name="description" content="Export one Telegram chat or your whole account with Telegram Desktop: JSON vs HTML, what to untick to keep it small, why it isn't on your phone, and what you…">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://myunwrapped.com/blog/export-telegram-chat-history/">
+
+<meta name="theme-color" content="#07070b">
+<meta name="color-scheme" content="dark light">
+<script src="/assets/js/theme-init.js?v=mveef9ql"></script>
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-18">
+<meta property="article:modified_time" content="2026-10-18">
+<meta property="og:site_name" content="Unwrapped">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How to export Telegram chat history (JSON or HTML) · 2026 guide">
+<meta property="og:description" content="Export one Telegram chat or your whole account with Telegram Desktop: JSON vs HTML, what to untick to keep it small, why it isn't on your phone, and what you…">
+<meta property="og:url" content="https://myunwrapped.com/blog/export-telegram-chat-history/">
+<meta property="og:image" content="https://myunwrapped.com/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to export Telegram chat history (JSON or HTML) · 2026 guide">
+<meta name="twitter:description" content="Export one Telegram chat or your whole account with Telegram Desktop: JSON vs HTML, what to untick to keep it small, why it isn't on your phone, and what you…">
+<meta name="twitter:image" content="https://myunwrapped.com/assets/img/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" href="/assets/fonts/bricolage-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/css/main.css?v=mveef9ql">
+<link rel="modulepreload" href="/assets/js/site.js?v=mveef9ql">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Unwrapped","item":"https://myunwrapped.com/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://myunwrapped.com/blog/"},{"@type":"ListItem","position":3,"name":"How to export your Telegram chat history","item":"https://myunwrapped.com/blog/export-telegram-chat-history/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to export your Telegram chat history","description":"Export one Telegram chat or your whole account with Telegram Desktop: JSON vs HTML, what to untick to keep it small, why it isn't on your phone, and what you can do with the file.","datePublished":"2026-10-18","dateModified":"2026-10-18","mainEntityOfPage":"https://myunwrapped.com/blog/export-telegram-chat-history/","image":"https://myunwrapped.com/assets/img/og.png","author":{"@type":"Organization","name":"Unwrapped","url":"https://myunwrapped.com/"},"publisher":{"@type":"Organization","name":"Unwrapped","logo":{"@type":"ImageObject","url":"https://myunwrapped.com/assets/img/icon-512.png"}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does Telegram notify the other person when I export a chat?","acceptedAnswer":{"@type":"Answer","text":"No. Exporting only saves a copy on your computer. Nobody in the chat is notified."}},{"@type":"Question","name":"Where does Telegram save the export?","acceptedAnswer":{"@type":"Answer","text":"By default in your Downloads folder, under Telegram Desktop, in a folder named ChatExport with the date. You can change the location before you start."}},{"@type":"Question","name":"Can I export a channel or a group I’m not an admin of?","acceptedAnswer":{"@type":"Answer","text":"Usually yes, as long as you can see the messages. Groups and channels with content protection turned on block saving and exporting."}},{"@type":"Question","name":"Why is my export so slow?","acceptedAnswer":{"@type":"Answer","text":"Media makes exports large. Untick photos, videos, voice messages and files, and the text export of even a big chat finishes quickly."}}]}</script>
+</head>
+<body class="">
+<a class="skip-link" href="#main">Skip to content</a>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <symbol id="i-logo" viewBox="0 0 32 32"><defs><linearGradient id="lgU" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8f7dff"/><stop offset="1" stop-color="#d7ff3a"/></linearGradient></defs><rect x="1.5" y="1.5" width="29" height="29" rx="8.5" fill="#0f0f16" stroke="rgba(255,255,255,.14)"/><path d="M10 8.5v8.5a6 6 0 0 0 12 0V8.5" fill="none" stroke="url(#lgU)" stroke-width="3.6" stroke-linecap="round"/><circle cx="16" cy="8.4" r="2.3" fill="#d7ff3a"/></symbol>
+  <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <symbol id="i-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="14" r="1.2"/><circle cx="15" cy="14" r="1.2"/><path d="M2 13v3M22 13v3"/></symbol>
+    <symbol id="i-report" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9 17v-3M12 17v-6M15 17v-2"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 7 7 17M7 7l10 10"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M8 3h8l-1 6 3 4H6l3-4-1-6z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-user-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="8" r="4"/><path d="M3 21a7 7 0 0 1 14 0M17 11h5"/></symbol>
+    <symbol id="i-user-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="8" r="4"/><path d="M3 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></symbol>
+    <symbol id="i-ghost" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-1.8-2.3 1.8-2.4-1.8-2.4 1.8-2.3-1.8L5 21z"/><circle cx="9.5" cy="10.5" r="1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="10.5" r="1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h5l1.5 3h5L16 13h5"/><path d="M5.5 5h13L21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6l2.5-8z"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7-4.4-9-9a4.8 4.8 0 0 1 9-3 4.8 4.8 0 0 1 9 3c-2 4.6-9 9-9 9z"/></symbol>
+    <symbol id="i-fingerprint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 11v3a6 6 0 0 1-1.5 4"/><path d="M8 12a4 4 0 0 1 8 0v1.5"/><path d="M5.5 15.5A9 9 0 0 1 5 12a7 7 0 0 1 14 0c0 1.2-.1 2.4-.4 3.5"/><path d="M15.5 19c.5-1 .9-2 1.1-3"/><path d="M7.5 19.5a9 9 0 0 0 1-2"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21.5a7 7 0 0 1-7-7c0-4.5 4-7 5-12 3 2.5 4 5 4 7.5 1-.5 2-2 2.3-3.3C18 8.3 19 11 19 14.5a7 7 0 0 1-7 7z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 4v16M17 4v16M3 9h4M17 9h4M3 15h4M17 15h4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+    <symbol id="i-device" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3 11v2a2 2 0 0 0 2 2h2l7 5V4L7 9H5a2 2 0 0 0-2 2z"/><path d="M18 8.5a5 5 0 0 1 0 7"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="15" r="4.5"/><path d="m11.5 11.5 8-8M17 6l2.5 2.5M15 8l2 2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v6c0 4.5 3.2 8 7.5 9 4.3-1 7.5-4.5 7.5-9V6L12 3z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17.5v.01"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 8h7M12 8v9M8 11.5c1.2.6 2.5.9 4 .9s2.8-.3 4-.9"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.7 1.8-1.7H17a4 4 0 0 0 4-4c0-4.6-4-8.2-9-8.2z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.2" r="1.2"/><circle cx="15" cy="7.6" r="1.2"/></symbol>
+    <symbol id="i-music"viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol>
+    <symbol id="i-message"viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5z"/></symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 9h14M5 15h14M10 4 8 20M16 4l-2 16"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 15l-3-3 3-5c2-3 6-5 11-4 1 5-1 9-4 11l-5 3-2-2z"/><circle cx="15" cy="9" r="1.5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M21 3 3 10.5l7 3 3 7L21 3z"/><path d="m10 13.5 4-4"/></symbol>
+    <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="currentColor"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+<symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="m4 18 5.5-5 4 3.5 2.5-2 4 3.5"/></symbol>
+<symbol id="i-arrow"viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.5-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5z"/></symbol>
+    <symbol id="i-orbit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.5"/><circle cx="20" cy="9.6" r="1.3" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8M7.5 5.5l9 5"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5v-12z"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-tiktok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.5 2.5 4.5 5 4.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 4h4.5L20 20h-4.5L4 4z"/><path d="M20 4l-6.6 7.5M4 20l6.6-7.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M13 21v-7.5h2.5l.4-3H13V8.8c0-.9.3-1.4 1.5-1.4H16V4.8a18 18 0 0 0-2.2-.1c-2.2 0-3.8 1.3-3.8 3.8v2h-2.5v3H10V21"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M8 10.5V17M8 7.2v.1M12 17v-6.5M12 13.5a2.5 2.5 0 0 1 5 0V17"/></symbol>
+    <symbol id="i-threads" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16.5 11c-.4-2.7-2.2-4-4.5-4-3 0-5 2.2-5 5s2 5 5 5c2.4 0 4.1-1.3 4.5-3.6"/><path d="M16.5 11c0 2.2.8 3.4 2.1 3.4 1.4 0 2.4-1.3 2.4-3.4A9 9 0 1 0 15.5 20.3"/></symbol>
+  </g>
+</svg>
+
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/" aria-label="Unwrapped — home"><svg aria-hidden="true"><use href="#i-logo"/></svg>Unwrapped</a>
+    <nav class="nav" aria-label="Main">
+      <a href="/instagram/" data-nav="instagram">Instagram</a>
+      <a href="/tiktok/" data-nav="tiktok">TikTok</a>
+      <a href="/x/" data-nav="x">X</a>
+      <a href="/tools/" data-nav="tools">Tools <span class="nav-new">New</span></a>
+      <a href="/guides/" data-nav="guides">Guides</a>
+      <a href="/pricing/" data-nav="pricing">Pricing</a>
+    </nav>
+    <div class="header-actions">
+      <div class="theme-pick"><button class="icon-btn theme-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Colour theme" title="Colour theme"><svg aria-hidden="true"><use href="#i-palette"/></svg></button></div>
+      <details class="lang-switch"><summary aria-label="Language: English"><svg aria-hidden="true"><use href="#i-globe"/></svg>EN</summary><div class="lang-menu"><a href="/blog/export-telegram-chat-history/" hreflang="en" lang="en" aria-current="true">English</a><a href="/es/" hreflang="es" lang="es">Español</a><a href="/pt/" hreflang="pt-BR" lang="pt-BR">Português</a><a href="/tr/" hreflang="tr" lang="tr">Türkçe</a><a href="/fr/" hreflang="fr" lang="fr">Français</a><a href="/de/" hreflang="de" lang="de">Deutsch</a></div></details>
+      <a class="btn btn--ghost btn--sm get-pro" href="/pricing/">Plans</a>
+      <a class="badge pro-pill" href="/account/" style="text-decoration:none"><svg aria-hidden="true" style="width:14px;height:14px"><use href="#i-check"/></svg><span data-tier-name>Pro</span></a>
+      <a class="btn btn--primary btn--sm" href="/#start">Open the app</a>
+      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-nav" aria-label="Mobile">
+  <a href="/instagram/"><img class="ico3d mnav-ico" src="/assets/img/icons/instagram.webp" width="64" height="64" alt="Instagram icon" aria-hidden="true" loading="lazy" decoding="async">Instagram</a>
+  <a href="/tiktok/"><img class="ico3d mnav-ico" src="/assets/img/icons/tiktok.webp" width="64" height="64" alt="Tiktok icon" aria-hidden="true" loading="lazy" decoding="async">TikTok</a>
+  <a href="/x/"><img class="ico3d mnav-ico" src="/assets/img/icons/x.webp" width="64" height="64" alt="X icon" aria-hidden="true" loading="lazy" decoding="async">X (Twitter)</a>
+  <a href="/facebook/"><img class="ico3d mnav-ico" src="/assets/img/icons/facebook.webp" width="64" height="64" alt="Facebook icon" aria-hidden="true" loading="lazy" decoding="async">Facebook</a>
+  <a href="/linkedin/"><img class="ico3d mnav-ico" src="/assets/img/icons/linkedin.webp" width="64" height="64" alt="Linkedin icon" aria-hidden="true" loading="lazy" decoding="async">LinkedIn</a>
+  <a href="/whatsapp-chat-analyzer/"><img class="ico3d mnav-ico" src="/assets/img/icons/whatsapp.webp" width="64" height="64" alt="Whatsapp icon" aria-hidden="true" loading="lazy" decoding="async">WhatsApp</a>
+  <a href="/telegram-chat-analyzer/"><img class="ico3d mnav-ico" src="/assets/img/icons/telegram.webp" width="64" height="64" alt="Telegram icon" aria-hidden="true" loading="lazy" decoding="async">Telegram</a>
+  <a href="/spotify-stats/"><img class="ico3d mnav-ico" src="/assets/img/icons/spotify.webp" width="64" height="64" alt="Spotify icon" aria-hidden="true" loading="lazy" decoding="async">Spotify</a>
+  <a href="/tools/"><img class="ico3d mnav-ico" src="/assets/img/icons/report.webp" width="64" height="64" alt="Report icon" aria-hidden="true" loading="lazy" decoding="async">All tools</a>
+  <a href="/guides/"><img class="ico3d mnav-ico" src="/assets/img/icons/search.webp" width="64" height="64" alt="Search icon" aria-hidden="true" loading="lazy" decoding="async">Guides</a>
+  <a href="/pricing/"><img class="ico3d mnav-ico" src="/assets/img/icons/trend.webp" width="64" height="64" alt="Trend icon" aria-hidden="true" loading="lazy" decoding="async">Pricing</a>
+  <a href="/account/"><img class="ico3d mnav-ico" src="/assets/img/icons/crown.webp" width="64" height="64" alt="Crown icon" aria-hidden="true" loading="lazy" decoding="async">My license</a>
+  <div class="mobile-langs" aria-label="Language"><a href="/blog/export-telegram-chat-history/" hreflang="en" lang="en" aria-current="true">English</a><a href="/es/" hreflang="es" lang="es">Español</a><a href="/pt/" hreflang="pt-BR" lang="pt-BR">Português</a><a href="/tr/" hreflang="tr" lang="tr">Türkçe</a><a href="/fr/" hreflang="fr" lang="fr">Français</a><a href="/de/" hreflang="de" lang="de">Deutsch</a></div>
+</nav>
+<main id="main" class="page">
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/chat-telegram-640.webp" srcset="/assets/img/art/chat-telegram-320.webp 320w, /assets/img/art/chat-telegram-640.webp 640w, /assets/img/art/chat-telegram-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="Chat telegram illustration" aria-hidden="true" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Telegram</span>
+      <h1 class="h1">How to export <span class="serif grad">Telegram chat history</span></h1>
+      <p class="lead">Telegram can save a single chat, a group, a channel or your whole account as files on your computer. The option lives in Telegram Desktop, not in the phone app. Here’s the quickest way.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>The short answer</h2>
+      <ol>
+        <li>Install <strong>Telegram Desktop</strong> on your computer and log in.</li>
+        <li>Open the chat, click <strong>⋮</strong> in the top-right corner and choose <strong>Export chat history</strong>.</li>
+        <li>Untick photos, videos and files, and set the format to <strong>Machine-readable JSON</strong>.</li>
+        <li>Click <strong>Export</strong>. You get a folder with a <code>result.json</code> file inside.</li>
+      </ol>
+
+      <h2>Export a single chat or group</h2>
+      <ol>
+        <li>In Telegram Desktop, open the chat, group or channel.</li>
+        <li>Click the <strong>three dots</strong> (⋮) at the top right → <strong>Export chat history</strong>.</li>
+        <li>Choose what to include. For text and stats, untick <strong>Photos</strong>, <strong>Videos</strong>, <strong>Voice messages</strong> and <strong>Files</strong>. The export is then small and fast, even for years of messages.</li>
+        <li>Pick a date range if you only need part of the chat, or leave it at all time.</li>
+        <li>Under <strong>Format</strong>, choose <strong>HTML</strong> to read it in a browser, or <strong>Machine-readable JSON</strong> to analyse it.</li>
+        <li>Click <strong>Export</strong> and wait. Telegram saves a folder named like <code>ChatExport_2026-10-18</code> in your Downloads folder.</li>
+      </ol>
+
+      <h2>Export your whole Telegram account</h2>
+      <p>Go to <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Export Telegram data</strong>. You can include your profile, contacts, personal chats, groups and channels. For security, Telegram may ask you to confirm the export from another logged-in device, and on a newly connected computer it can make you wait before the export starts.</p>
+
+      <h2>JSON or HTML?</h2>
+      <ul>
+        <li><strong>HTML</strong> looks like the chat and opens in any browser. Good for reading or keeping a record.</li>
+        <li><strong>JSON</strong> is one structured file with every message, sender and timestamp. Tools can read it reliably, so choose JSON if you want stats.</li>
+      </ul>
+      <p>If you’re unsure, export both: tick the formats one after the other, it only takes a minute without media.</p>
+
+      <h2>Why can’t I export on my phone?</h2>
+      <p>The Telegram apps for iPhone and Android don’t have a chat history export. You need Telegram Desktop for Windows, macOS or Linux. On a Mac, if the App Store version doesn’t show the option, use Telegram Desktop from Telegram’s website instead. Secret chats can’t be exported at all, because they only exist on the device where they were started.</p>
+
+      <h2>What you can do with the export</h2>
+      <ul>
+        <li><strong>Keep a backup</strong> of a group before you leave it or before it’s deleted.</li>
+        <li><strong>Search old messages</strong> offline.</li>
+        <li><strong>See the stats:</strong> drop <code>result.json</code> on the <a href="/telegram-chat-analyzer/">Telegram chat analyzer</a> to see who talks more, who replies faster, when you talk, top words and emojis, and your longest streak.</li>
+      </ul>
+      <p>Unwrapped reads the file in your browser. Messages and names never leave your computer.</p>
+      <div class="read-next"><h2>Read next</h2><ul><li><a href="/blog/how-to-export-whatsapp-chat/">How to export a WhatsApp chat</a></li><li><a href="/blog/who-leaves-you-on-read-instagram/">Who leaves you on read on Instagram?</a></li><li><a href="/blog/spotify-extended-streaming-history/">How to get your Spotify extended streaming history</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Does Telegram notify the other person when I export a chat?</summary><div class="answer"><p>No. Exporting only saves a copy on your computer. Nobody in the chat is notified.</p></div></details>
+      <details><summary>Where does Telegram save the export?</summary><div class="answer"><p>By default in your Downloads folder, under Telegram Desktop, in a folder named ChatExport with the date. You can change the location before you start.</p></div></details>
+      <details><summary>Can I export a channel or a group I’m not an admin of?</summary><div class="answer"><p>Usually yes, as long as you can see the messages. Groups and channels with content protection turned on block saving and exporting.</p></div></details>
+      <details><summary>Why is my export so slow?</summary><div class="answer"><p>Media makes exports large. Untick photos, videos, voice messages and files, and the text export of even a big chat finishes quickly.</p></div></details>
+    </div>
+    <div style="max-width:760px"><div class="cta-band" style="margin-top:56px">
+  <span class="eyebrow">Try it now</span>
+  <h2 class="h2" style="max-width:18ch">Drop your export. <span class="serif grad">Get answers in seconds.</span></h2>
+  <p class="text-2" style="max-width:52ch">No password, no upload — everything runs on your device.</p>
+  <div class="drop-actions"><a class="btn btn--primary btn--lg" href="/#start">Open the app</a><a class="btn btn--ghost btn--lg" href="/#demo" data-demo>See the live demo</a></div>
+</div>
+<div style="margin-top:40px">
+  <span class="eyebrow">More guides</span>
+  <ul class="checklist more-links" style="margin-top:16px">
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/guides/who-unfollowed-me-on-instagram/">How to see who unfollowed you on Instagram</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/guides/download-instagram-data/">How to download your Instagram data</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/guides/tiktok-screen-time/">How much time do you really spend on TikTok?</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/guides/are-unfollower-apps-safe/">Are unfollower apps safe?</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/blog/why-am-i-losing-followers/">Why am I losing followers on Instagram?</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/blog/how-to-spot-fake-followers/">How to spot fake followers</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/instagram-story-archive/">See your old Instagram stories and posts</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/tiktok-watch-history/">Find a TikTok you watched</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/blog/what-instagram-knows-about-you/">What Instagram knows about you</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/unfollower-app-alternative/">Unwrapped vs. unfollower apps</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/search-old-tweets/">Search and clean up your old tweets</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/instagram-liked-posts/">Find posts you liked on Instagram</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/guides/instagram-data-files-explained/">Your Instagram data download, file by file</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/blog/recover-deleted-instagram-messages/">Can you recover deleted Instagram messages?</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/blog/who-leaves-you-on-read-instagram/">Who leaves you on read on Instagram?</a></li>
+    <li><svg aria-hidden="true"><use href="#i-arrow"/></svg><a href="/blog/instagram-search-history/">Your full Instagram search history</a></li>
+  </ul>
+</div>
+</div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="stack" style="--stack:14px">
+        <a class="logo" href="/"><svg aria-hidden="true"><use href="#i-logo"/></svg>Unwrapped</a>
+        <p class="small text-2" style="max-width:36ch">Decode your social media data exports — privately, on your own device. No passwords. No uploads. Ever.</p>
+        <span class="chip"><span class="dot"></span>Works offline once loaded</span>
+        <div class="footer-langs" aria-label="Language"><svg aria-hidden="true"><use href="#i-globe"/></svg><a href="/blog/export-telegram-chat-history/" hreflang="en" lang="en" aria-current="true">English</a><a href="/es/" hreflang="es" lang="es">Español</a><a href="/pt/" hreflang="pt-BR" lang="pt-BR">Português</a><a href="/tr/" hreflang="tr" lang="tr">Türkçe</a><a href="/fr/" hreflang="fr" lang="fr">Français</a><a href="/de/" hreflang="de" lang="de">Deutsch</a></div>
+      </div>
+      <div>
+        <h2 class="f-h">Platforms</h2>
+        <ul>
+          <li><a href="/instagram/">Instagram unfollowers</a></li>
+          <li><a href="/tiktok/">TikTok screen time</a></li>
+          <li><a href="/x/">X archive explorer</a></li>
+          <li><a href="/facebook/">Facebook unfriend tracker</a></li>
+          <li><a href="/linkedin/">LinkedIn network map</a></li>
+          <li><a href="/whatsapp-chat-analyzer/">WhatsApp</a></li>
+          <li><a href="/telegram-chat-analyzer/">Telegram</a></li>
+          <li><a href="/spotify-stats/">Spotify</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="f-h">Tools</h2>
+        <ul>
+          <li><a href="/instagram-audit/">Free account audit</a></li>
+          <li><a href="/fake-follower-checker/">Fake follower checker</a></li>
+          <li><a href="/instagram-dm-analyzer/">Instagram DM analyzer</a></li>
+          <li><a href="/instagram-message-viewer/">Instagram message viewer</a></li>
+          <li><a href="/instagram-story-archive/">Old Instagram stories &amp; posts</a></li>
+          <li><a href="/tiktok-watch-history/">TikTok watch history</a></li>
+          <li><a href="/search-old-tweets/">Search &amp; clean up old tweets</a></li>
+          <li><a href="/instagram-liked-posts/">Instagram likes &amp; comments</a></li>
+<li><a href="/instagram-account-age/">When did I join Instagram?</a></li>
+          <li><a href="/best-time-to-post/">Best time to post</a></li>
+          <li><a href="/tools/">All tools</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="f-h">Product</h2>
+        <ul>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#how">How it works</a></li>
+          <li><a href="/guides/">Guides</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/account/#invite">Invite friends</a></li>
+          <li><a href="/#demo" data-demo>Live demo</a></li>
+          <li><a href="/account/">My license</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="f-h">Trust</h2>
+        <ul>
+          <li><a href="/help/">Help center</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/unfollower-app-alternative/">vs. unfollower apps</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/terms/">Terms &amp; refunds</a></li>
+          <li><a href="/#promise">The no-password promise</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">unwrapped</div>
+    <div class="legal">
+      <span>© <span data-year></span> Unwrapped. Not affiliated with Instagram, Meta, TikTok, X, or LinkedIn. All trademarks belong to their owners.</span>
+      <span>Made for people, not for data brokers.</span>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/assets/js/site.js?v=mveef9ql"></script>
+</body>
+</html>

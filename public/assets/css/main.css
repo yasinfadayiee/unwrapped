@@ -488,6 +488,19 @@ ul, ol { margin: 0; padding: 0; }
 .hd-row b { flex: 1; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hd-row em { flex: none; font-style: normal; font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
 .hd-row em.is-warn { color: var(--warning); }
+/* Wide screens: copy on the left, the live product preview on the right, so
+   the thing people get is visible without scrolling. */
+@media (min-width: 1080px) {
+  .hero--split { padding-top: clamp(40px, 5vw, 72px); }
+  .hero--split .container { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); column-gap: clamp(40px, 4.5vw, 72px); align-items: center; }
+  .hero--split .hero-top { align-items: flex-start; text-align: left; gap: 22px; }
+  .hero--split .hero-title { max-width: none; font-size: clamp(68px, 6.3vw, 100px); }
+  .hero--split .hero-sub { text-align: left; max-width: 34em; font-size: clamp(17px, 1.35vw, 19px); }
+  .hero--split .hero-cta, .hero--split .works-with { justify-content: flex-start; }
+  .hero--split .works-with { margin-top: 6px; }
+  .hero--split .hero-demo { width: 100%; margin: 0; }
+  .hero--split .container > :not(.hero-top):not(.hero-demo) { grid-column: 1 / -1; }
+}
 @media (max-width: 520px) {
   .hero-cta { align-self: stretch; }
   .hero-cta .btn { width: 100%; max-width: 340px; padding: 0 18px; }
