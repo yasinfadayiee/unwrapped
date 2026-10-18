@@ -400,7 +400,7 @@ ul, ol { margin: 0; padding: 0; }
 .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.03em; }
 .logo svg { width: 30px; height: 30px; }
 .nav { display: none; align-items: center; gap: 4px; }
-.nav a { padding: 8px 14px; border-radius: 999px; text-decoration: none; color: var(--text-2); font-size: 14.5px; font-weight: 500; transition: color 0.2s, background-color 0.2s; }
+.nav a { padding: 8px 14px; border-radius: 999px; text-decoration: none; color: var(--text-2); font-size: 14.5px; font-weight: 500; white-space: nowrap; transition: color 0.2s, background-color 0.2s; }
 .nav a:hover, .nav a[aria-current='page'] { color: var(--text); background: rgba(var(--fg-rgb), 0.05); }
 .header-actions { display: flex; align-items: center; gap: 8px; }
 @media (max-width: 639px) {
@@ -428,6 +428,11 @@ ul, ol { margin: 0; padding: 0; }
 @media (min-width: 960px) {
   .nav { display: flex; }
   .menu-btn, .mobile-nav { display: none; }
+}
+/* Narrow desktops: the nav already links Pricing, so the Plans button goes first. */
+@media (min-width: 960px) and (max-width: 1179px) {
+  .nav a { padding: 8px 10px; }
+  .header-actions .get-pro { display: none; }
 }
 
 /* ---------- hero ---------- */
@@ -680,6 +685,7 @@ ul, ol { margin: 0; padding: 0; }
 
 /* ---------- prose pages ---------- */
 .page-hero { padding: clamp(48px, 8vw, 100px) 0 clamp(24px, 4vw, 48px); }
+.page-hero + .section--tight { padding-top: clamp(16px, 3vw, 40px); }
 .prose { max-width: 760px; color: var(--text-2); font-size: 16.5px; line-height: 1.75; }
 .prose h2 { color: var(--text); font-family: var(--font-display); font-size: clamp(26px, 3vw, 34px); letter-spacing: -0.03em; line-height: 1.15; margin: 48px 0 14px; }
 .prose h3 { color: var(--text); font-size: 19px; margin: 30px 0 10px; letter-spacing: -0.01em; }
@@ -1580,7 +1586,10 @@ audio.msg-media { min-height: 0; }
 .hero-art--side { max-width: 170px; margin: -8px auto 4px; }
 .hero-art--side + * { position: static; }
 @media (min-width: 960px) {
-  .hero-art--side { position: absolute; top: -28px; right: 8px; width: 300px; max-width: none; margin: 0; z-index: 0; }
+  .hero-art.hero-art--side { position: absolute; top: -28px; right: 8px; width: 300px; max-width: none; margin: 0; z-index: 0; }
+  /* Keep the art clear of whatever follows the heading (a card grid, the article). */
+  .page-hero > .container:has(.hero-art--side) { min-height: 250px; }
+  .page-hero > .container:has(.hero-art--side) > :is(.sec-head, .stack) { min-height: 240px; }
   .page-hero > .container:has(.hero-art--side) > :not(.hero-art) { position: relative; z-index: 1; }
   .page-hero > .container:has(.hero-art--side) > :is(.sec-head, .stack, .eyebrow, h1, .lead, .meta, p) { max-width: calc(100% - 320px); }
   .page-hero > .container:has(.hero-art--side) > .sec-head > * { max-width: 100%; }
