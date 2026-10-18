@@ -33,7 +33,11 @@ const VIEW_BUILDERS = {
   facebook: facebookViews,
   linkedin: linkedinViews,
   whatsapp: whatsappViews,
+  telegram: whatsappViews,
 };
+
+// Chat exports get the chat dashboard only: no timeline or intro story.
+const CHAT_PLATFORMS = new Set(['whatsapp', 'telegram']);
 
 const SECTIONS = ['start', 'people', 'content', 'privacy', 'lab', 'share'];
 const SECTION_TITLE = { start: () => tl('Start here'), people: () => tl('Followers & people'), content: () => tl('Your posts & activity'), privacy: () => tl('Privacy'), lab: () => tl('Pro Lab'), share: () => tl('Share') };
@@ -80,7 +84,10 @@ function loader() {
 const HINTS = {
   parts: () => tl('Your export seems to be split into several parts. Select all of the parts at once (hold Ctrl or Shift), or drop the whole folder.'),
   empty: () => tl('The file is empty or could not be opened. Download the export again — the first download sometimes breaks off.'),
-  other: (v) => tl('This looks like a {v0} export. Unwrapped reads Instagram, TikTok, X, Facebook, Threads and LinkedIn exports.', v),
+  other: (v) =>
+    /telegram/i.test(v.v0)
+      ? tl('This is a Telegram export in HTML. Export it again in Telegram Desktop and choose “Machine-readable JSON” as the format.')
+      : tl('This looks like a {v0} export. Unwrapped reads Instagram, TikTok, X, Facebook, Threads, LinkedIn, WhatsApp and Telegram exports.', v),
   media: () => tl('This download only contains photos or videos. Request your data again and choose “Followers and following” (Instagram) or “All data” (TikTok) in JSON format.'),
   pdf: () => tl('PDF files can’t be analyzed. Request the download in JSON (or HTML) format instead.'),
   'meta-partial': () => tl('This is a real Instagram/Facebook export — but it doesn’t include your followers or activity. Request it again and tick “Followers and following” (or choose “All available information”).'),
@@ -94,13 +101,14 @@ function noDataHelp(result, hints = []) {
       'div',
       { class: 'stack', style: { '--stack': '14px' } },
       hints.length ? h('div', { class: 'err-box', role: 'alert' }, hints.map((x) => h('p', { style: { margin: '0 0 6px' } }, HINTS[x.id](x.vars)))) : null,
-      h('p', { class: 'text-2' }, tl('We looked through {v0} files but none of them look like an Instagram, TikTok, X, Facebook, Threads or LinkedIn export.', { v0: fmtInt(result.files) })),
+      h('p', { class: 'text-2' }, tl('We looked through {v0} files but none of them look like an export from a supported platform.', { v0: fmtInt(result.files) })),
       h(
         'ul',
         { class: 'checklist text-2' },
         h('li', null, icon('check'), tl('Upload the ZIP exactly as the platform sent it — or the unzipped folder.')),
         h('li', null, icon('check'), tl('Instagram: choose “Followers and following” (or “All available information”), format JSON or HTML.')),
         h('li', null, icon('check'), tl('TikTok: choose JSON or TXT. X: upload the archive ZIP. LinkedIn: the ZIP with Connections.csv.')),
+        h('li', null, icon('check'), tl('WhatsApp: open the chat → Export chat. Telegram Desktop: Export chat history → format JSON.')),
       ),
       result.problems.length ? h('div', { class: 'err-box' }, result.problems.join(' · ')) : null,
       h(
@@ -255,7 +263,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
           primary.splice(1, 0, { id: 'health', label: tl('Account health'), icon: 'pulse', render: () => healthView(ds, ctx) });
         }
         // One timeline across every dropped export, shown in each tab.
-        if (ds.platform !== 'whatsapp') primary.push({ id: 'timeline', label: tl('Your digital life'), icon: 'calendar', render: () => timelineView(datasets, ctx) });
+        if (!CHAT_PLATFORMS.has(ds.platform)) primary.push({ id: 'timeline', label: tl('Your digital life'), icon: 'calendar', render: () => timelineView(datasets, ctx) });
         // The menu is grouped so people find things by what they want to do.
         const all = [...primary, ...lab.map((v) => ({ ...v, section: 'lab' })), ...wrapped.map((v) => ({ ...v, section: 'share' }))];
         for (const v of all) v.section = v.section || SECTION_OF[v.id] || 'content';
@@ -453,7 +461,7 @@ export async function openApp({ files = [], demo = false } = {}) {
     }
     load.close();
     track(demo ? 'demo' : 'analyze');
-    if (!openApp.skipStory && result.datasets.some((d) => d.platform !== 'whatsapp')) {
+    if (!openApp.skipStory && result.datasets.some((d) => !CHAT_PLATFORMS.has(d.platform))) {
       playStory(result.datasets, { onDone: () => active?.root?.querySelector('.app-main')?.focus() });
     }
     active = mount(result, { tier: activeTier, demo, config, netStart, onNewFiles: (f) => openApp({ files: f }) });

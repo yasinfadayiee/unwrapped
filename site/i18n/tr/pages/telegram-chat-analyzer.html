@@ -1,0 +1,81 @@
+<!--page {
+  "route": "/telegram-chat-analyzer/",
+  "nav": "tools",
+  "title": "Telegram sohbet analizi — her sohbet için gizli ve ücretsiz istatistik · Unwrapped",
+  "description": "Dışa aktarılan bir Telegram sohbetini analiz et: kim daha çok yazıyor, yanıt süreleri, aktif saatler, en çok kelime ve emojiler, seriler. Hiçbir şey yüklenmez.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-message"/></svg>Telegram · sohbet istatistikleri</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Telegram sohbetin,</span></span>
+        <span class="line"><span><span class="serif grad">rakamlarla.</span></span></span>
+      </h1>
+      <p class="hero-sub">Telegram’tan herhangi bir sohbeti dışa aktar ve dosyayı buraya bırak. <b>Kim daha çok yazıyor, kim daha hızlı yanıt veriyor</b>, ne zaman konuşuyorsunuz, favori kelime ve emojileriniz — <b>cihazında okunur, asla yüklenmez.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/messages-radar-640.webp" srcset="/assets/img/art/messages-radar-320.webp 320w, /assets/img/art/messages-radar-640.webp 640w, /assets/img/art/messages-radar-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Neler göreceksin</span>
+      <h2 class="h2">Her sohbet, çözümlendi.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Kim daha çok konuşuyor</b> — kişi başına mesaj payı, gruplarda da.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Yanıt süreleri</b> — kim en hızlı yanıt veriyor, sohbeti kim başlatıyor.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Ne zaman konuşuyorsunuz</b> — saat, gün ve aya göre, en uzun seri.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>En çok kelime ve emojiler</b> — toplamda ve kişi başına.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Medya, bağlantılar ve silinen mesajlar</b> kişi başına.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2aabee,#0c3550)"></span><b>Mesaj</b><em>12,480</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2aabee,#0c3550)"></span><b>Yanıt süresi</b><em>4 min</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2aabee,#0c3550)"></span><b>En uzun seri</b><em>41</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2aabee,#0c3550)"></span><b>Favori emoji</b><em>😂</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Nasıl çalışır</span><h2 class="h2">Üç adım, bir dakika.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Telegram Desktop’u aç</b><span>Bilgisayarında: sohbeti aç → ⋮ → <b>Sohbet geçmişini dışa aktar</b>. Tüm sohbetler için: Ayarlar → Gelişmiş → <b>Telegram verilerini dışa aktar</b>.</span></li>
+      <li><b>JSON seç</b><span>Fotoğraf ve videoların işaretini kaldır, biçimi <b>Makine tarafından okunabilir JSON</b> yap. <b>result.json</b> içeren bir klasör alırsın.</span></li>
+      <li><b>Buraya bırak</b><span>Dosya tarayıcında okunur. Hiçbir şey cihazından çıkmaz — isimler bile.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Telegram istatistikleri, açıklandı.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Sohbetimi burada analiz etmek güvenli mi?</summary><div class="answer"><p>Evet. Dosyayı tarayıcın açar ve asla yüklenmez. Sayfa yüklendikten sonra uçak modunu bile açabilirsin.</p></div></details>
+      <details><summary>Grup sohbetlerinde çalışır mı?</summary><div class="answer"><p>Evet. Her katılımcının kendi istatistikleri olur; Pro her kişi için ayrıntılı kart gösterir.</p></div></details>
+            <details><summary>Karşı taraf öğrenir mi?</summary><div class="answer"><p>Hayır. Sohbeti dışa aktarmak bildirim göndermez ve analiz yalnızca cihazında yapılır.</p></div></details>
+      <details><summary>Ücretsiz mi?</summary><div class="answer"><p>Sohbet özeti ücretsiz. Pro tam sıralamaları ve her kişi için kart ekler.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Sohbetini <span class="serif grad">rakamlarla gör.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Sohbetimi analiz et</a></div>
+    </div>
+  </div>
+</section>

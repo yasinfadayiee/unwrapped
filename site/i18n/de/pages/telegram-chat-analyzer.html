@@ -1,0 +1,81 @@
+<!--page {
+  "route": "/telegram-chat-analyzer/",
+  "nav": "tools",
+  "title": "Telegram Chat Analyse — Statistiken für jeden Chat, privat & kostenlos · Unwrapped",
+  "description": "Analysiere einen exportierten Telegram-Chat: wer mehr schreibt, Antwortzeiten, aktive Uhrzeiten, Top-Wörter und Emojis, Serien. Nichts wird hochgeladen.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-message"/></svg>Telegram · Chat-Statistik</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Dein Telegram-Chat,</span></span>
+        <span class="line"><span><span class="serif grad">in Zahlen.</span></span></span>
+      </h1>
+      <p class="hero-sub">Exportiere einen beliebigen Chat aus Telegram und zieh die Datei hierher. Sieh, <b>wer mehr schreibt und wer schneller antwortet</b>, wann ihr schreibt, eure Lieblingswörter und Emojis — <b>auf deinem Gerät gelesen, nie hochgeladen.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/messages-radar-640.webp" srcset="/assets/img/art/messages-radar-320.webp 320w, /assets/img/art/messages-radar-640.webp 640w, /assets/img/art/messages-radar-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">Was du siehst</span>
+      <h2 class="h2">Jeder Chat, entschlüsselt.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Wer mehr schreibt</b> — Nachrichtenanteil pro Person, auch in Gruppen.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Antwortzeiten</b> — wer am schnellsten antwortet und wer Gespräche beginnt.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Wann ihr schreibt</b> — nach Uhrzeit, Wochentag und Monat, plus längste Serie.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Top-Wörter & Emojis</b> — insgesamt und pro Person.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Medien, Links und gelöschte Nachrichten</b> pro Person.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2aabee,#0c3550)"></span><b>Nachrichten</b><em>12,480</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2aabee,#0c3550)"></span><b>Antwortzeit</b><em>4 min</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2aabee,#0c3550)"></span><b>Längste Serie</b><em>41</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#2aabee,#0c3550)"></span><b>Top-Emoji</b><em>😂</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">So funktioniert’s</span><h2 class="h2">Drei Schritte, eine Minute.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Öffne Telegram Desktop</b><span>Am Computer: Chat öffnen → ⋮ → <b>Chatverlauf exportieren</b>. Für alle Chats: Einstellungen → Erweitert → <b>Telegram-Daten exportieren</b>.</span></li>
+      <li><b>Wähle JSON</b><span>Fotos und Videos abwählen, Format <b>Maschinenlesbares JSON</b>. Du bekommst einen Ordner mit <b>result.json</b>.</span></li>
+      <li><b>Zieh sie hierher</b><span>Die Datei wird in deinem Browser gelesen. Nichts verlässt dein Gerät — nicht einmal die Namen.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Telegram-Statistiken, erklärt.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Ist es sicher, meinen Chat hier zu analysieren?</summary><div class="answer"><p>Ja. Dein Browser öffnet die Datei, sie wird nie hochgeladen. Du kannst nach dem Laden sogar den Flugmodus einschalten.</p></div></details>
+      <details><summary>Funktioniert es mit Gruppen?</summary><div class="answer"><p>Ja. Jede Person bekommt eigene Statistiken; Pro zeigt eine Detailkarte für jede Person.</p></div></details>
+            <details><summary>Merkt die andere Person etwas?</summary><div class="answer"><p>Nein. Ein Chat-Export sendet keine Benachrichtigung, und die Analyse passiert nur auf deinem Gerät.</p></div></details>
+      <details><summary>Ist es kostenlos?</summary><div class="answer"><p>Der Chat-Überblick ist kostenlos. Pro ergänzt komplette Ranglisten und eine Karte pro Person.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">Sieh deinen Chat <span class="serif grad">in Zahlen.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Meinen Chat analysieren</a></div>
+    </div>
+  </div>
+</section>

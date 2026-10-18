@@ -1449,4 +1449,8 @@ export default {
   "Unlock Pro to see all {v0} people.": "Schalte Pro frei, um alle {v0} Personen zu sehen.",
   "{v0} chats in what you dropped.": "{v0} Chats in deinem Upload.",
   "Chat overview": "Chat-Überblick",
+  "This is a Telegram export in HTML. Export it again in Telegram Desktop and choose “Machine-readable JSON” as the format.": "Das ist ein Telegram-Export im HTML-Format. Exportiere ihn in Telegram Desktop erneut und wähle „Maschinenlesbares JSON“ als Format.",
+  "This looks like a {v0} export. Unwrapped reads Instagram, TikTok, X, Facebook, Threads, LinkedIn, WhatsApp and Telegram exports.": "Das sieht nach einem {v0}-Export aus. Unwrapped liest Exporte von Instagram, TikTok, X, Facebook, Threads, LinkedIn, WhatsApp und Telegram.",
+  "We looked through {v0} files but none of them look like an export from a supported platform.": "Wir haben {v0} Dateien durchsucht, aber keine sieht nach dem Export einer unterstützten Plattform aus.",
+  "WhatsApp: open the chat → Export chat. Telegram Desktop: Export chat history → format JSON.": "WhatsApp: Chat öffnen → Chat exportieren. Telegram Desktop: Chatverlauf exportieren → Format JSON.",
 };

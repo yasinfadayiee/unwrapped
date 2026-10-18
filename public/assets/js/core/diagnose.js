@@ -4,7 +4,7 @@
 const OTHER_EXPORTS = [
   { name: 'Snapchat', test: (e) => /(^|\/)(memories_history|snap_history|chat_history)\.(json|html)$|snapchat/i.test(e.path) },
   { name: 'Google Takeout', test: (e) => /(^|\/)takeout\//i.test(e.path) },
-  { name: 'Telegram', test: (e) => /(^|\/)result\.json$|chatexport_/i.test(e.path) },
+  { name: 'Telegram (HTML)', test: (e) => /chatexport_.*\.html$|(^|\/)messages\d*\.html$/i.test(e.path) },
   { name: 'Discord', test: (e) => /(^|\/)messages\/c\d+\/|(^|\/)package\/account\//i.test(e.path) },
   { name: 'Pinterest', test: (e) => /pinterest/i.test(e.path) },
 ];
