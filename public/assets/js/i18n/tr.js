@@ -1568,4 +1568,10 @@ export default {
   "Remove the watermark": "Filigranı kaldır",
   "Plus gives you clean cards for every chat.": "Plus her sohbet için temiz kartlar verir.",
   "See the full breakdown": "Tüm ayrıntıları gör",
+  "Your closest people": "En yakın kişilerin",
+  "One ranking from all your chats — how much you talk, how balanced it is and how recent. Drop WhatsApp, Telegram and Instagram together for the full picture.": "Tüm sohbetlerinden tek sıralama — ne kadar konuştuğunuz, ne kadar dengeli ve ne kadar yakın zamanda. Tam tablo için WhatsApp, Telegram ve Instagram’ı birlikte yükle.",
+  "No one-to-one chats in what you dropped.": "Yüklediklerinde birebir sohbet yok.",
+  "last {v0}": "son {v0}",
+  "Who are #2 to #{v0}?": "#2’den #{v0}’e kadar kimler?",
+  "See your full closeness ranking across every platform.": "Tüm platformlardaki tam yakınlık sıralamanı gör.",
 };

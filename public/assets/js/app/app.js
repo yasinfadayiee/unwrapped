@@ -18,6 +18,7 @@ import { facebookViews } from './views-facebook.js';
 import { linkedinViews } from './views-linkedin.js';
 import { whatsappViews } from './views-whatsapp.js';
 import { spotifyViews } from './views-spotify.js';
+import { closestView, hasClosest } from './views-closest.js';
 import { crossView } from './views-cross.js';
 import { timelineView } from './views-timeline.js';
 
@@ -44,7 +45,7 @@ const CHAT_PLATFORMS = new Set(['whatsapp', 'telegram', 'spotify']);
 const SECTIONS = ['start', 'people', 'content', 'privacy', 'lab', 'share'];
 const SECTION_TITLE = { start: () => tl('Start here'), people: () => tl('Followers & people'), content: () => tl('Your posts & activity'), privacy: () => tl('Privacy'), lab: () => tl('Pro Lab'), share: () => tl('Share') };
 const SECTION_OF = {
-  overview: 'start', health: 'start', timeline: 'start',
+  overview: 'start', health: 'start', timeline: 'start', closest: 'people',
   notBack: 'people', fans: 'people', mutuals: 'people', unfollowers: 'people', lookup: 'people', requests: 'people', lists: 'people', friends: 'people', connections: 'people',
   privacy: 'privacy',
 };
@@ -265,6 +266,8 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
           primary.splice(1, 0, { id: 'health', label: tl('Account health'), icon: 'pulse', render: () => healthView(ds, ctx) });
         }
         // One timeline across every dropped export, shown in each tab.
+        // One closeness ranking across every dropped export that has chats.
+        if (hasClosest(datasets)) primary.splice(1, 0, { id: 'closest', label: tl('Your closest people'), icon: 'heart', render: () => closestView(datasets, ctx) });
         if (!CHAT_PLATFORMS.has(ds.platform)) primary.push({ id: 'timeline', label: tl('Your digital life'), icon: 'calendar', render: () => timelineView(datasets, ctx) });
         // The menu is grouped so people find things by what they want to do.
         const all = [...primary, ...lab.map((v) => ({ ...v, section: 'lab' })), ...wrapped.map((v) => ({ ...v, section: 'share' }))];

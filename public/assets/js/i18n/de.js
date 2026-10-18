@@ -1580,4 +1580,10 @@ export default {
   "Remove the watermark": "Wasserzeichen entfernen",
   "Plus gives you clean cards for every chat.": "Plus gibt dir saubere Karten für jeden Chat.",
   "See the full breakdown": "Die ganze Aufschlüsselung ansehen",
+  "Your closest people": "Deine engsten Menschen",
+  "One ranking from all your chats — how much you talk, how balanced it is and how recent. Drop WhatsApp, Telegram and Instagram together for the full picture.": "Ein Ranking aus all deinen Chats — wie viel ihr schreibt, wie ausgeglichen und wie aktuell. Lade WhatsApp, Telegram und Instagram zusammen hoch für das ganze Bild.",
+  "No one-to-one chats in what you dropped.": "Keine Einzelchats in deinem Upload.",
+  "last {v0}": "zuletzt {v0}",
+  "Who are #2 to #{v0}?": "Wer sind #2 bis #{v0}?",
+  "See your full closeness ranking across every platform.": "Sieh dein komplettes Nähe-Ranking über alle Plattformen.",
 };

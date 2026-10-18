@@ -1580,4 +1580,10 @@ export default {
   "Remove the watermark": "Retirer le filigrane",
   "Plus gives you clean cards for every chat.": "Plus vous donne des cartes sans filigrane pour chaque discussion.",
   "See the full breakdown": "Voir le détail complet",
+  "Your closest people": "Vos proches",
+  "One ranking from all your chats — how much you talk, how balanced it is and how recent. Drop WhatsApp, Telegram and Instagram together for the full picture.": "Un classement de toutes vos discussions — combien vous échangez, l’équilibre et la fraîcheur. Déposez WhatsApp, Telegram et Instagram ensemble pour la vue complète.",
+  "No one-to-one chats in what you dropped.": "Aucune discussion individuelle dans ce que vous avez déposé.",
+  "last {v0}": "dernier {v0}",
+  "Who are #2 to #{v0}?": "Qui sont les n° 2 à #{v0} ?",
+  "See your full closeness ranking across every platform.": "Voyez votre classement complet de proximité sur toutes les plateformes.",
 };
