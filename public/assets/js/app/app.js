@@ -89,7 +89,7 @@ const HINTS = {
   other: (v) =>
     /telegram/i.test(v.v0)
       ? tl('This is a Telegram export in HTML. Export it again in Telegram Desktop and choose “Machine-readable JSON” as the format.')
-      : tl('This looks like a {v0} export. Unwrapped reads Instagram, TikTok, X, Facebook, Threads, LinkedIn, WhatsApp and Telegram exports.', v),
+      : tl('This looks like a {v0} export. Unwrapped reads Instagram, TikTok, X, Facebook, Threads, LinkedIn, WhatsApp, Telegram and Spotify exports.', v),
   media: () => tl('This download only contains photos or videos. Request your data again and choose “Followers and following” (Instagram) or “All data” (TikTok) in JSON format.'),
   pdf: () => tl('PDF files can’t be analyzed. Request the download in JSON (or HTML) format instead.'),
   'meta-partial': () => tl('This is a real Instagram/Facebook export — but it doesn’t include your followers or activity. Request it again and tick “Followers and following” (or choose “All available information”).'),
