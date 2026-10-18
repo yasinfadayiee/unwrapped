@@ -50,19 +50,24 @@ function themePicker() {
   const current = () => document.documentElement.getAttribute('data-theme') || 'lime';
   $('meta[name="theme-color"]')?.setAttribute('content', (THEMES.find((x) => x[0] === current()) || THEMES[0])[3]);
   const menu = h('div', { class: 'theme-menu', role: 'radiogroup', 'aria-label': t('Colour theme'), hidden: true });
+  // The same swatches inside the phone menu, where the header has no room for the button.
+  const phone = h('div', { class: 'mobile-themes', role: 'radiogroup', 'aria-label': t('Colour theme') });
   const draw = () => {
-    clear(menu);
-    for (const [id, label, swatch] of THEMES) {
-      const b = h('button', { class: 'theme-sw', type: 'button', role: 'radio', 'aria-checked': String(id === current()) }, h('i', { style: { background: swatch } }), t(label));
-      b.addEventListener('click', () => {
-        applyTheme(id);
-        draw();
-      });
-      menu.append(b);
+    for (const box of [menu, phone]) {
+      clear(box);
+      for (const [id, label, swatch] of THEMES) {
+        const b = h('button', { class: 'theme-sw', type: 'button', role: 'radio', 'aria-checked': String(id === current()) }, h('i', { style: { background: swatch } }), t(label));
+        b.addEventListener('click', () => {
+          applyTheme(id);
+          draw();
+        });
+        box.append(b);
+      }
     }
   };
   draw();
   btn.after(menu);
+  $('.mobile-langs')?.before(phone);
   const toggle = (open) => {
     menu.hidden = !open;
     btn.setAttribute('aria-expanded', String(open));
