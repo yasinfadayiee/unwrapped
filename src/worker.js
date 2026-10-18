@@ -15,6 +15,7 @@ import { handleAdmin } from './admin.js';
 import { attachReferral, discounted, getReferralForLicense, validReferral } from './referrals.js';
 import { isEmail, normalizeLicenseKey } from './util.js';
 import { publicStats, recordHit } from './stats.js';
+import { submitFeedback, testimonials } from './feedback.js';
 
 async function enabledMethods(env) {
   const methods = [];
@@ -156,6 +157,10 @@ async function route(request, env, ctx, url) {
       return handleNowpaymentsIpn(request, env);
     case 'POST /api/hit':
       return recordHit(request, env);
+    case 'POST /api/feedback':
+      return submitFeedback(request, env);
+    case 'GET /api/testimonials':
+      return testimonials(env, url);
     case 'GET /api/stats':
       return publicStats(env);
     case 'GET /api/health':

@@ -118,6 +118,32 @@ async function liveCount() {
   }
 }
 
+// Approved testimonials on the home page; nothing is shown until there are three.
+async function testimonials() {
+  const slot = $('[data-testimonials]');
+  if (!slot) return;
+  try {
+    const lang = (document.documentElement.lang || 'en').slice(0, 2);
+    const { items } = await (await fetch(`/api/testimonials?lang=${lang}`)).json();
+    if (!items || items.length < 3) return;
+    const stars = (n) => h('div', { class: 'q-stars', 'aria-label': t('{n} of 5', { n }) }, Array.from({ length: n }, () => h('span', { class: 'star' })));
+    slot.replaceWith(
+      h(
+        'section',
+        { class: 'section section--tight', id: 'reviews' },
+        h(
+          'div',
+          { class: 'container' },
+          h('div', { class: 'sec-head sec-head--center' }, h('span', { class: 'eyebrow' }, t('Reviews')), h('h2', { class: 'h2' }, t('What people say'))),
+          h('div', { class: 'quotes' }, items.map((q) => h('figure', { class: 'card quote' }, stars(q.rating), h('blockquote', null, h('p', null, `“${q.text}”`)), h('figcaption', { class: 'q-who' }, q.name || t('Unwrapped user'))))),
+        ),
+      ),
+    );
+  } catch {
+    /* offline or not deployed yet */
+  }
+}
+
 function spotlight() {
   document.addEventListener(
     'pointermove',
@@ -576,6 +602,7 @@ supportContact();
 import('./lib/stats.js').then(({ trackView }) => trackView()).catch(() => {});
 reveals();
 liveCount();
+testimonials();
 spotlight();
 dropZones();
 tabs();

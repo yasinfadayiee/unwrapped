@@ -423,3 +423,21 @@ test('public stats show analyses only once there are enough of them', async () =
   const { body } = await call('GET', '/api/stats');
   assert.equal(body.analyzed30d, 200);
 });
+
+test('feedback: only public, approved, good ratings become testimonials', async () => {
+  assert.equal((await call('POST', '/api/feedback', { rating: 9 })).status, 400);
+  await call('POST', '/api/feedback', { rating: 5, text: 'Finally saw who unfollowed me', name: 'Sam', public: true, platform: 'instagram', lang: 'en' });
+  await call('POST', '/api/feedback', { rating: 5, text: 'Keep this private', public: false });
+  await call('POST', '/api/feedback', { rating: 2, text: 'Too slow', public: true });
+  assert.deepEqual((await call('GET', '/api/testimonials')).body.items, []);
+  env.ADMIN_TOKEN = 'admin-token-123456';
+  const admin = { authorization: 'Bearer admin-token-123456' };
+  const list = (await call('GET', '/api/admin/feedback', undefined, admin)).body;
+  assert.equal(list.count, 3);
+  const pub = list.items.find((f) => f.name === 'Sam');
+  const priv = list.items.find((f) => f.text === 'Keep this private');
+  assert.equal((await call('POST', '/api/admin/feedback/approve', { id: priv.id, approved: true }, admin)).status, 404);
+  await call('POST', '/api/admin/feedback/approve', { id: pub.id, approved: true }, admin);
+  const { items } = (await call('GET', '/api/testimonials?lang=en')).body;
+  assert.deepEqual(items, [{ text: 'Finally saw who unfollowed me', name: 'Sam', rating: 5, platform: 'instagram' }]);
+});

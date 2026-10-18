@@ -1,6 +1,8 @@
 // The schema is created automatically on first use, so a fresh D1 database
 // needs no manual migration step.
 
+import { FEEDBACK_SCHEMA } from './feedback.js';
+
 export const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS orders (
     id TEXT PRIMARY KEY,
@@ -65,6 +67,8 @@ export const SCHEMA = [
   )`,
   // Daily counters for the privacy-friendly site statistics (src/stats.js).
   `CREATE TABLE IF NOT EXISTS stats (day INTEGER NOT NULL, kind TEXT NOT NULL, key TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, kind, key))`,
+  // Ratings and testimonials (src/feedback.js).
+  FEEDBACK_SCHEMA,
 ];
 
 // Columns added after the first release. SQLite has no "ADD COLUMN IF NOT

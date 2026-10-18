@@ -473,6 +473,8 @@ export async function openApp({ files = [], demo = false } = {}) {
       playStory(result.datasets, { onDone: () => active?.root?.querySelector('.app-main')?.focus() });
     }
     active = mount(result, { tier: activeTier, demo, config, netStart, onNewFiles: (f) => openApp({ files: f }) });
+    // Ask for a rating once people have had time to look around (never in the demo).
+    if (!demo) setTimeout(() => import('../lib/feedback.js').then((m) => m.maybeAskFeedback({ platform: result.datasets[0]?.platform })).catch(() => {}), 45_000);
     for (const { ds, from } of compared) {
       toast(tl('Older {v0} export found — comparing {v1} with {v2}', { v0: ds.label, v1: dateShort(from), v2: dateShort(ds.exportedAt) }), { iconName: 'ghost', timeout: 6000 });
     }
