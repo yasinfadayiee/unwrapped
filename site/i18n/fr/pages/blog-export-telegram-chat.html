@@ -1,0 +1,70 @@
+<!--page {
+  "route": "/blog/export-telegram-chat-history/",
+  "title": "Comment exporter l’historique d’une discussion Telegram (JSON ou HTML) · guide 2026",
+  "headline": "Comment exporter ton historique de discussions Telegram",
+  "description": "Exporte une discussion Telegram ou tout ton compte avec Telegram Desktop : JSON ou HTML, quoi décocher pour un fichier léger, pourquoi ce n’est pas possible sur mobile et quoi faire du fichier.",
+  "article": "2026-10-18",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/chat-telegram-640.webp" srcset="/assets/img/art/chat-telegram-320.webp 320w, /assets/img/art/chat-telegram-640.webp 640w, /assets/img/art/chat-telegram-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Telegram</span>
+      <h1 class="h1">Comment exporter ton <span class="serif grad">historique Telegram</span></h1>
+      <p class="lead">Telegram peut enregistrer une discussion, un groupe, une chaîne ou tout ton compte sous forme de fichiers sur ton ordinateur. L’option se trouve dans Telegram Desktop, pas dans l’appli mobile. Voici la méthode la plus rapide.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>La réponse courte</h2>
+      <ol>
+        <li>Installe <strong>Telegram Desktop</strong> sur ton ordinateur et connecte-toi.</li>
+        <li>Ouvre la discussion, clique sur <strong>⋮</strong> en haut à droite et choisis <strong>Exporter l’historique</strong>.</li>
+        <li>Décoche photos, vidéos et fichiers, et choisis le format <strong>JSON lisible par machine</strong>.</li>
+        <li>Clique sur <strong>Exporter</strong>. Tu obtiens un dossier avec un fichier <code>result.json</code>.</li>
+      </ol>
+
+      <h2>Exporter une discussion ou un groupe</h2>
+      <ol>
+        <li>Dans Telegram Desktop, ouvre la discussion, le groupe ou la chaîne.</li>
+        <li>Clique sur les <strong>trois points</strong> (⋮) en haut à droite → <strong>Exporter l’historique</strong>.</li>
+        <li>Choisis ce qu’il faut inclure. Pour le texte et les stats, décoche <strong>Photos</strong>, <strong>Vidéos</strong>, <strong>Messages vocaux</strong> et <strong>Fichiers</strong>. L’export reste léger et rapide, même avec des années de messages.</li>
+        <li>Choisis une période si tu n’as besoin que d’une partie, sinon laisse tout l’historique.</li>
+        <li>Sous <strong>Format</strong>, choisis <strong>HTML</strong> pour le lire dans un navigateur ou <strong>JSON lisible par machine</strong> pour l’analyser.</li>
+        <li>Clique sur <strong>Exporter</strong> et patiente. Telegram enregistre un dossier comme <code>ChatExport_2026-10-18</code> dans tes Téléchargements.</li>
+      </ol>
+
+      <h2>Exporter tout ton compte Telegram</h2>
+      <p>Va dans <strong>Paramètres</strong> → <strong>Avancé</strong> → <strong>Exporter les données Telegram</strong>. Tu peux inclure ton profil, tes contacts, tes discussions privées, tes groupes et tes chaînes. Par sécurité, Telegram peut te demander de confirmer l’export depuis un autre appareil connecté, et sur un ordinateur fraîchement connecté il peut te faire patienter avant le début de l’export.</p>
+
+      <h2>JSON ou HTML ?</h2>
+      <ul>
+        <li><strong>HTML</strong> ressemble à la discussion et s’ouvre dans n’importe quel navigateur. Idéal pour lire ou archiver.</li>
+        <li><strong>JSON</strong> est un fichier structuré avec chaque message, expéditeur et horodatage. Les outils le lisent de façon fiable, donc choisis JSON si tu veux des stats.</li>
+      </ul>
+      <p>Si tu hésites, exporte les deux l’un après l’autre : sans médias, ça prend une minute.</p>
+
+      <h2>Pourquoi je ne peux pas exporter sur mon téléphone ?</h2>
+      <p>Les applis Telegram pour iPhone et Android n’ont pas d’export de l’historique. Il te faut Telegram Desktop pour Windows, macOS ou Linux. Sur Mac, si la version de l’App Store n’affiche pas l’option, utilise Telegram Desktop depuis le site de Telegram. Les discussions secrètes ne peuvent pas être exportées, car elles n’existent que sur l’appareil où elles ont été lancées.</p>
+
+      <h2>Ce que tu peux faire avec l’export</h2>
+      <ul>
+        <li><strong>Garder une sauvegarde</strong> d’un groupe avant de le quitter ou qu’il soit supprimé.</li>
+        <li><strong>Chercher d’anciens messages</strong> hors ligne.</li>
+        <li><strong>Voir les statistiques :</strong> dépose <code>result.json</code> sur l’<a href="/telegram-chat-analyzer/">analyseur de discussions Telegram</a> pour voir qui parle le plus, qui répond le plus vite, quand vous discutez, les mots et emojis favoris et votre plus longue série.</li>
+      </ul>
+      <p>Unwrapped lit le fichier dans ton navigateur. Les messages et les noms ne quittent jamais ton ordinateur.</p>
+      <div class="read-next"><h2>À lire aussi</h2><ul><li><a href="/blog/how-to-export-whatsapp-chat/">Comment exporter une discussion WhatsApp</a></li><li><a href="/blog/who-leaves-you-on-read-instagram/">Qui te laisse en vu sur Instagram ?</a></li><li><a href="/blog/spotify-extended-streaming-history/">Comment obtenir ton historique d’écoute étendu Spotify</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Telegram prévient-il l’autre personne si j’exporte une discussion ?</summary><div class="answer"><p>Non. L’export enregistre seulement une copie sur ton ordinateur. Personne dans la discussion n’est prévenu.</p></div></details>
+      <details><summary>Où Telegram enregistre-t-il l’export ?</summary><div class="answer"><p>Par défaut dans ton dossier Téléchargements, sous Telegram Desktop, dans un dossier ChatExport daté. Tu peux changer l’emplacement avant de commencer.</p></div></details>
+      <details><summary>Puis-je exporter une chaîne ou un groupe dont je ne suis pas admin ?</summary><div class="answer"><p>En général oui, tant que tu peux voir les messages. Les groupes et chaînes avec la protection du contenu activée bloquent l’enregistrement et l’export.</p></div></details>
+      <details><summary>Pourquoi mon export est-il si lent ?</summary><div class="answer"><p>Les médias alourdissent les exports. Décoche photos, vidéos, messages vocaux et fichiers, et l’export texte même d’une grosse discussion se termine vite.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
