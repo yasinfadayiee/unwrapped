@@ -1637,4 +1637,5 @@ export default {
   "Launching soon": "Yakında",
   "Unwrapped Growth is in private beta while Instagram reviews our app.": "Unwrapped Growth, Instagram uygulamamızı incelerken özel beta aşamasında.",
   "Could not load your accounts. Please refresh.": "Hesapların yüklenemedi. Lütfen sayfayı yenile.",
+  "{n} exports analyzed in the last 30 days": "Son 30 günde {n} dışa aktarma analiz edildi",
 };

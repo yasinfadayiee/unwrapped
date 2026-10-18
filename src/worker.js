@@ -14,7 +14,7 @@ import { emailEnabled, sendRenewalReminders } from './email.js';
 import { handleAdmin } from './admin.js';
 import { attachReferral, discounted, getReferralForLicense, validReferral } from './referrals.js';
 import { isEmail, normalizeLicenseKey } from './util.js';
-import { recordHit } from './stats.js';
+import { publicStats, recordHit } from './stats.js';
 
 async function enabledMethods(env) {
   const methods = [];
@@ -156,6 +156,8 @@ async function route(request, env, ctx, url) {
       return handleNowpaymentsIpn(request, env);
     case 'POST /api/hit':
       return recordHit(request, env);
+    case 'GET /api/stats':
+      return publicStats(env);
     case 'GET /api/health':
       return json({ ok: true, time: Date.now() });
     case 'POST /api/dev/pay':

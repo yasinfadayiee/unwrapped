@@ -235,7 +235,8 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       // Most buyers have never paid with crypto: a short, honest how-to.
       h(
         'details',
-        { class: 'crypto-help' },
+        // Open for first-time buyers: no crypto is the most common reason to stop here.
+        { class: 'crypto-help', open: !state.pro && !renewKey },
         h('summary', null, t('New to crypto? How to pay in a few minutes')),
         h(
           'ol',

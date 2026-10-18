@@ -82,6 +82,7 @@ function themePicker() {
 
 /* ---------- reveal + spotlight ---------- */
 function reveals() {
+  document.documentElement.classList.add('reveal-ready');
   const items = $$('.reveal');
   if (!items.length) return;
   if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
@@ -100,6 +101,21 @@ function reveals() {
     { rootMargin: '0px 0px -8% 0px' },
   );
   items.forEach((i) => io.observe(i));
+}
+
+// Real usage, shown next to the drop zone's trust badges once there is enough of it.
+async function liveCount() {
+  const row = $('.trust-row');
+  if (!row) return;
+  try {
+    const res = await fetch('/api/stats');
+    const { analyzed30d: n } = await res.json();
+    if (!n) return;
+    const num = new Intl.NumberFormat(document.documentElement.lang || 'en').format(n);
+    row.append(h('span', { class: 'live-count' }, icon('users'), t('{n} exports analyzed in the last 30 days', { n: num })));
+  } catch {
+    /* offline or old server: keep the static badges */
+  }
 }
 
 function spotlight() {
@@ -559,6 +575,7 @@ inAppBrowserNotice();
 supportContact();
 import('./lib/stats.js').then(({ trackView }) => trackView()).catch(() => {});
 reveals();
+liveCount();
 spotlight();
 dropZones();
 tabs();

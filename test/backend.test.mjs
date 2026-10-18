@@ -414,3 +414,12 @@ test('checkout is rate limited per visitor and validates input', async () => {
   for (let i = 0; i < 9; i++) last = await call('POST', '/api/checkout', { plan: 'month', method: 'tron' }, { 'cf-connecting-ip': '192.0.2.50' });
   assert.equal(last.status, 429);
 });
+
+test('public stats show analyses only once there are enough of them', async () => {
+  const { body: few } = await call('GET', '/api/stats');
+  assert.equal(few.analyzed30d, null);
+  const day = Math.floor(Date.now() / 86_400_000);
+  await env.DB.prepare("INSERT INTO stats (day, kind, key, n) VALUES (?, 'event', 'analyze', 140), (?, 'event', 'analyze', 60), (?, 'event', 'analyze', 999)").bind(day, day - 3, day - 40).run();
+  const { body } = await call('GET', '/api/stats');
+  assert.equal(body.analyzed30d, 200);
+});

@@ -1649,4 +1649,5 @@ export default {
   "Launching soon": "Bientôt disponible",
   "Unwrapped Growth is in private beta while Instagram reviews our app.": "Unwrapped Growth est en bêta privée pendant qu'Instagram examine notre appli.",
   "Could not load your accounts. Please refresh.": "Impossible de charger tes comptes. Actualise la page.",
+  "{n} exports analyzed in the last 30 days": "{n} exports analysés ces 30 derniers jours",
 };

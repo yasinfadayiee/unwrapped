@@ -46,6 +46,15 @@ export async function recordHit(request, env) {
   return new Response(null, { status: 204 });
 }
 
+// Public social proof: how many exports were analyzed (real counters only).
+// Below `min` the number is withheld, so a quiet week never shows "3".
+export async function publicStats(env, min = 100) {
+  const from = Math.floor(Date.now() / DAY) - 29;
+  const row = await env.DB.prepare("SELECT COALESCE(SUM(n), 0) AS n FROM stats WHERE kind = 'event' AND key = 'analyze' AND day >= ?").bind(from).first();
+  const n = row?.n || 0;
+  return json({ ok: true, analyzed30d: n >= min ? n : null }, 200, { 'cache-control': 'public, max-age=900' });
+}
+
 // Last 30 days for the owner dashboard.
 export async function statsSummary(env) {
   const from = Math.floor(Date.now() / DAY) - 29;
