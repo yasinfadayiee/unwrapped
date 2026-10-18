@@ -385,7 +385,7 @@ function stickyCta() {
   const drop = $('.hero .drop, .hero [data-drop]');
   if (!bar || !drop || !('IntersectionObserver' in window)) return;
   const seen = new Map();
-  const update = () => bar.classList.toggle('is-on', !seen.get('drop') && !seen.get('cta') && !seen.get('foot'));
+  const update = () => bar.classList.toggle('is-on', ![...seen.values()].some(Boolean));
   const watch = (el, key) => {
     if (!el) return;
     new IntersectionObserver(([e]) => {
@@ -395,6 +395,7 @@ function stickyCta() {
   };
   seen.set('drop', true);
   watch(drop, 'drop');
+  watch($('.hero-cta'), 'hero');
   watch($('.cta-band'), 'cta');
   watch($('.site-footer'), 'foot');
 }
@@ -501,20 +502,23 @@ async function heroCanvas() {
 /* ---------- hero video ---------- */
 // The hero picture becomes a short looping clip on wider screens, once the page
 // is idle. Phones, data-saver and reduced-motion users keep the still image.
-async function heroVideo() {
-  const box = $('[data-hero-video]');
-  if (!box || innerWidth < 760 || navigator.connection?.saveData || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (document.readyState !== 'complete') await new Promise((r) => addEventListener('load', r, { once: true }));
-  await new Promise((r) => (window.requestIdleCallback ? requestIdleCallback(r, { timeout: 3000 }) : setTimeout(r, 1500)));
-  const img = box.querySelector('img');
-  const v = h('video', { muted: true, loop: true, playsInline: true, autoplay: true, preload: 'auto', poster: img.currentSrc, width: img.width, height: img.height });
-  v.muted = true;
-  v.src = box.dataset.heroVideo;
-  v.className = 'hero-video';
-  // Sits on top of the picture and fades in once it actually plays.
-  v.addEventListener('playing', () => v.classList.add('is-playing'), { once: true });
-  box.append(v);
-  v.play().catch(() => v.remove());
+// Hero preview: the counts tick up as the "answers" appear (timed to the CSS).
+function heroDemo() {
+  const nums = $$('.hero-demo [data-count]');
+  if (!nums.length || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  nums.forEach((el, i) => {
+    const end = Number(el.dataset.count);
+    el.textContent = '0';
+    setTimeout(() => {
+      const t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / 900);
+        el.textContent = String(Math.round(end * (1 - (1 - p) ** 3)));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, 2250 + i * 80);
+  });
 }
 
 /* ---------- misc ---------- */
@@ -609,7 +613,7 @@ tabs();
 checkoutTriggers();
 misc();
 heroCanvas();
-heroVideo();
+heroDemo();
 showcase();
 netMonitor();
 stickyCta();
