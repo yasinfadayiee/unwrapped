@@ -28,7 +28,9 @@ export async function signIpnBody(secret, body) {
   return hmacHex('SHA-512', String(secret).trim(), JSON.stringify(sortObject(body)));
 }
 
-export async function createNowpaymentsOrder(env, request, { plan, priceUsd = plan.priceUsd, email, renewKey, visitor }) {
+// `returnPath` sends the buyer back somewhere other than the license success
+// page (Growth returns to its dashboard).
+export async function createNowpaymentsOrder(env, request, { plan, priceUsd = plan.priceUsd, email, renewKey, visitor, returnPath }) {
   const order = await insertOrder(env, {
     plan: plan.id,
     price_usd: priceUsd,
@@ -47,8 +49,8 @@ export async function createNowpaymentsOrder(env, request, { plan, priceUsd = pl
       order_id: order.id,
       order_description: `${brand(env)} ${plan.name}`,
       ipn_callback_url: `${site}/api/webhook/nowpayments`,
-      success_url: `${site}/success/?order=${order.id}&t=${order.token}`,
-      cancel_url: `${site}/#pricing`,
+      success_url: returnPath ? `${site}${returnPath}#paid=${order.id}` : `${site}/success/?order=${order.id}&t=${order.token}`,
+      cancel_url: returnPath ? `${site}${returnPath}` : `${site}/#pricing`,
       // Fixed-rate quotes raise NOWPayments' per-coin minimums above our $5 plans.
       is_fixed_rate: false,
       is_fee_paid_by_user: false,

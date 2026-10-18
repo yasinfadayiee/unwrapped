@@ -1,8 +1,9 @@
-import { SETTINGS, getPlan } from './config.js';
+import { SETTINGS, getGrowthPlan, getPlan } from './config.js';
 import { getOrder, getLicense, logEvent } from './db.js';
 import { grantLicense, issueToken, licenseView } from './license.js';
 import { sendLicenseEmail } from './email.js';
 import { creditReferral } from './referrals.js';
+import { fulfillGrowthOrder } from './growth/billing.js';
 import { MINUTE, randomId, formatUsdt, timingSafeEqual } from './util.js';
 
 export async function insertOrder(env, fields) {
@@ -54,6 +55,13 @@ export async function fulfillOrder(env, order, { providerRef = null, paidUnits =
     .bind(now, providerRef, paidUnits, order.id)
     .run();
   if (!flipped.meta || !flipped.meta.changes) return null;
+
+  const growth = getGrowthPlan(order.plan);
+  if (growth) {
+    const paidUntil = await fulfillGrowthOrder(env, order, growth);
+    await logEvent(env, 'order.paid', order.id, { method: order.method, plan: order.plan, providerRef, paidUntil });
+    return { growth: true, paidUntil };
+  }
 
   const plan = getPlan(order.plan);
   const license = await grantLicense(env, {

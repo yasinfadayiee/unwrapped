@@ -2,50 +2,16 @@
 // comment-to-DM). Owners sign in with the platform's own OAuth; a random session
 // token in their browser is the only "account" we keep.
 
-import { siteUrl } from '../config.js';
+import { GROWTH_PLANS, SETTINGS, getGrowthPlan, siteUrl } from '../config.js';
 import { logEvent } from '../db.js';
 import { HttpError, fail, json, rateLimit, readJson, visitorId } from '../http.js';
 import { DAY } from '../util.js';
 import { seal, open, randomId } from './vault.js';
 import * as ig from './instagram.js';
+import { createNowpaymentsOrder, nowpaymentsEnabled } from '../payments/nowpayments.js';
+import { ensureGrowthSchema } from './schema.js';
 
-export const GROWTH_SCHEMA = [
-  `CREATE TABLE IF NOT EXISTS growth_accounts (
-    id TEXT PRIMARY KEY,
-    platform TEXT NOT NULL,
-    ext_id TEXT NOT NULL,
-    username TEXT,
-    token_enc TEXT NOT NULL,
-    token_expires INTEGER,
-    token_refreshed INTEGER,
-    session TEXT NOT NULL,
-    paid_until INTEGER,
-    created_at INTEGER NOT NULL
-  )`,
-  'CREATE INDEX IF NOT EXISTS growth_accounts_session ON growth_accounts (session)',
-  // One trial per platform account, forever — survives disconnecting.
-  'CREATE TABLE IF NOT EXISTS growth_trials (account_id TEXT PRIMARY KEY, started_at INTEGER NOT NULL, sent INTEGER NOT NULL DEFAULT 0)',
-  `CREATE TABLE IF NOT EXISTS growth_rules (
-    id TEXT PRIMARY KEY,
-    account_id TEXT NOT NULL,
-    keyword TEXT NOT NULL,
-    dm_text TEXT NOT NULL,
-    public_reply TEXT,
-    media_id TEXT,
-    active INTEGER NOT NULL DEFAULT 1,
-    created_at INTEGER NOT NULL
-  )`,
-  // Every comment handled once (Meta may deliver a webhook twice).
-  'CREATE TABLE IF NOT EXISTS growth_sent (account_id TEXT NOT NULL, comment_id TEXT NOT NULL, rule_id TEXT, ts INTEGER NOT NULL, ok INTEGER NOT NULL, PRIMARY KEY (account_id, comment_id))',
-  'CREATE TABLE IF NOT EXISTS growth_states (state TEXT PRIMARY KEY, session TEXT NOT NULL, created_at INTEGER NOT NULL)',
-];
-
-const ready = new WeakMap();
-export async function ensureGrowthSchema(env) {
-  if (ready.get(env.DB)) return;
-  await env.DB.batch(GROWTH_SCHEMA.map((sql) => env.DB.prepare(sql)));
-  ready.set(env.DB, true);
-}
+export { GROWTH_SCHEMA, ensureGrowthSchema } from './schema.js';
 
 export const TRIAL = { days: 7, messages: 100 };
 const MAX_RULES = 20;
@@ -118,6 +84,8 @@ export async function handleGrowth(request, env, url, ctx) {
       return deleteRule(request, env);
     case 'POST /api/growth/disconnect':
       return disconnect(request, env);
+    case 'POST /api/growth/checkout':
+      return checkout(request, env);
   }
   return fail(404, 'not_found');
 }
@@ -150,11 +118,11 @@ async function instagramCallback(request, env, url) {
   const id = `ig:${prof.userId}`;
   const now = Date.now();
   await env.DB.prepare(
-    `INSERT INTO growth_accounts (id, platform, ext_id, username, token_enc, token_expires, token_refreshed, session, created_at)
-     VALUES (?, 'instagram', ?, ?, ?, ?, ?, ?, ?)
+    `INSERT INTO growth_accounts (id, platform, ext_id, username, token_enc, token_expires, token_refreshed, session, paid_until, created_at)
+     VALUES (?, 'instagram', ?, ?, ?, ?, ?, ?, (SELECT paid_until FROM growth_paid WHERE account_id = ?), ?)
      ON CONFLICT(id) DO UPDATE SET username = excluded.username, token_enc = excluded.token_enc, token_expires = excluded.token_expires, token_refreshed = excluded.token_refreshed, session = excluded.session`,
   )
-    .bind(id, prof.userId, prof.username, await seal(env, prof.token), prof.expiresAt, now, row.session, now)
+    .bind(id, prof.userId, prof.username, await seal(env, prof.token), prof.expiresAt, now, row.session, id, now)
     .run();
   await logEvent(env, 'growth.connected', id, { username: prof.username });
   return back(`session=${row.session}`);
@@ -223,7 +191,7 @@ async function me(request, env) {
     const stats = await env.DB.prepare('SELECT COUNT(*) AS n, SUM(ok) AS ok, SUM(CASE WHEN ts > ? THEN ok ELSE 0 END) AS week FROM growth_sent WHERE account_id = ?').bind(Date.now() - 7 * DAY, a.id).first();
     out.push({ ...publicAccount(a, trial, rules), stats: { total: stats?.ok || 0, week: stats?.week || 0 } });
   }
-  return json({ ok: true, accounts: out, trial: TRIAL });
+  return json({ ok: true, accounts: out, trial: TRIAL, plans: GROWTH_PLANS, payments: nowpaymentsEnabled(env) });
 }
 
 async function ownAccount(env, request, accountId) {
@@ -267,6 +235,22 @@ async function disconnect(request, env) {
   ]);
   await logEvent(env, 'growth.disconnected', account.id, null);
   return json({ ok: true });
+}
+
+// Growth is paid per account through a NOWPayments invoice (USDT and other
+// coins); the paid order extends that account's time in billing.js.
+async function checkout(request, env) {
+  const visitor = await visitorId(request, env);
+  await rateLimit(env, 'checkout', visitor, SETTINGS.maxCheckoutsPerHour);
+  const body = await readJson(request);
+  const account = await ownAccount(env, request, String(body.accountId || ''));
+  const plan = getGrowthPlan(String(body.plan || GROWTH_PLANS[0].id));
+  if (!plan) throw new HttpError(400, 'unknown_plan');
+  if (!nowpaymentsEnabled(env)) throw new HttpError(400, 'method_unavailable');
+  const order = await createNowpaymentsOrder(env, request, { plan, email: null, renewKey: null, visitor, returnPath: '/growth/' });
+  await env.DB.prepare('INSERT INTO growth_orders (order_id, account_id) VALUES (?, ?)').bind(order.id, account.id).run();
+  await logEvent(env, 'order.created', order.id, { plan: plan.id, method: 'nowpayments', account: account.id });
+  return json({ ok: true, redirectUrl: order.redirect_url });
 }
 
 // ---------- cron ----------

@@ -13,6 +13,7 @@ const ERRORS = {
   denied: 'Instagram access was not granted. Nothing was connected.',
   connect: 'Instagram did not accept the connection. Make sure your account is a Business or Creator account, then try again.',
 };
+const PAID_NOTE = 'Thanks! Your payment is being confirmed on the network. Growth switches to paid automatically within a few minutes — refresh this page to check.';
 
 function connectButton(label = 'Connect Instagram') {
   const s = getSession();
@@ -69,9 +70,33 @@ function accessLine(a) {
   return h('span', { class: 'badge', style: { background: 'rgba(224,87,74,.18)', color: '#ff8a7e' } }, 'Trial ended — subscribe to keep it running');
 }
 
-function render(data) {
-  if (!data.accounts.length) return intro();
+const money = (n) => `$${Number(n).toFixed(Number.isInteger(n) ? 0 : 2)}`;
+
+// Pay for 30 more days of this account (NOWPayments invoice, USDT and other coins).
+function payButton(a, data) {
+  const plan = data.plans?.[0];
+  if (!plan || !data.payments) {
+    return a.access.mode === 'expired' ? h('p', { class: 'small text-2' }, 'Payments are being set up. Please check back soon.') : '';
+  }
+  const label = a.access.mode === 'paid' ? `Add ${plan.days} days · ${money(plan.priceUsd)}` : `Subscribe · ${money(plan.priceUsd)} / ${plan.days} days`;
+  const btn = h('button', { class: a.access.mode === 'expired' ? 'btn btn--primary' : 'btn btn--ghost btn--sm', type: 'button' }, label);
+  btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    try {
+      const res = await api('/api/growth/checkout', { method: 'POST', headers: auth(), body: { accountId: a.id, plan: plan.id } });
+      location.href = res.redirectUrl;
+    } catch (err) {
+      toast(err?.code === 'too_many_requests' ? 'Too many attempts — please wait a few minutes.' : 'The payment provider did not respond. Please try again.', { iconName: 'warning' });
+      btn.disabled = false;
+    }
+  });
+  return h('div', { class: 'stack', style: { '--stack': '6px' } }, btn, h('p', { class: 'small text-2', style: { margin: 0 } }, 'Pay with USDT or 150+ other coins. No auto-renewal; paying early adds to the time left.'));
+}
+
+function render(data, note) {
+  if (!data.accounts.length) return intro(note);
   clear(root);
+  if (note) root.append(h('div', { class: 'card card--pad', role: 'status' }, note));
   for (const a of data.accounts) {
     const rules = h(
       'div',
@@ -100,6 +125,7 @@ function render(data) {
         h('div', { style: { display: 'flex', gap: '12px', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' } }, h('div', { class: 'h3' }, `@${a.username}`), accessLine(a)),
         h('div', { class: 'proof', style: { display: 'flex', gap: '24px' } }, h('div', null, h('b', { class: 'h2' }, String(a.stats.week)), h('div', { class: 'small text-2' }, 'DMs this week')), h('div', null, h('b', { class: 'h2' }, String(a.stats.total)), h('div', { class: 'small text-2' }, 'DMs in total'))),
         h('h3', { class: 'h3' }, 'Keyword rules'),
+        payButton(a, data),
         rules,
         h('details', null, h('summary', null, 'Add a rule'), h('div', { style: { marginTop: '12px' } }, ruleForm(a, null, render))),
         h('div', null, off),
@@ -112,7 +138,7 @@ function render(data) {
 async function load(note) {
   if (!getSession()) return intro(note);
   try {
-    render(await api('/api/growth/me', { headers: auth() }));
+    render(await api('/api/growth/me', { headers: auth() }), note);
   } catch (err) {
     if (err instanceof ApiError && err.status === 401) {
       setSession('');
@@ -128,6 +154,6 @@ async function load(note) {
 
 const hash = new URLSearchParams(location.hash.slice(1));
 if (hash.get('session')) setSession(hash.get('session'));
-const note = ERRORS[hash.get('error')] || '';
+const note = hash.get('paid') ? PAID_NOTE : ERRORS[hash.get('error')] || '';
 if (location.hash) history.replaceState(null, '', location.pathname);
 load(note);

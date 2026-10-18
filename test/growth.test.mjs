@@ -125,3 +125,63 @@ test('webhook verification and session checks', async () => {
   const session = await connect();
   assert.equal((await api('POST', '/api/growth/rules', session, { accountId: 'ig:other', keyword: 'a', dmText: 'b' })).status, 404);
 });
+
+test('paying for Growth extends the account, survives reconnecting and stacks on renewal', async () => {
+  Object.assign(env, { DEV_MODE: '1', NOWPAYMENTS_API_KEY: 'np-key', NOWPAYMENTS_IPN_SECRET: 'np-secret' });
+  const invoices = [];
+  const fakeFetch = globalThis.fetch;
+  globalThis.fetch = async (input, init = {}) => {
+    const url = new URL(typeof input === 'string' ? input : input.url);
+    if (url.hostname === 'api.nowpayments.io' && url.pathname === '/v1/invoice') {
+      const body = JSON.parse(init.body);
+      invoices.push(body);
+      return Response.json({ id: `inv_${body.order_id}`, invoice_url: `https://nowpayments.io/payment/?iid=${body.order_id}` }, { status: 201 });
+    }
+    return fakeFetch(input, init);
+  };
+  const session = await connect();
+  let me = await api('GET', '/api/growth/me', session);
+  assert.equal(me.body.payments, true);
+  assert.equal(me.body.plans[0].id, 'growth-month');
+
+  assert.equal((await api('POST', '/api/growth/checkout', session, { accountId: 'ig:other' })).status, 404);
+  assert.equal((await api('POST', '/api/growth/checkout', session, { accountId: 'ig:1784', plan: 'pro-month' })).status, 400);
+  const co = await api('POST', '/api/growth/checkout', session, { accountId: 'ig:1784', plan: 'growth-month' });
+  assert.match(co.body.redirectUrl, /^https:\/\/nowpayments\.io\/payment/);
+  assert.equal(invoices[0].price_amount, 9);
+  assert.match(invoices[0].success_url, /^https:\/\/shop\.test\/growth\/#paid=/);
+  const orderId = invoices[0].order_id;
+
+  // Trial used up, then the payment lands.
+  await env.DB.prepare('INSERT INTO growth_trials (account_id, started_at, sent) VALUES (?, ?, ?)').bind('ig:1784', Date.now(), TRIAL.messages).run();
+  assert.equal((await api('GET', '/api/growth/me', session)).body.accounts[0].access.mode, 'expired');
+  await api('POST', '/api/dev/pay', null, { id: orderId });
+  me = await api('GET', '/api/growth/me', session);
+  const until = me.body.accounts[0].access.until;
+  assert.equal(me.body.accounts[0].access.mode, 'paid');
+  assert.ok(Math.abs(until - (Date.now() + 30 * 86_400_000)) < 60_000);
+  assert.equal((await env.DB.prepare('SELECT COUNT(*) AS n FROM licenses').first()).n, 0, 'no license is created');
+
+  await api('POST', '/api/growth/rules', session, { accountId: 'ig:1784', keyword: 'link', dmText: 'here' });
+  await comment('link', { id: 'p1' });
+  assert.equal(sentDMs.length, 1);
+
+  // Disconnect and reconnect: the paid time comes back.
+  await api('POST', '/api/growth/disconnect', session, { accountId: 'ig:1784' });
+  const again = await connect();
+  assert.equal((await api('GET', '/api/growth/me', again)).body.accounts[0].access.until, until);
+
+  // Paying again while active adds 30 days on top.
+  await api('POST', '/api/growth/checkout', again, { accountId: 'ig:1784' });
+  await api('POST', '/api/dev/pay', null, { id: invoices[1].order_id });
+  await api('POST', '/api/dev/pay', null, { id: invoices[1].order_id }); // paid twice is still one extension
+  assert.equal((await api('GET', '/api/growth/me', again)).body.accounts[0].access.until, until + 30 * 86_400_000);
+});
+
+test('Growth checkout needs a payment provider', async () => {
+  const session = await connect();
+  assert.equal((await api('GET', '/api/growth/me', session)).body.payments, false);
+  const res = await api('POST', '/api/growth/checkout', session, { accountId: 'ig:1784' });
+  assert.equal(res.status, 400);
+  assert.equal(res.body.error, 'method_unavailable');
+});
