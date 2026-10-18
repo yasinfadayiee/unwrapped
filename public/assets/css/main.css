@@ -167,6 +167,12 @@
 .works-with a { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(var(--fg-rgb), 0.03); color: var(--text-2); font-size: 13px; font-weight: 600; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
 .works-with a:hover { border-color: var(--signal); color: var(--text); }
 
+/* Tools page: jump links to each goal, sticky under the header */
+.tools-nav { position: sticky; top: calc(var(--header-h) + 8px); z-index: 20; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px; margin: 0 auto 8px; width: fit-content; max-width: 100%; border-radius: 999px; background: rgba(var(--shade-rgb), 0.72); border: 1px solid var(--line); backdrop-filter: blur(12px); }
+.tools-nav a { padding: 7px 14px; border-radius: 999px; color: var(--text-2); font-size: 13.5px; font-weight: 600; text-decoration: none; }
+.tools-nav a:hover { color: var(--text); background: rgba(var(--fg-rgb), 0.06); }
+.tools-group[id] { scroll-margin-top: calc(var(--header-h) + 80px); }
+@media (max-width: 640px) { .tools-nav { border-radius: 18px; } }
 #what .tools-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
 
 /* Theme picker */
@@ -1183,7 +1189,7 @@ button.stat:hover { border-color: var(--line-3); transform: translateY(-2px); }
 /* ---------- tools hub ---------- */
 .tools-group { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin: 44px 0 16px; }
 .tools-group:first-child { margin-top: 0; }
-.tools-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); }
+.tools-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
 .tool-tile { display: grid; gap: 10px; align-content: start; padding: 22px; text-decoration: none; color: inherit; transition: transform 0.25s var(--ease), border-color 0.2s; }
 .tool-tile:hover { transform: translateY(-3px); border-color: var(--line-3); }
 .tool-top { display: flex; justify-content: space-between; align-items: center; }
