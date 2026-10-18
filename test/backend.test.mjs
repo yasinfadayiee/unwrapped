@@ -279,13 +279,14 @@ test('anonymous site stats count views, referrers and funnel events', async () =
   assert.equal((await hit({ k: 'view', p: '/es/pricing/', r: 'www.google.com', l: 'es' })).status, 204);
   await hit({ k: 'view', p: '/es/pricing/', r: 'shop.test', l: 'es' });
   await hit({ k: 'analyze' });
+  for (let i = 0; i < 12; i++) await hit({ k: 'analyze' }); // the public count can't be pumped
   assert.equal((await hit({ k: 'view', p: 'javascript:alert(1)' })).status, 400);
   assert.equal((await hit({ k: 'nope' })).status, 400);
   assert.equal((await hit({ k: 'tool', t: 'timeline' })).status, 204);
   assert.equal((await hit({ k: 'tool', t: '../x' })).status, 400);
   const { body } = await call('GET', '/api/admin/stats', undefined, { authorization: `Bearer ${env.ADMIN_TOKEN}` });
   assert.equal(body.events.view, 2);
-  assert.equal(body.events.analyze, 1);
+  assert.equal(body.events.analyze, 10);
   assert.deepEqual(body.pages, [{ key: '/es/pricing/', n: 2 }]);
   assert.deepEqual(body.tools, [{ key: 'timeline', n: 1 }]);
   assert.deepEqual(body.refs.map((r) => r.key).sort(), ['(direct)', 'google.com']);
