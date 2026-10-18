@@ -51,5 +51,8 @@
   "fTweets": "Busque e limpe tweets antigos",
   "fLikes": "Curtidas e comentários do Instagram",
   "fAge": "Quando entrei no Instagram?",
-  "theme": "Tema de cores"
+  "theme": "Tema de cores",
+  "articlePublished": "Publicado em",
+  "articleUpdated": "Atualizado em",
+  "readTime": "{n} min de leitura"
 }

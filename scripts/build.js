@@ -216,6 +216,16 @@ for (const { loc, file, meta, body } of pages) {
     });
   }
   content = content.replaceAll('{{siteName}}', site.name).replaceAll('{{origin}}', origin);
+  // Articles show their date and reading time under the intro, matching the
+  // Article structured data (search engines prefer a visible date).
+  if (meta.article) {
+    const iso = meta.updated || meta.article;
+    const date = new Intl.DateTimeFormat(loc.hreflang, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(iso));
+    const minutes = Math.max(2, Math.round(stripTags(body).split(' ').length / 230));
+    const label = meta.updated ? strings.articleUpdated : strings.articlePublished;
+    const line = `<p class="article-meta"><span>${esc(label)} <time datetime="${iso}">${esc(date)}</time></span><span>${esc(strings.readTime.replace('{n}', minutes))}</span></p>`;
+    content = content.replace(/(<p class="lead">[\s\S]*?<\/p>)/, `$1\n      ${line}`);
+  }
 
   const url = urlOf(loc, meta.route);
   const canonical = `${origin}${url.replace(/index\.html$/, '')}`;

@@ -51,5 +51,8 @@
   "fTweets": "Alte Tweets durchsuchen & aufräumen",
   "fLikes": "Instagram-Likes & Kommentare",
   "fAge": "Wann bin ich Instagram beigetreten?",
-  "theme": "Farbthema"
+  "theme": "Farbthema",
+  "articlePublished": "Veröffentlicht am",
+  "articleUpdated": "Aktualisiert am",
+  "readTime": "{n} Min. Lesezeit"
 }

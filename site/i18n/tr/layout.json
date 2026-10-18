@@ -51,5 +51,8 @@
   "fTweets": "Eski tweet’leri ara ve temizle",
   "fLikes": "Instagram beğenileri ve yorumları",
   "fAge": "Instagram’a ne zaman katıldım?",
-  "theme": "Renk teması"
+  "theme": "Renk teması",
+  "articlePublished": "Yayın tarihi:",
+  "articleUpdated": "Güncelleme:",
+  "readTime": "{n} dk okuma"
 }
