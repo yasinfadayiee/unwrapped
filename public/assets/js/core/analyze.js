@@ -5,6 +5,7 @@ import { detectTikTok, parseTikTok } from '../platforms/tiktok.js';
 import { detectX, parseX } from '../platforms/x.js';
 import { detectFacebook, parseFacebook } from '../platforms/facebook.js';
 import { detectLinkedIn, parseLinkedIn } from '../platforms/linkedin.js';
+import { detectWhatsApp, parseWhatsApp } from '../platforms/whatsapp.js';
 
 const PLATFORMS = [
   { id: 'instagram', detect: detectInstagram, parse: parseInstagram },
@@ -13,6 +14,7 @@ const PLATFORMS = [
   { id: 'x', detect: detectX, parse: parseX },
   { id: 'facebook', detect: detectFacebook, parse: parseFacebook },
   { id: 'linkedin', detect: detectLinkedIn, parse: parseLinkedIn },
+  { id: 'whatsapp', detect: detectWhatsApp, parse: parseWhatsApp },
 ];
 
 // When the export was made: newest modification time of the files we used.

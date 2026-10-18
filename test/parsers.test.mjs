@@ -333,8 +333,8 @@ test('unrecognized uploads get a specific explanation', async () => {
   const { diagnose } = await import('../public/assets/js/core/diagnose.js');
   const vfsOf = async (entries) => buildVfs([asFile(makeZip(entries), 'export.zip')]);
   const ids = (hints) => hints.map((h) => h.id);
-  assert.deepEqual(ids(diagnose(await vfsOf([{ path: 'WhatsApp Chat - Ana/_chat.txt', content: 'hi' }]))), ['other']);
-  assert.equal(diagnose(await vfsOf([{ path: 'WhatsApp Chat - Ana/_chat.txt', content: 'hi' }]))[0].vars.v0, 'WhatsApp');
+  assert.deepEqual(ids(diagnose(await vfsOf([{ path: 'json/snap_history.json', content: '{}' }]))), ['other']);
+  assert.equal(diagnose(await vfsOf([{ path: 'json/snap_history.json', content: '{}' }]))[0].vars.v0, 'Snapchat');
   assert.deepEqual(ids(diagnose(await vfsOf([{ path: 'media/1.jpg', content: 'x' }, { path: 'media/2.mp4', content: 'y' }]))), ['media']);
   assert.deepEqual(ids(diagnose(await vfsOf([{ path: 'notes.json', content: '{}' }]))), ['few']);
   const parts = diagnose({ entries: [] }, [{ name: 'instagram.zip.001' }]);

@@ -1,0 +1,82 @@
+<!--page {
+  "route": "/whatsapp-chat-analyzer/",
+  "nav": "tools",
+  "title": "WhatsApp chat analyzer — stats for any chat, private & free · Unwrapped",
+  "description": "Analyze a WhatsApp chat export: who texts more, reply times, active hours, top words and emojis, streaks. Works with iPhone and Android exports. Nothing is uploaded.",
+  "faqSchema": true
+}-->
+<div class="aurora" aria-hidden="true"></div>
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-top">
+      <span class="chip fade-in" style="--d:.05s"><svg aria-hidden="true" style="width:15px;height:15px"><use href="#i-message"/></svg>WhatsApp · chat stats</span>
+      <h1 class="h1 hero-title" style="max-width:16ch">
+        <span class="line"><span>Your WhatsApp chat,</span></span>
+        <span class="line"><span><span class="serif grad">in numbers.</span></span></span>
+      </h1>
+      <p class="hero-sub">Export any chat from WhatsApp and drop the file here. See <b>who texts more, who replies faster</b>, when you talk, your favourite words and emojis — <b>read on your device, never uploaded.</b></p>
+    </div>
+    <div class="hero-art hero-art--sq fade-in" style="--d:.35s" aria-hidden="true"><img src="/assets/img/art/messages-radar-640.webp" srcset="/assets/img/art/messages-radar-320.webp 320w, /assets/img/art/messages-radar-640.webp 640w, /assets/img/art/messages-radar-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div style="margin-top:40px">{{> dropzone}}</div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container split split--visual">
+    <div class="stack reveal" style="--stack:18px">
+      <span class="eyebrow">What you see</span>
+      <h2 class="h2">Every chat, decoded.</h2>
+      <ul class="checklist">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Who talks more</b> — message share per person, also for groups.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Reply times</b> — who answers fastest and who starts conversations.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>When you talk</b> — by hour, weekday and month, plus your longest streak.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Top words & emojis</b> — overall and per person.</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Media, links and deleted messages</b> per person.</span></li>
+      </ul>
+    </div>
+    <div class="card tool-visual reveal" style="--d:.1s" aria-hidden="true">
+      <div class="flag-list">
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#25d366,#0b3d22)"></span><b>Messages</b><em>12,480</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#25d366,#0b3d22)"></span><b>Reply time</b><em>4 min</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#25d366,#0b3d22)"></span><b>Longest streak</b><em>41</em></div>
+        <div class="flag"><span class="av" style="background:linear-gradient(135deg,#25d366,#0b3d22)"></span><b>Top emoji</b><em>😂</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" id="how">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2 class="h2">Three steps, one minute.</h2></div>
+    <ol class="steps3 reveal">
+      <li><b>Open the chat in WhatsApp</b><span>Tap the name (iPhone) or ⋮ → More (Android) → <b>Export chat</b>. “Without media” is enough and much faster.</span></li>
+      <li><b>Save or send the file to yourself</b><span>You get a .zip (iPhone) or .txt (Android). Save it to Files or your computer.</span></li>
+      <li><b>Drop it here</b><span>The chat is read in your browser. Nothing leaves your device — not even the names.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">WhatsApp chat stats, explained.</h2></div>
+    <div class="faq reveal">
+      <details open><summary>Is it safe to analyze my WhatsApp chat here?</summary><div class="answer"><p>Yes. The file is opened by your browser and never uploaded. You can even turn on airplane mode after the page loads.</p></div></details>
+      <details><summary>Does it work with group chats?</summary><div class="answer"><p>Yes. Every participant gets their own stats; Pro shows a detailed card for each person.</p></div></details>
+      <details><summary>iPhone or Android?</summary><div class="answer"><p>Both. Unwrapped understands both export formats, 12- and 24-hour clocks and day-first or month-first dates.</p></div></details>
+      <details><summary>Does the other person know?</summary><div class="answer"><p>No. Exporting a chat sends no notification, and the analysis happens only on your device.</p></div></details>
+      <details><summary>Is it free?</summary><div class="answer"><p>The chat overview is free. Pro adds full word and emoji rankings and a card for every person.</p></div></details>
+    </div>
+  </div>
+</section>
+
+{{> related-tools}}
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <h2 class="h2" style="max-width:18ch">See your chat <span class="serif grad">in numbers.</span></h2>
+      <div class="drop-actions"><a class="btn btn--primary btn--lg" href="#start">Analyze my chat</a></div>
+    </div>
+  </div>
+</section>

@@ -151,7 +151,7 @@ function lastModified(file, meta) {
 }
 
 // Pages that are tools people use in the browser.
-const TOOL_ROUTES = new Set(['/instagram/', '/tiktok/', '/x/', '/facebook/', '/linkedin/', '/fake-follower-checker/', '/instagram-audit/', '/instagram-dm-analyzer/', '/best-time-to-post/', '/instagram-message-viewer/', '/tiktok-watch-history/', '/instagram-story-archive/', '/search-old-tweets/', '/instagram-liked-posts/', '/instagram-account-age/', '/export-instagram-followers/', '/threads-unfollowers/', '/instagram-follower-tracker/']);
+const TOOL_ROUTES = new Set(['/instagram/', '/tiktok/', '/x/', '/facebook/', '/linkedin/', '/fake-follower-checker/', '/instagram-audit/', '/instagram-dm-analyzer/', '/best-time-to-post/', '/instagram-message-viewer/', '/tiktok-watch-history/', '/instagram-story-archive/', '/search-old-tweets/', '/instagram-liked-posts/', '/instagram-account-age/', '/export-instagram-followers/', '/threads-unfollowers/', '/instagram-follower-tracker/', '/whatsapp-chat-analyzer/']);
 
 function breadcrumbs(loc, meta, strings, pageName) {
   if (meta.route === '/') return null;

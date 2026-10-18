@@ -2,7 +2,6 @@
 // mistakes are the wrong export, a media-only download or a missing ZIP part.
 
 const OTHER_EXPORTS = [
-  { name: 'WhatsApp', test: (e) => /(^|\/)_chat\.txt$|whatsapp chat/i.test(e.path) },
   { name: 'Snapchat', test: (e) => /(^|\/)(memories_history|snap_history|chat_history)\.(json|html)$|snapchat/i.test(e.path) },
   { name: 'Google Takeout', test: (e) => /(^|\/)takeout\//i.test(e.path) },
   { name: 'Telegram', test: (e) => /(^|\/)result\.json$|chatexport_/i.test(e.path) },

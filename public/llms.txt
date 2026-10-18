@@ -16,6 +16,7 @@ Key facts:
 - [Export Instagram followers to CSV/Excel](https://myunwrapped.com/export-instagram-followers/)
 - [Fake follower checker](https://myunwrapped.com/fake-follower-checker/): bot and spam followers with an audience quality grade.
 - [Threads unfollowers](https://myunwrapped.com/threads-unfollowers/)
+- [WhatsApp chat analyzer](https://myunwrapped.com/whatsapp-chat-analyzer/)
 - [TikTok screen time, watch history & unfollowers](https://myunwrapped.com/tiktok/)
 - [X (Twitter) archive viewer & unfollowers](https://myunwrapped.com/x/)
 - [Instagram DM analyzer](https://myunwrapped.com/instagram-dm-analyzer/) and [message viewer](https://myunwrapped.com/instagram-message-viewer/)

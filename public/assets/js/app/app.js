@@ -16,6 +16,7 @@ import { tiktokViews } from './views-tiktok.js';
 import { xViews } from './views-x.js';
 import { facebookViews } from './views-facebook.js';
 import { linkedinViews } from './views-linkedin.js';
+import { whatsappViews } from './views-whatsapp.js';
 import { crossView } from './views-cross.js';
 import { timelineView } from './views-timeline.js';
 
@@ -31,6 +32,7 @@ const VIEW_BUILDERS = {
   x: xViews,
   facebook: facebookViews,
   linkedin: linkedinViews,
+  whatsapp: whatsappViews,
 };
 
 const SECTIONS = ['start', 'people', 'content', 'privacy', 'lab', 'share'];
@@ -253,7 +255,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
           primary.splice(1, 0, { id: 'health', label: tl('Account health'), icon: 'pulse', render: () => healthView(ds, ctx) });
         }
         // One timeline across every dropped export, shown in each tab.
-        primary.push({ id: 'timeline', label: tl('Your digital life'), icon: 'calendar', render: () => timelineView(datasets, ctx) });
+        if (ds.platform !== 'whatsapp') primary.push({ id: 'timeline', label: tl('Your digital life'), icon: 'calendar', render: () => timelineView(datasets, ctx) });
         // The menu is grouped so people find things by what they want to do.
         const all = [...primary, ...lab.map((v) => ({ ...v, section: 'lab' })), ...wrapped.map((v) => ({ ...v, section: 'share' }))];
         for (const v of all) v.section = v.section || SECTION_OF[v.id] || 'content';
@@ -451,7 +453,7 @@ export async function openApp({ files = [], demo = false } = {}) {
     }
     load.close();
     track(demo ? 'demo' : 'analyze');
-    if (!openApp.skipStory) {
+    if (!openApp.skipStory && result.datasets.some((d) => d.platform !== 'whatsapp')) {
       playStory(result.datasets, { onDone: () => active?.root?.querySelector('.app-main')?.focus() });
     }
     active = mount(result, { tier: activeTier, demo, config, netStart, onNewFiles: (f) => openApp({ files: f }) });
