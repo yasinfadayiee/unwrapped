@@ -1,4 +1,6 @@
-import { h } from '../lib/ui.js';
+import { h, icon } from '../lib/ui.js';
+import { effortScore } from '../platforms/whatsapp.js';
+import { drawChatCard, downloadCanvas, shareCanvas } from './chat-card.js';
 import { fmtInt, dateShort } from '../lib/format.js';
 import { viewHead, stat, panel, insights, upsell } from './components.js';
 import { barChart, rankList, splitBar } from './charts.js';
@@ -103,10 +105,61 @@ function chatsView(ds, ctx) {
   );
 }
 
+const PART_LABEL = () => ({ starts: tl('Starts the conversation'), speed: tl('Replies faster'), messages: tl('Sends more messages'), words: tl('Writes longer messages'), doubles: tl('Double-texts after silence') });
+
+function effortView(chat, ctx) {
+  const e = effortScore(chat);
+  const full = ctx.pro || ctx.demo;
+  const winner = e.scoreA >= e.scoreB ? e.a : e.b;
+  const gap = Math.abs(e.scoreA - e.scoreB);
+  const verdict = gap < 6 ? tl('A perfectly balanced friendship.') : gap < 16 ? tl('{v0} puts in a little more effort.', { v0: winner.name }) : tl('{v0} clearly cares more.', { v0: winner.name });
+  const labels = PART_LABEL();
+  return h(
+    'div',
+    { class: 'app-content' },
+    viewHead(tl('Who cares more?'), tl('Five signals from the whole chat, weighed into one effort score.')),
+    panel(
+      { title: verdict },
+      splitBar([
+        { label: e.a.name, value: e.scoreA, color: 'var(--c1)' },
+        { label: e.b.name, value: e.scoreB, color: 'var(--c3)' },
+      ]),
+    ),
+    full
+      ? panel(
+          { title: tl('Why'), text: tl('Each signal shows how much of it comes from {v0}.', { v0: e.a.name }) },
+          rankList(Object.keys(labels).map((k) => ({ key: labels[k], count: Math.round(e.parts[k] * 100) })), { max: 100, valueLabel: (v) => `${v}% · ${100 - v}%` }),
+          h('p', { class: 'text-2' }, tl('Left: {v0} · right: {v1}.', { v0: e.a.name, v1: e.b.name })),
+        )
+      : upsell({ title: gap < 6 ? tl('See the full breakdown') : tl('See why {v0} scores higher', { v0: winner.name }), text: tl('The breakdown: who starts, who replies faster, who double-texts and who writes more.'), onUpgrade: () => ctx.upgrade('chat') }),
+  );
+}
+
+function cardView(chat, ctx) {
+  const full = ctx.pro || ctx.demo;
+  const canvas = drawChatCard(chat, effortScore(chat), { watermark: !full });
+  canvas.style.cssText = 'width:100%;max-width:420px;height:auto;border-radius:18px;display:block;margin:0 auto';
+  const name = `chat-wrapped-${String(chat.title || 'chat').replace(/[^\w-]+/g, '-').slice(0, 30)}.png`;
+  const share = h('button', { class: 'btn btn--primary', type: 'button' }, icon('share'), tl('Share'));
+  share.addEventListener('click', async () => {
+    if (!(await shareCanvas(canvas, name).catch(() => false))) downloadCanvas(canvas, name);
+  });
+  const save = h('button', { class: 'btn btn--ghost', type: 'button', onClick: () => downloadCanvas(canvas, name) }, icon('download'), tl('Save image'));
+  return h(
+    'div',
+    { class: 'app-content' },
+    viewHead(tl('Chat Wrapped'), tl('Your chat as a card — made on your device, ready for your story.')),
+    panel(null, canvas, h('div', { class: 'drop-actions', style: { justifyContent: 'center', marginTop: '18px' } }, share, save)),
+    full ? null : upsell({ title: tl('Remove the watermark'), text: tl('Plus gives you clean cards for every chat.'), onUpgrade: () => ctx.upgrade('chat') }),
+  );
+}
+
 export function whatsappViews(ds, ctx) {
   const chat = ds.chats[0];
   const views = [
     { id: 'overview', label: tl('Chat overview'), icon: 'home', render: () => overview(chat, ctx) },
+    ...(chat.people.length === 2 ? [{ id: 'effort', label: tl('Who cares more?'), icon: 'heart', render: () => effortView(chat, ctx) }] : []),
+    { id: 'card', label: tl('Chat Wrapped'), icon: 'sparkles', render: () => cardView(chat, ctx) },
     { id: 'people', label: tl('Person by person'), icon: 'users', count: chat.people.length, render: () => peopleView(chat, ctx) },
   ];
   if (ds.chats.length > 1) views.push({ id: 'chats', label: tl('All chats'), icon: 'message', count: ds.chats.length, render: () => chatsView(ds, ctx) });

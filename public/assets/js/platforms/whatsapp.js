@@ -76,7 +76,7 @@ const dayKey = (ts) => {
 export function chatStats(messages, title = '') {
   const people = new Map();
   const person = (n) => {
-    if (!people.has(n)) people.set(n, { name: n, messages: 0, words: 0, media: 0, deleted: 0, links: 0, emojis: new Map(), starts: 0, replies: [], night: 0, longest: 0 });
+    if (!people.has(n)) people.set(n, { name: n, messages: 0, words: 0, media: 0, deleted: 0, links: 0, emojis: new Map(), starts: 0, doubles: 0, replies: [], night: 0, longest: 0 });
     return people.get(n);
   };
   const byHour = Array(24).fill(0);
@@ -110,6 +110,8 @@ export function chatStats(messages, title = '') {
     // A gap of 6 h starts a new conversation; otherwise a change of sender is a reply.
     if (!prev || m.ts - prev.ts > 6 * 3600e3) p.starts++;
     else if (prev.from !== m.from) p.replies.push(m.ts - prev.ts);
+    // Writing again after 30+ minutes of silence from the other side: a double text.
+    else if (m.ts - prev.ts > 30 * 60e3) p.doubles++;
     prev = m;
   }
   const days = [...byDay.keys()].sort();
@@ -128,7 +130,7 @@ export function chatStats(messages, title = '') {
   };
   const top = (map, n) => [...map.entries()].sort((a, b) => b[1] - a[1]).slice(0, n).map(([key, count]) => ({ key, count }));
   const list = [...people.values()]
-    .map((p) => ({ name: p.name, messages: p.messages, words: p.words, media: p.media, deleted: p.deleted, links: p.links, starts: p.starts, replyMs: median(p.replies.filter((x) => x < 12 * 3600e3)), nightShare: p.messages ? p.night / p.messages : 0, longest: p.longest, topEmojis: top(p.emojis, 5) }))
+    .map((p) => ({ name: p.name, messages: p.messages, words: p.words, media: p.media, deleted: p.deleted, links: p.links, starts: p.starts, doubles: p.doubles, replyMs: median(p.replies.filter((x) => x < 12 * 3600e3)), nightShare: p.messages ? p.night / p.messages : 0, longest: p.longest, topEmojis: top(p.emojis, 5) }))
     .sort((a, b) => b.messages - a.messages);
   const first = messages[0]?.ts || 0;
   const lastTs = messages[messages.length - 1]?.ts || 0;
@@ -149,6 +151,30 @@ export function chatStats(messages, title = '') {
     topWords: top(words, 30),
     topEmojis: top(emojis, 12),
   };
+}
+
+// "Who cares more?" for a two-person chat: each signal is split between the two
+// people, then weighted. Returns the two people with a 0–100 score and the parts.
+const EFFORT_WEIGHTS = { starts: 0.3, speed: 0.25, messages: 0.2, words: 0.15, doubles: 0.1 };
+
+export function effortScore(chat) {
+  if (!chat || chat.people.length !== 2) return null;
+  const [a, b] = chat.people;
+  const split = (x, y) => (x + y > 0 ? x / (x + y) : 0.5);
+  // Rare events (a handful of conversation starts) get pulled towards 50/50, so one
+  // lucky start can't decide the result.
+  const smooth = (x, y) => (x + 3) / (x + y + 6);
+  // Faster replies mean more effort: compare the inverse of the typical reply time.
+  const inv = (p) => (p.replyMs ? 1 / Math.max(p.replyMs, 30e3) : 0);
+  const parts = {
+    starts: smooth(a.starts, b.starts),
+    speed: a.replyMs || b.replyMs ? split(inv(a), inv(b)) : 0.5,
+    messages: split(a.messages, b.messages),
+    words: split(a.words, b.words),
+    doubles: smooth(a.doubles, b.doubles),
+  };
+  const score = Object.entries(EFFORT_WEIGHTS).reduce((s, [k, w]) => s + parts[k] * w, 0);
+  return { a, b, scoreA: Math.round(score * 100), scoreB: 100 - Math.round(score * 100), parts };
 }
 
 // "WhatsApp Chat with Sara.txt" / "WhatsApp Chat - Sara.zip" → "Sara"

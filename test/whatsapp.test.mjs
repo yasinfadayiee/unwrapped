@@ -49,6 +49,22 @@ test('computes per-person stats, replies, emojis and streaks', () => {
   assert.equal(s.topEmojis[0].count, 2);
 });
 
+test('effort score favours the person who starts, replies fast and double-texts', async () => {
+  const { effortScore } = await import('../public/assets/js/platforms/whatsapp.js');
+  const lines = [];
+  for (let d = 1; d <= 9; d++) {
+    lines.push(`[0${d}/02/24, 09:00:00] Sara: good morning, how are you today?`);
+    lines.push(`[0${d}/02/24, 10:00:00] Sara: hello??`);
+    lines.push(`[0${d}/02/24, 12:00:00] Ali: ok`);
+    lines.push(`[0${d}/02/24, 12:01:00] Sara: great to hear from you!`);
+  }
+  const e = effortScore(chatStats(parseChatText(lines.join('\n'))));
+  assert.equal(e.a.name, 'Sara');
+  assert.ok(e.scoreA > 70, `score ${e.scoreA}`);
+  assert.equal(e.scoreA + e.scoreB, 100);
+  assert.equal(effortScore({ people: [{}, {}, {}] }), null);
+});
+
 test('detects and parses a chat file from a dropped export', async () => {
   const entry = { path: 'WhatsApp Chat with Sara.txt', lower: 'whatsapp chat with sara.txt', source: 'WhatsApp Chat with Sara.txt', text: async () => IOS };
   const vfs = { entries: [entry] };
