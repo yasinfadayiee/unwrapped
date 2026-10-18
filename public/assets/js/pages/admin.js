@@ -121,6 +121,31 @@ async function load() {
     ),
   );
 
+  // Growth (comment-to-DM): accounts and their access state
+  const gr = await api('/api/admin/growth', { headers: auth() }).catch(() => null);
+  if (gr) {
+    const untilText = (a) => (a.mode === 'expired' ? 'ended' : a.until ? `until ${dateShort(a.until)}` : '');
+    root.append(
+      h(
+        'section',
+        { class: 'panel' },
+        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Growth'), h('p', null, gr.enabled ? 'Connected Instagram accounts and their access.' : 'Instagram app is not configured — Growth is off.'))),
+        h(
+          'div',
+          { class: 'stats stats--5' },
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Paying'), h('span', { class: 'value' }, fmtInt(gr.counts.paid))),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'On trial'), h('span', { class: 'value' }, fmtInt(gr.counts.trial))),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Trial ended'), h('span', { class: 'value' }, fmtInt(gr.counts.expired))),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'DMs this week'), h('span', { class: 'value' }, fmtInt(gr.dmsWeek))),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Growth revenue'), h('span', { class: 'value' }, usd(gr.revenue.usd)), h('span', { class: 'sub' }, `${fmtInt(gr.revenue.orders)} orders`)),
+        ),
+        gr.accounts.length
+          ? h('div', { class: 'table-wrap', style: { maxHeight: '360px', marginTop: '14px' } }, h('table', { class: 'data-table' }, h('thead', null, h('tr', null, ['Account', 'Access', 'Rules', 'DMs (week / total)', 'Connected'].map((t) => h('th', null, t)))), h('tbody', null, gr.accounts.map((a) => h('tr', null, h('td', null, `@${a.username}`), h('td', null, `${a.mode} ${untilText(a)}`), h('td', null, String(a.rules)), h('td', null, `${a.dmsWeek} / ${a.dms}`), h('td', null, dateShort(a.connectedAt)))))))
+          : h('p', { class: 'small text-2' }, 'No accounts connected yet.'),
+      ),
+    );
+  }
+
   // Orders
   const statusSel = h('select', { class: 'select', 'aria-label': 'Filter orders' }, ['all', 'pending', 'paid', 'expired', 'failed'].map((v) => h('option', { value: v }, v)));
   const tableBox = h('div', { class: 'table-wrap', style: { maxHeight: '520px' } });

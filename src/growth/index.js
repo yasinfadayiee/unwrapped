@@ -253,6 +253,32 @@ async function checkout(request, env) {
   return json({ ok: true, redirectUrl: order.redirect_url });
 }
 
+// ---------- admin ----------
+
+// Owner overview: who is connected and in which state. Tokens never leave the DB.
+export async function growthSummary(env, now = Date.now()) {
+  await ensureGrowthSchema(env);
+  const { results } = await env.DB.prepare(
+    `SELECT a.id, a.platform, a.username, a.paid_until, a.created_at, t.started_at, t.sent AS trial_sent,
+       (SELECT COUNT(*) FROM growth_rules r WHERE r.account_id = a.id AND r.active = 1) AS rules,
+       (SELECT COALESCE(SUM(ok), 0) FROM growth_sent s WHERE s.account_id = a.id) AS dms,
+       (SELECT COALESCE(SUM(ok), 0) FROM growth_sent s WHERE s.account_id = a.id AND s.ts > ?) AS dms_week
+     FROM growth_accounts a LEFT JOIN growth_trials t ON t.account_id = a.id
+     ORDER BY a.created_at DESC LIMIT 200`,
+  )
+    .bind(now - 7 * DAY)
+    .all();
+  const counts = { paid: 0, trial: 0, expired: 0 };
+  const accounts = results.map((a) => {
+    const trial = a.started_at ? { started_at: a.started_at, sent: a.trial_sent } : null;
+    const acc = access(a, trial, now);
+    counts[acc.mode]++;
+    return { id: a.id, platform: a.platform, username: a.username, mode: acc.mode, until: acc.until, rules: a.rules, dms: a.dms, dmsWeek: a.dms_week, connectedAt: a.created_at };
+  });
+  const revenue = await env.DB.prepare("SELECT COALESCE(SUM(price_usd), 0) AS usd, COUNT(*) AS n FROM orders WHERE status = 'paid' AND plan LIKE 'growth-%'").first();
+  return { enabled: growthEnabled(env), counts, accounts, revenue: { usd: revenue.usd, orders: revenue.n }, dmsWeek: accounts.reduce((n, a) => n + a.dmsWeek, 0) };
+}
+
 // ---------- cron ----------
 
 // Refresh tokens older than a week; drop stale OAuth states.

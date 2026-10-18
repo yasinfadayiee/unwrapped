@@ -9,6 +9,7 @@ import { tronEnabled } from './payments/tron.js';
 import { fetchPayment, nowpaymentsEnabled } from './payments/nowpayments.js';
 import { emailEnabled, sendLicenseEmail } from './email.js';
 import { statsSummary } from './stats.js';
+import { growthSummary } from './growth/index.js';
 import { DAY, formatUsdt, isEmail, maskEmail, normalizeLicenseKey, timingSafeEqual } from './util.js';
 
 function authorized(request, env) {
@@ -40,6 +41,8 @@ export async function handleAdmin(request, env, url) {
       return markPaid(env, await readJson(request));
     case 'GET /api/admin/events':
       return listEvents(env);
+    case 'GET /api/admin/growth':
+      return json({ ok: true, ...(await growthSummary(env)) });
     case 'GET /api/admin/stats':
       return statsSummary(env);
     case 'GET /api/admin/nowpayments': {

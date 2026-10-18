@@ -185,3 +185,17 @@ test('Growth checkout needs a payment provider', async () => {
   assert.equal(res.status, 400);
   assert.equal(res.body.error, 'method_unavailable');
 });
+
+test('admin growth summary lists accounts by access state without tokens', async () => {
+  env.ADMIN_TOKEN = 'admin-token-123456';
+  const session = await connect();
+  await api('POST', '/api/growth/rules', session, { accountId: 'ig:1784', keyword: 'link', dmText: 'hi' });
+  await comment('link', { id: 'a1' });
+  const res = await raw('GET', '/api/admin/growth', { headers: { authorization: 'Bearer admin-token-123456' } });
+  const body = await res.json();
+  assert.equal(body.counts.trial, 1);
+  assert.equal(body.accounts[0].username, 'nova.studio');
+  assert.equal(body.accounts[0].dmsWeek, 1);
+  assert.ok(!JSON.stringify(body).includes('token'));
+  assert.equal((await raw('GET', '/api/admin/growth')).status, 401);
+});
