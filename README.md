@@ -186,10 +186,11 @@ Request **Advanced Access** for the three permissions the app asks for
 Before submitting:
 
 1. **Business verification** of your Meta business portfolio (required for Advanced Access).
-2. **App settings → Basic**: app icon (1024×1024), category, contact e-mail, a **Privacy policy
-   URL** (`/privacy/`) that describes the Growth data (Instagram user ID, username, encrypted
-   token, rules, comment IDs of sent replies), and **User data deletion** instructions or a
-   callback URL.
+2. **App settings → Basic**: app icon (1024×1024), category, contact e-mail, the **Privacy policy
+   URL** `https://YOUR_SITE/privacy/` (section 8 describes the Growth data) and the **User data
+   deletion** callback URL `https://YOUR_SITE/api/growth/data-deletion`. Use the same URL as the
+   **Deauthorize callback** under Instagram → API setup. It checks Meta's signed request and
+   deletes the account, its rules and its reply history.
 3. A **screencast per permission**: open `/growth/` → Connect Instagram → approve the Instagram
    consent screen → create a rule → comment the keyword from a second account → show the DM
    arriving. Captions in English.

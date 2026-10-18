@@ -116,6 +116,8 @@ export async function handleGrowth(request, env, url, ctx) {
       return saveRule(request, env);
     case 'POST /api/growth/rules/delete':
       return deleteRule(request, env);
+    case 'POST /api/growth/data-deletion':
+      return dataDeletion(request, env, url);
     case 'POST /api/growth/disconnect':
       return disconnect(request, env);
   }
@@ -224,6 +226,22 @@ async function me(request, env) {
     out.push({ ...publicAccount(a, trial, rules), stats: { total: stats?.ok || 0, week: stats?.week || 0 } });
   }
   return json({ ok: true, accounts: out, trial: TRIAL });
+}
+
+// Meta calls this when someone removes the app in Instagram or asks for their data
+// to be deleted. Everything we keep for that account goes, except the one-trial marker.
+async function dataDeletion(request, env, url) {
+  const form = await request.formData().catch(() => null);
+  const userId = await ig.parseSignedRequest(env, form?.get('signed_request'));
+  if (!userId) return fail(400, 'bad_signed_request');
+  const id = `ig:${userId}`;
+  await env.DB.batch([
+    env.DB.prepare('DELETE FROM growth_rules WHERE account_id = ?').bind(id),
+    env.DB.prepare('DELETE FROM growth_sent WHERE account_id = ?').bind(id),
+    env.DB.prepare('DELETE FROM growth_accounts WHERE id = ?').bind(id),
+  ]);
+  await logEvent(env, 'growth.data_deleted', id, null);
+  return json({ url: `${siteUrl(env, request)}/privacy/#growth-data`, confirmation_code: randomId(9) });
 }
 
 async function ownAccount(env, request, accountId) {
