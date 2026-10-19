@@ -554,6 +554,20 @@ function localizedNotFound() {
 
 header();
 themePicker();
+
+// Platforms dropdown: opens on hover/focus via CSS; the button adds tap and Escape support.
+(() => {
+  const dd = $('.nav-dd');
+  const b = $('.nav-dd-btn');
+  if (!dd || !b) return;
+  const set = (open) => {
+    dd.classList.toggle('is-open', open);
+    b.setAttribute('aria-expanded', String(open));
+  };
+  b.addEventListener('click', () => set(!dd.classList.contains('is-open')));
+  document.addEventListener('click', (e) => { if (!dd.contains(e.target)) set(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+})();
 localizedNotFound();
 inAppBrowserNotice();
 supportContact();

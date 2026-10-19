@@ -42,9 +42,10 @@
   <div class="container">
     <a class="logo" href="/" aria-label="{{siteName}} — {{t:home}}"><svg aria-hidden="true"><use href="#i-logo"/></svg>{{siteName}}</a>
     <nav class="nav" aria-label="{{t:navMain}}">
-      <a href="/instagram/" data-nav="instagram">Instagram</a>
-      <a href="/tiktok/" data-nav="tiktok">TikTok</a>
-      <a href="/x/" data-nav="x">X</a>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button" aria-haspopup="true" aria-expanded="false">{{t:navPlatforms}}<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <div class="nav-dd-menu"><a href="/instagram/" data-nav="instagram"><img class="ico3d" src="/assets/img/icons/instagram.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Instagram</a><a href="/tiktok/" data-nav="tiktok"><img class="ico3d" src="/assets/img/icons/tiktok.webp" width="64" height="64" alt="" loading="lazy" decoding="async">TikTok</a><a href="/x/" data-nav="x"><img class="ico3d" src="/assets/img/icons/x.webp" width="64" height="64" alt="" loading="lazy" decoding="async">X</a><a href="/facebook/" data-nav="facebook"><img class="ico3d" src="/assets/img/icons/facebook.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Facebook</a><a href="/linkedin/" data-nav="linkedin"><img class="ico3d" src="/assets/img/icons/linkedin.webp" width="64" height="64" alt="" loading="lazy" decoding="async">LinkedIn</a><a href="/threads-unfollowers/" data-nav="threads"><img class="ico3d" src="/assets/img/icons/threads.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Threads</a><a href="/whatsapp-chat-analyzer/" data-nav="whatsapp"><img class="ico3d" src="/assets/img/icons/whatsapp.webp" width="64" height="64" alt="" loading="lazy" decoding="async">WhatsApp</a><a href="/telegram-chat-analyzer/" data-nav="telegram"><img class="ico3d" src="/assets/img/icons/telegram.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Telegram</a><a href="/spotify-stats/" data-nav="spotify"><img class="ico3d" src="/assets/img/icons/spotify.webp" width="64" height="64" alt="" loading="lazy" decoding="async">Spotify</a></div>
+      </div>
       <a href="/tools/" data-nav="tools">{{t:navTools}} <span class="nav-new">{{t:new}}</span></a>
       <a href="/guides/" data-nav="guides">{{t:navGuides}}</a>
       <a href="/pricing/" data-nav="pricing">{{t:navPricing}}</a>
