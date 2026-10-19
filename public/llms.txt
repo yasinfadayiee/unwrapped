@@ -1,62 +1,88 @@
 # Unwrapped
 
-> Unwrapped (https://myunwrapped.com) is a privacy-first web app that reads the official data export of Instagram, TikTok, X (Twitter), Facebook, Threads and LinkedIn inside the user's browser. It shows who doesn't follow you back, who unfollowed you (by comparing two exports), mutual followers, fake/bot followers, real TikTok screen time, DM statistics, search history and what advertisers know about you. It never asks for a password, never logs in to any account and uploads nothing: the ZIP file is processed on the device.
+> Unwrapped reads the data export you download from Instagram, TikTok, X, Facebook and LinkedIn and turns it into insights such as who unfollowed you and who doesn't follow back. Everything is analysed in the browser; the export file is never uploaded.
 
-Key facts:
-- How it works: request your data from the platform (Instagram: Accounts Center → Your information and permissions → Download your information → Followers and following, JSON), then drop the ZIP on myunwrapped.com.
-- Safe by design: no login, no password, no browser extension, no automation on the account — so it cannot get an account banned or blocked.
-- Who unfollowed you: needs two exports from different dates; every export is kept as a private snapshot in the browser and compared automatically.
-- Free: the analysis, counts, not-following-back list preview, TikTok screen time and demo are free.
-- Paid plans (one-time crypto payments, no auto-renewal, no account): Plus $5/month or $29/year; Pro $9/month, $49/year or $99 lifetime; Creator $19/month or $119/year.
-- Languages: English, Spanish, Portuguese (Brazil), Turkish, French, German.
-
-## Tools
-- [Instagram unfollowers & not following back](https://myunwrapped.com/instagram/): who doesn't follow you back, who unfollowed you, follow requests, mutuals, fans.
-- [Instagram follower tracker](https://myunwrapped.com/instagram-follower-tracker/): followers gained and lost over time from repeated exports.
-- [Export Instagram followers to CSV/Excel](https://myunwrapped.com/export-instagram-followers/)
-- [Fake follower checker](https://myunwrapped.com/fake-follower-checker/): bot and spam followers with an audience quality grade.
-- [Threads unfollowers](https://myunwrapped.com/threads-unfollowers/)
-- [WhatsApp chat analyzer](https://myunwrapped.com/whatsapp-chat-analyzer/)
-- [Telegram chat analyzer](https://myunwrapped.com/telegram-chat-analyzer/)
-- [Spotify stats — Wrapped any time](https://myunwrapped.com/spotify-stats/)
-- [TikTok screen time, watch history & unfollowers](https://myunwrapped.com/tiktok/)
-- [X (Twitter) archive viewer & unfollowers](https://myunwrapped.com/x/)
-- [Instagram DM analyzer](https://myunwrapped.com/instagram-dm-analyzer/) and [message viewer](https://myunwrapped.com/instagram-message-viewer/)
-- [Unwrapped Bio — free link in bio page](https://myunwrapped.com/bio/): a fast page at myunwrapped.com/@name with links, socials, photo, a featured Telegram/WhatsApp button and click analytics. Free up to 5 links; Pro (up to 100 links, unlimited contacts, visitor insights, brand colours, scheduled links, no badge) is included in every Unwrapped plan. A free Linktree alternative.
-- [All tools](https://myunwrapped.com/tools/) · [Pricing](https://myunwrapped.com/pricing/)
+## Tools and pricing
+- [About Unwrapped — Privacy-First Social Media Insights](https://myunwrapped.com/about/): Why Unwrapped exists, how it works without your password, how it makes money and how to reach us.
+- [Best time to post on Instagram, TikTok & X — from your own data](https://myunwrapped.com/best-time-to-post/): Stop guessing from generic charts. Find your personal best time to post on Instagram, TikTok and X from your own data: real engagement of your posts.
+- [Free Link in Bio Page — Linktree Alternative with Click Analytics](https://myunwrapped.com/bio/): Create a free link-in-bio page for Instagram, TikTok and YouTube in one minute: all your links, socials and contact in one beautiful page at myunwrapped.
+- [Blog — Instagram growth, fake followers & social media privacy](https://myunwrapped.com/blog/): Practical articles on losing followers, spotting fake followers, posting times and what social platforms know about you — backed by your own data.
+- [Export Instagram followers to CSV / Excel — free, no login](https://myunwrapped.com/export-instagram-followers/): Export your Instagram followers and following lists to a CSV file you can open in Excel or Google Sheets — with follow dates.
+- [Who unfriended me on Facebook? Free friend tracker from your Facebook data](https://myunwrapped.com/facebook/): Find out who unfriended you on Facebook, see pending friend requests and which advertisers hold your data — using your official Facebook data download.
+- [Fake follower checker for Instagram & TikTok — free bot audit, no login](https://myunwrapped.com/fake-follower-checker/): Check how many of your Instagram or TikTok followers are bots, spam or bought. Get an audience quality grade, the red flags and the exact accounts.
+- [Guides — Instagram unfollowers, TikTok screen time & data downloads](https://myunwrapped.com/guides/): Clear, step-by-step guides: see who unfollowed you on Instagram, download your data, find your real TikTok screen time and stay safe from risky unfollower apps.
+- [Help center — uploads, downloads, payments & licenses](https://myunwrapped.com/help/): Fixes for the most common problems: the upload button doesn’t work on your phone, your data download is slow, “no social media data found”.
+- [When did I create my Instagram account? Find your join date](https://myunwrapped.com/instagram-account-age/): Find the exact day you joined Instagram, your oldest follower, your first post still online and every milestone since.
+- [Free Instagram account audit + white-label PDF report](https://myunwrapped.com/instagram-audit/): Audit any Instagram account in a minute: a free account health score, follow-back balance, audience authenticity, engagement and growth.
+- [Instagram DM analyzer: who leaves you on read, reply times & who texts first](https://myunwrapped.com/instagram-dm-analyzer/): Analyze your Instagram DMs privately: see who leaves you on read, how fast each person really replies.
+- [Instagram follower tracker — followers gained & lost over time, no login](https://myunwrapped.com/instagram-follower-tracker/): Track your Instagram followers over time: new followers, who unfollowed you and your follower growth chart — from your own data exports.
+- [Find posts you liked on Instagram & your comment history](https://myunwrapped.com/instagram-liked-posts/): See every Instagram post you ever liked or saved and every comment you wrote. Search by account, word or year and open the post again.
+- [Instagram DM Viewer — Read & Search Old Messages, No Login](https://myunwrapped.com/instagram-message-viewer/): Open the messages from your Instagram data download like a real chat app: read old conversations with photos, search every chat at once and save a chat as text.
+- [See your old Instagram stories & posts from your data download](https://myunwrapped.com/instagram-story-archive/): View every story, post and reel you ever shared on Instagram — even deleted posts and long-gone stories — from your own data download.
+- [Who Unfollowed Me on Instagram? Free Checker, No Password](https://myunwrapped.com/instagram/): See who doesn't follow you back on Instagram, who unfollowed you, pending follow requests and what advertisers know.
+- [LinkedIn Connections Analyzer — Your Network by Company](https://myunwrapped.com/linkedin/): Turn your LinkedIn data export into a network map: top companies, roles, recruiters and founders in your network, and how it grew year by year.
+- [Pricing — Unwrapped Plus, Pro & Creator from $2.42/month](https://myunwrapped.com/pricing/): Unwrapped is free to try. Plus unlocks full lists and who unfollowed you, Pro adds the Ghost Detector, Engagement Audit and Growth Time Machine.
+- [Search your old tweets & find posts to delete](https://myunwrapped.com/search-old-tweets/): Search every tweet, reply and repost you ever made, filter by year, and run a clean-up check for swearing, party posts and personal info — from your X archive.
+- [Spotify stats any time — your full listening history, private](https://myunwrapped.com/spotify-stats/): Your Spotify Wrapped, any day of the year: top artists and songs, minutes listened, every year’s number one, podcasts and listening habits.
+- [Telegram chat analyzer — stats for any chat, private & free](https://myunwrapped.com/telegram-chat-analyzer/): Analyze a Telegram chat export: who texts more, reply times, active hours, top words and emojis, streaks. Nothing is uploaded.
+- [Threads unfollowers — see who unfollowed you on Threads, no login](https://myunwrapped.com/threads-unfollowers/): See who doesn’t follow you back on Threads and who unfollowed you — from your official Threads data download. No password, no risky app, nothing uploaded.
+- [TikTok watch history: find a video you watched before](https://myunwrapped.com/tiktok-watch-history/): Lost a TikTok you watched? Open your full TikTok watch history by day and time, plus every video you liked, saved or shared — from your own data download.
+- [TikTok Screen Time, Watch History & Unfollowers — Free](https://myunwrapped.com/tiktok/): Turn your TikTok data download into real screen time: hours watched, longest binges, peak hours, searches.
+- [All tools — unfollowers, fake follower checker, DM analyzer, best time to post](https://myunwrapped.com/tools/): Every Unwrapped tool in one place: Instagram unfollowers, account health audit, fake follower checker, Instagram DM analyzer, best time to post.
+- [Safe alternative to Instagram unfollower apps — no login, no password](https://myunwrapped.com/unfollower-app-alternative/): Compare Unwrapped with login-based unfollower apps and browser scripts: account risk, accuracy, privacy and price.
+- [WhatsApp chat analyzer — stats for any chat, private & free](https://myunwrapped.com/whatsapp-chat-analyzer/): Analyze a WhatsApp chat export: who texts more, reply times, active hours, top words and emojis, streaks. Works with iPhone and Android exports.
+- [X (Twitter) Unfollowers & Archive Viewer — Free, No Login](https://myunwrapped.com/x/): Open your X / Twitter archive in seconds: your best posts ever, posting habits, accounts that don't follow back.
 
 ## Guides
-- [Best Instagram unfollower apps in 2026, compared](https://myunwrapped.com/blog/best-instagram-unfollower-apps/)
-- [How to see who unfollowed you on Instagram — safely](https://myunwrapped.com/guides/who-unfollowed-me-on-instagram/)
-- [How to download your Instagram data](https://myunwrapped.com/guides/download-instagram-data/)
-- [Are unfollower apps safe?](https://myunwrapped.com/guides/are-unfollower-apps-safe/)
-- [Instagram data files explained](https://myunwrapped.com/guides/instagram-data-files-explained/)
-- [Compare two Instagram follower lists](https://myunwrapped.com/blog/compare-instagram-follower-lists/)
-- [Instagram download has no followers file — fix](https://myunwrapped.com/blog/instagram-followers-file-missing/)
-- [Mutual followers on Instagram](https://myunwrapped.com/blog/instagram-mutual-followers/)
-- [Instagram unfollow limit per day](https://myunwrapped.com/blog/instagram-unfollow-limit-per-day/)
-- [Who doesn't follow me back on X (Twitter)?](https://myunwrapped.com/blog/who-doesnt-follow-me-back-on-x/)
-- [Instagram data download: HTML or JSON?](https://myunwrapped.com/blog/instagram-html-vs-json-download/)
-- [Does Instagram notify when you unfollow someone?](https://myunwrapped.com/blog/does-instagram-notify-unfollow/)
-- [Who viewed my Instagram profile? (honest answer)](https://myunwrapped.com/blog/who-viewed-my-instagram-profile/)
-- [How to export a WhatsApp chat (iPhone & Android)](https://myunwrapped.com/blog/how-to-export-whatsapp-chat/)
-- [How to export Telegram chat history](https://myunwrapped.com/blog/export-telegram-chat-history/)
-- [Spotify extended streaming history: how to get it](https://myunwrapped.com/blog/spotify-extended-streaming-history/)
-- [Spotify Wrapped 2026: release date and stats now](https://myunwrapped.com/blog/spotify-wrapped-2026/)
-- [How to export your LinkedIn connections](https://myunwrapped.com/blog/export-linkedin-connections/)
-- [How to download your TikTok data](https://myunwrapped.com/guides/download-tiktok-data/)
-- [How to download your X (Twitter) archive](https://myunwrapped.com/guides/download-twitter-archive/)
-- [How to download your Facebook data](https://myunwrapped.com/guides/download-facebook-data/)
-- [How to search your old tweets](https://myunwrapped.com/blog/search-your-old-tweets/)
-- [Who texts more in a WhatsApp chat?](https://myunwrapped.com/blog/whatsapp-chat-stats/)
-- [Which advertisers have your Facebook data?](https://myunwrapped.com/blog/facebook-advertisers-have-your-data/)
-- [How to find a TikTok you watched before](https://myunwrapped.com/blog/find-tiktok-video-you-watched/)
-- [How to see who unfollowed you on Threads](https://myunwrapped.com/blog/who-unfollowed-me-on-threads/)
-- [How to see all the posts you liked on Instagram](https://myunwrapped.com/blog/see-all-instagram-posts-you-liked/)
-- [How to see your old Instagram stories](https://myunwrapped.com/blog/see-old-instagram-stories/)
-- [When did you create your Instagram account?](https://myunwrapped.com/blog/when-did-i-create-my-instagram-account/)
-- [How to download all your Instagram photos and videos](https://myunwrapped.com/blog/download-all-instagram-photos-and-videos/)
-- [Pay with USDT step by step](https://myunwrapped.com/guides/pay-with-usdt/)
+- [How to download your Facebook data (friends, ads, everything)](https://myunwrapped.com/guides/download-facebook-data/): Download your Facebook information from Accounts Center: which options to pick (friends, ads, JSON), how long it takes, what is inside the ZIP.
+- [How to download your Instagram data (followers, messages, everything)](https://myunwrapped.com/guides/download-instagram-data/): Step-by-step: download your Instagram data from Accounts Center, which options to pick (JSON vs HTML, followers only or everything).
+- [How to download your TikTok data (watch history, followers, everything)](https://myunwrapped.com/guides/download-tiktok-data/): Request your TikTok data in the app or on the web: why to pick All data and JSON, how long it takes.
+- [How to download your X (Twitter) archive](https://myunwrapped.com/guides/download-twitter-archive/): Request your full X (Twitter) archive: where the option is, why X asks for your password and a code, how long it takes, what is in the ZIP.
+- [Instagram data download files explained: followers_1.json & more](https://myunwrapped.com/guides/instagram-data-files-explained/): What’s inside your Instagram data download: followers_1.json, following.json, liked_posts.json, message_1.json, advertisers_using_your_activity_or_information.
+- [How to pay with USDT (TRC20) — a step-by-step guide for beginners](https://myunwrapped.com/guides/pay-with-usdt/): Never paid with crypto? Buy USDT with a card, send it on the TRON (TRC20) network from Binance, OKX or Trust Wallet.
+- [Are Unfollower Apps Safe? The Risks of Instagram Trackers](https://myunwrapped.com/guides/are-unfollower-apps-safe/): Many Instagram unfollower apps ask for your password. Here's what can go wrong, how to spot a risky tracker.
+- [How much time do you spend on TikTok? Find your real watch time](https://myunwrapped.com/guides/tiktok-screen-time/): Find your real TikTok screen time from your own watch history: total hours, longest binge, peak hours and how to make your own TikTok Wrapped — privately.
+- [How to see who unfollowed you on Instagram (without your password)](https://myunwrapped.com/guides/who-unfollowed-me-on-instagram/): Instagram doesn't notify you when someone unfollows. Here's the safe, official way to find out who unfollowed you and who doesn't follow you back.
 
-## Optional
-- [About](https://myunwrapped.com/about/) · [Help center](https://myunwrapped.com/help/) · [Privacy](https://myunwrapped.com/privacy/)
+## Articles
+- [Best Instagram Unfollower Apps in 2026 (Safe, No Login) — Compared](https://myunwrapped.com/blog/best-instagram-unfollower-apps/): We compared Instagram unfollower apps and tools by safety, privacy and features: which need your password, which upload your data.
+- [Instagram Close Friends, blocked & hidden lists — see them all](https://myunwrapped.com/blog/instagram-close-friends-list/): See everyone on your Close Friends list, who you blocked, restricted or hide your story from — and who should be on Close Friends but isn’t. Private, no login.
+- [How to Compare Two Instagram Follower Lists (Free, No Login)](https://myunwrapped.com/blog/compare-instagram-follower-lists/): Compare your Instagram followers from two dates to see exactly who unfollowed you and who followed you — using two official data downloads.
+- [Can you recover deleted Instagram messages? What actually works](https://myunwrapped.com/blog/recover-deleted-instagram-messages/): An honest answer: what Instagram keeps after you delete or unsend a message, what your data download can and can’t bring back.
+- [How long does the Instagram data download take? Fixes when it fails](https://myunwrapped.com/blog/instagram-data-download-how-long/): Your Instagram data download is usually ready in minutes, sometimes days. How long it really takes, where to find it.
+- [How to download all your Instagram photos and videos](https://myunwrapped.com/blog/download-all-instagram-photos-and-videos/): Save every photo, video, story and reel you posted on Instagram in one ZIP: which options to choose, why media can be missing.
+- [How to export your LinkedIn connections to CSV (2026 guide)](https://myunwrapped.com/blog/export-linkedin-connections/): Download a list of all your LinkedIn connections as a CSV file in about ten minutes: where the option is, what columns you get, why most e-mails are missing.
+- [How to export Telegram chat history (JSON or HTML)](https://myunwrapped.com/blog/export-telegram-chat-history/): Export one Telegram chat or your whole account with Telegram Desktop: JSON vs HTML, what to untick to keep it small, why it isn't on your phone.
+- [How to export a WhatsApp chat on iPhone and Android (2026 guide)](https://myunwrapped.com/blog/how-to-export-whatsapp-chat/): Step-by-step: export any WhatsApp chat or group as a text file on iPhone or Android, with or without media.
+- [Which advertisers have your Facebook data? How to see the list](https://myunwrapped.com/blog/facebook-advertisers-have-your-data/): Facebook lets you download the list of advertisers that used your activity or information.
+- [Who unfriended me on Facebook? How to find out](https://myunwrapped.com/blog/who-unfriended-me-on-facebook/): Facebook never tells you when someone unfriends you. Your Facebook data download can: compare two exports to see who left your friends list — privately.
+- [How to spot fake followers on Instagram (and should you remove them?)](https://myunwrapped.com/blog/how-to-spot-fake-followers/): The red flags of bot, spam and bought followers on Instagram, why they hurt your reach, and how to check your whole follower list at once — privately.
+- [How to find a TikTok video you watched before](https://myunwrapped.com/blog/find-tiktok-video-you-watched/): The app only shows recent history. Your TikTok data download keeps every video you watched with the date and time, so you can find it by the day you remember.
+- [See (and cancel) every follow request you sent on Instagram](https://myunwrapped.com/blog/see-sent-follow-requests-instagram/): Instagram hides the follow requests you sent to private accounts. Your data download lists every one still pending — see them all and cancel them safely.
+- [Instagram Download Has No Followers File (followers_1.json)? Fix](https://myunwrapped.com/blog/instagram-followers-file-missing/): Can’t find followers_1.json or following.json in your Instagram data download? The usual causes — HTML format, wrong category, multi-part ZIPs, wrong account.
+- [Instagram Data Download: HTML or JSON? Which Format to Choose](https://myunwrapped.com/blog/instagram-html-vs-json-download/): Instagram asks you to choose HTML or JSON when you download your data. What each format is, which one tools can read, and why JSON is usually the better choice.
+- [Which advertisers have your data on Instagram — and who logged in](https://myunwrapped.com/blog/instagram-advertisers-and-logins/): Companies upload customer lists to Instagram to target you with ads. Your Instagram data download names them.
+- [When did I create my Instagram account? How to find your join date](https://myunwrapped.com/blog/when-did-i-create-my-instagram-account/): Instagram shows the month and year in About this account. Your data download has the exact sign-up date, plus your oldest follower.
+- [What Instagram knows about you — and how to see it yourself](https://myunwrapped.com/blog/what-instagram-knows-about-you/): Instagram keeps your followers, messages, logins, searches, ad interests and a list of advertisers that have your information.
+- [How to see all the posts you liked on Instagram](https://myunwrapped.com/blog/see-all-instagram-posts-you-liked/): The app shows only recent likes. Your Instagram data download lists every post you liked or saved and every comment you wrote, with dates.
+- [Instagram Wrapped 2026: your year on Instagram, TikTok & X](https://myunwrapped.com/blog/instagram-wrapped/): Instagram doesn’t make a Wrapped — so make your own. Your top people, busiest months, likes, messages and more as shareable cards.
+- [How to clean up your social media before a job search (2026 checklist)](https://myunwrapped.com/blog/clean-up-social-media-before-job-search/): Recruiters look you up. Use this checklist to find old posts, comments and personal info worth removing on X, Instagram and TikTok — privately.
+- [Who leaves you on read on Instagram? How to find out from your DMs](https://myunwrapped.com/blog/who-leaves-you-on-read-instagram/): Instagram won't tell you who ignores your messages. Your own DM history can: see who leaves you on read, who you ghost, and which chats are fading — privately.
+- [How to Add a Link in Your Instagram or TikTok Bio (2026 Guide)](https://myunwrapped.com/blog/how-to-add-link-in-bio/): Step by step: add a clickable link to your Instagram, TikTok and YouTube bio — and how to share many links with one link-in-bio page.
+- [Best Free Linktree Alternatives in 2026 — Link in Bio Tools Compared](https://myunwrapped.com/blog/linktree-alternatives/): Looking for a free Linktree alternative? We compare popular link-in-bio tools by free plan, design, analytics and privacy.
+- [Why am I losing followers on Instagram? 8 real reasons (and how to check)](https://myunwrapped.com/blog/why-am-i-losing-followers/): Losing Instagram followers every day? Here are the eight real causes — from bot purges to follow-for-follow accounts — and how to see exactly who left and why.
+- [How to See Mutual Followers on Instagram (Full List)](https://myunwrapped.com/blog/instagram-mutual-followers/): See the full list of your mutual followers on Instagram — people you follow who follow you back — plus fans and accounts that don’t follow back.
+- [How to see your old Instagram stories (after they expire)](https://myunwrapped.com/blog/see-old-instagram-stories/): Stories disappear from view after 24 hours, but Instagram keeps a copy. Here is how to find them in the Archive and in your data download.
+- [Who viewed my Instagram profile? The honest answer](https://myunwrapped.com/blog/who-viewed-my-instagram-profile/): Instagram doesn’t show who visits your profile — and apps that claim to are a risk to your account. What you can see instead, safely, from your own data.
+- [How to see your full Instagram search history (and clear it)](https://myunwrapped.com/blog/instagram-search-history/): The app only shows recent searches. Your Instagram data download keeps more: every account, keyword and tag you searched.
+- [How to search your old tweets (and find the ones to delete)](https://myunwrapped.com/blog/search-your-old-tweets/): X search often misses old posts. Here is how to search every tweet, reply and repost you ever made using your own X archive, filter by year.
+- [Spotify extended streaming history: how to get it and see your stats (2026)](https://myunwrapped.com/blog/spotify-extended-streaming-history/): Request your full Spotify listening history (every song since you joined), what is inside the files, how long it takes.
+- [Spotify Wrapped 2026: when it comes out, and how to see your stats now](https://myunwrapped.com/blog/spotify-wrapped-2026/): When Spotify Wrapped 2026 is likely to come out, what counts towards it, why it might not show up.
+- [How to see who unfollowed you on Threads (no login)](https://myunwrapped.com/blog/who-unfollowed-me-on-threads/): Threads doesn't show who left. Download your Threads data, compare two exports and see exactly who unfollowed you, without giving anyone your password.
+- [How to see your full TikTok search history](https://myunwrapped.com/blog/tiktok-search-history/): The TikTok app only shows a few recent searches. Your TikTok data download keeps all of them with dates — see your most-searched terms privately.
+- [How to see who unfollowed you on TikTok (without an app login)](https://myunwrapped.com/blog/who-unfollowed-me-on-tiktok/): TikTok doesn’t tell you who unfollowed you. Here’s the safe way to find out — and who doesn’t follow you back — using your own TikTok data download.
+- [Instagram Unfollow Limit Per Day (2026): A Safe Pace That Avoids Blocks](https://myunwrapped.com/blog/instagram-unfollow-limit-per-day/): Instagram doesn’t publish an unfollow limit, but going too fast triggers “action blocked”.
+- [Does Instagram Notify When You Unfollow Someone? (2026 Answer)](https://myunwrapped.com/blog/does-instagram-notify-unfollow/): No — Instagram doesn’t notify anyone when you unfollow them, remove a follower or check who unfollowed you.
+- [WhatsApp chat stats: who texts more, who replies faster](https://myunwrapped.com/blog/whatsapp-chat-stats/): WhatsApp has no built-in chat statistics. Export a chat and read the numbers on your own device: message share, reply times, active hours.
+- [Who Doesn’t Follow Me Back on X (Twitter)? Check Free, No Login](https://myunwrapped.com/blog/who-doesnt-follow-me-back-on-x/): See every account on X (Twitter) that doesn’t follow you back, from your official X archive — no login, no third-party app access, nothing uploaded.
+

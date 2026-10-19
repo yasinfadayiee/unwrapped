@@ -336,6 +336,7 @@ for (const { loc, file, meta, body } of pages) {
     canonical: esc(canonical),
     robots: meta.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large',
     jsonld: schemas.map(ld).join('\n'),
+    verification: [['google-site-verification', site.googleVerification], ['msvalidate.01', site.bingVerification]].filter(([, v]) => v).map(([n, v]) => `<meta name="${n}" content="${esc(v)}">`).join('\n'),
     bodyClass: esc(meta.bodyClass || ''),
     siteName: esc(site.name),
     origin,
@@ -371,6 +372,19 @@ write(
 // see if robots.txt lets them in (and Bing reports blocked linked pages).
 const privatePaths = ['/admin/', '/success/', '/api/'];
 write('public/robots.txt', `User-agent: *\nAllow: /\n${[...new Set(privatePaths)].map((p) => `Disallow: ${p}`).join('\n')}\n\nSitemap: ${origin}/sitemap.xml\n`);
+
+// llms.txt: a plain-text map of the English site for AI search and assistants.
+const llmsPages = pages.filter((p) => p.loc.code === 'en' && !p.meta.noindex && !p.meta.route.endsWith('.html') && p.meta.route !== '/');
+const llmsGroup = (title, test) => {
+  const rows = llmsPages.filter((p) => test(p.meta.route)).map((p) => `- [${stripTags(p.meta.title).replace(/\s*·.*$/, '')}](${origin}${p.meta.route}): ${stripTags(shortDescription(p.meta.description))}`);
+  return rows.length ? `## ${title}\n${rows.join('\n')}\n\n` : '';
+};
+const isBlog = (r) => r.startsWith('/blog/') && r !== '/blog/';
+const isGuide = (r) => r.startsWith('/guides/') && r !== '/guides/';
+write(
+  'public/llms.txt',
+  `# ${site.name}\n\n> ${site.name} reads the data export you download from Instagram, TikTok, X, Facebook and LinkedIn and turns it into insights such as who unfollowed you and who doesn't follow back. Everything is analysed in the browser; the export file is never uploaded.\n\n${llmsGroup('Tools and pricing', (r) => !isBlog(r) && !isGuide(r) && !['/privacy/', '/terms/', '/account/', '/success/'].includes(r))}${llmsGroup('Guides', isGuide)}${llmsGroup('Articles', isBlog)}`,
+);
 
 // Texts for the share-image renderer (scripts/og.js), one card per page.
 write('.og/manifest.json', JSON.stringify(ogManifest, null, 1));
