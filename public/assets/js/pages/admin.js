@@ -100,6 +100,36 @@ async function load() {
     );
   }
 
+  // Unwrapped Growth: connected Instagram accounts and their trial / paid state.
+  const gr = await api('/api/admin/growth', { headers: auth() }).catch(() => null);
+  if (gr?.enabled) {
+    const g = gr.totals;
+    const mode = (a) =>
+      a.mode === 'paid'
+        ? h('span', { class: 'badge' }, `Paid until ${dateShort(a.until)}`)
+        : a.mode === 'trial'
+          ? h('span', { class: 'badge badge--muted' }, a.until ? `Trial · ${a.left} DMs left · until ${dateShort(a.until)}` : 'Trial not started')
+          : h('span', { class: 'badge badge--muted' }, `Trial ended ${dateShort(a.until)}`);
+    root.append(
+      h(
+        'section',
+        { class: 'panel' },
+        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Growth (comment-to-DM)'), h('p', null, 'Connected Instagram accounts, their trial or paid time, and automatic DMs sent.'))),
+        h(
+          'div',
+          { class: 'stats stats--5' },
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Connected accounts'), h('span', { class: 'value' }, fmtInt(g.accounts))),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Paying'), h('span', { class: 'value' }, fmtInt(g.paid)), h('span', { class: 'sub' }, `${fmtInt(g.trial)} on trial · ${fmtInt(g.expired)} trial ended`)),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'DMs sent, 7 days'), h('span', { class: 'value' }, fmtInt(g.dmsWeek)), h('span', { class: 'sub' }, `${fmtInt(g.dmsTotal)} in total`)),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Growth revenue'), h('span', { class: 'value' }, usd(g.usd)), h('span', { class: 'sub' }, `${fmtInt(g.orders)} paid orders`)),
+        ),
+        gr.accounts.length
+          ? h('div', { class: 'rows', style: { marginTop: '18px' } }, gr.accounts.map((a) => h('div', { class: 'row' }, h('div', { class: 'who' }, h('b', null, `@${a.username || a.id}`), h('span', { class: 'small text-2' }, ` · ${fmtInt(a.dmsWeek)} DMs this week · ${fmtInt(a.dmsTotal)} total`)), mode(a))))
+          : h('p', { class: 'small text-2' }, 'No accounts connected yet.'),
+      ),
+    );
+  }
+
   const hl = s.health;
   const cronAge = hl.cronLastRun ? Math.round((Date.now() - hl.cronLastRun) / 60000) : null;
   root.append(

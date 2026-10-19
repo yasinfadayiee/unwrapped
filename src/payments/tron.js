@@ -82,7 +82,7 @@ export async function allocateAmountUnits(env, priceUsd) {
   throw new HttpError(503, 'busy_try_again');
 }
 
-export async function createTronOrder(env, { plan, priceUsd = plan.priceUsd, email, renewKey, visitor }) {
+export async function createTronOrder(env, { plan, priceUsd = plan.priceUsd, email, renewKey, visitor, growthAccount = null }) {
   const amountUnits = await allocateAmountUnits(env, priceUsd);
   return insertOrder(env, {
     plan: plan.id,
@@ -93,6 +93,7 @@ export async function createTronOrder(env, { plan, priceUsd = plan.priceUsd, ema
     email,
     renew_key: renewKey,
     visitor,
+    growth_account: growthAccount,
   });
 }
 

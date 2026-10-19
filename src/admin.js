@@ -9,6 +9,7 @@ import { tronEnabled } from './payments/tron.js';
 import { fetchPayment, nowpaymentsEnabled } from './payments/nowpayments.js';
 import { emailEnabled, sendLicenseEmail } from './email.js';
 import { statsSummary } from './stats.js';
+import { access, ensureGrowthSchema, growthEnabled } from './growth/index.js';
 import { DAY, formatUsdt, isEmail, maskEmail, normalizeLicenseKey, timingSafeEqual } from './util.js';
 
 function authorized(request, env) {
@@ -42,6 +43,8 @@ export async function handleAdmin(request, env, url) {
       return listEvents(env);
     case 'GET /api/admin/stats':
       return statsSummary(env);
+    case 'GET /api/admin/growth':
+      return growthSummary(env);
     case 'GET /api/admin/nowpayments': {
       // Support helper: the live status of one NOWPayments payment.
       const id = String(url.searchParams.get('payment') || '').replace(/\D/g, '');
@@ -182,6 +185,47 @@ async function markPaid(env, body) {
   const license = await fulfillOrder(env, order, { providerRef: 'manual' });
   await logEvent(env, 'order.manual_paid', order.id, null);
   return json({ ok: true, license });
+}
+
+// Unwrapped Growth at a glance: every connected account with its trial or
+// paid status, DMs sent and what Growth has earned.
+async function growthSummary(env) {
+  if (!growthEnabled(env)) return json({ ok: true, enabled: false });
+  await ensureGrowthSchema(env);
+  const now = Date.now();
+  const db = env.DB;
+  const [accounts, sent, revenue] = await db.batch([
+    db.prepare(
+      `SELECT a.id, a.username, a.paid_until, a.created_at, t.started_at, t.sent
+       FROM growth_accounts a LEFT JOIN growth_trials t ON t.account_id = a.id ORDER BY a.created_at DESC LIMIT 200`,
+    ),
+    db
+      .prepare('SELECT account_id, SUM(ok) AS total, SUM(CASE WHEN ts > ? THEN ok ELSE 0 END) AS week FROM growth_sent GROUP BY account_id')
+      .bind(now - 7 * DAY),
+    db.prepare("SELECT COUNT(*) AS n, COALESCE(SUM(price_usd), 0) AS usd FROM orders WHERE status = 'paid' AND plan LIKE 'growth-%'"),
+  ]);
+  const dms = new Map(sent.results.map((r) => [r.account_id, r]));
+  const list = accounts.results.map((a) => {
+    const x = access(a, a.started_at == null ? null : { started_at: a.started_at, sent: a.sent }, now);
+    const d = dms.get(a.id);
+    return { id: a.id, username: a.username, mode: x.mode, until: x.fresh ? null : x.until, left: x.left ?? null, connectedAt: a.created_at, dmsWeek: d?.week || 0, dmsTotal: d?.total || 0 };
+  });
+  const count = (mode) => list.filter((a) => a.mode === mode).length;
+  return json({
+    ok: true,
+    enabled: true,
+    totals: {
+      accounts: list.length,
+      paid: count('paid'),
+      trial: count('trial'),
+      expired: count('expired'),
+      dmsWeek: list.reduce((n, a) => n + a.dmsWeek, 0),
+      dmsTotal: list.reduce((n, a) => n + a.dmsTotal, 0),
+      orders: revenue.results[0].n,
+      usd: revenue.results[0].usd,
+    },
+    accounts: list,
+  });
 }
 
 async function listEvents(env) {

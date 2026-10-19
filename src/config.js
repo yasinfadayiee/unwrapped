@@ -63,6 +63,17 @@ export const PLANS = [
   { id: 'creator-year', tier: 'creator', cycle: 'year', name: 'Creator · 12 months', short: 'Yearly', priceUsd: 119, days: 365 },
 ];
 
+// Unwrapped Growth (comment-to-DM automation) is billed per Instagram account,
+// separately from the export tiers above: paying adds days to that account.
+export const GROWTH_PLANS = [
+  { id: 'growth-month', tier: 'growth', cycle: 'month', name: 'Growth · 30 days', short: 'Monthly', priceUsd: 9, days: 30 },
+  { id: 'growth-year', tier: 'growth', cycle: 'year', name: 'Growth · 12 months', short: 'Yearly', priceUsd: 79, days: 365, badge: 'Save 27%' },
+];
+
+export function getGrowthPlan(id) {
+  return GROWTH_PLANS.find((p) => p.id === id) || null;
+}
+
 // Plan ids from before the tiers existed. Licenses that carry them keep
 // working as Pro, and old links buy today's Pro plans.
 const LEGACY_PLANS = { month: 'pro-month', year: 'pro-year', life: 'pro-life' };
