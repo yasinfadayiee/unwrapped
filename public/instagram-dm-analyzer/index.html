@@ -16,7 +16,7 @@
 <link rel="alternate" hreflang="x-default" href="https://myunwrapped.com/instagram-dm-analyzer/">
 <meta name="theme-color" content="#07070b">
 <meta name="color-scheme" content="dark light">
-<script src="/assets/js/theme-init.js?v=mvf2dzam"></script>
+<script src="/assets/js/theme-init.js?v=mvf4nct8"></script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Unwrapped">
 <meta property="og:locale" content="en_US">
@@ -36,8 +36,8 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="preload" href="/assets/fonts/bricolage-wght.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-wght.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/css/main.css?v=mvf2dzam">
-<link rel="modulepreload" href="/assets/js/site.js?v=mvf2dzam">
+<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/css/main.css?v=mvf4nct8">
+<link rel="modulepreload" href="/assets/js/site.js?v=mvf4nct8">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Instagram DM analyzer: who leaves you on read — Unwrapped","url":"https://myunwrapped.com/instagram-dm-analyzer/","inLanguage":"en","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (runs in the browser)","description":"Analyze your Instagram DMs privately: see who leaves you on read, how fast each person really replies, who always texts first and which friendships are fading…","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Unwrapped","item":"https://myunwrapped.com/"},{"@type":"ListItem","position":2,"name":"Instagram DM analyzer: who leaves you on read","item":"https://myunwrapped.com/instagram-dm-analyzer/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I see who leaves me on read on Instagram?","acceptedAnswer":{"@type":"Answer","text":"Instagram doesn’t show it, but your message history does. Unwrapped counts the times you wrote, got no answer for a day or more and wrote again, and lists chats where your last message is still unanswered after a week."}},{"@type":"Question","name":"Will the other person know?","acceptedAnswer":{"@type":"Answer","text":"No. Nobody is notified and nothing is sent anywhere — the analysis runs on your own device from the file Instagram gives you."}},{"@type":"Question","name":"Do you read my messages?","acceptedAnswer":{"@type":"Answer","text":"No. The stats only use who sent each message and when. If you open the Message viewer , your chats are shown to you on your own device — they are never stored on a server or uploaded."}},{"@type":"Question","name":"Which data do I need to download?","acceptedAnswer":{"@type":"Answer","text":"Choose “Messages” (or “All available information”) in Instagram’s Download your information, in JSON format."}},{"@type":"Question","name":"Does it include group chats?","acceptedAnswer":{"@type":"Answer","text":"Reply times and “left on read” are measured in 1:1 chats only, where they’re meaningful. Group chats still count toward your message totals."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Your own reply time, their average reply time and the counts are free. The names behind each list, Friendship Radar and Friendship Wrapped cards are part of Pro."}}]}</script>
@@ -121,9 +121,10 @@
   <div class="container">
     <a class="logo" href="/" aria-label="Unwrapped — home"><svg aria-hidden="true"><use href="#i-logo"/></svg>Unwrapped</a>
     <nav class="nav" aria-label="Main">
-      <a href="/instagram/" data-nav="instagram">Instagram</a>
-      <a href="/tiktok/" data-nav="tiktok">TikTok</a>
-      <a href="/x/" data-nav="x">X</a>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button" aria-haspopup="true" aria-expanded="false">Platforms<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <div class="nav-dd-menu"><a href="/instagram/" data-nav="instagram"><img class="ico3d" src="/assets/img/icons/instagram.webp" width="64" height="64" alt="Instagram icon" aria-hidden="true" loading="lazy" decoding="async">Instagram</a><a href="/tiktok/" data-nav="tiktok"><img class="ico3d" src="/assets/img/icons/tiktok.webp" width="64" height="64" alt="Tiktok icon" aria-hidden="true" loading="lazy" decoding="async">TikTok</a><a href="/x/" data-nav="x"><img class="ico3d" src="/assets/img/icons/x.webp" width="64" height="64" alt="X icon" aria-hidden="true" loading="lazy" decoding="async">X</a><a href="/facebook/" data-nav="facebook"><img class="ico3d" src="/assets/img/icons/facebook.webp" width="64" height="64" alt="Facebook icon" aria-hidden="true" loading="lazy" decoding="async">Facebook</a><a href="/linkedin/" data-nav="linkedin"><img class="ico3d" src="/assets/img/icons/linkedin.webp" width="64" height="64" alt="Linkedin icon" aria-hidden="true" loading="lazy" decoding="async">LinkedIn</a><a href="/threads-unfollowers/" data-nav="threads"><img class="ico3d" src="/assets/img/icons/threads.webp" width="64" height="64" alt="Threads icon" aria-hidden="true" loading="lazy" decoding="async">Threads</a><a href="/whatsapp-chat-analyzer/" data-nav="whatsapp"><img class="ico3d" src="/assets/img/icons/whatsapp.webp" width="64" height="64" alt="Whatsapp icon" aria-hidden="true" loading="lazy" decoding="async">WhatsApp</a><a href="/telegram-chat-analyzer/" data-nav="telegram"><img class="ico3d" src="/assets/img/icons/telegram.webp" width="64" height="64" alt="Telegram icon" aria-hidden="true" loading="lazy" decoding="async">Telegram</a><a href="/spotify-stats/" data-nav="spotify"><img class="ico3d" src="/assets/img/icons/spotify.webp" width="64" height="64" alt="Spotify icon" aria-hidden="true" loading="lazy" decoding="async">Spotify</a></div>
+      </div>
       <a href="/tools/" data-nav="tools" aria-current="page">Tools <span class="nav-new">New</span></a>
       <a href="/guides/" data-nav="guides">Guides</a>
       <a href="/pricing/" data-nav="pricing">Pricing</a>
@@ -351,6 +352,6 @@
     </div>
   </div>
 </footer>
-<script type="module" src="/assets/js/site.js?v=mvf2dzam"></script>
+<script type="module" src="/assets/js/site.js?v=mvf4nct8"></script>
 </body>
 </html>

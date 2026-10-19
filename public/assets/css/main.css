@@ -1594,3 +1594,57 @@ audio.msg-media { min-height: 0; }
 .read-next { margin: 36px 0 8px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); } .read-next h2 { margin-top: 0 !important; font-size: 18px; } .read-next ul { margin: 10px 0 0; } .read-next li { margin: 6px 0; }
 .mobile-nav a:has(.mnav-ico) { display: flex; align-items: center; gap: 14px; } .mnav-ico { width: 34px; height: 34px; flex: none; filter: none; }
 .hero-art { position: relative; } .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .8s ease; -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 50%, #000 58%, transparent 100%); mask-image: radial-gradient(ellipse 60% 62% at 50% 50%, #000 58%, transparent 100%); } .hero-video.is-playing { opacity: 1; }
+
+/* Desktop hero (home and tool pages): copy on the left, art and drop zone on the right, so the main action sits on the first screen. */
+@media (min-width: 1100px) {
+  .hero:has(> .container > .hero-art + div .drop) { padding-top: 40px; }
+  .hero > .container:has(> .hero-art + div .drop) { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); grid-template-rows: auto auto; column-gap: 56px; align-items: center; }
+  .hero > .container:has(> .hero-art + div .drop) > .hero-top { grid-row: 1 / 3; align-items: flex-start; text-align: left; gap: 22px; }
+  .hero > .container:has(> .hero-art + div .drop) .hero-title { max-width: 16ch; font-size: clamp(48px, 4.6vw, 70px); }
+  .home .hero-title { max-width: 15ch; font-size: clamp(60px, 5.6vw, 88px); }
+  .hero > .container:has(> .hero-art + div .drop) .hero-sub { text-align: left; max-width: 540px; font-size: 18px; }
+  .hero > .container:has(> .hero-art + div .drop) .works-with { justify-content: flex-start; margin-top: 4px; }
+  .hero > .container:has(> .hero-art + div .drop) > .hero-art { grid-column: 2; grid-row: 1; align-self: end; width: 58%; max-width: 300px; margin: 0 auto -40px; }
+  .hero > .container:has(> .hero-art + div .drop) > .hero-art--sq { max-width: 220px; margin-bottom: -20px; }
+  .hero > .container:has(> .hero-art + div .drop) > .hero-art + div { grid-column: 2; grid-row: 2; align-self: start; margin-top: 0 !important; }
+}
+/* Centered square art on inner pages: smaller on desktop so the page's real content (plans, steps) starts on the first screen. */
+@media (min-width: 900px) { .page-hero .hero-art--sq { max-width: 210px !important; margin-top: 0 !important; margin-bottom: 12px !important; } .page-hero { padding-top: 56px; } }
+
+/* Header: one Platforms dropdown holding all nine platforms, so the bar stays short and nothing is hidden. */
+.nav-dd { position: relative; }
+.nav-dd-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; color: var(--text-2); font-size: 14.5px; font-weight: 500; transition: color 0.2s, background-color 0.2s; }
+.nav-dd-btn svg { width: 12px; height: 12px; transform: rotate(90deg); }
+.nav-dd:hover .nav-dd-btn, .nav-dd.is-open .nav-dd-btn, .nav-dd:focus-within .nav-dd-btn { color: var(--text); background: rgba(var(--fg-rgb), 0.05); }
+.nav-dd-menu { position: absolute; left: 50%; top: 100%; z-index: 120; display: none; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; width: 440px; margin-top: 6px; padding: 10px; border-radius: 18px; background: var(--surface-2); border: 1px solid var(--line-2); box-shadow: 0 18px 50px -12px rgba(var(--shade-rgb), 0.6); transform: translateX(-50%); }
+.nav-dd-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
+.nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu, .nav-dd.is-open .nav-dd-menu { display: grid; }
+.nav .nav-dd-menu a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 12px; font-size: 14.5px; font-weight: 600; color: var(--text); }
+.nav .nav-dd-menu a:hover { background: rgba(var(--fg-rgb), 0.07); }
+.nav-dd-menu .ico3d { width: 26px; height: 26px; flex: none; }
+
+/* Home: three plain steps right under the hero, so a first-time visitor knows what to do. */
+.steps3 { display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 760px) { .steps3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.step3 { position: relative; display: grid; gap: 6px; align-content: start; padding: 22px 22px 22px 72px; border-radius: var(--r); border: 1px solid var(--line); background: rgba(var(--fg-rgb), 0.02); }
+.step3 i { position: absolute; left: 22px; top: 22px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font: 700 17px var(--font-display); font-style: normal; background: var(--signal); color: var(--signal-ink); }
+.step3 b { font-size: 17px; letter-spacing: -0.01em; line-height: 1.3; }
+.step3 span { font-size: 14.5px; line-height: 1.55; color: var(--text-2); }
+.step3 span a { color: var(--text); font-weight: 600; text-underline-offset: 3px; white-space: nowrap; }
+
+/* Typography polish: balanced headings (no lonely last word), tidier paragraph endings. */
+h1, h2, h3, .h1, .h2, .h3 { text-wrap: balance; }
+.lead, .hero-sub, .answer p { text-wrap: pretty; }
+
+/* Phones: smaller centred art on inner pages so the real content starts higher. */
+@media (max-width: 899px) { .page-hero .hero-art--sq { max-width: 170px !important; margin-bottom: 10px !important; } }
+@media (max-width: 760px) { .hero-art--sq { max-width: 200px; } }
+
+/* Desktop hero: keep the drifting particles to the right half so they don't cross the copy; in the light theme show the art as a round badge instead of a clipped dark box. */
+@media (min-width: 1100px) {
+  .hero:has(> .container > .hero-art + div .drop) .hero-canvas { -webkit-mask-image: linear-gradient(to right, transparent 30%, #000 65%); mask-image: linear-gradient(to right, transparent 30%, #000 65%); }
+  :root[data-theme='light'] .hero:has(> .container > .hero-art + div .drop) .hero-art:not(.hero-art--sq) { width: 40%; max-width: 220px; margin-bottom: 18px; }
+  :root[data-theme='light'] .hero:has(> .container > .hero-art + div .drop) .hero-art:not(.hero-art--sq) :is(img, .hero-video) { aspect-ratio: 1; object-fit: cover; border-radius: 50%; }
+}
+/* Phones: the platform chips repeat what the drop card and the next section already show, so the first screen goes straight to the action. */
+@media (max-width: 760px) { .home .hero .works-with { display: none; } }
