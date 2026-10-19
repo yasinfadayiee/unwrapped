@@ -151,6 +151,28 @@ async function load() {
     ),
   );
 
+  // Feedback: ratings, and testimonials to approve for the home page
+  const fb = await api('/api/admin/feedback', { headers: auth() }).catch(() => null);
+  if (fb) {
+    const rows = fb.items.map((f) => {
+      const toggle = f.public ? h('button', { class: 'row-btn', type: 'button' }, f.approved ? 'Hide' : 'Show on site') : null;
+      toggle?.addEventListener('click', async () => {
+        await api('/api/admin/feedback/approve', { method: 'POST', headers: auth(), body: { id: f.id, approved: !f.approved } });
+        toast(f.approved ? 'Hidden' : 'Shown on the home page (3+ needed)');
+        load();
+      });
+      return h('tr', null, h('td', null, new Date(f.ts).toLocaleDateString('en-US')), h('td', null, '★'.repeat(f.rating)), h('td', { style: { whiteSpace: 'normal', minWidth: '240px' } }, f.text || ''), h('td', null, f.name || ''), h('td', null, [f.platform, f.lang].filter(Boolean).join(' · ')), h('td', null, f.public ? (f.approved ? 'public ✓' : 'may show') : 'private'), h('td', null, toggle));
+    });
+    root.append(
+      h(
+        'section',
+        { class: 'panel' },
+        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Feedback'), h('p', null, fb.count ? `${fmtInt(fb.count)} ratings · average ${fb.average} / 5. Approved quotes appear on the home page once there are 3.` : 'No ratings yet. People are asked once, 45 seconds after their first analysis.'))),
+        fb.items.length ? h('div', { class: 'table-wrap', style: { maxHeight: '420px' } }, h('table', { class: 'data-table' }, h('thead', null, h('tr', null, ['Date', 'Rating', 'Text', 'Name', 'Where', 'Status', ''].map((x) => h('th', null, x)))), h('tbody', null, rows))) : null,
+      ),
+    );
+  }
+
   // Orders
   const statusSel = h('select', { class: 'select', 'aria-label': 'Filter orders' }, ['all', 'pending', 'paid', 'expired', 'failed'].map((v) => h('option', { value: v }, v)));
   const tableBox = h('div', { class: 'table-wrap', style: { maxHeight: '520px' } });

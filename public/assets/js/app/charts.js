@@ -96,7 +96,8 @@ export function barChart(data, { height = 220, color = 'var(--c1)', valueLabel =
     const band = innerW / Math.max(1, data.length);
     const barW = Math.max(2, Math.min(24, band * 0.68));
     const gap = band - barW;
-    const svg = s('svg', { width, height, viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': ariaLabel });
+    // A group, not an image: each bar is focusable and announces its own value.
+    const svg = s('svg', { width, height, viewBox: `0 0 ${width} ${height}`, role: 'group', 'aria-label': ariaLabel });
 
     for (let v = 0; v <= scale.max + 1e-9; v += scale.step) {
       const y = pad.top + innerH - (v / scale.max) * innerH;
@@ -116,6 +117,7 @@ export function barChart(data, { height = 220, color = 'var(--c1)', valueLabel =
         width: band,
         height: innerH,
         tabindex: '0',
+        role: 'img',
         'aria-label': `${d.label}: ${valueLabel(d.value)}`,
       });
       const show = () => tip.show(x + barW / 2, y - 4, valueLabel(d.value), d.label);

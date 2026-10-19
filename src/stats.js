@@ -1,7 +1,7 @@
 // Privacy-friendly site statistics: daily counters only. No cookies, no IPs,
 // no user ids — a page view is just "+1 for this path today".
 
-import { HttpError, json, readJson } from './http.js';
+import { HttpError, json, rateLimit, readJson, visitorId } from './http.js';
 import { DAY } from './util.js';
 
 const EVENTS = new Set(['view', 'analyze', 'demo', 'checkout', 'nodata', 'tool', 'pay', 'wallet', 'cont']);
@@ -17,6 +17,9 @@ export async function recordHit(request, env) {
   const body = await readJson(request, 1024);
   const kind = String(body.k || '');
   if (!EVENTS.has(kind)) throw new HttpError(400, 'bad_event');
+  // The analysis count is shown publicly (publicStats), so one visitor can
+  // only add a handful per hour.
+  if (kind === 'analyze') await rateLimit(env, 'hit-analyze', await visitorId(request, env), 10);
   const day = Math.floor(Date.now() / DAY);
   const rows = [['event', kind]];
   if (kind === 'view') {
@@ -44,6 +47,15 @@ export async function recordHit(request, env) {
   const stmt = env.DB.prepare('INSERT INTO stats (day, kind, key, n) VALUES (?, ?, ?, 1) ON CONFLICT(day, kind, key) DO UPDATE SET n = n + 1');
   await env.DB.batch(rows.map(([k, v]) => stmt.bind(day, k, v)));
   return new Response(null, { status: 204 });
+}
+
+// Public social proof: how many exports were analyzed (real counters only).
+// Below `min` the number is withheld, so a quiet week never shows "3".
+export async function publicStats(env, min = 100) {
+  const from = Math.floor(Date.now() / DAY) - 29;
+  const row = await env.DB.prepare("SELECT COALESCE(SUM(n), 0) AS n FROM stats WHERE kind = 'event' AND key = 'analyze' AND day >= ?").bind(from).first();
+  const n = row?.n || 0;
+  return json({ ok: true, analyzed30d: n >= min ? n : null }, 200, { 'cache-control': 'public, max-age=900' });
 }
 
 // Last 30 days for the owner dashboard.

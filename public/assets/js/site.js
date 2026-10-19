@@ -82,6 +82,7 @@ function themePicker() {
 
 /* ---------- reveal + spotlight ---------- */
 function reveals() {
+  document.documentElement.classList.add('reveal-ready');
   const items = $$('.reveal');
   if (!items.length) return;
   if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
@@ -100,6 +101,47 @@ function reveals() {
     { rootMargin: '0px 0px -8% 0px' },
   );
   items.forEach((i) => io.observe(i));
+}
+
+// Real usage, shown next to the drop zone's trust badges once there is enough of it.
+async function liveCount() {
+  const row = $('.trust-row');
+  if (!row) return;
+  try {
+    const res = await fetch('/api/stats');
+    const { analyzed30d: n } = await res.json();
+    if (!n) return;
+    const num = new Intl.NumberFormat(document.documentElement.lang || 'en').format(n);
+    row.append(h('span', { class: 'live-count' }, icon('users'), t('{n} exports analyzed in the last 30 days', { n: num })));
+  } catch {
+    /* offline or old server: keep the static badges */
+  }
+}
+
+// Approved testimonials on the home page; nothing is shown until there are three.
+async function testimonials() {
+  const slot = $('[data-testimonials]');
+  if (!slot) return;
+  try {
+    const lang = (document.documentElement.lang || 'en').slice(0, 2);
+    const { items } = await (await fetch(`/api/testimonials?lang=${lang}`)).json();
+    if (!items || items.length < 3) return;
+    const stars = (n) => h('div', { class: 'q-stars', 'aria-label': t('{n} of 5', { n }) }, Array.from({ length: n }, () => h('span', { class: 'star' })));
+    slot.replaceWith(
+      h(
+        'section',
+        { class: 'section section--tight', id: 'reviews' },
+        h(
+          'div',
+          { class: 'container' },
+          h('div', { class: 'sec-head sec-head--center' }, h('span', { class: 'eyebrow' }, t('Reviews')), h('h2', { class: 'h2' }, t('What people say'))),
+          h('div', { class: 'quotes' }, items.map((q) => h('figure', { class: 'card quote' }, stars(q.rating), h('blockquote', null, h('p', null, `“${q.text}”`)), h('figcaption', { class: 'q-who' }, q.name || t('Unwrapped user'))))),
+        ),
+      ),
+    );
+  } catch {
+    /* offline or not deployed yet */
+  }
 }
 
 function spotlight() {
@@ -573,6 +615,8 @@ inAppBrowserNotice();
 supportContact();
 import('./lib/stats.js').then(({ trackView }) => trackView()).catch(() => {});
 reveals();
+liveCount();
+testimonials();
 spotlight();
 dropZones();
 tabs();
@@ -589,11 +633,23 @@ if (document.readyState === 'complete') setTimeout(featuredPlanFirst, 50);
 else window.addEventListener('load', () => setTimeout(featuredPlanFirst, 50), { once: true });
 // Phones show the plans as a swipe row: start on the featured one.
 function featuredPlanFirst() {
+  swipeRowsFocusable();
   $$('.pricing--tiers').forEach((row) => {
     const featured = $('.is-featured', row);
     if (!featured || row.scrollWidth <= row.clientWidth) return;
     const delta = featured.getBoundingClientRect().left - row.getBoundingClientRect().left - (row.clientWidth - featured.offsetWidth) / 2;
     row.scrollTo({ left: row.scrollLeft + delta, behavior: 'instant' });
+  });
+}
+// A swipe row or wide table with nothing focusable inside can't be scrolled from the keyboard,
+// so it becomes a tab stop itself.
+function swipeRowsFocusable() {
+  $$('.lab-grid, .pricing--tiers, #tools .bento, #how .steps, .table-wrap, .compare-wrap, .card--pad').forEach((row) => {
+    if (row.scrollWidth <= row.clientWidth || row.querySelector('a[href], button, input, select, textarea, [tabindex]')) return;
+    const head = row.closest('section')?.querySelector('h2');
+    row.setAttribute('tabindex', '0');
+    row.setAttribute('role', 'region');
+    if (head) row.setAttribute('aria-label', head.textContent.trim());
   });
 }
 // Phones: plan names above the swipe row, so it's clear there are three plans and which one is shown.
@@ -643,7 +699,31 @@ function tileFilter() {
     grid.before(bar);
   }
 }
+// Phones: the compare table shows Free plus one paid plan at a time, picked with the buttons above it.
+function compareColumns() {
+  const table = $('.compare');
+  const wrap = table?.closest('.compare-wrap');
+  const heads = table ? $$('thead th', table).slice(2) : [];
+  if (!wrap || heads.length < 2) return;
+  const phone = matchMedia('(max-width: 760px)');
+  const groups = $$('tr.grp th[colspan]', table).map((th) => [th, th.colSpan]);
+  const buttons = heads.map((th) => h('button', { type: 'button', 'aria-pressed': 'false' }, th.textContent.trim()));
+  const pick = (i) => {
+    table.dataset.col = String(i);
+    buttons.forEach((b, j) => b.setAttribute('aria-pressed', String(j === i)));
+  };
+  buttons.forEach((b, i) => b.addEventListener('click', () => pick(i)));
+  wrap.before(h('div', { class: 'compare-pick', role: 'group', 'aria-label': $('#compare h2')?.textContent.trim() || '' }, ...buttons));
+  pick(Math.max(0, heads.findIndex((th) => th.classList.contains('is-featured'))));
+  const apply = () => {
+    table.classList.toggle('is-picked', phone.matches);
+    groups.forEach(([th, span]) => (th.colSpan = phone.matches ? 3 : span));
+  };
+  phone.addEventListener('change', apply);
+  apply();
+}
 tileFilter();
+compareColumns();
 planTabs();
 getConfig().then(async () => {
   await pricing();
