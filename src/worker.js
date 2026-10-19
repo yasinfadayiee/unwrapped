@@ -1,14 +1,14 @@
 // Cloudflare Worker entry. Static files in /public are served by Workers
 // Static Assets; everything under /api/* is handled here.
 
-import { PLANS, SETTINGS, TIERS, brand, getPlan, tierRank } from './config.js';
+import { GROWTH_PLANS, PLANS, SETTINGS, TIERS, brand, getGrowthPlan, getPlan, tierRank } from './config.js';
 import { cleanup, ensureSchema, getLicense, getOrder, logEvent } from './db.js';
 import { HttpError, fail, json, rateLimit, readJson, visitorId } from './http.js';
 import { activateLicense, getSigningKeys, lifetimeTier } from './license.js';
 import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
 import { checkNowpaymentsPayments, createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
-import { growthMaintenance, handleGrowth } from './growth/index.js';
+import { growthAccountForCheckout, growthMaintenance, handleGrowth } from './growth/index.js';
 import { handleBio, servePublicBio } from './bio/index.js';
 import { emailEnabled, sendRenewalReminders } from './email.js';
 import { handleAdmin } from './admin.js';
@@ -33,6 +33,7 @@ async function getConfig(env) {
     ok: true,
     brand: brand(env),
     plans: PLANS,
+    growthPlans: GROWTH_PLANS,
     tiers: TIERS,
     methods: await enabledMethods(env),
     publicKey: publicJwk,
@@ -49,8 +50,11 @@ async function checkout(request, env) {
   await rateLimit(env, 'checkout', visitor, SETTINGS.maxCheckoutsPerHour);
   const body = await readJson(request);
 
-  const plan = getPlan(body.plan);
+  const growthPlan = getGrowthPlan(body.plan);
+  const plan = growthPlan || getPlan(body.plan);
   if (!plan) throw new HttpError(400, 'unknown_plan');
+  // Growth pays for one connected Instagram account, not for a license.
+  const growthAccount = growthPlan ? await growthAccountForCheckout(env, request, String(body.accountId || '')) : null;
 
   let email = null;
   if (body.email) {
@@ -58,7 +62,7 @@ async function checkout(request, env) {
     if (!isEmail(email)) throw new HttpError(400, 'invalid_email');
   }
 
-  let renewKey = body.renewKey ? normalizeLicenseKey(body.renewKey) : null;
+  let renewKey = body.renewKey && !growthPlan ? normalizeLicenseKey(body.renewKey) : null;
   if (renewKey) {
     const current = await getLicense(env, renewKey);
     if (!current || current.status !== 'active') renewKey = null;
@@ -73,14 +77,14 @@ async function checkout(request, env) {
   const methodId = body.method || (methods[0] && methods[0].id);
   if (!methods.some((m) => m.id === methodId)) throw new HttpError(400, 'method_unavailable');
 
-  const referral = body.ref ? await validReferral(env, body.ref, renewKey) : null;
+  const referral = body.ref && !growthPlan ? await validReferral(env, body.ref, renewKey) : null;
   const priceUsd = referral ? discounted(plan.priceUsd) : plan.priceUsd;
 
-  const args = { plan, priceUsd, email, renewKey, visitor };
+  const args = { plan, priceUsd, email, renewKey, visitor, growthAccount };
   const order =
     methodId === 'tron' ? await createTronOrder(env, args) : await createNowpaymentsOrder(env, request, args);
   if (referral) await attachReferral(env, order.id, referral.code);
-  await logEvent(env, 'order.created', order.id, { plan: plan.id, method: methodId, ref: referral ? referral.code : null });
+  await logEvent(env, 'order.created', order.id, { plan: plan.id, method: methodId, ref: referral ? referral.code : null, growthAccount });
   const view = await publicOrder(env, order);
   view.listPriceUsd = plan.priceUsd;
   view.referral = Boolean(referral);

@@ -125,3 +125,30 @@ test('webhook verification and session checks', async () => {
   const session = await connect();
   assert.equal((await api('POST', '/api/growth/rules', session, { accountId: 'ig:other', keyword: 'a', dmText: 'b' })).status, 404);
 });
+
+test('paying for Growth adds days to the account, kept across reconnects', async () => {
+  env.TRON_ADDRESS = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb';
+  env.DEV_MODE = '1';
+  const session = await connect();
+  assert.equal((await api('POST', '/api/checkout', null, { plan: 'growth-month', method: 'tron', accountId: 'ig:1784' })).status, 401);
+  assert.equal((await api('POST', '/api/checkout', session, { plan: 'growth-month', method: 'tron', accountId: 'ig:other' })).status, 404);
+  const co = await api('POST', '/api/checkout', session, { plan: 'growth-month', method: 'tron', accountId: 'ig:1784' });
+  assert.equal(co.status, 200, JSON.stringify(co.body));
+  assert.equal(co.body.order.growthAccount, 'ig:1784');
+  const paid = await api('POST', '/api/dev/pay', null, { id: co.body.order.id });
+  assert.ok(paid.body.order.growthUntil > Date.now() + 29 * 86_400_000);
+  assert.equal(paid.body.order.license, undefined);
+
+  let me = await api('GET', '/api/growth/me', session);
+  assert.equal(me.body.accounts[0].access.mode, 'paid');
+  const until = me.body.accounts[0].access.until;
+
+  await api('POST', '/api/growth/disconnect', session, { accountId: 'ig:1784' });
+  me = await api('GET', '/api/growth/me', await connect());
+  assert.equal(me.body.accounts[0].access.until, until);
+
+  env.ADMIN_TOKEN = 'admin-token-123456';
+  const admin = await api('GET', '/api/admin/growth', 'admin-token-123456');
+  assert.equal(admin.body.totals.paid, 1);
+  assert.equal(admin.body.totals.usd, 9);
+});

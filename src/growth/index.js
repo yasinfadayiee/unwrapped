@@ -25,6 +25,8 @@ export const GROWTH_SCHEMA = [
   'CREATE INDEX IF NOT EXISTS growth_accounts_session ON growth_accounts (session)',
   // One trial per platform account, forever — survives disconnecting.
   'CREATE TABLE IF NOT EXISTS growth_trials (account_id TEXT PRIMARY KEY, started_at INTEGER NOT NULL, sent INTEGER NOT NULL DEFAULT 0)',
+  // Paid time per platform account; like the trial it survives disconnecting.
+  'CREATE TABLE IF NOT EXISTS growth_paid (account_id TEXT PRIMARY KEY, paid_until INTEGER NOT NULL, updated_at INTEGER NOT NULL)',
   `CREATE TABLE IF NOT EXISTS growth_rules (
     id TEXT PRIMARY KEY,
     account_id TEXT NOT NULL,
@@ -85,6 +87,30 @@ async function sessionAccounts(env, request) {
   const { results } = await env.DB.prepare('SELECT * FROM growth_accounts WHERE session = ?').bind(session).all();
   if (!results.length) throw new HttpError(401, 'no_session');
   return { session, accounts: results };
+}
+
+// Adds paid days to an account (from today, or from the end of time already
+// paid). Called once per paid order; returns the new end date.
+export async function extendGrowth(env, accountId, days, now = Date.now()) {
+  if (!accountId) throw new Error('growth order without an account');
+  await ensureGrowthSchema(env);
+  const row = await env.DB.prepare('SELECT paid_until FROM growth_paid WHERE account_id = ?').bind(accountId).first();
+  const until = Math.max(now, row?.paid_until || 0) + days * DAY;
+  await env.DB.batch([
+    env.DB.prepare('INSERT INTO growth_paid (account_id, paid_until, updated_at) VALUES (?, ?, ?) ON CONFLICT(account_id) DO UPDATE SET paid_until = excluded.paid_until, updated_at = excluded.updated_at').bind(accountId, until, now),
+    env.DB.prepare('UPDATE growth_accounts SET paid_until = ? WHERE id = ?').bind(until, accountId),
+  ]);
+  return until;
+}
+
+// The checkout uses this to make sure the buyer owns the account they pay for.
+export async function growthAccountForCheckout(env, request, accountId) {
+  if (!growthEnabled(env)) throw new HttpError(404, 'growth_disabled');
+  await ensureGrowthSchema(env);
+  const { accounts } = await sessionAccounts(env, request);
+  const account = accounts.find((a) => a.id === accountId);
+  if (!account) throw new HttpError(404, 'account_not_found');
+  return account.id;
 }
 
 async function trialOf(env, accountId) {
@@ -150,11 +176,11 @@ async function instagramCallback(request, env, url) {
   const id = `ig:${prof.userId}`;
   const now = Date.now();
   await env.DB.prepare(
-    `INSERT INTO growth_accounts (id, platform, ext_id, username, token_enc, token_expires, token_refreshed, session, created_at)
-     VALUES (?, 'instagram', ?, ?, ?, ?, ?, ?, ?)
+    `INSERT INTO growth_accounts (id, platform, ext_id, username, token_enc, token_expires, token_refreshed, session, paid_until, created_at)
+     VALUES (?, 'instagram', ?, ?, ?, ?, ?, ?, (SELECT paid_until FROM growth_paid WHERE account_id = ?), ?)
      ON CONFLICT(id) DO UPDATE SET username = excluded.username, token_enc = excluded.token_enc, token_expires = excluded.token_expires, token_refreshed = excluded.token_refreshed, session = excluded.session`,
   )
-    .bind(id, prof.userId, prof.username, await seal(env, prof.token), prof.expiresAt, now, row.session, now)
+    .bind(id, prof.userId, prof.username, await seal(env, prof.token), prof.expiresAt, now, row.session, id, now)
     .run();
   await logEvent(env, 'growth.connected', id, { username: prof.username });
   return back(`session=${row.session}`);

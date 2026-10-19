@@ -299,7 +299,7 @@ function line(k, v, { big = false, copy } = {}) {
   return h('div', { class: 'pay-line' }, h('span', { class: 'k' }, k), h('span', { class: `v${big ? ' big' : ''}` }, v), btn);
 }
 
-export function tronScreen(m, order, token, config) {
+export function tronScreen(m, order, token, config, onPaid = (o) => successScreen(m, o)) {
   m.setTitle(t('Pay with USDT (TRC20)'));
   clear(m.body);
   import('./stats.js').then(({ track }) => track('pay')).catch(() => {});
@@ -356,7 +356,7 @@ export function tronScreen(m, order, token, config) {
     if (o.status === 'paid') {
       clearInterval(tickTimer);
       stop();
-      successScreen(m, o);
+      onPaid(o);
     } else if (o.status === 'expired') {
       status.replaceChildren(icon('clock'), h('span', null, t('This order expired, but a payment arriving in the next hours is still accepted. You can also start a new order.')));
     }

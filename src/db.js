@@ -73,6 +73,8 @@ export const SCHEMA = [
 const MIGRATIONS = [
   // A lifetime license that bought time on a higher tier falls back to this plan.
   'ALTER TABLE licenses ADD COLUMN base_plan TEXT',
+  // Growth orders pay for one Instagram account instead of a license.
+  'ALTER TABLE orders ADD COLUMN growth_account TEXT',
 ];
 
 const ready = new WeakMap();

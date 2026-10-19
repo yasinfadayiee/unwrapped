@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
-import { TIERS, PLANS } from '../src/config.js';
+import { TIERS, PLANS, GROWTH_PLANS } from '../src/config.js';
 
 const root = path.resolve(import.meta.dirname, '..');
 const jsRoot = path.join(root, 'public/assets/js');
@@ -27,7 +27,7 @@ export function translationKeys() {
     while ((m = re.exec(src))) keys.add(m[1].replace(/\\'/g, "'"));
   }
   for (const tier of TIERS) [tier.tagline, tier.bestFor, ...tier.features].forEach((s) => keys.add(s));
-  for (const plan of PLANS) [plan.short, plan.badge].filter(Boolean).forEach((s) => keys.add(s));
+  for (const plan of [...PLANS, ...GROWTH_PLANS]) [plan.short, plan.badge].filter(Boolean).forEach((s) => keys.add(s));
   const worker = readFileSync(path.join(root, 'src/worker.js'), 'utf8');
   for (const m of worker.matchAll(/(?:label|detail): '([^']+)'/g)) keys.add(m[1]);
   // Error messages are passed to t() through the ERRORS map.

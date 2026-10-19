@@ -1,4 +1,5 @@
-import { SETTINGS, getPlan } from './config.js';
+import { SETTINGS, getGrowthPlan, getPlan } from './config.js';
+import { extendGrowth } from './growth/index.js';
 import { getOrder, getLicense, logEvent } from './db.js';
 import { grantLicense, issueToken, licenseView } from './license.js';
 import { sendLicenseEmail } from './email.js';
@@ -18,11 +19,12 @@ export async function insertOrder(env, fields) {
     email: null,
     renew_key: null,
     visitor: null,
+    growth_account: null,
     ...fields,
   };
   await env.DB.prepare(
-    `INSERT INTO orders (id, token, plan, price_usd, method, status, amount_units, pay_address, email, renew_key, visitor, created_at, expires_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO orders (id, token, plan, price_usd, method, status, amount_units, pay_address, email, renew_key, visitor, growth_account, created_at, expires_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   )
     .bind(
       order.id,
@@ -36,6 +38,7 @@ export async function insertOrder(env, fields) {
       order.email,
       order.renew_key,
       order.visitor,
+      order.growth_account,
       order.created_at,
       order.expires_at,
     )
@@ -54,6 +57,13 @@ export async function fulfillOrder(env, order, { providerRef = null, paidUnits =
     .bind(now, providerRef, paidUnits, order.id)
     .run();
   if (!flipped.meta || !flipped.meta.changes) return null;
+
+  const growthPlan = getGrowthPlan(order.plan);
+  if (growthPlan) {
+    const until = await extendGrowth(env, order.growth_account, growthPlan.days);
+    await logEvent(env, 'order.paid', order.id, { method: order.method, plan: order.plan, providerRef, growthAccount: order.growth_account, until });
+    return { growthUntil: until };
+  }
 
   const plan = getPlan(order.plan);
   const license = await grantLicense(env, {
@@ -102,6 +112,13 @@ export async function publicOrder(env, order) {
     if (order.paid_units) view.paid = formatUsdt(order.paid_units);
   }
   if (order.redirect_url) view.redirectUrl = order.redirect_url;
+  if (order.growth_account) {
+    view.growthAccount = order.growth_account;
+    if (order.status === 'paid') {
+      const row = await env.DB.prepare('SELECT paid_until FROM growth_paid WHERE account_id = ?').bind(order.growth_account).first().catch(() => null);
+      view.growthUntil = row?.paid_until || null;
+    }
+  }
   if (order.status === 'paid' && order.license_key) {
     const license = await getLicense(env, order.license_key);
     if (license) {

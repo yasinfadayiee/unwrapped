@@ -28,7 +28,7 @@ export async function signIpnBody(secret, body) {
   return hmacHex('SHA-512', String(secret).trim(), JSON.stringify(sortObject(body)));
 }
 
-export async function createNowpaymentsOrder(env, request, { plan, priceUsd = plan.priceUsd, email, renewKey, visitor }) {
+export async function createNowpaymentsOrder(env, request, { plan, priceUsd = plan.priceUsd, email, renewKey, visitor, growthAccount = null }) {
   const order = await insertOrder(env, {
     plan: plan.id,
     price_usd: priceUsd,
@@ -36,8 +36,11 @@ export async function createNowpaymentsOrder(env, request, { plan, priceUsd = pl
     email,
     renew_key: renewKey,
     visitor,
+    growth_account: growthAccount,
   });
   const site = siteUrl(env, request);
+  // Growth buyers go back to their dashboard, which shows the new end date.
+  const back = growthAccount ? { success: `${site}/growth/#paid=1`, cancel: `${site}/growth/` } : { success: `${site}/success/?order=${order.id}&t=${order.token}`, cancel: `${site}/#pricing` };
   const res = await fetch(`${API}/invoice`, {
     method: 'POST',
     headers: { 'x-api-key': env.NOWPAYMENTS_API_KEY, 'content-type': 'application/json' },
@@ -47,8 +50,8 @@ export async function createNowpaymentsOrder(env, request, { plan, priceUsd = pl
       order_id: order.id,
       order_description: `${brand(env)} ${plan.name}`,
       ipn_callback_url: `${site}/api/webhook/nowpayments`,
-      success_url: `${site}/success/?order=${order.id}&t=${order.token}`,
-      cancel_url: `${site}/#pricing`,
+      success_url: back.success,
+      cancel_url: back.cancel,
       // Fixed-rate quotes raise NOWPayments' per-coin minimums above our $5 plans.
       is_fixed_rate: false,
       is_fee_paid_by_user: false,
