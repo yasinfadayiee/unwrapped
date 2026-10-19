@@ -171,11 +171,15 @@ export function relationshipOrbit(groups, { labels = { mutual: tl('Mutual'), fan
     }
   }
   let pointer = null;
-  canvas.addEventListener('pointermove', (e) => {
+  const aim = (e) => {
     const rect = canvas.getBoundingClientRect();
     pointer = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-  });
-  canvas.addEventListener('pointerleave', () => {
+  };
+  canvas.addEventListener('pointermove', aim);
+  // Touch has no hover: a tap shows the dot under the finger and keeps it shown.
+  canvas.addEventListener('pointerdown', aim);
+  canvas.addEventListener('pointerleave', (e) => {
+    if (e.pointerType === 'touch') return;
     pointer = null;
     tip.classList.remove('is-on');
   });

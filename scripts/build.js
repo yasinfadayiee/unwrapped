@@ -251,6 +251,14 @@ for (const { loc, file, meta, body } of pages) {
       publisher: { '@type': 'Organization', name: site.name, logo: { '@type': 'ImageObject', url: `${origin}/assets/img/icon-512.png` } },
     });
   }
+  // Guides and blog posts: a back link, the date and the reading time under the intro.
+  const section = meta.article && meta.route.match(/^\/(guides|blog)\/.+/)?.[1];
+  if (section) {
+    const minutes = Math.max(2, Math.round(stripTags(content).split(' ').length / 220));
+    const date = new Intl.DateTimeFormat(loc.hreflang, { dateStyle: 'medium', timeZone: 'UTC' }).format(new Date(meta.updated || meta.article));
+    const info = `<div class="article-meta"><a href="/${section}/">← ${esc(section === 'guides' ? strings.fGuides : strings.fBlog)}</a><time datetime="${meta.updated || meta.article}">${esc(date)}</time><span>${esc(strings.minRead.replace('{n}', minutes))}</span></div>`;
+    content = content.replace(/(<p class="lead"[^>]*>[\s\S]*?<\/p>)/, `$1${info}`);
+  }
   if (meta.faqSchema) {
     const faq = faqSchema(content);
     if (faq) schemas.push(faq);

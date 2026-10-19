@@ -151,6 +151,8 @@ async function render() {
         (config.tiers || [])
           .filter((tier) => !state.lifetimeTier || TIER_RANK[tier.id] > TIER_RANK[state.lifetimeTier])
           .map((tier) => h('button', { class: `btn ${tier.id === 'pro' ? 'btn--primary' : 'btn--ghost'}`, type: 'button', dataset: { checkout: '', tier: tier.id } }, state.pro && tier.id === state.tier ? t('Extend {v0}', { v0: tier.name }) : tier.name)),
+        // Plans couldn't be loaded (offline): still give a way forward.
+        config.tiers?.length ? null : h('a', { class: 'btn btn--ghost', href: '/pricing/' }, t('See plans')),
       ),
     ),
   );

@@ -37,7 +37,7 @@ export function networkPanel(ds, rel) {
     notBack: rel.notFollowingBack.map((i) => name(ds.platform, i)),
   };
   return panel(
-    { title: tl('Your network orbit'), text: tl('Every dot is an account. Hover to see who.') },
+    { title: tl('Your network orbit'), text: tl('Every dot is an account. Hover or tap to see who.') },
     relationshipOrbit(groups),
     h(
       'div',
