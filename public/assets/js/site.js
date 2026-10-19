@@ -593,11 +593,62 @@ function featuredPlanFirst() {
     const featured = $('.is-featured', row);
     if (!featured || row.scrollWidth <= row.clientWidth) return;
     const delta = featured.getBoundingClientRect().left - row.getBoundingClientRect().left - (row.clientWidth - featured.offsetWidth) / 2;
-    row.scrollLeft += delta;
+    row.scrollTo({ left: row.scrollLeft + delta, behavior: 'instant' });
   });
 }
-getConfig().then(() => {
-  pricing();
+// Phones: plan names above the swipe row, so it's clear there are three plans and which one is shown.
+function planTabs() {
+  $$('.pricing--tiers').forEach((row) => {
+    row.previousElementSibling?.classList.contains('plan-tabs') && row.previousElementSibling.remove();
+    const cards = [...row.children];
+    const tabs = h('div', { class: 'plan-tabs' }, ...cards.map((card) => h('button', { type: 'button', 'aria-current': String(card.classList.contains('is-featured')) }, $('.plan-name', card)?.textContent || '')));
+    const buttons = [...tabs.children];
+    // The billing toggle redraws the cards, so look them up on each use.
+    const card = (i) => row.children[i];
+    buttons.forEach((b, i) => b.addEventListener('click', () => row.scrollTo({ left: row.scrollLeft + card(i).getBoundingClientRect().left - row.getBoundingClientRect().left - (row.clientWidth - card(i).offsetWidth) / 2, behavior: 'smooth' })));
+    let tick = 0;
+    row.addEventListener('scroll', () => {
+      cancelAnimationFrame(tick);
+      tick = requestAnimationFrame(() => {
+        const box = row.getBoundingClientRect();
+        const off = (c) => { const r = c.getBoundingClientRect(); return Math.abs(r.left + r.width / 2 - box.left - box.width / 2); };
+        const live = [...row.children];
+        let best = 0;
+        live.forEach((c, i) => { if (off(c) < off(live[best])) best = i; });
+        buttons.forEach((b, i) => b.setAttribute('aria-current', String(i === best)));
+      });
+    }, { passive: true });
+    row.before(tabs);
+  });
+}
+// Long card lists (the blog): filter by the topic badge on each card.
+function tileFilter() {
+  for (const grid of $$('[data-filter]')) {
+    const tiles = [...grid.children];
+    const topic = (tile) => $('.badge', tile)?.textContent.trim() || '';
+    const counts = new Map();
+    tiles.forEach((tile) => counts.set(topic(tile), (counts.get(topic(tile)) || 0) + 1));
+    const topics = [...counts].filter(([name, n]) => name && n > 1).sort((a, b) => b[1] - a[1]);
+    if (tiles.length < 9 || topics.length < 2) continue;
+    const bar = h('div', { class: 'tile-filter', role: 'toolbar', 'aria-label': grid.dataset.filter });
+    const pick = (name) => {
+      tiles.forEach((tile) => (tile.hidden = !!name && topic(tile) !== name));
+      [...bar.children].forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.topic || '') === name)));
+    };
+    for (const [name, n] of [['', tiles.length], ...topics]) {
+      const b = h('button', { type: 'button', 'aria-pressed': String(!name), dataset: { topic: name } }, name || grid.dataset.filter, h('span', null, String(n)));
+      b.addEventListener('click', () => pick(name));
+      bar.append(b);
+    }
+    grid.before(bar);
+  }
+}
+tileFilter();
+planTabs();
+getConfig().then(async () => {
+  await pricing();
+  planTabs();
+  featuredPlanFirst();
   licenseBadge();
 });
 import('./lib/referral.js').then(async ({ captureRef }) => {

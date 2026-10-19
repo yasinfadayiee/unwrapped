@@ -225,7 +225,7 @@ export default {
   "Tap to review": "İncelemek için dokun",
   "You don’t follow back": "Sen geri takip etmiyorsun",
   "Your network orbit": "Ağının yörüngesi",
-  "Every dot is an account. Hover to see who.": "Her nokta bir hesap. Kim olduğunu görmek için üzerine gel.",
+  "Every dot is an account. Hover or tap to see who.": "Her nokta bir hesap. Kim olduğunu görmek için üzerine gel veya dokun.",
   "{v0} of the accounts you follow follow you back": "Takip ettiğin hesapların {v0} kadarı seni geri takip ediyor",
   "That’s a strong, reciprocal network.": "Bu güçlü ve karşılıklı bir ağ.",
   "A clean-up could make your feed feel more like yours.": "Bir temizlik akışını daha çok sana ait hissettirebilir.",

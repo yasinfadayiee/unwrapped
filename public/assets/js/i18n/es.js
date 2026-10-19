@@ -225,7 +225,7 @@ export default {
   "Tap to review": "Toca para revisar",
   "You don’t follow back": "No los sigues",
   "Your network orbit": "La órbita de tu red",
-  "Every dot is an account. Hover to see who.": "Cada punto es una cuenta. Pasa el cursor para ver quién es.",
+  "Every dot is an account. Hover or tap to see who.": "Cada punto es una cuenta. Pasa el cursor o toca para ver quién es.",
   "{v0} of the accounts you follow follow you back": "El {v0} de las cuentas que sigues te sigue de vuelta",
   "That’s a strong, reciprocal network.": "Es una red fuerte y recíproca.",
   "A clean-up could make your feed feel more like yours.": "Una limpieza haría que tu feed se sienta más tuyo.",
