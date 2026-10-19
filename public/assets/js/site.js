@@ -401,15 +401,61 @@ function stickyCta() {
 
 /* ---------- "remind me tomorrow" ---------- */
 // Exports take minutes to hours; a calendar reminder brings people back.
+// When the server can send e-mail, the button first offers a one-time e-mail
+// reminder (the address is deleted after sending); the .ics stays as fallback.
+async function calendarReminder() {
+  const [{ icsReminder }, { downloadBlob, toast }] = await Promise.all([import('./lib/calendar.js'), import('./lib/ui.js')]);
+  const prefix = (document.documentElement.lang || 'en').slice(0, 2);
+  const url = `${location.origin}${prefix === 'en' ? '' : `/${prefix}`}/#start`;
+  const ics = icsReminder({ title: t('Drop your data export on Unwrapped'), description: t('Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}', { v0: url }), url, days: 1 });
+  downloadBlob(new Blob([ics], { type: 'text/calendar' }), 'unwrapped-reminder.ics');
+  toast(t('Reminder saved — open it to add it to your calendar'), { iconName: 'calendar', timeout: 4200 });
+}
+
+function remindForm(btn) {
+  const form = document.createElement('form');
+  form.className = 'stack';
+  form.style.cssText = '--stack:8px;max-width:420px;margin-top:10px';
+  form.dataset.remindForm = '';
+  form.innerHTML = `<label class="small muted" for="remind-email-${btn.dataset.remind}"></label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><input class="input" style="flex:1 1 200px" type="email" required autocomplete="email" inputmode="email" maxlength="254" id="remind-email-${btn.dataset.remind}"><button class="btn btn--primary btn--sm" type="submit"></button></div>
+    <button class="btn btn--ghost btn--sm" type="button" style="align-self:flex-start" data-remind-ics></button>`;
+  form.querySelector('label').textContent = t('E-mail me once when my export should be ready. Your address is deleted after that one e-mail.');
+  form.querySelector('[type=submit]').textContent = t('E-mail me');
+  form.querySelector('[data-remind-ics]').textContent = t('Use a calendar file instead');
+  form.querySelector('[data-remind-ics]').addEventListener('click', calendarReminder);
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submit = form.querySelector('[type=submit]');
+    submit.disabled = true;
+    const [{ api }, { toast }] = await Promise.all([import('./lib/api.js'), import('./lib/ui.js')]);
+    try {
+      const lang = (document.documentElement.lang || 'en').slice(0, 2);
+      const { hours } = await api('/api/remind', { method: 'POST', body: { email: form.querySelector('input').value.trim(), platform: btn.dataset.remind || 'instagram', lang } });
+      form.replaceChildren(Object.assign(document.createElement('p'), { className: 'small muted', textContent: t('Done — we’ll e-mail you in about {v0} hours.', { v0: hours }) }));
+    } catch {
+      submit.disabled = false;
+      toast(t('Couldn’t save the reminder — try the calendar file instead'), { iconName: 'calendar', timeout: 4200 });
+    }
+  });
+  return form;
+}
+
 function remindButtons() {
   $$('[data-remind]').forEach((btn) =>
     btn.addEventListener('click', async () => {
-      const [{ icsReminder }, { downloadBlob, toast }] = await Promise.all([import('./lib/calendar.js'), import('./lib/ui.js')]);
-      const prefix = (document.documentElement.lang || 'en').slice(0, 2);
-      const url = `${location.origin}${prefix === 'en' ? '' : `/${prefix}`}/#start`;
-      const ics = icsReminder({ title: t('Drop your data export on Unwrapped'), description: t('Your export should be ready. Download the ZIP from the e-mail and drop it here: {v0}', { v0: url }), url, days: 1 });
-      downloadBlob(new Blob([ics], { type: 'text/calendar' }), 'unwrapped-reminder.ics');
-      toast(t('Reminder saved — open it to add it to your calendar'), { iconName: 'calendar', timeout: 4200 });
+      const row = btn.parentElement;
+      if (row.nextElementSibling?.matches('[data-remind-form]')) return row.nextElementSibling.querySelector('input')?.focus();
+      let email = false;
+      try {
+        email = Boolean((await (await import('./lib/api.js')).getConfig()).email);
+      } catch {
+        /* offline: calendar file only */
+      }
+      if (!email) return calendarReminder();
+      const form = remindForm(btn);
+      row.after(form);
+      form.querySelector('input').focus();
     }),
   );
 }

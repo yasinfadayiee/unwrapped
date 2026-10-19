@@ -1675,4 +1675,9 @@ export default {
   "Reviews": "Bewertungen",
   "What people say": "Was andere sagen",
   "Unwrapped user": "Unwrapped-Nutzer",
+  "E-mail me once when my export should be ready. Your address is deleted after that one e-mail.": "Schick mir eine einmalige E-Mail, wenn mein Export fertig sein sollte. Deine Adresse wird danach gelöscht.",
+  "E-mail me": "E-Mail an mich",
+  "Use a calendar file instead": "Lieber eine Kalenderdatei",
+  "Done — we’ll e-mail you in about {v0} hours.": "Erledigt — wir schreiben dir in etwa {v0} Stunden.",
+  "Couldn’t save the reminder — try the calendar file instead": "Die Erinnerung konnte nicht gespeichert werden — nimm stattdessen die Kalenderdatei",
 };

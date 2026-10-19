@@ -1663,4 +1663,9 @@ export default {
   "Reviews": "Yorumlar",
   "What people say": "İnsanlar ne diyor",
   "Unwrapped user": "Unwrapped kullanıcısı",
+  "E-mail me once when my export should be ready. Your address is deleted after that one e-mail.": "Dışa aktarımım hazır olduğunda bana tek bir e-posta gönder. Adresin bu e-postadan sonra silinir.",
+  "E-mail me": "Bana e-posta gönder",
+  "Use a calendar file instead": "Bunun yerine takvim dosyası",
+  "Done — we’ll e-mail you in about {v0} hours.": "Tamam — yaklaşık {v0} saat sonra sana e-posta göndereceğiz.",
+  "Couldn’t save the reminder — try the calendar file instead": "Hatırlatma kaydedilemedi — bunun yerine takvim dosyasını dene",
 };
