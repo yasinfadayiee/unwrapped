@@ -1,0 +1,43 @@
+<!--page {
+  "route": "/blog/who-was-my-first-instagram-follower/",
+  "title": "Who Was My First Instagram Follower? How to Find Out (2026)",
+  "headline": "Who was my first Instagram follower?",
+  "description": "Instagram’s app won’t tell you who followed you first, but your data download records when each follower followed you. How to find your first follower in a few minutes.",
+  "article": "2026-10-19",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/party-popper-640.webp" srcset="/assets/img/art/party-popper-320.webp 320w, /assets/img/art/party-popper-640.webp 640w, /assets/img/art/party-popper-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Instagram</span>
+      <h1 class="h1">Who was your first <span class="serif grad">Instagram follower?</span></h1>
+      <p class="lead">Instagram doesn’t show it in the app, but your data download keeps a date for every follower. Here’s how to find the first one.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+<h2>Why the app can’t show it</h2>
+      <p>The followers list in the Instagram app is sorted by Instagram’s own ranking, not by date, and it has no “oldest first” option. Scrolling to the bottom doesn’t give you your first follower either.</p>
+      <h2>Where the date is stored</h2>
+      <p>When you <a href="/guides/download-instagram-data/">download your Instagram data</a>, the followers file (<code>followers_1.json</code>, or <code>followers_1.html</code> in the HTML format) lists every follower together with a timestamp of when they followed you. Accounts that followed, unfollowed and followed again show the most recent date.</p>
+      <h2>Find your first follower</h2>
+      <ol>
+        <li>Request your data from Accounts Center → Your information and permissions → Download your information. Pick <b>Followers and following</b> and the JSON format.</li>
+        <li>When the file arrives, open it in <a href="/instagram/">Unwrapped’s Instagram analyzer</a>. It runs in your browser; the file is never uploaded.</li>
+        <li>Open your followers list and sort by date, oldest first. The top row is the earliest follower who still follows you.</li>
+      </ol>
+      <p>Only people who still follow you are in the file. If your very first follower left, they won’t appear.</p>
+      <div class="read-next"><h2>Read next</h2><ul><li><a href="/blog/when-did-i-create-my-instagram-account/">When did I create my Instagram account?</a></li><li><a href="/blog/instagram-mutual-followers/">How to see your mutual followers on Instagram</a></li><li><a href="/guides/instagram-data-files-explained/">Every file in your Instagram download, explained</a></li></ul></div>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Can I see my first follower without downloading my data?</summary><div class="answer"><p>No. The app doesn’t sort followers by date, so the data download is the only reliable way.</p></div></details>
+      <details><summary>Why is my first follower missing?</summary><div class="answer"><p>The file only contains current followers. Someone who unfollowed or deleted their account is no longer listed.</p></div></details>
+      <details><summary>Does the other person know I checked?</summary><div class="answer"><p>No. Reading your own data download is private and sends nothing to Instagram.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
