@@ -1648,3 +1648,6 @@ h1, h2, h3, .h1, .h2, .h3 { text-wrap: balance; }
 }
 /* Phones: the platform chips repeat what the drop card and the next section already show, so the first screen goes straight to the action. */
 @media (max-width: 760px) { .home .hero .works-with { display: none; } }
+
+/* The later `.hero-art { position: relative }` rule was cancelling the absolute placement of the side art, so text pages (About, Guides, Blog, Help…) showed a 300px picture above the title. */
+@media (min-width: 960px) { .hero-art.hero-art--side { position: absolute; } }
