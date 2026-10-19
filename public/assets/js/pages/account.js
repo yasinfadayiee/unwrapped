@@ -129,6 +129,16 @@ async function render() {
     ),
   );
   if (fromHash && !state.pro) btn.click();
+  if (!state.pro) {
+    root.append(
+      h(
+        'section',
+        { class: 'panel' },
+        h('div', { class: 'panel-head' }, h('div', null, h('h3', null, t('Lost your key?')), h('p', null, t('If you gave an e-mail at checkout, your key was sent there. Otherwise contact us with your order ID or transaction hash and we’ll send it again.')))),
+        config.support ? h('p', { class: 'small' }, ...supportLinks(config.support)) : null,
+      ),
+    );
+  }
 
   // Renew / buy
   root.append(
