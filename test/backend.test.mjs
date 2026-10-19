@@ -442,3 +442,33 @@ test('feedback: only public, approved, good ratings become testimonials', async 
   const { items } = (await call('GET', '/api/testimonials?lang=en')).body;
   assert.deepEqual(items, [{ text: 'Finally saw who unfollowed me', name: 'Sam', rating: 5, platform: 'instagram' }]);
 });
+
+test('export reminders are sent once after the platform delay, then deleted', async () => {
+  assert.equal((await call('POST', '/api/remind', { email: 'a@b.co', platform: 'tiktok', lang: 'de' })).status, 503);
+  Object.assign(env, { RESEND_API_KEY: 're-key', EMAIL_FROM: 'Unwrapped <hi@shop.test>' });
+  const sent = [];
+  const fetchBefore = globalThis.fetch;
+  globalThis.fetch = async (input, init = {}) => {
+    if (String(input) === 'https://api.resend.com/emails') {
+      sent.push(JSON.parse(init.body));
+      return Response.json({ id: 'em_1' });
+    }
+    return fetchBefore(input, init);
+  };
+  assert.equal((await call('POST', '/api/remind', { email: 'nope' })).status, 400);
+  const res = await call('POST', '/api/remind', { email: 'Fan@Example.com', platform: 'tiktok', lang: 'de' });
+  assert.equal(res.status, 200);
+  assert.equal(res.body.hours, 48);
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+  assert.equal(sent.length, 0, 'not due yet');
+  await env.DB.prepare('UPDATE export_reminders SET send_at = 0').run();
+  await worker.scheduled({ cron: '* * * * *' }, env, ctx());
+  await Promise.all(pending.splice(0));
+  assert.equal(sent.length, 1);
+  assert.deepEqual(sent[0].to, ['fan@example.com']);
+  assert.match(sent[0].subject, /TikTok/);
+  assert.match(sent[0].text, /https:\/\/shop\.test\/de\/#start/);
+  const left = await env.DB.prepare('SELECT COUNT(*) AS n FROM export_reminders').first();
+  assert.equal(left.n, 0);
+});

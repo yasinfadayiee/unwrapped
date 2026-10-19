@@ -2,6 +2,7 @@
 // needs no manual migration step.
 
 import { FEEDBACK_SCHEMA } from './feedback.js';
+import { REMINDER_SCHEMA } from './reminders.js';
 
 export const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS orders (
@@ -69,6 +70,8 @@ export const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS stats (day INTEGER NOT NULL, kind TEXT NOT NULL, key TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, kind, key))`,
   // Ratings and testimonials (src/feedback.js).
   FEEDBACK_SCHEMA,
+  // One-time "your export is ready" e-mails (src/reminders.js).
+  REMINDER_SCHEMA,
 ];
 
 // Columns added after the first release. SQLite has no "ADD COLUMN IF NOT

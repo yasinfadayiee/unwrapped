@@ -9,7 +9,7 @@ export function emailEnabled(env) {
 }
 
 // Plain-text twin of every message: better deliverability, readable anywhere.
-async function send(env, { to, subject, html, text }) {
+export async function send(env, { to, subject, html, text }) {
   if (!emailEnabled(env)) return false;
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -24,7 +24,7 @@ async function send(env, { to, subject, html, text }) {
 const TIER = { plus: 'Plus', pro: 'Pro', creator: 'Creator' };
 const tierName = (plan) => TIER[plan?.tier] || 'Pro';
 
-function layout(env, title, body) {
+export function layout(env, title, body, footer) {
   const name = escapeHtml(brand(env));
   return `<!doctype html><html><body style="margin:0;background:#0b0b10;font-family:Inter,Segoe UI,Arial,sans-serif;color:#ececf1">
   <div style="max-width:520px;margin:0 auto;padding:40px 24px">
@@ -33,7 +33,7 @@ function layout(env, title, body) {
       <h1 style="font-size:22px;margin:0 0 12px;letter-spacing:-0.02em">${title}</h1>
       ${body}
     </div>
-    <p style="color:#7d7d8c;font-size:12px;line-height:1.6;margin-top:24px">You received this e-mail because you bought ${name} at ${escapeHtml(siteUrl(env).replace(/^https?:\/\//, ''))}. Your social data never leaves your device — we only know your license.</p>
+    <p style="color:#7d7d8c;font-size:12px;line-height:1.6;margin-top:24px">${footer || `You received this e-mail because you bought ${name} at ${escapeHtml(siteUrl(env).replace(/^https?:\/\//, ''))}. Your social data never leaves your device — we only know your license.`}</p>
   </div></body></html>`;
 }
 

@@ -16,6 +16,7 @@ import { attachReferral, discounted, getReferralForLicense, validReferral } from
 import { isEmail, normalizeLicenseKey } from './util.js';
 import { publicStats, recordHit } from './stats.js';
 import { submitFeedback, testimonials } from './feedback.js';
+import { createReminder, sendDueReminders } from './reminders.js';
 
 async function enabledMethods(env) {
   const methods = [];
@@ -163,6 +164,8 @@ async function route(request, env, ctx, url) {
       return recordHit(request, env);
     case 'POST /api/feedback':
       return submitFeedback(request, env);
+    case 'POST /api/remind':
+      return createReminder(request, env);
     case 'GET /api/testimonials':
       return testimonials(env, url);
     case 'GET /api/stats':
@@ -225,6 +228,7 @@ export default {
         await cleanup(env);
         await checkTronPayments(env).catch((err) => console.error('tron check', err));
         await checkNowpaymentsPayments(env).catch((err) => console.error('nowpayments check', err));
+        await sendDueReminders(env).catch((err) => console.error('export reminders', err));
         await env.DB.prepare(
           "INSERT INTO meta (k, v) VALUES ('cron_last', ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v",
         )

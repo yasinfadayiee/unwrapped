@@ -1663,4 +1663,9 @@ export default {
   "Reviews": "Avaliações",
   "What people say": "O que as pessoas dizem",
   "Unwrapped user": "Usuário do Unwrapped",
+  "E-mail me once when my export should be ready. Your address is deleted after that one e-mail.": "Me envie um único e-mail quando minha exportação deve estar pronta. Seu endereço é apagado depois desse e-mail.",
+  "E-mail me": "Me avise por e-mail",
+  "Use a calendar file instead": "Prefiro um arquivo de calendário",
+  "Done — we’ll e-mail you in about {v0} hours.": "Pronto — vamos te escrever em cerca de {v0} horas.",
+  "Couldn’t save the reminder — try the calendar file instead": "Não foi possível salvar o lembrete — use o arquivo de calendário",
 };
