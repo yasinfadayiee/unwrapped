@@ -1656,4 +1656,5 @@ export default {
   "Reviews": "Avaliações",
   "What people say": "O que as pessoas dizem",
   "Unwrapped user": "Usuário do Unwrapped",
+  "Filter by topic": "Filtrar por tema",
 };

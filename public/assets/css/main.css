@@ -1699,3 +1699,15 @@ img.tile-art { position: absolute; right: -14px; top: 50%; width: 140px; height:
 .quote .q-who { color: var(--muted); font-size: 13.5px; }
 @media (max-width: 520px) { .feedback-card { left: 4vw; right: 4vw; width: auto; bottom: 12px; } }
 .quote, .quote blockquote { margin: 0; }
+
+/* ---------- blog / guides topic filter ---------- */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+.filter-chip {
+  display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line-2); background: rgba(var(--fg-rgb), 0.03); color: var(--text-2); font: inherit; font-size: 13.5px; font-weight: 600;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.filter-chip:hover { color: var(--text); border-color: var(--line-3); }
+.filter-chip[aria-pressed='true'] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.filter-n { font-family: var(--font-mono); font-size: 11.5px; opacity: 0.6; }
+.card[hidden] { display: none; }

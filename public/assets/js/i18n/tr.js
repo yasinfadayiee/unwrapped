@@ -1656,4 +1656,5 @@ export default {
   "Reviews": "Yorumlar",
   "What people say": "İnsanlar ne diyor",
   "Unwrapped user": "Unwrapped kullanıcısı",
+  "Filter by topic": "Konuya göre filtrele",
 };

@@ -1668,4 +1668,5 @@ export default {
   "Reviews": "Bewertungen",
   "What people say": "Was andere sagen",
   "Unwrapped user": "Unwrapped-Nutzer",
+  "Filter by topic": "Nach Thema filtern",
 };

@@ -642,6 +642,32 @@ function swipeRowsFocusable() {
     if (head) row.setAttribute('aria-label', head.textContent.trim());
   });
 }
+/* ---------- blog / guides filter ---------- */
+// Chips built from the cards' own badges; without JS every card simply stays visible.
+function cardFilter() {
+  const grid = $('main .bento[data-filter]');
+  if (!grid) return;
+  const cards = $$('.card.tile', grid);
+  const counts = new Map();
+  cards.forEach((c) => {
+    const key = $('.badge', c)?.textContent.trim();
+    if (key) counts.set(key, (counts.get(key) || 0) + 1);
+  });
+  const topics = [...counts].filter(([, n]) => n > 1).sort((a, b) => b[1] - a[1]);
+  if (topics.length < 2) return;
+  const bar = h('div', { class: 'filter-bar', role: 'group', 'aria-label': t('Filter by topic') });
+  const chips = [[t('All'), '', cards.length], ...topics.map(([k, n]) => [k, k, n])].map(([label, key, n]) => {
+    const b = h('button', { type: 'button', class: 'filter-chip', 'aria-pressed': String(key === '') }, `${label} `, h('span', { class: 'filter-n' }, String(n)));
+    b.addEventListener('click', () => {
+      chips.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      cards.forEach((c) => { c.hidden = key !== '' && $('.badge', c)?.textContent.trim() !== key; });
+    });
+    return b;
+  });
+  chips.forEach((b) => bar.append(b));
+  grid.before(bar);
+}
+cardFilter();
 getConfig().then(() => {
   pricing();
   licenseBadge();

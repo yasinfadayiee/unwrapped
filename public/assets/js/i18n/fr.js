@@ -1668,4 +1668,5 @@ export default {
   "Reviews": "Avis",
   "What people say": "Ce qu'ils en disent",
   "Unwrapped user": "Utilisateur d'Unwrapped",
+  "Filter by topic": "Filtrer par sujet",
 };
