@@ -154,6 +154,14 @@ function shortDescription(text, max = 160) {
   const cut = d.slice(0, max);
   const end = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('? '), cut.lastIndexOf('! '), cut.lastIndexOf('.'));
   if (end > 80) return cut.slice(0, end + 1);
+  // No full sentence fits: end at the last clause or list break instead of a
+  // mid-phrase "…", so the snippet reads as a finished line.
+  const clause = Math.max(cut.lastIndexOf(', '), cut.lastIndexOf(' — '), cut.lastIndexOf('; '));
+  if (clause > 90) {
+    const words = cut.slice(0, clause).replace(/[\s,:;—–-]+$/, '').split(' ');
+    while (words.length > 3 && TRAILING.test(words[words.length - 1])) words.pop();
+    return `${words.join(' ')}.`;
+  }
   return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,:;—–-]+$/, '')}…`;
 }
 
