@@ -8,6 +8,7 @@
     "build": "node scripts/build.js",
     "og": "node scripts/og.js",
     "indexnow": "node scripts/indexnow.js",
+    "check-export": "node scripts/check-export.mjs",
     "dev": "node scripts/build.js && wrangler dev",
     "deploy": "node scripts/build.js && wrangler deploy && node scripts/indexnow.js",
     "db:create": "wrangler d1 create unwrapped",
