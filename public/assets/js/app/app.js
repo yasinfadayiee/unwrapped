@@ -126,13 +126,23 @@ function noDataHelp(result, hints = []) {
   );
 }
 
+const PASSIVE_TYPES = new Set(['img', 'css', 'link', 'script']);
+function isPassiveAsset(e) {
+  try {
+    return PASSIVE_TYPES.has(e.initiatorType) && new URL(e.name, location.href).origin === location.origin;
+  } catch {
+    return false;
+  }
+}
+
 function networkMonitor(startTime) {
   const value = h('b', null, '0');
   const el = h('span', { class: 'net-indicator', title: tl('Counted live by your browser. Your files are never sent anywhere.') }, h('span', { class: 'pulse-dot' }), value, ' ', tl('network requests since you opened your file'));
   let count = 0;
   try {
     const po = new PerformanceObserver((list) => {
-      for (const e of list.getEntries()) if (e.startTime >= startTime) count++;
+      // Only requests that could carry data count: a same-origin image, stylesheet or script download can't.
+      for (const e of list.getEntries()) if (e.startTime >= startTime && !isPassiveAsset(e)) count++;
       value.textContent = fmtInt(count);
     });
     po.observe({ type: 'resource', buffered: true });
