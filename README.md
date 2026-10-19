@@ -15,6 +15,7 @@ and sells three paid tiers — **Plus**, **Pro** and **Creator** — with fully 
 - **Payments** — direct USDT-TRC20 to your own wallet (unique amounts + blockchain watcher + "paste your tx hash") and optional NOWPayments (150+ coins). Licenses are ECDSA-signed tokens verified in the browser.
 - **Owner dashboard** — revenue, conversion, health checks, orders, manual licenses, event log at `/admin/`.
 - **Referral program** — every Pro license gets an invite link (`/?ref=CODE`): friends get 10% off, the inviter gets 30 free days per paid order (`referralDiscount` / `referralRewardDays` in `src/config.js`).
+- **Feedback & testimonials** — one rating prompt a while after the first analysis (only what the person types is sent, never anything from the export). Quotes show on the home and pricing pages only when the author allowed it and the owner approved it in `/admin/`, and only from three quotes up. `/api/stats` feeds a real "exports analyzed" counter next to the drop zone (withheld under 100).
 - **SEO guides** — article pages under `/guides/` with Article + FAQ structured data.
 - **Pro Lab** (Pro) — Ghost Detector (reply times, left on read, who texts first), Engagement Audit (one-way support, dead follows), Growth Time Machine (audience curve, churn, follow-back speed), Friendship Radar.
 - **Creator tools** — Audience Quality (bot/spam follower detector with a grade), Best Time to Post (real X engagement, or audience activity), white-label PDF client report.

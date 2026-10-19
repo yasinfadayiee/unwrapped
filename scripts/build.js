@@ -3,8 +3,10 @@
 //   node scripts/build.js            (uses site/site.json)
 //   SITE_URL=https://example.com node scripts/build.js
 
+import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { PLANS, TIERS } from '../src/config.js';
 
 const root = path.resolve(import.meta.dirname, '..');
 const read = (p) => readFileSync(path.join(root, p), 'utf8');
@@ -132,6 +134,20 @@ function describeImages(html) {
   });
 }
 
+// Below-the-fold images load lazily; the first image of a page (its hero) and
+// anything already marked loading/fetchpriority are left alone so LCP stays fast.
+function lazyImages(html) {
+  let first = true;
+  return html.replace(/<img\b[^>]*>/g, (tag) => {
+    if (first) {
+      first = false;
+      return tag;
+    }
+    if (/\s(loading|fetchpriority)=/.test(tag)) return tag;
+    return tag.replace(/<img\b/, '<img loading="lazy"');
+  });
+}
+
 function shortDescription(text, max = 160) {
   const d = String(text || '');
   if (d.length <= max) return d;
@@ -143,8 +159,20 @@ function shortDescription(text, max = 160) {
 
 // When a page really changed: its source file (or partials it uses), never
 // "today" on every build — search engines ignore a lastmod that always moves.
+// The date of the last commit that touched the file; a fresh checkout gives
+// every file the same mtime, which would move every lastmod on each deploy.
+function fileDate(file) {
+  try {
+    const d = execFileSync('git', ['log', '-1', '--format=%cI', '--', file], { cwd: root, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+    if (d) return new Date(d);
+  } catch {
+    /* no git history (e.g. a source tarball) */
+  }
+  return statSync(path.join(root, file)).mtime;
+}
+
 function lastModified(file, meta) {
-  const mtime = statSync(path.join(root, file)).mtime;
+  const mtime = fileDate(file);
   const article = meta.updated || meta.article;
   const best = article && new Date(article) > mtime ? new Date(article) : mtime;
   return best.toISOString().slice(0, 10);
@@ -188,7 +216,6 @@ for (const { loc, file, meta, body } of pages) {
     });
   }
   content = content.replaceAll('{{siteName}}', site.name).replaceAll('{{origin}}', origin);
-
   const url = urlOf(loc, meta.route);
   const canonical = `${origin}${url.replace(/index\.html$/, '')}`;
   const translations = meta.noindex || meta.route.endsWith('.html') ? [] : localesWith(meta.route);
@@ -244,7 +271,7 @@ for (const { loc, file, meta, body } of pages) {
       headline: meta.headline || meta.title,
       description: meta.description,
       datePublished: meta.article,
-      dateModified: meta.article,
+      dateModified: meta.updated || meta.article,
       mainEntityOfPage: canonical,
       image: `${origin}${ogImage}`,
       author: { '@type': 'Organization', name: site.name, url: `${origin}/` },
@@ -259,6 +286,27 @@ for (const { loc, file, meta, body } of pages) {
     const info = `<div class="article-meta"><a href="/${section}/">← ${esc(section === 'guides' ? strings.fGuides : strings.fBlog)}</a><time datetime="${meta.updated || meta.article}">${esc(date)}</time><span>${esc(strings.minRead.replace('{n}', minutes))}</span></div>`;
     content = content.replace(/(<p class="lead"[^>]*>[\s\S]*?<\/p>)/, `$1${info}`);
   }
+  if (meta.route === '/pricing/') {
+    // One Product per tier with an Offer per plan, so the prices can show up in search.
+    for (const tier of TIERS) {
+      schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: `${site.name} ${tier.name}`,
+        description: `${tier.tagline}. ${tier.bestFor}.`,
+        brand: { '@type': 'Brand', name: site.name },
+        image: `${origin}${ogImage}`,
+        offers: PLANS.filter((p) => p.tier === tier.id).map((p) => ({
+          '@type': 'Offer',
+          name: p.name,
+          price: String(p.priceUsd),
+          priceCurrency: 'USD',
+          url: `${origin}${url}`,
+          availability: 'https://schema.org/InStock',
+        })),
+      });
+    }
+  }
   if (meta.faqSchema) {
     const faq = faqSchema(content);
     if (faq) schemas.push(faq);
@@ -272,6 +320,8 @@ for (const { loc, file, meta, body } of pages) {
     lang: loc.hreflang,
     ogLocale: loc.og,
     ogImage,
+    ogType: meta.article ? 'article' : 'website',
+    articleMeta: meta.article ? `\n<meta property="article:published_time" content="${meta.article}">\n<meta property="article:modified_time" content="${meta.updated || meta.article}">` : '',
     alternates,
     title: esc(shortTitle(meta.title)),
     description: esc(shortDescription(meta.description)),
@@ -296,7 +346,7 @@ for (const { loc, file, meta, body } of pages) {
     .replaceAll('{{langLinks}}', links);
 
   const out = url.endsWith('.html') ? `public${url}` : `public${url}index.html`;
-  write(out, describeImages(html));
+  write(out, lazyImages(describeImages(html)));
   if (!meta.noindex && !meta.route.endsWith('.html')) {
     const alternates = translations.length > 1 ? [...translations.map((l) => ({ hreflang: l.hreflang, href: `${origin}${urlOf(l, meta.route)}` })), { hreflang: 'x-default', href: `${origin}${meta.route}` }] : [];
     sitemap.push({ loc: canonical, lastmod: lastModified(file, meta), priority: meta.route === '/' ? '1.0' : meta.article ? '0.6' : '0.8', alternates });
