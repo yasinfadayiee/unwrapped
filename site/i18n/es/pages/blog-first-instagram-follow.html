@@ -1,0 +1,43 @@
+<!--page {
+  "route": "/blog/who-did-i-follow-first-on-instagram/",
+  "title": "¿A quién seguí primero en Instagram? Mira tu historial de seguidos (2026)",
+  "headline": "¿A quién seguí primero en Instagram?",
+  "description": "Encuentra la primera cuenta que seguiste en Instagram y mira todo tu historial de seguidos por fecha, con la descarga de datos gratuita que te da Instagram.",
+  "article": "2026-10-19",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/compass-map-640.webp" srcset="/assets/img/art/compass-map-320.webp 320w, /assets/img/art/compass-map-640.webp 640w, /assets/img/art/compass-map-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Instagram</span>
+      <h1 class="h1">¿A quién <span class="serif grad">seguiste primero?</span></h1>
+      <p class="lead">Tu descarga de datos de Instagram guarda la fecha en que seguiste cada cuenta. Así ves todo tu historial en orden.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+<h2>La app oculta el orden</h2>
+      <p>En la app, Seguidos → Ordenar por te deja elegir “Fecha de seguimiento: más antiguos”. En listas largas va lento y no muestra fechas. Tu descarga de datos muestra la fecha exacta de cada cuenta.</p>
+      <h2>Dónde buscar</h2>
+      <p>En la <a href="/guides/download-instagram-data/">descarga de datos de Instagram</a>, el archivo <code>following.json</code> incluye cada cuenta que sigues con su fecha. Al lado, <code>recently_unfollowed_profiles.json</code> incluye las cuentas que dejaste de seguir hace poco, también con fecha.</p>
+      <h2>Mira tu historial de seguidos en orden</h2>
+      <ol>
+        <li>Descarga tus datos con <b>Seguidores y seguidos</b> seleccionado, en formato JSON.</li>
+        <li>Abre el ZIP en <a href="/instagram/">Unwrapped</a>. Todo se lee en tu dispositivo.</li>
+        <li>Ordena tu lista de seguidos por fecha. Verás la primera cuenta que seguiste, cuántas seguiste cada año y cuentas que seguiste hace años y olvidaste.</li>
+      </ol>
+      <p>También es una forma rápida de <a href="/blog/clean-up-social-media-before-job-search/">limpiar</a> seguidos viejos: los más antiguos suelen ser cuentas que ya no te interesan.</p>
+      <div class="read-next"><h2>Sigue leyendo</h2><ul><li><a href="/blog/who-was-my-first-instagram-follower/">¿Quién fue mi primer seguidor en Instagram?</a></li><li><a href="/blog/instagram-unfollow-limit-per-day/">Límite diario para dejar de seguir en Instagram</a></li><li><a href="/blog/what-instagram-knows-about-you/">Lo que Instagram sabe de ti</a></li></ul></div>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>¿Puedo ver cuándo seguí a alguien en Instagram?</summary><div class="answer"><p>Sí. El archivo de seguidos de tu descarga tiene una fecha para cada cuenta que sigues.</p></div></details>
+      <details><summary>¿Incluye las cuentas que dejé de seguir?</summary><div class="answer"><p>Solo las recientes, en un archivo aparte de perfiles que dejaste de seguir.</p></div></details>
+      <details><summary>¿Es seguro?</summary><div class="answer"><p>Sí. Descargas el archivo de Instagram tú mismo y Unwrapped lo lee en tu navegador sin subirlo.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

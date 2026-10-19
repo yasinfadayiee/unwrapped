@@ -1,0 +1,43 @@
+<!--page {
+  "route": "/blog/who-was-my-first-instagram-follower/",
+  "title": "Qui était mon premier abonné Instagram ? Comment le savoir (2026)",
+  "headline": "Qui était mon premier abonné Instagram ?",
+  "description": "L’app Instagram ne dit pas qui t’a suivi en premier, mais ton téléchargement de données enregistre quand chaque abonné t’a suivi. Comment trouver ton premier abonné en quelques minutes.",
+  "article": "2026-10-19",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/party-popper-640.webp" srcset="/assets/img/art/party-popper-320.webp 320w, /assets/img/art/party-popper-640.webp 640w, /assets/img/art/party-popper-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Instagram</span>
+      <h1 class="h1">Qui était ton premier <span class="serif grad">abonné Instagram ?</span></h1>
+      <p class="lead">Instagram ne l’affiche pas dans l’app, mais ton téléchargement de données garde une date pour chaque abonné. Voici comment trouver le premier.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+<h2>Pourquoi l’app ne peut pas l’afficher</h2>
+      <p>La liste d’abonnés de l’app est triée selon le classement d’Instagram, pas par date, et il n’y a pas d’option « plus anciens d’abord ». Descendre tout en bas ne te montre pas non plus ton premier abonné.</p>
+      <h2>Où la date est enregistrée</h2>
+      <p>Quand tu <a href="/guides/download-instagram-data/">télécharges tes données Instagram</a>, le fichier des abonnés (<code>followers_1.json</code>, ou <code>followers_1.html</code> au format HTML) liste chaque abonné avec la date à laquelle il t’a suivi. Les comptes qui t’ont suivi, se sont désabonnés puis réabonnés affichent la date la plus récente.</p>
+      <h2>Trouve ton premier abonné</h2>
+      <ol>
+        <li>Demande tes données dans Espace comptes → Tes informations et autorisations → Télécharger tes informations. Choisis <b>Abonnés et abonnements</b> et le format JSON.</li>
+        <li>Quand le fichier arrive, ouvre-le dans <a href="/instagram/">l’analyseur Instagram d’Unwrapped</a>. Il fonctionne dans ton navigateur ; le fichier n’est jamais envoyé.</li>
+        <li>Ouvre ta liste d’abonnés et trie par date, plus anciens d’abord. La première ligne est l’abonné le plus ancien qui te suit encore.</li>
+      </ol>
+      <p>Seules les personnes qui te suivent encore sont dans le fichier. Si ton tout premier abonné est parti, il n’apparaîtra pas.</p>
+      <div class="read-next"><h2>À lire ensuite</h2><ul><li><a href="/blog/when-did-i-create-my-instagram-account/">Quand ai-je créé mon compte Instagram ?</a></li><li><a href="/blog/instagram-mutual-followers/">Voir tes abonnés en commun sur Instagram</a></li><li><a href="/guides/instagram-data-files-explained/">Chaque fichier de ton téléchargement Instagram, expliqué</a></li></ul></div>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Puis-je voir mon premier abonné sans télécharger mes données ?</summary><div class="answer"><p>Non. L’app ne trie pas les abonnés par date, donc le téléchargement de données est le seul moyen fiable.</p></div></details>
+      <details><summary>Pourquoi mon premier abonné manque-t-il ?</summary><div class="answer"><p>Le fichier ne contient que les abonnés actuels. Quelqu’un qui s’est désabonné ou a supprimé son compte n’y figure plus.</p></div></details>
+      <details><summary>L’autre personne sait-elle que j’ai regardé ?</summary><div class="answer"><p>Non. Lire ton propre téléchargement de données est privé et n’envoie rien à Instagram.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
