@@ -152,3 +152,25 @@ test('paying for Growth adds days to the account, kept across reconnects', async
   assert.equal(admin.body.totals.paid, 1);
   assert.equal(admin.body.totals.usd, 9);
 });
+
+test('data-deletion callback verifies the signature and wipes the account', async () => {
+  const session = await connect();
+  await api('POST', '/api/growth/rules', session, { accountId: 'ig:1784', keyword: 'link', dmText: 'x' });
+  await comment('link', { id: 'c1' });
+  const b64url = (s) => Buffer.from(s).toString('base64url');
+  const payload = b64url(JSON.stringify({ user_id: '1784', algorithm: 'HMAC-SHA256' }));
+  const sig = Buffer.from(await hmacHex('SHA-256', env.IG_APP_SECRET, payload), 'hex').toString('base64url');
+  const post = (signed) => raw('POST', '/api/growth/data-deletion', { body: new URLSearchParams({ signed_request: signed }), headers: { 'content-type': 'application/x-www-form-urlencoded' } });
+
+  assert.equal((await post(`${sig}.${payload}x`)).status, 400);
+  assert.equal((await env.DB.prepare('SELECT COUNT(*) AS n FROM growth_accounts').first()).n, 1);
+
+  const res = await post(`${sig}.${payload}`);
+  assert.equal(res.status, 200);
+  const out = await res.json();
+  assert.equal(out.url, 'https://shop.test/privacy/#growth-data');
+  assert.ok(out.confirmation_code);
+  for (const t of ['growth_accounts', 'growth_rules', 'growth_sent']) {
+    assert.equal((await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${t}`).first()).n, 0, t);
+  }
+});

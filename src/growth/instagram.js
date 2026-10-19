@@ -2,7 +2,7 @@
 // accounts). OAuth only — we never see a password. Comment-to-DM uses Meta's
 // Private Replies; everything an account receives arrives by signed webhook.
 
-import { hmacHex, timingSafeEqual } from '../util.js';
+import { b64urlDecode, hmacHex, timingSafeEqual } from '../util.js';
 
 const GRAPH = 'https://graph.instagram.com/v21.0';
 export const IG_SCOPES = ['instagram_business_basic', 'instagram_business_manage_comments', 'instagram_business_manage_messages'];
@@ -78,4 +78,21 @@ export function commentEvents(body) {
     }
   }
   return out;
+}
+
+// Meta's deauthorize / data-deletion callbacks send `signed_request=<sig>.<payload>`
+// (both base64url); sig is HMAC-SHA256(payload) keyed with the app secret.
+// Returns the Instagram user id it names, or null when the signature is wrong.
+export async function parseSignedRequest(env, signedRequest) {
+  const [sig, payload] = String(signedRequest || '').split('.');
+  if (!sig || !payload) return null;
+  const expected = await hmacHex('SHA-256', env.IG_APP_SECRET, payload);
+  const given = [...b64urlDecode(sig)].map((b) => b.toString(16).padStart(2, '0')).join('');
+  if (!timingSafeEqual(expected, given)) return null;
+  try {
+    const userId = JSON.parse(new TextDecoder().decode(b64urlDecode(payload))).user_id;
+    return userId ? String(userId) : null;
+  } catch {
+    return null;
+  }
 }

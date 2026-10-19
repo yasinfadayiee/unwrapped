@@ -23,6 +23,7 @@ and sells three paid tiers — **Plus**, **Pro** and **Creator** — with fully 
 - **Friendship Wrapped** (Pro) — a story card for you and one friend (streak, reply speed, friendship type), showing only a nickname you type.
 - **Re-export reminders** — a calendar file (.ics) built on the device, so users come back with a fresh export.
 - **SEO landing pages** — `/tools/`, `/fake-follower-checker/`, `/instagram-dm-analyzer/`, `/best-time-to-post/`, `/instagram-audit/` (FAQ structured data, shared `related-tools` partial).
+- **Growth (beta)** — Instagram comment-to-DM automation through Meta's official API at `/growth/` (off until configured, see [Growth (beta)](#growth-beta-instagram-comment-to-dm)).
 - **Tiers & upgrades** — prices in `src/config.js` (`TIERS`, `PLANS`), tool → tier mapping in `public/assets/js/lib/tiers.js`. Upgrading converts the remaining time at fair value (yearly prices); a lifetime Pro license can add Creator time and falls back to lifetime Pro afterwards. Old plan ids (`month`/`year`/`life`) keep working as Pro.
 
 ## Project layout
@@ -96,6 +97,9 @@ generated automatically and stored in D1.
 | `RESEND_API_KEY` | secret | Enables license + renewal-reminder e-mails |
 | `IP_SALT` | secret | Salt for hashed visitor IDs used by rate limiting |
 | `TRONGRID_URL`, `TRON_USDT_CONTRACT` | vars | Point at the Nile testnet for testing |
+| `IG_APP_ID` / `IG_APP_SECRET` | secrets | Growth (beta): the **Instagram** app ID and secret of your Meta app |
+| `IG_VERIFY_TOKEN` | secret | Growth (beta): any random string, also typed into Meta's webhook setup |
+| `GROWTH_KEY` | secret | Growth (beta): 32 random bytes, base64 — encrypts stored Instagram tokens |
 
 Prices, plan lengths, free-tier limits and tolerances live in `src/config.js`.
 
@@ -112,6 +116,88 @@ Prices, plan lengths, free-tier limits and tolerances live in `src/config.js`.
 
 NOWPayments uses signed IPN webhooks (HMAC-SHA512, recursive key sort) that are double-checked
 against the NOWPayments API before activation.
+
+## Growth (beta): Instagram comment-to-DM
+
+`/growth/` lets a creator connect a professional Instagram account and set keyword rules: when
+someone comments the keyword, Meta's Private Replies API sends them a DM (and optionally a public
+reply). Owners sign in with Instagram's own OAuth; their long-lived token is stored AES-GCM
+encrypted with `GROWTH_KEY` and refreshed weekly by the cron. New accounts get a trial of 7 days
+or 100 DMs (`TRIAL` in `src/growth/index.js`).
+
+The feature is **off** until all four Growth secrets are set: until then every `/api/growth/*`
+route answers `404 growth_disabled` and the page shows "Launching soon". The page is `noindex` and not linked from the site yet.
+
+### 1. Create the Meta app
+
+1. <https://developers.facebook.com/apps> → **Create app** → use case **Manage messaging & content on Instagram** (app type Business).
+2. In the app: **Instagram → API setup with Instagram login**. Copy the **Instagram app ID** and
+   **Instagram app secret** shown there. These are *not* the Facebook App ID/secret at the top of
+   the dashboard.
+3. Same page, **Set up Instagram business login** → add the OAuth redirect URI
+   `https://YOUR_SITE/api/growth/ig/callback` (must match `SITE_URL` exactly).
+4. Same page, **Configure webhooks**:
+   - Callback URL: `https://YOUR_SITE/api/growth/webhook/instagram`
+   - Verify token: the value you will store as `IG_VERIFY_TOKEN`
+   - Subscribe to the fields **comments** and **messages**.
+
+   Meta calls the URL once to check the token, so deploy with the secrets (step 2) *before*
+   clicking **Verify and save**.
+
+### 2. Set the secrets
+
+```bash
+# random values for the two keys you make yourself
+node -e "console.log(require('crypto').randomBytes(24).toString('hex'))"     # IG_VERIFY_TOKEN
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"  # GROWTH_KEY
+
+npx wrangler secret put IG_APP_ID
+npx wrangler secret put IG_APP_SECRET
+npx wrangler secret put IG_VERIFY_TOKEN
+npx wrangler secret put GROWTH_KEY
+npm run deploy
+```
+
+On a VPS put the same names in `.env`; locally in `.dev.vars` (Meta needs a public HTTPS URL for
+OAuth and webhooks, so test against the deployed site or a tunnel such as `cloudflared`).
+
+> Keep `GROWTH_KEY` safe and never change it: stored tokens can only be decrypted with it, so a new
+> key forces every connected account to reconnect. `IG_APP_SECRET` also signs webhooks
+> (`X-Hub-Signature-256`); requests with a wrong signature are rejected.
+
+### 3. Test in development mode
+
+While the app is unpublished, only Instagram accounts you add under **App roles → Roles →
+Instagram testers** can connect (the tester accepts in Instagram → Settings → Website
+permissions → Apps and websites → Tester invites). Open `/growth/`, connect, add a rule, and use
+the dashboard's webhook **Test** button. Meta generally delivers real comment events only once
+the app is live with Advanced Access, which needs App Review.
+
+### 4. Meta App Review
+
+Request **Advanced Access** for the three permissions the app asks for
+(`IG_SCOPES` in `src/growth/instagram.js`):
+
+| Permission | What to tell the reviewer |
+|---|---|
+| `instagram_business_basic` | Shows the connected account's username on `/growth/` |
+| `instagram_business_manage_comments` | Reads comments to match keyword rules; posts the optional public reply |
+| `instagram_business_manage_messages` | Sends one Private Reply DM to the person who commented the keyword |
+
+Before submitting:
+
+1. **Business verification** of your Meta business portfolio (required for Advanced Access).
+2. **App settings → Basic**: app icon (1024×1024), category, contact e-mail, the **Privacy policy
+   URL** `https://YOUR_SITE/privacy/` (section 8 describes the Growth data) and the **User data
+   deletion** callback URL `https://YOUR_SITE/api/growth/data-deletion`. Use the same URL as the
+   **Deauthorize callback** under Instagram → API setup. It checks Meta's signed request and
+   deletes the account, its rules and its reply history.
+3. A **screencast per permission**: open `/growth/` → Connect Instagram → approve the Instagram
+   consent screen → create a rule → comment the keyword from a second account → show the DM
+   arriving. Captions in English.
+4. **Reviewer instructions**: the `/growth/` URL and a test Instagram account the reviewer can use
+   (add it as an Instagram tester).
+5. Switch the app to **Live** once review is approved.
 
 ## Self-hosting on a VPS
 

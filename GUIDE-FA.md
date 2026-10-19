@@ -166,6 +166,94 @@ npx wrangler secret put NOWPAYMENTS_IPN_SECRET
 npx wrangler secret put RESEND_API_KEY
 ```
 
+## اختیاری: Growth (بتا)، دایرکت خودکار برای کامنت‌گذارها
+
+صفحه‌ی `/growth/` به تولیدکننده‌ی محتوا اجازه می‌دهد حساب حرفه‌ای (Business یا Creator) اینستاگرامش را وصل کند و قانون کلمه‌ی کلیدی بسازد. مثلاً هر کس زیر پست بنویسد «لینک»، خودکار یک دایرکت با لینک برایش می‌رود (و اگر بخواهید، یک جواب عمومی هم زیر کامنتش). همه‌چیز با API رسمی متا است: کاربر با صفحه‌ی ورود خود اینستاگرام وصل می‌شود و هیچ رمزی به ما نمی‌دهد. توکن حساب رمزنگاری‌شده ذخیره می‌شود و کرون هر هفته تمدیدش می‌کند. هر حساب جدید یک دوره‌ی آزمایشی ۷ روزه یا ۱۰۰ دایرکت دارد (`TRIAL` در `src/growth/index.js`).
+
+تا وقتی هر چهار کلید زیر ثبت نشده‌اند، این قابلیت **خاموش** است و صفحه پیام «Launching soon» نشان می‌دهد. صفحه `noindex` است و فعلاً از هیچ جای سایت لینک نشده.
+
+> ⚠️ این بخش یک **اپ متا** و **بررسی اپ (App Review)** لازم دارد. تأیید متا معمولاً چند روز تا چند هفته طول می‌کشد و ممکن است چند بار رد و دوباره ارسال شود.
+
+### ۱. ساخت اپ در Meta for Developers
+
+1. وارد [developers.facebook.com/apps](https://developers.facebook.com/apps) شوید ← **Create app** ← کاربرد **Manage messaging & content on Instagram** (نوع اپ: Business).
+2. داخل اپ: **Instagram ← API setup with Instagram login**. در این صفحه **Instagram app ID** و **Instagram app secret** را کپی کنید.
+   ⚠️ این دو با App ID و App secret فیسبوکیِ بالای داشبورد **فرق دارند**. حتماً مقدارهای بخش Instagram را بردارید.
+3. در همان صفحه، بخش **Set up Instagram business login**، این آدرس را به‌عنوان OAuth redirect URI اضافه کنید (باید دقیقاً با `SITE_URL` یکی باشد):
+   `https://myunwrapped.com/api/growth/ig/callback`
+4. در همان صفحه، بخش **Configure webhooks**:
+   - Callback URL: `https://myunwrapped.com/api/growth/webhook/instagram`
+   - Verify token: همان مقداری که در قدم بعد به‌عنوان `IG_VERIFY_TOKEN` ثبت می‌کنید
+   - فیلدهای **comments** و **messages** را Subscribe کنید.
+
+   متا موقع ذخیره یک بار این آدرس را صدا می‌زند تا توکن را چک کند. پس **اول** قدم ۲ را انجام دهید و منتشر کنید، **بعد** دکمه‌ی Verify and save را بزنید.
+
+### ۲. ثبت کلیدها
+
+دو کلید را خودتان می‌سازید:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(24).toString('hex'))"
+```
+
+خروجی بالا را برای `IG_VERIFY_TOKEN` نگه دارید.
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
+
+خروجی بالا را برای `GROWTH_KEY` نگه دارید.
+
+بعد هر چهار کلید را ثبت کنید و منتشر کنید:
+
+```bash
+npx wrangler secret put IG_APP_ID
+npx wrangler secret put IG_APP_SECRET
+npx wrangler secret put IG_VERIFY_TOKEN
+npx wrangler secret put GROWTH_KEY
+npm run deploy
+```
+
+| کلید | از کجا می‌آید | کارش |
+|---|---|---|
+| `IG_APP_ID` | Instagram app ID در داشبورد متا | شناسه‌ی اپ برای ورود با اینستاگرام |
+| `IG_APP_SECRET` | Instagram app secret در داشبورد متا | گرفتن توکن و بررسی امضای وب‌هوک‌ها |
+| `IG_VERIFY_TOKEN` | خودتان می‌سازید (دستور بالا) | تأیید آدرس وب‌هوک توسط متا |
+| `GROWTH_KEY` | خودتان می‌سازید (۳۲ بایت، base64) | رمزنگاری توکن‌های اینستاگرام در دیتابیس |
+
+> ⚠️ `GROWTH_KEY` را جایی امن نگه دارید و **هیچ‌وقت عوضش نکنید**. توکن‌های ذخیره‌شده فقط با همین کلید باز می‌شوند. اگر عوضش کنید، همه‌ی حساب‌های وصل‌شده باید دوباره وصل شوند.
+
+روی VPS همین نام‌ها را در فایل `.env` بگذارید. برای کامپیوتر خودتان در `.dev.vars`. ولی متا برای ورود و وب‌هوک آدرس عمومی HTTPS می‌خواهد، پس تست را روی سایت منتشرشده (یا با یک تونل مثل `cloudflared`) انجام دهید.
+
+### ۳. تست در حالت توسعه (Development)
+
+تا وقتی اپ منتشر نشده، فقط حساب‌هایی که به‌عنوان **Instagram tester** اضافه کرده‌اید می‌توانند وصل شوند:
+
+1. داشبورد اپ ← **App roles ← Roles ← Instagram testers** ← اضافه کردن نام کاربری.
+2. صاحب آن حساب در اینستاگرام دعوت را قبول می‌کند: Settings ← Website permissions ← Apps and websites ← Tester invites.
+3. `/growth/` را باز کنید، حساب را وصل کنید و یک قانون بسازید.
+4. از بخش Webhooks داشبورد، دکمه‌ی **Test** را برای فیلد comments بزنید.
+
+معمولاً متا کامنت‌های واقعی را فقط وقتی می‌فرستد که اپ **Live** باشد و دسترسی **Advanced** گرفته باشد. یعنی تست کامل بعد از App Review ممکن است.
+
+### ۴. بررسی اپ توسط متا (App Review)
+
+برای این سه دسترسی **Advanced Access** درخواست بدهید (لیستشان در `IG_SCOPES` داخل `src/growth/instagram.js` است):
+
+| دسترسی | به بررسی‌کننده چه بگویید |
+|---|---|
+| `instagram_business_basic` | نام کاربری حساب وصل‌شده را در `/growth/` نشان می‌دهیم |
+| `instagram_business_manage_comments` | کامنت‌ها را برای پیدا کردن کلمه‌ی کلیدی می‌خوانیم و جواب عمومی اختیاری را می‌فرستیم |
+| `instagram_business_manage_messages` | به کسی که کلمه‌ی کلیدی را کامنت کرده، یک دایرکت (Private Reply) می‌فرستیم |
+
+قبل از ارسال:
+
+1. **تأیید کسب‌وکار (Business verification)** در Meta Business. بدون آن Advanced Access داده نمی‌شود.
+2. **App settings ← Basic**: آیکون ۱۰۲۴×۱۰۲۴، دسته‌بندی، ایمیل تماس، **Privacy policy URL** برابر `https://myunwrapped.com/privacy/` (بخش ۸ همین صفحه داده‌های Growth را توضیح می‌دهد) و **User data deletion** برابر `https://myunwrapped.com/api/growth/data-deletion`. همین آدرس را در Instagram ← API setup به‌عنوان **Deauthorize callback** هم بگذارید. سرور امضای درخواست متا را بررسی می‌کند و حساب، قانون‌ها و تاریخچه‌ی جواب‌ها را پاک می‌کند.
+3. **یک ویدیوی ضبط صفحه برای هر دسترسی**: باز کردن `/growth/` ← Connect Instagram ← تأیید در صفحه‌ی اینستاگرام ← ساخت قانون ← کامنت کلمه‌ی کلیدی از یک حساب دیگر ← رسیدن دایرکت. توضیح‌ها به انگلیسی.
+4. **راهنمای بررسی‌کننده**: آدرس `/growth/` و یک حساب تست اینستاگرام که بررسی‌کننده بتواند با آن وارد شود (به‌عنوان Instagram tester اضافه‌اش کنید).
+5. بعد از تأیید، اپ را در داشبورد روی **Live** بگذارید.
+
 ---
 
 ## پنل مدیریت (`/admin/`)
