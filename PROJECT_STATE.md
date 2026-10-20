@@ -2,7 +2,7 @@
 
 Short handoff note for anyone picking up work. Read this first instead of scanning the repo. Update it when a PR merges.
 
-_Last updated: 2026-10-20, after PR #16 merged._
+_Last updated: 2026-10-20, after PR #18 merged and deployed._
 
 ## What this is
 
@@ -23,6 +23,8 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 
 ## Recently merged
 
+- #18 check-export prints account name and DM totals
+- #17 this file
 - #16 check-export script, mobile hero shows the drop zone on the first screen, privacy monitor wording, new blog articles (TikTok watch history, LinkedIn removals, Instagram comments, first tweet, WhatsApp who texts first, Spotify all-time hours) in all six languages
 - #15 email reminder when an export is ready, IndexNow ping after deploy
 - #14 three Instagram blog articles
@@ -35,8 +37,9 @@ None.
 
 ## Next steps
 
-1. Done 2026-10-20: synthetic exports in each platform's official format (Instagram JSON + HTML + DMs, TikTok, X, Facebook + Messenger, LinkedIn, WhatsApp Android + iOS, Telegram, Spotify basic + extended) all parsed with correct counts. Still worth a run on a real export when one is at hand.
-2. Deploy main (`npm run deploy`), if not already deployed automatically.
+1. Done 2026-10-20: synthetic exports in each platform's official format (Instagram JSON + HTML + DMs, TikTok, X, Facebook + Messenger, LinkedIn, WhatsApp Android + iOS, Telegram, Spotify basic + extended) all parsed with correct counts. Still worth a run on a real export when one is at hand. Large account (50k followers, 300 chats / 120k DMs) parses in ~1.2s in Node.
+2. Done 2026-10-20: deployed main (dc9bf173) to myunwrapped.com, version cd19a6f4. Deploy is manual from C:\unwrapped (no CI). Old local build output is in git stash@{0} there.
+4. Open decisions for Yasin (from analysis/pay-readiness-fa.md): support name/photo/email + About page, card payments (Paddle/Lemon Squeezy/Stripe), Search Console and Product Hunt.
 3. Keep this file current: add each merged PR and the next step.
 
 ## Rules for working here
