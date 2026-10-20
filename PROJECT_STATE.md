@@ -40,15 +40,16 @@ None.
 
 ## Next steps
 
-1. Yasin: deploy #20 and #21 from C:\unwrapped: `git pull` then `npm.cmd run deploy` (no CI; deploy is manual).
-2. Yasin: turn on Cloudflare Email Routing so support@myunwrapped.com forwards to a real inbox.
+1. Done 2026-10-20: deployed main (1ab1e1dd, PR #22), Cloudflare version c5a8b66e. Deploy is manual from C:\unwrapped.
+2. Done 2026-10-20: support@myunwrapped.com forwards to Yasin's Gmail via Cloudflare Email Routing.
+6. Card checkout: waiting on Yasin to open a Lemon Squeezy store (payout to Wise) and set API key + webhook secret as Cloudflare secrets; then add the card button and webhook unlock.
 3. Optional: run `npm run check-export` on a real export when one is at hand (synthetic exports for all platforms already pass; 50k followers / 120k DMs parse in ~1.2s).
 4. Open decisions for Yasin (outward-facing, ask first): Google Search Console submission, Product Hunt launch.
 5. Keep this file current: add each merged PR and the next step.
 
 ## Decisions
 
-- Card payments (Paddle, Lemon Squeezy, Stripe) are not possible: Yasin is in Iran. Crypto (USDT) only, with the P2P/friend route from #21 for buyers without crypto.
+- Yasin lives in Malaysia (an earlier note saying Iran was wrong) and has a verified Wise account. Card payments are possible: plan is a Merchant of Record (Lemon Squeezy preferred, or Paddle) paying out to Wise, next to the existing USDT option. Don't take card payments directly into Wise.
 - No team photo; a made-up one was declined.
 
 ## Rules for working here
