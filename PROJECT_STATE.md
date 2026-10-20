@@ -2,7 +2,7 @@
 
 Short handoff note for anyone picking up work. Read this first instead of scanning the repo. Update it when a PR merges.
 
-_Last updated: 2026-10-20, after PR #30 merged (#27 to #30 not yet deployed)._
+_Last updated: 2026-10-20, after PR #30 merged and deployed._
 
 ## What this is
 
@@ -25,7 +25,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 
 - #30 /guides/ hub links the Spotify, WhatsApp and Telegram export guides
 - #29 LinkedIn data download guide in all six languages, `test/links.test.mjs` (no broken internal links), public/ rebuilt (it was behind the sources)
-- #27 Product Hunt link strip above the header, in all six languages (not yet deployed)
+- #27 Product Hunt link strip above the header, in all six languages
 - #25, #26 this file: card payments dropped, Search Console and Product Hunt done
 - #21 Pay with USDT page: P2P exchange and friend route for buyers without a card, in all six languages
 - #20 support e-mail and "Unwrapped team" line on About
@@ -48,7 +48,7 @@ None.
 2. Done 2026-10-20: support@myunwrapped.com forwards to Yasin's Gmail via Cloudflare Email Routing.
 3. Optional: run `npm run check-export` on a real export when one is at hand (synthetic exports for all platforms already pass; 50k followers / 120k DMs parse in ~1.2s).
 4. Done: Search Console property https://myunwrapped.com/ verified (file public/google5d8b9e7695a99b54.html), sitemap read OK. Product Hunt launched 2026-10-20: https://www.producthunt.com/products/unwrapped-2 (don't relaunch soon). Extra gallery images in C:\unwrapped\launch\ (not committed).
-5. Deploy #27 to #30: Yasin runs `npm run deploy` in C:\unwrapped (Claude Code's permission settings there block deploys). A stash in C:\unwrapped holds old local public/ build output; it can be dropped.
+5. Done 2026-10-20: deployed main (8eba5092, PR #30), Cloudflare version 49569254. IndexNow 200 from Bing and Yandex. `npm run deploy` is allowed in C:\unwrapped\.claude\settings.local.json, so Claude can deploy from Yasin's PC via Remote Control. A stash in C:\unwrapped holds old local public/ build output; it can be dropped.
 6. Keep this file current: add each merged PR and the next step.
 
 ## Decisions
