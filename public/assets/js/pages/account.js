@@ -7,6 +7,7 @@ import { inviteLink } from '../lib/referral.js';
 import { TIER_NAME, TIER_RANK } from '../lib/tiers.js';
 import { t, locale } from '../lib/i18n.js';
 import { supportLinks } from '../lib/support.js';
+import { accountSection, loadAccount, signInFromHash } from './account-user.js';
 
 const root = document.getElementById('account-root');
 
@@ -21,9 +22,10 @@ let renderSeq = 0;
 
 async function render() {
   const seq = ++renderSeq;
-  const [state, config, snapshots] = await Promise.all([proState(), getConfig(), countAllSnapshots()]);
+  const [state, config, snapshots, account] = await Promise.all([proState(), getConfig(), countAllSnapshots(), loadAccount()]);
   if (seq !== renderSeq) return; // a newer render started meanwhile
   clear(root);
+  root.append(...accountSection(account, state.key || storedKey(), render));
 
   // Status
   const keyText = state.key || storedKey();
@@ -246,5 +248,5 @@ function keyRow(key) {
   return h('div', { class: 'pay-line' }, h('span', { class: 'k' }, t('Key')), shown, reveal, copy, remove);
 }
 
-render();
+signInFromHash().finally(render);
 window.addEventListener('unw:license', render);
