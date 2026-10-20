@@ -273,7 +273,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
         body: { plan: planId, method: methodId, email: email.value.trim() || undefined, renewKey: renewKey || undefined, ref: ref || undefined },
       });
       rememberOrder(res.order, res.token);
-      if (res.order.method === 'nowpayments' && res.order.redirectUrl) {
+      if ((res.order.method === 'nowpayments' || res.order.method === 'lemonsqueezy') && res.order.redirectUrl) {
         go.textContent = t('Opening the payment page…');
         location.href = res.order.redirectUrl;
         return;

@@ -37,6 +37,10 @@
     // Your own USDT (TRC20) receiving address. Leave empty to disable direct USDT.
     "TRON_ADDRESS": "TSEJswyoKTWcRp5x1JFffYr8owDEtXiBA6",
     "SUPPORT_CONTACT": "Email: support@myunwrapped.com · Telegram: @socialstore_support · WhatsApp: +447352488046 · Discord: Socialstore_pro",
+    // Card payments via Lemon Squeezy are on once these four secrets are set
+    // (wrangler secret put …): LEMONSQUEEZY_API_KEY, LEMONSQUEEZY_STORE_ID,
+    // LEMONSQUEEZY_VARIANT_ID (a "pay what you want" variant), LEMONSQUEEZY_WEBHOOK_SECRET.
+    // Webhook URL: https://myunwrapped.com/api/webhook/lemonsqueezy, event order_created.
     // Optional e-mail sender for license + renewal e-mails (needs RESEND_API_KEY secret).
     "EMAIL_FROM": "Unwrapped <license@myunwrapped.com>"
   },

@@ -8,6 +8,7 @@ import { activateLicense, getSigningKeys, lifetimeTier } from './license.js';
 import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
 import { checkNowpaymentsPayments, createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
+import { createLemonsqueezyOrder, handleLemonsqueezyWebhook, lemonsqueezyEnabled } from './payments/lemonsqueezy.js';
 import { growthAccountForCheckout, growthMaintenance, handleGrowth } from './growth/index.js';
 import { handleBio, servePublicBio } from './bio/index.js';
 import { emailEnabled, sendRenewalReminders } from './email.js';
@@ -25,6 +26,9 @@ async function enabledMethods(env) {
   }
   if (nowpaymentsEnabled(env)) {
     methods.push({ id: 'nowpayments', label: '150+ cryptocurrencies', detail: 'BTC, ETH, SOL, TON, LTC, BNB, USDT…' });
+  }
+  if (lemonsqueezyEnabled(env)) {
+    methods.push({ id: 'lemonsqueezy', label: 'Card · PayPal', detail: 'Visa, Mastercard, Apple Pay, Google Pay, PayPal' });
   }
   return methods;
 }
@@ -84,7 +88,11 @@ async function checkout(request, env) {
 
   const args = { plan, priceUsd, email, renewKey, visitor, growthAccount };
   const order =
-    methodId === 'tron' ? await createTronOrder(env, args) : await createNowpaymentsOrder(env, request, args);
+    methodId === 'tron'
+      ? await createTronOrder(env, args)
+      : methodId === 'lemonsqueezy'
+        ? await createLemonsqueezyOrder(env, request, args)
+        : await createNowpaymentsOrder(env, request, args);
   if (referral) await attachReferral(env, order.id, referral.code);
   await logEvent(env, 'order.created', order.id, { plan: plan.id, method: methodId, ref: referral ? referral.code : null, growthAccount });
   const view = await publicOrder(env, order);
@@ -160,6 +168,8 @@ async function route(request, env, ctx, url) {
       return referralCheck(env, url);
     case 'POST /api/webhook/nowpayments':
       return handleNowpaymentsIpn(request, env);
+    case 'POST /api/webhook/lemonsqueezy':
+      return handleLemonsqueezyWebhook(request, env);
     case 'POST /api/hit':
       return recordHit(request, env);
     case 'POST /api/feedback':

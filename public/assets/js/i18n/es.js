@@ -858,6 +858,8 @@ export default {
   "Pay once": "Un solo pago",
   "USDT · TRC20": "USDT · TRC20",
   "Direct to wallet · lowest fees · ~1 min": "Directo a la wallet · comisiones mínimas · ~1 min",
+  "Card · PayPal": "Tarjeta · PayPal",
+  "Visa, Mastercard, Apple Pay, Google Pay, PayPal": "Visa, Mastercard, Apple Pay, Google Pay, PayPal",
   "150+ cryptocurrencies": "Más de 150 criptomonedas",
   "BTC, ETH, SOL, TON, LTC, BNB, USDT…": "BTC, ETH, SOL, TON, LTC, BNB, USDT…",
   "Too many attempts — please wait a few minutes.": "Demasiados intentos: espera unos minutos.",

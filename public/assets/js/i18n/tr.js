@@ -858,6 +858,8 @@ export default {
   "Pay once": "Bir kez öde",
   "USDT · TRC20": "USDT · TRC20",
   "Direct to wallet · lowest fees · ~1 min": "Doğrudan cüzdana · en düşük ücret · ~1 dk",
+  "Card · PayPal": "Kart · PayPal",
+  "Visa, Mastercard, Apple Pay, Google Pay, PayPal": "Visa, Mastercard, Apple Pay, Google Pay, PayPal",
   "150+ cryptocurrencies": "150+ kripto para",
   "BTC, ETH, SOL, TON, LTC, BNB, USDT…": "BTC, ETH, SOL, TON, LTC, BNB, USDT…",
   "Too many attempts — please wait a few minutes.": "Çok fazla deneme — lütfen birkaç dakika bekle.",
