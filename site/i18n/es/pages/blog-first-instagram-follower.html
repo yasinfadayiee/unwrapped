@@ -1,0 +1,43 @@
+<!--page {
+  "route": "/blog/who-was-my-first-instagram-follower/",
+  "title": "¿Quién fue mi primer seguidor en Instagram? Cómo averiguarlo (2026)",
+  "headline": "¿Quién fue mi primer seguidor en Instagram?",
+  "description": "La app de Instagram no te dice quién te siguió primero, pero tu descarga de datos registra cuándo te siguió cada seguidor. Cómo encontrar a tu primer seguidor en pocos minutos.",
+  "article": "2026-10-19",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/party-popper-640.webp" srcset="/assets/img/art/party-popper-320.webp 320w, /assets/img/art/party-popper-640.webp 640w, /assets/img/art/party-popper-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Instagram</span>
+      <h1 class="h1">¿Quién fue tu primer <span class="serif grad">seguidor en Instagram?</span></h1>
+      <p class="lead">Instagram no lo muestra en la app, pero tu descarga de datos guarda una fecha para cada seguidor. Así encuentras al primero.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+<h2>Por qué la app no puede mostrarlo</h2>
+      <p>La lista de seguidores de la app está ordenada según el ranking propio de Instagram, no por fecha, y no tiene la opción “más antiguos primero”. Bajar hasta el final tampoco te muestra a tu primer seguidor.</p>
+      <h2>Dónde se guarda la fecha</h2>
+      <p>Cuando <a href="/guides/download-instagram-data/">descargas tus datos de Instagram</a>, el archivo de seguidores (<code>followers_1.json</code>, o <code>followers_1.html</code> en formato HTML) incluye cada seguidor junto con la fecha en que te siguió. Las cuentas que te siguieron, dejaron de seguirte y volvieron a seguirte muestran la fecha más reciente.</p>
+      <h2>Encuentra a tu primer seguidor</h2>
+      <ol>
+        <li>Solicita tus datos en Centro de cuentas → Tu información y permisos → Descargar tu información. Elige <b>Seguidores y seguidos</b> y el formato JSON.</li>
+        <li>Cuando llegue el archivo, ábrelo en el <a href="/instagram/">analizador de Instagram de Unwrapped</a>. Funciona en tu navegador; el archivo nunca se sube.</li>
+        <li>Abre tu lista de seguidores y ordénala por fecha, de más antiguo a más reciente. La primera fila es el seguidor más antiguo que todavía te sigue.</li>
+      </ol>
+      <p>Solo aparecen quienes todavía te siguen. Si tu primerísimo seguidor se fue, no estará.</p>
+      <div class="read-next"><h2>Sigue leyendo</h2><ul><li><a href="/blog/when-did-i-create-my-instagram-account/">¿Cuándo creé mi cuenta de Instagram?</a></li><li><a href="/blog/instagram-mutual-followers/">Cómo ver tus seguidores en común en Instagram</a></li><li><a href="/guides/instagram-data-files-explained/">Cada archivo de tu descarga de Instagram, explicado</a></li></ul></div>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>¿Puedo ver a mi primer seguidor sin descargar mis datos?</summary><div class="answer"><p>No. La app no ordena a los seguidores por fecha, así que la descarga de datos es la única forma fiable.</p></div></details>
+      <details><summary>¿Por qué falta mi primer seguidor?</summary><div class="answer"><p>El archivo solo incluye seguidores actuales. Quien dejó de seguirte o borró su cuenta ya no aparece.</p></div></details>
+      <details><summary>¿La otra persona sabe que lo revisé?</summary><div class="answer"><p>No. Leer tu propia descarga de datos es privado y no envía nada a Instagram.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

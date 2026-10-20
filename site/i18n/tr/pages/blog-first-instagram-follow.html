@@ -1,0 +1,43 @@
+<!--page {
+  "route": "/blog/who-did-i-follow-first-on-instagram/",
+  "title": "Instagram'da ilk kimi takip ettim? Takip geçmişini gör (2026)",
+  "headline": "Instagram'da ilk kimi takip ettim?",
+  "description": "Instagram'da takip ettiğin ilk hesabı bul ve tüm takip geçmişini tarihe göre gör; Instagram'ın verdiği ücretsiz veri indirmesiyle.",
+  "article": "2026-10-19",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/compass-map-640.webp" srcset="/assets/img/art/compass-map-320.webp 320w, /assets/img/art/compass-map-640.webp 640w, /assets/img/art/compass-map-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Instagram</span>
+      <h1 class="h1">İlk kimi <span class="serif grad">takip ettin?</span></h1>
+      <p class="lead">Instagram veri indirmen her hesabı ne zaman takip ettiğini saklar. Tüm takip geçmişini sırayla şöyle görürsün.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+<h2>Uygulama sırayı gizler</h2>
+      <p>Uygulamada Takip edilenler → Sırala ile “Takip tarihi: En eski” seçebilirsin. Uzun listelerde yavaştır ve tarih göstermez. Veri indirmen her hesabın tam tarihini gösterir.</p>
+      <h2>Nereye bakmalı</h2>
+      <p><a href="/guides/download-instagram-data/">Instagram veri indirmesinde</a>, <code>following.json</code> dosyası takip ettiğin her hesabı zaman damgasıyla listeler. Yanındaki <code>recently_unfollowed_profiles.json</code> ise yakın zamanda takibi bıraktığın hesapları, yine tarihleriyle listeler.</p>
+      <h2>Takip geçmişini sırayla gör</h2>
+      <ol>
+        <li>Verilerini <b>Takipçiler ve takip edilenler</b> seçili olarak, JSON biçiminde indir.</li>
+        <li>ZIP dosyasını <a href="/instagram/">Unwrapped</a> ile aç. Her şey cihazında okunur.</li>
+        <li>Takip ettiklerin listesini tarihe göre sırala. Takip ettiğin ilk hesabı, her yıl kaç hesap takip ettiğini ve yıllar önce takip edip unuttuğun hesapları görürsün.</li>
+      </ol>
+      <p>Eski takipleri <a href="/blog/clean-up-social-media-before-job-search/">temizlemenin</a> de hızlı bir yolu: en eskiler çoğu zaman artık ilgilenmediğin hesaplardır.</p>
+      <div class="read-next"><h2>Sıradaki yazılar</h2><ul><li><a href="/blog/who-was-my-first-instagram-follower/">Instagram'daki ilk takipçim kimdi?</a></li><li><a href="/blog/instagram-unfollow-limit-per-day/">Instagram'da günlük takibi bırakma sınırı</a></li><li><a href="/blog/what-instagram-knows-about-you/">Instagram senin hakkında ne biliyor</a></li></ul></div>
+
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Instagram'da birini ne zaman takip ettiğimi görebilir miyim?</summary><div class="answer"><p>Evet. Veri indirmendeki takip edilenler dosyasında takip ettiğin her hesabın tarihi var.</p></div></details>
+      <details><summary>Takibi bıraktığım hesaplar da var mı?</summary><div class="answer"><p>Sadece yakın zamandakiler, takibi bırakılan profiller için ayrı bir dosyada.</p></div></details>
+      <details><summary>Güvenli mi?</summary><div class="answer"><p>Evet. Dosyayı Instagram'dan kendin indirirsin, Unwrapped da onu yüklemeden tarayıcında okur.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
