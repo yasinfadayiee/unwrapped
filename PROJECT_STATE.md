@@ -39,7 +39,8 @@ None.
 
 1. Done 2026-10-20: synthetic exports in each platform's official format (Instagram JSON + HTML + DMs, TikTok, X, Facebook + Messenger, LinkedIn, WhatsApp Android + iOS, Telegram, Spotify basic + extended) all parsed with correct counts. Still worth a run on a real export when one is at hand. Large account (50k followers, 300 chats / 120k DMs) parses in ~1.2s in Node.
 2. Done 2026-10-20: deployed main (dc9bf173) to myunwrapped.com, version cd19a6f4. Deploy is manual from C:\unwrapped (no CI). Old local build output is in git stash@{0} there.
-4. Open decisions for Yasin (from analysis/pay-readiness-fa.md): support name/photo/email + About page, card payments (Paddle/Lemon Squeezy/Stripe), Search Console and Product Hunt.
+4. Support email support@myunwrapped.com and "Unwrapped team" on About (PR #20); needs Cloudflare Email Routing to forward it. No team photo (decided against a made-up one).
+5. Open decisions for Yasin (from analysis/pay-readiness-fa.md): card payments (Paddle/Lemon Squeezy/Stripe), Search Console and Product Hunt.
 3. Keep this file current: add each merged PR and the next step.
 
 ## Rules for working here

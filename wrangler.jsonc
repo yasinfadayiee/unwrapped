@@ -36,7 +36,7 @@
     "BRAND": "Unwrapped",
     // Your own USDT (TRC20) receiving address. Leave empty to disable direct USDT.
     "TRON_ADDRESS": "TSEJswyoKTWcRp5x1JFffYr8owDEtXiBA6",
-    "SUPPORT_CONTACT": "Telegram: @socialstore_support · WhatsApp: +447352488046 · Discord: Socialstore_pro",
+    "SUPPORT_CONTACT": "Email: support@myunwrapped.com · Telegram: @socialstore_support · WhatsApp: +447352488046 · Discord: Socialstore_pro",
     // Optional e-mail sender for license + renewal e-mails (needs RESEND_API_KEY secret).
     "EMAIL_FROM": "Unwrapped <license@myunwrapped.com>"
   },
