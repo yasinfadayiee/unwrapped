@@ -243,6 +243,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
           'ol',
           null,
           h('li', null, t('Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).')),
+          h('li', null, t('No card? Most exchanges have a P2P section where you buy USDT from another person by bank transfer. A friend who has USDT can also send it for you.')),
           h('li', null, t('Buy a little more USDT than the price, to cover the network fee.')),
           h('li', null, t('Send it to the address on the next screen and choose the TRON (TRC20) network.')),
           h('li', null, t('Your plan unlocks automatically about a minute after the payment arrives.')),
