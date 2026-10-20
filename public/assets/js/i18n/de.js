@@ -1269,6 +1269,7 @@ export default {
   "Full step-by-step guide →": "Vollständige Schritt-für-Schritt-Anleitung →",
   "Open in Trust Wallet": "In Trust Wallet öffnen",
   "Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).": "Nutze eine Börse oder Wallet-App, die USDT per Karte oder Überweisung verkauft (zum Beispiel Binance, OKX oder Trust Wallet — Verfügbarkeit je nach Land).",
+  "No card? Most exchanges have a P2P section where you buy USDT from another person by bank transfer. A friend who has USDT can also send it for you.": "Keine Karte? Die meisten Börsen haben einen P2P-Bereich, in dem du USDT per Banküberweisung von einer anderen Person kaufst. Auch ein Freund mit USDT kann für dich zahlen.",
   "Buy a little more USDT than the price, to cover the network fee.": "Kaufe etwas mehr USDT als den Preis, um die Netzwerkgebühr abzudecken.",
   "Send it to the address on the next screen and choose the TRON (TRC20) network.": "Sende es an die Adresse auf dem nächsten Bildschirm und wähle das Netzwerk TRON (TRC20).",
   "Your plan unlocks automatically about a minute after the payment arrives.": "Dein Plan wird etwa eine Minute nach Zahlungseingang automatisch freigeschaltet.",

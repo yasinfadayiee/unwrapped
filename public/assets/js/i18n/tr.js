@@ -1257,6 +1257,7 @@ export default {
   "Full step-by-step guide →": "Adım adım tam rehber →",
   "Open in Trust Wallet": "Trust Wallet’ta aç",
   "Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).": "Kartla veya banka havalesiyle USDT satan bir borsa ya da cüzdan uygulaması kullan (örneğin Binance, OKX veya Trust Wallet — kullanılabilirlik ülkene bağlıdır).",
+  "No card? Most exchanges have a P2P section where you buy USDT from another person by bank transfer. A friend who has USDT can also send it for you.": "Kartın yok mu? Çoğu borsada başka bir kişiden banka havalesiyle USDT aldığın bir P2P bölümü var. USDT’si olan bir arkadaşın da senin için ödeyebilir.",
   "Buy a little more USDT than the price, to cover the network fee.": "Ağ ücretini karşılamak için fiyattan biraz fazla USDT al.",
   "Send it to the address on the next screen and choose the TRON (TRC20) network.": "Bir sonraki ekrandaki adrese gönder ve TRON (TRC20) ağını seç.",
   "Your plan unlocks automatically about a minute after the payment arrives.": "Ödeme ulaştıktan yaklaşık bir dakika sonra planın otomatik olarak açılır.",
