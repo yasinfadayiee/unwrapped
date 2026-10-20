@@ -27,7 +27,10 @@ for (const arg of args) await collect(arg, (await stat(arg)).isDirectory() ? arg
 const result = await analyze(await buildVfs(files));
 console.log(`files: ${result.files}, bytes: ${result.bytes}, exports: ${result.exports || 1}`);
 for (const d of result.datasets) {
-  console.log(`\n[${d.platform}] ${d.account || d.username || ''}`.trimEnd());
+  const who = d.account?.username || d.account?.name || '';
+  console.log(`\n[${d.platform}] ${who}`.trimEnd());
+  const m = d.activity?.messages || d.messages;
+  if (m?.total) console.log(`  messages: ${m.total} in ${m.threadCount} chats (sent ${m.sent})`);
   for (const [key, value] of Object.entries(d)) {
     if (Array.isArray(value)) console.log(`  ${key}: ${value.length}`);
     else if (value && typeof value === 'object') {

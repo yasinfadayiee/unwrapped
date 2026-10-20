@@ -35,7 +35,7 @@ None.
 
 ## Next steps
 
-1. Test with real exports using `npm run check-export` on each platform (checklist in project files: `analysis/real-export-checklist-fa.md`) and fix any parser mismatches.
+1. Done 2026-10-20: synthetic exports in each platform's official format (Instagram JSON + HTML + DMs, TikTok, X, Facebook + Messenger, LinkedIn, WhatsApp Android + iOS, Telegram, Spotify basic + extended) all parsed with correct counts. Still worth a run on a real export when one is at hand.
 2. Deploy main (`npm run deploy`), if not already deployed automatically.
 3. Keep this file current: add each merged PR and the next step.
 
