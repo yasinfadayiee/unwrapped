@@ -2,7 +2,7 @@
 
 Short handoff note for anyone picking up work. Read this first instead of scanning the repo. Update it when a PR merges.
 
-_Last updated: 2026-10-20, after PR #33 merged._
+_Last updated: 2026-10-20, after the #33 deploy._
 
 ## What this is
 
@@ -51,7 +51,7 @@ None.
 3. Optional: run `npm run check-export` on a real export when one is at hand (synthetic exports for all platforms already pass; 50k followers / 120k DMs parse in ~1.2s).
 4. Done: Search Console property https://myunwrapped.com/ verified (file public/google5d8b9e7695a99b54.html), sitemap read OK. Product Hunt launched 2026-10-20: https://www.producthunt.com/products/unwrapped-2 (don't relaunch soon). Extra gallery images in C:\unwrapped\launch\ (not committed).
 5. Done 2026-10-20: deployed main (8eba5092, PR #30), Cloudflare version 49569254. IndexNow 200 from Bing and Yandex. `npm run deploy` is allowed in C:\unwrapped\.claude\settings.local.json, so Claude can deploy from Yasin's PC via Remote Control. A stash in C:\unwrapped holds old local public/ build output; it can be dropped.
-6. Next: deploy main with #32 and #33 (`npm run deploy` from C:\unwrapped). D1 tables are created on first use (`src/db.js`). Sign-in codes only send after Yasin sets RESEND_API_KEY and EMAIL_FROM as Cloudflare secrets.
+6. Done 2026-10-20: deployed main (03639d57, PR #34, accounts #32/#33), Cloudflare version eaabab06. IndexNow 200 from Bing and Yandex (536 URLs). The deploy rule in settings.local.json now covers PowerShell too. Still needed: Yasin sets RESEND_API_KEY and EMAIL_FROM so sign-in codes are e-mailed.
 7. Keep this file current: add each merged PR and the next step.
 
 ## Decisions
