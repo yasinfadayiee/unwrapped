@@ -2,7 +2,7 @@
 
 Short handoff note for anyone picking up work. Read this first instead of scanning the repo. Update it when a PR merges.
 
-_Last updated: 2026-10-20, after PR #21 merged (not yet deployed)._
+_Last updated: 2026-10-20, after PR #27 merged (not yet deployed)._
 
 ## What this is
 
@@ -23,6 +23,8 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 
 ## Recently merged
 
+- #27 Product Hunt link strip above the header, in all six languages (not yet deployed)
+- #25, #26 this file: card payments dropped, Search Console and Product Hunt done
 - #21 Pay with USDT page: P2P exchange and friend route for buyers without a card, in all six languages
 - #20 support e-mail and "Unwrapped team" line on About
 - #19 this file: deploy and large-export timing
@@ -44,7 +46,8 @@ None.
 2. Done 2026-10-20: support@myunwrapped.com forwards to Yasin's Gmail via Cloudflare Email Routing.
 3. Optional: run `npm run check-export` on a real export when one is at hand (synthetic exports for all platforms already pass; 50k followers / 120k DMs parse in ~1.2s).
 4. Done: Search Console property https://myunwrapped.com/ verified (file public/google5d8b9e7695a99b54.html), sitemap read OK. Product Hunt launched 2026-10-20: https://www.producthunt.com/products/unwrapped-2 (don't relaunch soon). Extra gallery images in C:\unwrapped\launch\ (not committed).
-5. Keep this file current: add each merged PR and the next step.
+5. Deploy PR #27 from C:\unwrapped with `npm run deploy` (manual, needs Yasin's go-ahead).
+6. Keep this file current: add each merged PR and the next step.
 
 ## Decisions
 
