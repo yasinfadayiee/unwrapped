@@ -24,7 +24,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 ## Recently merged
 
 - #33 header: account button next to the language switch
-- #32 password-free accounts: sign up / sign in with an e-mailed 6-digit code or one-tap link (`src/users.js`, tables users, login_codes, sessions; HttpOnly cookie `uw_session`). /account/ shows the user's licenses (matched by e-mail), orders, invite rewards and tool links; keys can be added to an account. Admin has a Users section (`GET /api/admin/users`: totals, sign-ups per day, search). Needs RESEND_API_KEY + EMAIL_FROM to send codes.
+- #32 password-free accounts: sign up / sign in with an e-mailed 6-digit code or one-tap link (`src/users.js`, tables users, login_codes, sessions; HttpOnly cookie `uw_session`). /account/ shows the user's licenses (matched by e-mail), orders, invite rewards and tool links; keys can be added to an account. Admin has a Users section (`GET /api/admin/users`: totals, sign-ups per day, search). Codes go out through Resend (RESEND_API_KEY + EMAIL_FROM, already set).
 - #30 /guides/ hub links the Spotify, WhatsApp and Telegram export guides
 - #29 LinkedIn data download guide in all six languages, `test/links.test.mjs` (no broken internal links), public/ rebuilt (it was behind the sources)
 - #27 Product Hunt link strip above the header, in all six languages
@@ -51,7 +51,7 @@ None.
 3. Optional: run `npm run check-export` on a real export when one is at hand (synthetic exports for all platforms already pass; 50k followers / 120k DMs parse in ~1.2s).
 4. Done: Search Console property https://myunwrapped.com/ verified (file public/google5d8b9e7695a99b54.html), sitemap read OK. Product Hunt launched 2026-10-20: https://www.producthunt.com/products/unwrapped-2 (don't relaunch soon). Extra gallery images in C:\unwrapped\launch\ (not committed).
 5. Done 2026-10-20: deployed main (8eba5092, PR #30), Cloudflare version 49569254. IndexNow 200 from Bing and Yandex. `npm run deploy` is allowed in C:\unwrapped\.claude\settings.local.json, so Claude can deploy from Yasin's PC via Remote Control. A stash in C:\unwrapped holds old local public/ build output; it can be dropped.
-6. Done 2026-10-20: deployed main (03639d57, PR #34, accounts #32/#33), Cloudflare version eaabab06. IndexNow 200 from Bing and Yandex (536 URLs). The deploy rule in settings.local.json now covers PowerShell too. Still needed: Yasin sets RESEND_API_KEY and EMAIL_FROM so sign-in codes are e-mailed.
+6. Done 2026-10-20: deployed main (03639d57, PR #34, accounts #32/#33), Cloudflare version eaabab06. IndexNow 200 from Bing and Yandex (536 URLs). The deploy rule in settings.local.json now covers PowerShell too. RESEND_API_KEY and EMAIL_FROM were already set (Resend shows license and bio e-mails delivered), so sign-in codes should send.
 7. Keep this file current: add each merged PR and the next step.
 
 ## Decisions
