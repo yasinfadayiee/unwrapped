@@ -2,7 +2,7 @@
 
 Short handoff note for anyone picking up work. Read this first instead of scanning the repo. Update it when a PR merges.
 
-_Last updated: 2026-10-20, after PR #27 merged (not yet deployed)._
+_Last updated: 2026-10-20, after PR #30 merged (#27 to #30 not yet deployed)._
 
 ## What this is
 
@@ -17,12 +17,14 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 ## Commands
 
 - `npm run build`: build pages into `public/`
-- `npm test`: run all tests (89 passed at PR #16)
+- `npm test`: run all tests (90 passed at PR #29)
 - `npm run check-export -- <zip or folder>`: run a real export through the parsers locally
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
 
+- #30 /guides/ hub links the Spotify, WhatsApp and Telegram export guides
+- #29 LinkedIn data download guide in all six languages, `test/links.test.mjs` (no broken internal links), public/ rebuilt (it was behind the sources)
 - #27 Product Hunt link strip above the header, in all six languages (not yet deployed)
 - #25, #26 this file: card payments dropped, Search Console and Product Hunt done
 - #21 Pay with USDT page: P2P exchange and friend route for buyers without a card, in all six languages
@@ -46,7 +48,7 @@ None.
 2. Done 2026-10-20: support@myunwrapped.com forwards to Yasin's Gmail via Cloudflare Email Routing.
 3. Optional: run `npm run check-export` on a real export when one is at hand (synthetic exports for all platforms already pass; 50k followers / 120k DMs parse in ~1.2s).
 4. Done: Search Console property https://myunwrapped.com/ verified (file public/google5d8b9e7695a99b54.html), sitemap read OK. Product Hunt launched 2026-10-20: https://www.producthunt.com/products/unwrapped-2 (don't relaunch soon). Extra gallery images in C:\unwrapped\launch\ (not committed).
-5. Deploy PR #27 from C:\unwrapped with `npm run deploy` (manual, needs Yasin's go-ahead).
+5. Deploy #27 to #30: Yasin runs `npm run deploy` in C:\unwrapped (Claude Code's permission settings there block deploys). A stash in C:\unwrapped holds old local public/ build output; it can be dropped.
 6. Keep this file current: add each merged PR and the next step.
 
 ## Decisions
@@ -58,4 +60,5 @@ None.
 
 - Low token use; don't read `node_modules/`, `public/` build output, lock files, or logs.
 - Build and test once, at the end of a task.
+- Yasin said on 2026-10-20: keep improving the site without asking, and merge the PRs yourself.
 - One thread at a time; ask before starting a new one or doing anything outward-facing.
