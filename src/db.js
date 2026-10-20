@@ -72,6 +72,33 @@ export const SCHEMA = [
   FEEDBACK_SCHEMA,
   // One-time "your export is ready" e-mails (src/reminders.js).
   REMINDER_SCHEMA,
+  // Password-free accounts (src/users.js).
+  `CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    name TEXT,
+    lang TEXT,
+    created_at INTEGER NOT NULL,
+    last_login_at INTEGER,
+    logins INTEGER NOT NULL DEFAULT 0
+  )`,
+  `CREATE INDEX IF NOT EXISTS users_created ON users (created_at)`,
+  `CREATE TABLE IF NOT EXISTS login_codes (
+    email TEXT PRIMARY KEY,
+    code_hash TEXT NOT NULL,
+    name TEXT,
+    lang TEXT,
+    attempts INTEGER NOT NULL DEFAULT 0,
+    expires_at INTEGER NOT NULL
+  )`,
+  `CREATE TABLE IF NOT EXISTS sessions (
+    token_hash TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    expires_at INTEGER NOT NULL,
+    last_seen INTEGER NOT NULL
+  )`,
+  `CREATE INDEX IF NOT EXISTS sessions_user ON sessions (user_id)`,
 ];
 
 // Columns added after the first release. SQLite has no "ADD COLUMN IF NOT
@@ -124,6 +151,8 @@ export async function cleanup(env) {
   await env.DB.batch([
     env.DB.prepare("UPDATE orders SET status = 'expired' WHERE status = 'pending' AND expires_at < ?").bind(now),
     env.DB.prepare('DELETE FROM rate_limits WHERE reset_at < ?').bind(now),
+    env.DB.prepare('DELETE FROM login_codes WHERE expires_at < ?').bind(now),
+    env.DB.prepare('DELETE FROM sessions WHERE expires_at < ?').bind(now),
     env.DB.prepare('DELETE FROM events WHERE ts < ?').bind(now - 90 * 86_400_000),
     env.DB.prepare('DELETE FROM stats WHERE day < ?').bind(Math.floor(now / 86_400_000) - 400),
     // Higher-tier time on a lifetime license ran out: back to the lifetime plan.

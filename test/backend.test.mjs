@@ -472,3 +472,49 @@ test('export reminders are sent once after the platform delay, then deleted', as
   const left = await env.DB.prepare('SELECT COUNT(*) AS n FROM export_reminders').first();
   assert.equal(left.n, 0);
 });
+
+test('accounts: e-mail code sign-up, session, own licenses, admin user stats', async () => {
+  env.DEV_MODE = '1';
+  const raw = async (method, path, body, cookie) => {
+    const res = await worker.fetch(
+      new Request(`https://shop.test${path}`, {
+        method,
+        headers: { 'content-type': 'application/json', 'cf-connecting-ip': '203.0.113.9', ...(cookie ? { cookie } : {}) },
+        body: body === undefined ? undefined : JSON.stringify(body),
+      }),
+      env,
+      ctx(),
+    );
+    return { status: res.status, body: await res.json(), cookie: (res.headers.get('set-cookie') || '').split(';')[0] };
+  };
+  assert.equal((await raw('POST', '/api/auth/start', { email: 'nope' })).status, 400);
+  const start = await raw('POST', '/api/auth/start', { email: 'Ana@Example.com', name: 'Ana', lang: 'pt' });
+  assert.equal(start.body.isNew, true);
+  const wrong = await raw('POST', '/api/auth/verify', { email: 'ana@example.com', code: start.body.devCode === '000000' ? '111111' : '000000' });
+  assert.equal(wrong.body.error, 'wrong_code');
+  const ok = await raw('POST', '/api/auth/verify', { email: 'ana@example.com', code: start.body.devCode });
+  assert.equal(ok.body.isNew, true);
+  assert.match(ok.cookie, /^uw_session=\w+/);
+  // The code works once.
+  assert.equal((await raw('POST', '/api/auth/verify', { email: 'ana@example.com', code: start.body.devCode })).body.error, 'code_expired');
+
+  assert.equal((await raw('GET', '/api/me')).body.user, null);
+  const admin = { authorization: `Bearer ${env.ADMIN_TOKEN}` };
+  const lic = (await call('POST', '/api/admin/licenses', { plan: 'life' }, admin)).body.license;
+  const linked = await raw('POST', '/api/me/link-license', { key: lic.key }, ok.cookie);
+  assert.equal(linked.body.ok, true);
+  const me = (await raw('GET', '/api/me', undefined, ok.cookie)).body;
+  assert.equal(me.user.email, 'ana@example.com');
+  assert.equal(me.user.name, 'Ana');
+  assert.equal(me.licenses.length, 1);
+  assert.equal(me.licenses[0].status, 'active');
+
+  const stats = (await call('GET', '/api/admin/users', undefined, admin)).body;
+  assert.equal(stats.totals.total, 1);
+  assert.equal(stats.totals.today, 1);
+  assert.equal(stats.totals.paying, 1);
+  assert.equal(stats.users[0].email, 'ana@example.com');
+
+  await raw('POST', '/api/auth/logout', {}, ok.cookie);
+  assert.equal((await raw('GET', '/api/me', undefined, ok.cookie)).body.user, null);
+});

@@ -67,6 +67,60 @@ async function load() {
   }
   root.append(h('section', { class: 'panel' }, h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Revenue, last 30 days'), h('p', null, 'USD, by UTC day of payment'))), barChart(days, { title: 'Revenue', valueLabel: (v) => usd(v), ariaLabel: 'Revenue per day' })));
 
+  // Accounts: sign-ups over time, activity, and a searchable list.
+  const usersBox = h('div');
+  root.append(h('section', { class: 'panel', id: 'users' }, h('div', { class: 'panel-head' }, h('div', null, h('h3', null, 'Users'), h('p', null, 'Accounts created with an e-mail code. Paying = has an active license under the same e-mail.'))), usersBox));
+  const drawUsers = async (q = '') => {
+    const u = await api(`/api/admin/users?q=${encodeURIComponent(q)}`, { headers: auth() }).catch(() => null);
+    if (!u) return clear(usersBox).append(h('p', { class: 'small text-2' }, 'Could not load users.'));
+    const tt = u.totals;
+    const byDay = new Map(u.daily.map((d) => [d.day, d.n]));
+    const udays = [];
+    for (let i = 29; i >= 0; i--) {
+      const day = today - i * 86400000;
+      udays.push({ label: dateShort(day), short: new Date(day).getUTCDate() % 5 === 0 ? String(new Date(day).getUTCDate()) : '', value: byDay.get(day) || 0 });
+    }
+    const search = h('input', { class: 'input', type: 'search', placeholder: 'Search e-mail or name', value: q, 'aria-label': 'Search users' });
+    const form = h('form', { style: { display: 'flex', gap: '10px', margin: '18px 0 12px' } }, h('div', { style: { flex: '1' } }, search), h('button', { class: 'btn btn--ghost btn--sm', type: 'submit' }, 'Search'));
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      drawUsers(search.value.trim());
+    });
+    const conv = tt.total ? Math.round((tt.paying / tt.total) * 100) : 0;
+    clear(usersBox).append(
+      h(
+        'div',
+        { class: 'stats stats--5' },
+        h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Total users'), h('span', { class: 'value' }, fmtInt(tt.total)), h('span', { class: 'sub' }, `${fmtInt(tt.today)} today`)),
+        h('div', { class: 'stat' }, h('span', { class: 'label' }, 'New, 7 days'), h('span', { class: 'value' }, fmtInt(tt.d7))),
+        h('div', { class: 'stat' }, h('span', { class: 'label' }, 'New, 30 days'), h('span', { class: 'value' }, fmtInt(tt.d30))),
+        h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Signed in, 7 days'), h('span', { class: 'value' }, fmtInt(tt.active7)), h('span', { class: 'sub' }, `${fmtInt(tt.active30)} in 30 days`)),
+        h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Paying users'), h('span', { class: 'value' }, fmtInt(tt.paying)), h('span', { class: 'sub' }, `${conv}% of all users`)),
+      ),
+      barChart(udays, { title: 'Sign-ups', ariaLabel: 'Sign-ups per day' }),
+      u.langs.length ? h('p', { class: 'small text-2', style: { marginTop: '12px' } }, `Languages: ${u.langs.map((l) => `${l.lang} ${fmtInt(l.n)}`).join(' · ')}`) : null,
+      form,
+      u.users.length
+        ? h(
+            'div',
+            { class: 'rows' },
+            u.users.map((r) => {
+              const copy = h('button', { class: 'copy-btn', type: 'button' }, 'Copy');
+              copy.addEventListener('click', () => copyText(r.email, copy));
+              return h(
+                'div',
+                { class: 'row' },
+                h('div', { class: 'who' }, h('b', null, r.name ? `${r.name} · ${r.email}` : r.email), h('span', null, `Joined ${dateShort(r.created_at)} · last sign-in ${r.last_login_at ? dateShort(r.last_login_at) : '—'} · ${fmtInt(r.logins)} sign-ins${r.lang ? ` · ${r.lang}` : ''}`)),
+                r.licenses ? h('span', { class: 'badge' }, `${r.licenses} active · ${usd(r.spent)}`) : h('span', { class: 'badge badge--muted' }, r.spent ? usd(r.spent) : 'Free'),
+                h('div', { class: 'acts' }, copy),
+              );
+            }),
+          )
+        : h('p', { class: 'small text-2' }, q ? 'No users match.' : 'No users yet.'),
+    );
+  };
+  drawUsers();
+
   // Visitors (anonymous daily counters from /api/hit).
   const st = await api('/api/admin/stats', { headers: auth() }).catch(() => null);
   if (st) {

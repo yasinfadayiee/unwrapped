@@ -17,6 +17,7 @@ import { isEmail, normalizeLicenseKey } from './util.js';
 import { publicStats, recordHit } from './stats.js';
 import { submitFeedback, testimonials } from './feedback.js';
 import { createReminder, sendDueReminders } from './reminders.js';
+import { handleUsers } from './users.js';
 
 async function enabledMethods(env) {
   const methods = [];
@@ -176,6 +177,8 @@ async function route(request, env, ctx, url) {
       if (env.DEV_MODE === '1') return devPay(request, env);
       break;
   }
+  const users = handleUsers(request, env, url);
+  if (users) return users;
   if (url.pathname.startsWith('/api/admin/')) return handleAdmin(request, env, url);
   if (url.pathname.startsWith('/api/growth/')) return handleGrowth(request, env, url, ctx);
   if (url.pathname.startsWith('/api/bio/')) return handleBio(request, env, url);

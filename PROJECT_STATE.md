@@ -2,7 +2,7 @@
 
 Short handoff note for anyone picking up work. Read this first instead of scanning the repo. Update it when a PR merges.
 
-_Last updated: 2026-10-20, after PR #30 merged and deployed._
+_Last updated: 2026-10-20, after PR #32 merged._
 
 ## What this is
 
@@ -23,6 +23,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 
 ## Recently merged
 
+- #32 password-free accounts: sign up / sign in with an e-mailed 6-digit code or one-tap link (`src/users.js`, tables users, login_codes, sessions; HttpOnly cookie `uw_session`). /account/ shows the user's licenses (matched by e-mail), orders, invite rewards and tool links; keys can be added to an account. Admin has a Users section (`GET /api/admin/users`: totals, sign-ups per day, search). Needs RESEND_API_KEY + EMAIL_FROM to send codes.
 - #30 /guides/ hub links the Spotify, WhatsApp and Telegram export guides
 - #29 LinkedIn data download guide in all six languages, `test/links.test.mjs` (no broken internal links), public/ rebuilt (it was behind the sources)
 - #27 Product Hunt link strip above the header, in all six languages
@@ -60,5 +61,7 @@ None.
 
 - Low token use; don't read `node_modules/`, `public/` build output, lock files, or logs.
 - Build and test once, at the end of a task.
+- Login is e-mail code / magic link only, no passwords (Yasin chose this 2026-10-20 to keep the no-password promise).
+- ADMIN_TOKEN is a Cloudflare secret (at least 12 characters, admin.js rejects shorter); Yasin keeps it in C:\unwrapped\admin-token.local.txt. Claude can't write Cloudflare secrets from Yasin's PC (blocked by the local safety check); Yasin runs `Get-Content file | npx.cmd wrangler secret put NAME` in PowerShell.
 - Yasin said on 2026-10-20: keep improving the site without asking, and merge the PRs yourself.
 - One thread at a time; ask before starting a new one or doing anything outward-facing.
