@@ -23,6 +23,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 
 ## Recently merged
 
+- Pending review: contextual links to seven blog posts from two related pages each, in all six languages; public/ rebuilt.
 - #33 header: account button next to the language switch
 - #32 password-free accounts: sign up / sign in with an e-mailed 6-digit code or one-tap link (`src/users.js`, tables users, login_codes, sessions; HttpOnly cookie `uw_session`). /account/ shows the user's licenses (matched by e-mail), orders, invite rewards and tool links; keys can be added to an account. Admin has a Users section (`GET /api/admin/users`: totals, sign-ups per day, search). Codes go out through Resend (RESEND_API_KEY + EMAIL_FROM, already set).
 - #30 /guides/ hub links the Spotify, WhatsApp and Telegram export guides
