@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- Pricing page: "No crypto yet? How to pay with USDT" link to /guides/pay-with-usdt/ in all 6 languages (copy/link only).
 
 - Pending review: contextual links to seven blog posts from two related pages each, in all six languages; public/ rebuilt.
 - #33 header: account button next to the language switch
