@@ -1,0 +1,60 @@
+<!--page {
+  "route": "/blog/see-recently-unfollowed-instagram/",
+  "title": "Instagram: Konten finden, denen du kürzlich entfolgt bist",
+  "headline": "Konten sehen, denen du auf Instagram kürzlich entfolgt bist",
+  "description": "Finde Konten, denen du auf Instagram kürzlich entfolgt bist, mit Datumsangaben aus deinem Datendownload. Prüfe deine eigenen Entfolgungen privat in Unwrapped, ohne dein Passwort weiterzugeben.",
+  "article": "2026-10-23",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Instagram</span>
+      <h1 class="h1">Konten finden, <span class="serif grad">denen du kürzlich entfolgt bist.</span></h1>
+      <p class="lead">Du weißt den Namen eines Kontos nicht mehr, dem du entfolgt bist? Dein Instagram-Datendownload kann dir helfen. Es geht um deine eigenen Entfolgungen, nicht darum, wer dir nicht mehr folgt.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Wo Instagram den Verlauf speichert</h2>
+      <p>Instagram bietet in der App keine Liste der Konten, denen du entfolgt bist. In deinem Datendownload führt <code>recently_unfollowed_profiles.json</code> Konten auf, denen <strong>du</strong> kürzlich entfolgt bist, mit den von Instagram erfassten Datumsangaben.</p>
+      <p>Die Richtung ist entscheidend: Ein Eintrag hält fest, dass du einem Konto nicht mehr folgst. Er beschreibt nicht, dass jemand anderes dir entfolgt ist.</p>
+
+      <h2>Die richtigen Daten anfordern</h2>
+      <p>Die vollständigen Schritte stehen in der <a href="/guides/download-instagram-data/">Anleitung zum Instagram-Datendownload</a>. Für diese Liste:</p>
+      <ol>
+        <li>Gehe in Instagram zu deinem Profil → <strong>☰</strong> → <strong>Kontenübersicht</strong>.</li>
+        <li>Öffne <strong>Deine Informationen und Berechtigungen</strong> → <strong>Deine Informationen herunterladen</strong> → <strong>Informationen herunterladen oder übertragen</strong> und wähle deinen Instagram-Account.</li>
+        <li>Wähle <strong>Einige deiner Informationen</strong>, hake <strong>Follower und Gefolgt</strong> an und wähle <strong>Auf Gerät herunterladen</strong>.</li>
+        <li>Stelle <strong>Zeitraum: Gesamter Zeitraum</strong> und <strong>Format: JSON</strong> ein. Tippe auf <strong>Dateien erstellen</strong> und lade die ZIP herunter, sobald Instagram meldet, dass sie fertig ist.</li>
+      </ol>
+
+      <h2>Deine letzten Entfolgungen in Unwrapped öffnen</h2>
+      <ol>
+        <li>Lege die ZIP unverändert bei <a href="/instagram/">Unwrapped für Instagram</a> ab; du musst sie nicht entpacken.</li>
+        <li>Öffne <strong>Enge Freunde &amp; mehr</strong> und suche nach <strong>Kürzlich von dir entfolgt</strong>.</li>
+        <li>Suche in den aufgeführten Konten nach dem Profil, dem du entfolgt bist. Die Datumsangaben stammen aus den Einträgen deines Exports.</li>
+      </ol>
+      <p>Die Beschreibung des Abschnitts lautet: <em>Accounts, denen du kürzlich entfolgt bist.</em> Gemeint sind deine eigenen Aktionen.</p>
+
+      <h2>Letzte Aktivitäten, nicht dein gesamter Verlauf</h2>
+      <p>Die Datei enthält die jüngsten Einträge, die Instagram in diesem Download bereitstellt. Sie ist kein vollständiger Verlauf seit der Kontoerstellung. Auch mit Gesamter Zeitraum erscheint eine alte Entfolgung nicht zwangsläufig. Unwrapped kann fehlende Einträge nicht wiederherstellen.</p>
+
+      <h2>Halte deine Aktivitäten privat</h2>
+      <p>Der Export enthält Kontonamen und persönliche Aktivitäten. Unwrapped liest ihn in deinem Browser auf deinem Gerät; nichts wird hochgeladen. Es fragt nie nach deinem Instagram-Passwort und meldet sich nicht bei deinem Konto an.</p>
+
+      <div class="read-next"><h2>Weiterlesen</h2><ul><li><a href="/guides/download-instagram-data/">So lädst du deine Instagram-Daten herunter — Schritt für Schritt</a></li><li><a href="/instagram/">Unwrapped für Instagram öffnen</a></li><li><a href="/blog/who-did-i-follow-first-on-instagram/">Wem bin ich auf Instagram zuerst gefolgt?</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Wo finde ich die Konten, denen ich kürzlich entfolgt bin?</summary><div class="answer"><p>Fordere deine Instagram-Daten mit Follower und Gefolgt im JSON-Format an. Suche nach recently_unfollowed_profiles.json oder öffne die ZIP in Unwrapped. Unter Enge Freunde &amp; mehr findest du Kürzlich von dir entfolgt.</p></div></details>
+      <details><summary>Zeigt die Liste Konten, denen ich selbst entfolgt bin?</summary><div class="answer"><p>Ja. Sie enthält Konten, denen du nicht mehr folgst, mit den von Instagram bereitgestellten Datumsangaben. Sie beschreibt nicht die Entfolgungen anderer Menschen.</p></div></details>
+      <details><summary>Wie weit reicht die Liste zurück?</summary><div class="answer"><p>Sie enthält nur die jüngsten Einträge, die Instagram in deinem Export bereitstellt. Gehe weder von einem vollständigen Verlauf noch von einer festen Aufbewahrungsdauer aus.</p></div></details>
+      <details><summary>Warum fehlt der Abschnitt mit meinen letzten Entfolgungen?</summary><div class="answer"><p>Unwrapped zeigt den Abschnitt, wenn der Export entsprechende Einträge enthält. Prüfe, ob du den richtigen Instagram-Account und Follower und Gefolgt ausgewählt hast. Fehlt die Liste oder ist sie leer, gibt es keine Einträge anzuzeigen.</p></div></details>
+      <details><summary>Muss ich mein Passwort weitergeben oder die ZIP hochladen?</summary><div class="answer"><p>Nein. Lade deine eigene Datei von Instagram herunter und öffne sie auf deinem Gerät in Unwrapped. Dein Passwort wird nicht abgefragt und der Export nicht hochgeladen.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
