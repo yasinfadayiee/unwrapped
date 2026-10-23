@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- #46 Blog /blog/see-tiktok-liked-videos/ in 6 langs, blog tiles + watch-history and video-finder links
 - #40 Threads data download guide /guides/download-threads-data/ in 6 langs, linked from guides hub + Threads tool
 - #41 Blog /blog/see-recently-unfollowed-instagram/ in 6 langs, blog tiles + Instagram tool link
 - #42 Blog /blog/see-sent-friend-requests-facebook/ in 6 langs, blog tiles + Facebook tool link
