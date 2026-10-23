@@ -1,0 +1,59 @@
+<!--page {
+  "route": "/blog/see-sent-friend-requests-facebook/",
+  "title": "How to see sent friend requests on Facebook",
+  "headline": "How to see sent friend requests on Facebook",
+  "description": "Review pending requests you sent, separate them from received requests and cancel old ones manually on Facebook.",
+  "article": "2026-10-23",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Facebook</span>
+      <h1 class="h1">Find the friend requests <span class="serif grad">you sent on Facebook.</span></h1>
+      <p class="lead">Sent a friend request and forgot about it? Pending requests can be hard to find in Facebook. Your data download lets you review the ones recorded in your export, then decide which to keep.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Find the requests you sent</h2>
+      <p>The Facebook download includes <code>sent_friend_requests.json</code> for requests you sent and <code>received_friend_requests.json</code> for requests other people sent you. Keep the direction clear when reviewing the lists.</p>
+
+      <h2>Download your Facebook information</h2>
+      <p>Follow the <a href="/guides/download-facebook-data/">Facebook data download guide</a>. Choose your Facebook profile and include your friends data in JSON format:</p>
+
+      <ol>
+        <li>In Facebook, open <strong>Settings &amp; privacy</strong> → <strong>Settings</strong> → <strong>Accounts Center</strong>.</li>
+        <li>Tap <strong>Your information and permissions</strong> → <strong>Download your information</strong>.</li>
+        <li>Tap <strong>Download or transfer information</strong> and choose your Facebook profile.</li>
+        <li>Choose <strong>Some of your information</strong> and tick <strong>Friends and followers</strong>.</li>
+        <li>Choose <strong>Download to device</strong>.</li>
+        <li>Set <strong>Date range: All time</strong>, <strong>Format: JSON</strong> and <strong>Media quality: Low</strong>.</li>
+        <li>Tap <strong>Create files</strong>. Facebook notifies you when the file is ready.</li>
+      </ol>
+
+      <h2>See sent and received requests in Unwrapped</h2>
+      <p>Download the ZIP when it is ready and drop it into <a href="/facebook/">Unwrapped for Facebook</a> without unzipping it. Open <strong>Friend requests</strong>: sent requests still pending are shown separately from requests you received. Where the export includes a date, Unwrapped shows when you sent the request.</p>
+      <p>This is a snapshot of the information in your download, not a live connection to Facebook. A request may have been accepted or cancelled since the file was created. Check the profile before acting.</p>
+
+      <h2>Cancel a request from the person’s profile</h2>
+      <p>Find the person on Facebook and open their profile. Check that your sent request is still pending, then use Facebook’s option to cancel it. Repeat manually for any other requests you no longer want to keep. Reading a download in Unwrapped does not change your Facebook account.</p>
+
+      <h2>Keep your friends data on your device</h2>
+      <p>Unwrapped reads the ZIP in your browser on your device. The export is not uploaded, and you do not give Unwrapped your Facebook password or access to your account.</p>
+
+      <div class="read-next"><h2>Read next</h2><ul><li><a href="/guides/download-facebook-data/">How to download your Facebook data, step by step</a></li><li><a href="/facebook/">Open Unwrapped for Facebook</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Where can I see friend requests I sent on Facebook?</summary><div class="answer"><p>Request your Facebook data with Friends and followers included in JSON format, then open the ZIP in Unwrapped and choose Friend requests. Sent and received requests are listed separately.</p></div></details>
+      <details><summary>Does the sent list show every request I ever sent?</summary><div class="answer"><p>Treat it as the pending requests recorded in that download, not a complete history of every request you have ever sent.</p></div></details>
+      <details><summary>Can I see requests other people sent me?</summary><div class="answer"><p>Yes. Unwrapped also reads received_friend_requests.json and shows received requests separately in the Friend requests view.</p></div></details>
+      <details><summary>How do I cancel an old request?</summary><div class="answer"><p>Open the person’s profile on Facebook, check whether your request is still pending and cancel it there. Unwrapped does not cancel requests just by reading the file.</p></div></details>
+      <details><summary>Why is the list empty or out of date?</summary><div class="answer"><p>Check that you chose the correct Facebook profile and included friends data. An empty list can mean the file contains no pending requests; an older download will not reflect later changes. Request a fresh export to review newer data.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
