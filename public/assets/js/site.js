@@ -345,7 +345,7 @@ async function pricing() {
     const draw = () => {
       clear(toggle);
       for (const [cycle, label] of [['month', t('Monthly')], ['year', t('Yearly')]]) {
-        const b = h('button', { type: 'button', role: 'radio', 'aria-checked': String(billing === cycle) }, label, cycle === 'year' && bestSave > 0 ? h('span', { class: 'save' }, `−${bestSave}%`) : null);
+        const b = h('button', { type: 'button', role: 'radio', 'aria-checked': String(billing === cycle) }, label, cycle === 'year' && bestSave > 0 ? h('span', { class: 'save' }, t('up to −{n}%', { n: bestSave })) : null);
         b.addEventListener('click', () => {
           billing = cycle;
           boxes.forEach((x) => x._draw?.());
