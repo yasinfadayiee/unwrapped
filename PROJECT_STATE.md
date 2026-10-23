@@ -25,6 +25,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - #40 Threads data download guide /guides/download-threads-data/ in 6 langs, linked from guides hub + Threads tool
 - #41 Blog /blog/see-recently-unfollowed-instagram/ in 6 langs, blog tiles + Instagram tool link
 - #42 Blog /blog/see-sent-friend-requests-facebook/ in 6 langs, blog tiles + Facebook tool link
+- #43 Mobile (<=480px) hero: art hidden on drop-zone heroes + compact card top, so drop card, title and "Choose my export" sit on the first screen; square hero art fades fully before its edge (no hard crop)
 - #39 Demo banner says what free shows with your own export (first 20 rows of each list); pricing toggle says "up to −55%" (6 langs, copy only)
 - Pricing page: "No crypto yet? How to pay with USDT" link to /guides/pay-with-usdt/ in all 6 languages (copy/link only).
 
