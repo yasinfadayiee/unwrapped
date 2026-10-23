@@ -309,7 +309,7 @@ export function tronScreen(m, order, token, config, onPaid = (o) => successScree
   const qr = h('div', { class: 'pay-qr', 'aria-label': t('QR code of the wallet address') });
   qr.innerHTML = qrSvg(order.address);
   const timer = h('span', { class: 'mono' });
-  const status = h('div', { class: 'status-line' }, h('span', { class: 'spinner' }), h('span', null, t('Waiting for your payment — the blockchain is checked automatically.')));
+  const status = h('div', { class: 'status-line' }, h('span', { class: 'spinner' }), h('span', null, t('Waiting for your payment — the blockchain is checked automatically. You can close this page and resume the order later under “My account”.')));
   const claimInput = h('input', { class: 'input mono', placeholder: t('Transaction hash (TxID)'), 'aria-label': t('Transaction hash'), spellcheck: false });
   const claimBtn = h('button', { class: 'btn btn--ghost', type: 'button' }, t('Verify'));
   const claimMsg = h('div', { class: 'small text-2', role: 'status' });
@@ -334,7 +334,7 @@ export function tronScreen(m, order, token, config, onPaid = (o) => successScree
         icon('external'),
         t('Open in Trust Wallet'),
       ),
-      h('p', { class: 'small text-2' }, t('This exact amount is unique to your order — that’s how we match your payment instantly. Paying from an exchange? Make sure the amount that arrives is {amount} USDT (add the withdrawal fee on top).', { amount: order.amount })),
+      h('p', { class: 'small text-2' }, t('This exact amount (a few cents under the price) is unique to your order — that’s how we match your payment instantly. Paying from an exchange? Make sure the amount that arrives is {amount} USDT (add the withdrawal fee on top).', { amount: order.amount })),
       status,
       h('div', { class: 'small muted' }, t('Order expires in') + ' ', timer, ' · ', h('span', { class: 'mono' }, order.id)),
       h(
