@@ -216,7 +216,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
   // What worries first-time buyers, answered before they have to ask.
   const trust = h(
     'div',
-    { class: 'small text-2', style: { display: 'flex', flexWrap: 'wrap', gap: '6px 14px', justifyContent: 'center' } },
+    { class: 'co-trust small text-2' },
     h('span', null, '🔒 ', t('No account, no card details')),
     h('span', null, '⚡ ', t('Key unlocks right after payment')),
     h('span', null, '💬 ', t('Human support on Telegram')),
@@ -225,7 +225,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
   m.body.append(
     h(
       'div',
-      { class: 'stack', style: { '--stack': '18px' } },
+      { class: 'stack co-stack', style: { '--stack': '18px' } },
       trust,
       tierBox,
       featureBox,
