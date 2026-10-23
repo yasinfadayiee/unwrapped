@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- Pending review: Instagram recently-unfollowed-by-you article in six languages, with blog tiles and Instagram tool links.
 - #39 Demo banner says what free shows with your own export (first 20 rows of each list); pricing toggle says "up to −55%" (6 langs, copy only)
 - Pricing page: "No crypto yet? How to pay with USDT" link to /guides/pay-with-usdt/ in all 6 languages (copy/link only).
 
