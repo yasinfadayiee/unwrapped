@@ -1759,3 +1759,15 @@ h1, h2, h3, .h1, .h2, .h3 { text-wrap: balance; }
 /* Product Hunt strip above the header */
 .ph-banner { display: block; padding: 8px 16px; text-align: center; font-size: 0.875rem; font-weight: 600; color: #fff; background: #da552f; text-decoration: none; }
 .ph-banner:hover, .ph-banner:focus-visible { background: #c4461f; }
+
+/* Square art: fade fully out before the box edge, so pictures whose subject runs off the canvas (e.g. the Instagram ghost) never show a hard cropped edge. */
+.hero-art--sq img { -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); }
+/* Phones: the drop zone is the main action, so its card, title and button sit on the first screen; the hero art is skipped and the card top is compact. */
+@media (max-width: 480px) {
+  .hero > .container > .hero-art:has(+ div .drop) { display: none; }
+  .hero:has(> .container > .hero-art + div .drop) { padding-top: 20px; }
+  .hero > .container:has(> .hero-art + div .drop) > .hero-top { gap: 18px; }
+  .hero .drop-inner { padding-top: 16px; gap: 14px; }
+  .hero .drop-icon { width: 48px; height: 48px; border-radius: 15px; }
+  .hero .drop-icon svg { width: 24px; height: 24px; }
+}
