@@ -1,6 +1,6 @@
 // Service worker: caches the app shell so the analyzer keeps working offline
 // (yes — you can turn on airplane mode and still unwrap your export).
-const VERSION = 'mvjz9cz0';
+const VERSION = 'mvkl1lsu';
 const CACHE = `unwrapped-${VERSION}`;
 const CORE = [
   '/',

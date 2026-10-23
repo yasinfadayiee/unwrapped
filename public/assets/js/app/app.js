@@ -390,7 +390,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         h(
           'div',
           { class: 'demo-banner' },
-          h('span', null, tl('You’re exploring a demo with made-up data. Your own results look exactly like this.')),
+          h('span', null, tl('You’re exploring a demo with made-up data and every tool unlocked. Free with your own export: every overview and chart, plus the first 20 rows of every list.')),
           h('a', { class: 'btn btn--primary btn--sm', href: '/#how' }, tl('Get my export')),
         ),
       );
