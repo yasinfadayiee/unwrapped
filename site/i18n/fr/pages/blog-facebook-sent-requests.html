@@ -1,0 +1,59 @@
+<!--page {
+  "route": "/blog/see-sent-friend-requests-facebook/",
+  "title": "Comment voir les demandes d’ami envoyées sur Facebook",
+  "headline": "Comment voir les demandes d’ami envoyées sur Facebook",
+  "description": "Consulte tes demandes envoyées en attente, distingue-les des demandes reçues et annule les anciennes manuellement sur Facebook.",
+  "article": "2026-10-23",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Facebook</span>
+      <h1 class="h1">Retrouve les demandes d’ami <span class="serif grad">que tu as envoyées sur Facebook.</span></h1>
+      <p class="lead">Tu as envoyé une demande d’ami puis tu l’as oubliée ? Les demandes en attente peuvent être difficiles à retrouver sur Facebook. Ton téléchargement de données permet de consulter celles de ton export et de choisir lesquelles conserver.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Retrouver les demandes que tu as envoyées</h2>
+      <p>Le téléchargement Facebook contient <code>sent_friend_requests.json</code> pour tes demandes envoyées et <code>received_friend_requests.json</code> pour celles que d’autres personnes t’ont envoyées. En parcourant les listes, vérifie bien qui a envoyé la demande.</p>
+
+      <h2>Télécharger tes informations Facebook</h2>
+      <p>Suis le <a href="/guides/download-facebook-data/">guide de téléchargement des données Facebook</a>. Choisis ton profil Facebook et inclus les données de tes amis au format JSON :</p>
+
+      <ol>
+        <li>Dans Facebook, ouvre <strong>Paramètres et confidentialité</strong> → <strong>Paramètres</strong> → <strong>Espace Comptes</strong>.</li>
+        <li>Touche <strong>Vos informations et autorisations</strong> → <strong>Télécharger vos informations</strong>.</li>
+        <li>Touche <strong>Télécharger ou transférer des informations</strong> et choisis ton profil Facebook.</li>
+        <li>Choisis <strong>Certaines de vos informations</strong> et coche <strong>Amis et followers</strong>.</li>
+        <li>Choisis <strong>Télécharger sur l’appareil</strong>.</li>
+        <li>Règle <strong>Période : Depuis le début</strong>, <strong>Format : JSON</strong> et <strong>Qualité des médias : Faible</strong>.</li>
+        <li>Touche <strong>Créer les fichiers</strong>. Facebook te prévient quand le fichier est prêt.</li>
+      </ol>
+
+      <h2>Voir les demandes envoyées et reçues dans Unwrapped</h2>
+      <p>Télécharge le ZIP quand il est prêt et dépose-le dans <a href="/facebook/">Unwrapped pour Facebook</a> sans le décompresser. Ouvre <strong>Demandes d’ami</strong> : les demandes envoyées toujours en attente sont séparées des demandes reçues. Si l’export contient une date, Unwrapped affiche quand tu as envoyé la demande.</p>
+      <p>Le téléchargement est un instantané des informations, pas une connexion en direct à Facebook. Une demande a pu être acceptée ou annulée depuis la création du fichier. Vérifie le profil avant d’agir.</p>
+
+      <h2>Annuler une demande depuis le profil de la personne</h2>
+      <p>Cherche la personne sur Facebook et ouvre son profil. Vérifie que ta demande est toujours en attente, puis utilise l’option de Facebook pour l’annuler. Répète manuellement pour les demandes que tu ne souhaites plus conserver. Lire un export dans Unwrapped ne modifie pas ton compte Facebook.</p>
+
+      <h2>Tes données d’amis restent sur ton appareil</h2>
+      <p>Unwrapped lit le ZIP dans ton navigateur, sur ton appareil. L’export n’est pas envoyé et tu ne donnes à Unwrapped ni ton mot de passe Facebook ni l’accès à ton compte.</p>
+
+      <div class="read-next"><h2>À lire aussi</h2><ul><li><a href="/guides/download-facebook-data/">Comment télécharger tes données Facebook, pas à pas</a></li><li><a href="/facebook/">Ouvrir Unwrapped pour Facebook</a></li></ul></div>
+      <h2>Questions fréquentes</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Où voir les demandes d’ami que j’ai envoyées sur Facebook ?</summary><div class="answer"><p>Demande tes données Facebook avec Amis et followers au format JSON. Ouvre le ZIP dans Unwrapped et choisis Demandes d’ami. Les demandes envoyées et reçues sont séparées.</p></div></details>
+      <details><summary>La liste contient-elle toutes les demandes que j’ai envoyées ?</summary><div class="answer"><p>Considère-la comme les demandes en attente enregistrées dans ce téléchargement, pas comme l’historique complet de toutes tes demandes.</p></div></details>
+      <details><summary>Puis-je voir les demandes que d’autres personnes m’ont envoyées ?</summary><div class="answer"><p>Oui. Unwrapped lit aussi received_friend_requests.json et affiche les demandes reçues séparément dans Demandes d’ami.</p></div></details>
+      <details><summary>Comment annuler une ancienne demande ?</summary><div class="answer"><p>Ouvre le profil de la personne sur Facebook, vérifie si ta demande est toujours en attente et annule-la sur place. Unwrapped n’annule aucune demande en lisant le fichier.</p></div></details>
+      <details><summary>Pourquoi la liste est-elle vide ou ancienne ?</summary><div class="answer"><p>Vérifie que tu as choisi le bon profil Facebook et inclus les données d’amis. Une liste vide peut signifier que le fichier ne contient aucune demande en attente. Un ancien téléchargement ne reflète pas les changements ultérieurs ; demande un nouvel export pour consulter des données plus récentes.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

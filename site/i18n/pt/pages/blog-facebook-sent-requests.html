@@ -1,0 +1,59 @@
+<!--page {
+  "route": "/blog/see-sent-friend-requests-facebook/",
+  "title": "Como ver as solicitações de amizade enviadas no Facebook",
+  "headline": "Como ver as solicitações de amizade enviadas no Facebook",
+  "description": "Revise as solicitações enviadas pendentes, diferencie-as das recebidas e cancele as antigas manualmente no Facebook.",
+  "article": "2026-10-23",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Facebook</span>
+      <h1 class="h1">Encontre as solicitações de amizade <span class="serif grad">que você enviou no Facebook.</span></h1>
+      <p class="lead">Enviou uma solicitação de amizade e esqueceu dela? As solicitações pendentes podem ser difíceis de encontrar no Facebook. Seu download de dados permite revisar as que constam na exportação e decidir quais manter.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Encontre as solicitações que você enviou</h2>
+      <p>O download do Facebook inclui <code>sent_friend_requests.json</code> para as solicitações que você enviou e <code>received_friend_requests.json</code> para as que outras pessoas enviaram a você. Ao revisar as listas, confira quem enviou cada solicitação.</p>
+
+      <h2>Baixe suas informações do Facebook</h2>
+      <p>Siga o <a href="/guides/download-facebook-data/">guia para baixar seus dados do Facebook</a>. Escolha seu perfil do Facebook e inclua os dados de amigos em formato JSON:</p>
+
+      <ol>
+        <li>No Facebook, abra <strong>Configurações e privacidade</strong> → <strong>Configurações</strong> → <strong>Central de Contas</strong>.</li>
+        <li>Toque em <strong>Suas informações e permissões</strong> → <strong>Baixar suas informações</strong>.</li>
+        <li>Toque em <strong>Baixar ou transferir informações</strong> e escolha seu perfil do Facebook.</li>
+        <li>Escolha <strong>Algumas das suas informações</strong> e marque <strong>Amigos e seguidores</strong>.</li>
+        <li>Escolha <strong>Baixar no dispositivo</strong>.</li>
+        <li>Defina <strong>Período: Desde o início</strong>, <strong>Formato: JSON</strong> e <strong>Qualidade da mídia: Baixa</strong>.</li>
+        <li>Toque em <strong>Criar arquivos</strong>. O Facebook avisa quando o arquivo estiver pronto.</li>
+      </ol>
+
+      <h2>Veja solicitações enviadas e recebidas no Unwrapped</h2>
+      <p>Baixe o ZIP quando estiver pronto e solte no <a href="/facebook/">Unwrapped para Facebook</a> sem descompactar. Abra <strong>Solicitações de amizade</strong>: as solicitações enviadas que ainda estão pendentes aparecem separadas das recebidas. Quando a exportação inclui uma data, o Unwrapped mostra quando você enviou a solicitação.</p>
+      <p>O download é um retrato dos dados naquele momento, sem conexão ao vivo com o Facebook. Uma solicitação pode ter sido aceita ou cancelada desde a criação do arquivo. Confira o perfil antes de agir.</p>
+
+      <h2>Cancele uma solicitação pelo perfil da pessoa</h2>
+      <p>Encontre a pessoa no Facebook e abra o perfil dela. Confira se sua solicitação ainda está pendente e use a opção do Facebook para cancelá-la. Repita manualmente nas solicitações que não quiser manter. Ler um download no Unwrapped não altera sua conta do Facebook.</p>
+
+      <h2>Seus dados de amigos ficam no seu dispositivo</h2>
+      <p>O Unwrapped lê o ZIP no navegador, no seu dispositivo. A exportação não é enviada, e você não fornece ao Unwrapped sua senha do Facebook nem acesso à sua conta.</p>
+
+      <div class="read-next"><h2>Leia também</h2><ul><li><a href="/guides/download-facebook-data/">Como baixar seus dados do Facebook, passo a passo</a></li><li><a href="/facebook/">Abrir o Unwrapped para Facebook</a></li></ul></div>
+      <h2>Perguntas frequentes</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Onde vejo as solicitações de amizade que enviei no Facebook?</summary><div class="answer"><p>Peça seus dados do Facebook com Amigos e seguidores em formato JSON. Abra o ZIP no Unwrapped e escolha Solicitações de amizade. As solicitações enviadas e recebidas aparecem separadamente.</p></div></details>
+      <details><summary>A lista mostra todas as solicitações que já enviei?</summary><div class="answer"><p>Considere apenas as solicitações pendentes registradas naquele download, não um histórico completo de todas as solicitações que você já enviou.</p></div></details>
+      <details><summary>Posso ver as solicitações que outras pessoas me enviaram?</summary><div class="answer"><p>Sim. O Unwrapped também lê received_friend_requests.json e mostra as solicitações recebidas separadamente em Solicitações de amizade.</p></div></details>
+      <details><summary>Como cancelo uma solicitação antiga?</summary><div class="answer"><p>Abra o perfil da pessoa no Facebook, confira se sua solicitação ainda está pendente e cancele por lá. O Unwrapped não cancela solicitações ao ler o arquivo.</p></div></details>
+      <details><summary>Por que a lista está vazia ou desatualizada?</summary><div class="answer"><p>Confira se escolheu o perfil certo do Facebook e incluiu os dados de amigos. Uma lista vazia pode indicar que o arquivo não contém solicitações pendentes. Um download antigo não reflete alterações posteriores; peça uma nova exportação para revisar dados mais recentes.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
