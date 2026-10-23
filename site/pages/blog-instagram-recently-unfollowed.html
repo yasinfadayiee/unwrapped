@@ -1,0 +1,60 @@
+<!--page {
+  "route": "/blog/see-recently-unfollowed-instagram/",
+  "title": "How to see accounts you recently unfollowed on Instagram",
+  "headline": "See accounts you recently unfollowed on Instagram",
+  "description": "Find accounts you recently unfollowed on Instagram, with dates from your data download. View your own unfollow activity privately in Unwrapped, without sharing your password.",
+  "article": "2026-10-23",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Instagram</span>
+      <h1 class="h1">See accounts <span class="serif grad">you recently unfollowed.</span></h1>
+      <p class="lead">Forgot the name of an account you stopped following? Your Instagram data download can help you find it. This is your own unfollow activity, not a list of people who stopped following you.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Where Instagram keeps the record</h2>
+      <p>Instagram has no in-app list of accounts you have unfollowed. In your data download, <code>recently_unfollowed_profiles.json</code> lists accounts <strong>you</strong> unfollowed recently, with the dates recorded by Instagram.</p>
+      <p>The direction matters: an entry records you removing an account from your following list. It does not record somebody else removing you from theirs.</p>
+
+      <h2>Request the right data</h2>
+      <p>Use the <a href="/guides/download-instagram-data/">Instagram data download guide</a> for the full walkthrough. For this list:</p>
+      <ol>
+        <li>In Instagram, go to your profile → <strong>☰</strong> → <strong>Accounts Center</strong>.</li>
+        <li>Open <strong>Your information and permissions</strong> → <strong>Download your information</strong> → <strong>Download or transfer information</strong>, then select your Instagram account.</li>
+        <li>Choose <strong>Some of your information</strong>, tick <strong>Followers and following</strong>, then choose <strong>Download to device</strong>.</li>
+        <li>Set <strong>Date range: All time</strong> and <strong>Format: JSON</strong>. Tap <strong>Create files</strong> and download the ZIP when Instagram tells you it is ready.</li>
+      </ol>
+
+      <h2>Open your recent unfollows in Unwrapped</h2>
+      <ol>
+        <li>Drop the ZIP as it is on <a href="/instagram/">Unwrapped for Instagram</a>; you do not need to unzip it.</li>
+        <li>Open <strong>Close friends &amp; more</strong> and find <strong>Recently unfollowed by you</strong>.</li>
+        <li>Use the accounts listed there to find the profile you stopped following. The dates come from the records in your export.</li>
+      </ol>
+      <p>The section’s description is <em>Accounts you unfollowed recently.</em> It is about actions you took.</p>
+
+      <h2>Recent activity, not your entire history</h2>
+      <p>The file covers the recent records Instagram includes in that download. It is not a complete lifetime history. Choosing All time does not guarantee that an old unfollow will appear, and Unwrapped cannot recreate an entry that is absent from the file.</p>
+
+      <h2>Keep your activity private</h2>
+      <p>The export contains account names and personal activity. Unwrapped reads it in your browser on your device; nothing is uploaded. It never asks for your Instagram password or logs in to your account.</p>
+
+      <div class="read-next"><h2>Read next</h2><ul><li><a href="/guides/download-instagram-data/">How to download your Instagram data — step by step</a></li><li><a href="/instagram/">Open Unwrapped for Instagram</a></li><li><a href="/blog/who-did-i-follow-first-on-instagram/">Who did I follow first on Instagram?</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Where is my recently unfollowed list?</summary><div class="answer"><p>Request your Instagram data with Followers and following selected in JSON format. Look for recently_unfollowed_profiles.json, or open the ZIP in Unwrapped and find Recently unfollowed by you under Close friends &amp; more.</p></div></details>
+      <details><summary>Does this show accounts I unfollowed?</summary><div class="answer"><p>Yes. These are accounts you stopped following, with the dates Instagram included. The list does not describe other people’s unfollow activity.</p></div></details>
+      <details><summary>How far back does it go?</summary><div class="answer"><p>It only covers the recent records Instagram includes in your export. Do not treat it as a complete history or assume a fixed retention period.</p></div></details>
+      <details><summary>Why is the recently unfollowed section missing?</summary><div class="answer"><p>Unwrapped shows this section when the export contains entries for it. Check that you requested the correct Instagram account and included Followers and following. If the list is absent or empty, Unwrapped has no entries to display.</p></div></details>
+      <details><summary>Do I need to share my password or upload the ZIP?</summary><div class="answer"><p>No. Download your own file from Instagram, then open it in Unwrapped on your device. Your password is not requested and the export is not uploaded.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

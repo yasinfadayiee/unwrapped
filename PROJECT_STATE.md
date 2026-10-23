@@ -22,7 +22,8 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
-- Pending review: Threads data download guide in six languages, linked from the guide hubs and Threads tool.
+- #40 Threads data download guide /guides/download-threads-data/ in 6 langs, linked from guides hub + Threads tool
+- #41 Blog /blog/see-recently-unfollowed-instagram/ in 6 langs, blog tiles + Instagram tool link
 - #39 Demo banner says what free shows with your own export (first 20 rows of each list); pricing toggle says "up to −55%" (6 langs, copy only)
 - Pricing page: "No crypto yet? How to pay with USDT" link to /guides/pay-with-usdt/ in all 6 languages (copy/link only).
 

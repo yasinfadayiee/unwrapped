@@ -1,0 +1,60 @@
+<!--page {
+  "route": "/blog/see-recently-unfollowed-instagram/",
+  "title": "Cómo ver a quién dejaste de seguir recientemente en Instagram",
+  "headline": "Cómo ver las cuentas que dejaste de seguir recientemente en Instagram",
+  "description": "Encuentra las cuentas que dejaste de seguir en Instagram, con las fechas de tu descarga de datos. Revisa tu propia actividad en privado con Unwrapped, sin compartir tu contraseña.",
+  "article": "2026-10-23",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Instagram</span>
+      <h1 class="h1">Encuentra las cuentas <span class="serif grad">que dejaste de seguir.</span></h1>
+      <p class="lead">¿Olvidaste el nombre de una cuenta que dejaste de seguir? Tu descarga de datos de Instagram puede ayudarte a encontrarla. Se trata de tu propia actividad, no de las personas que dejaron de seguirte.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Dónde guarda Instagram el registro</h2>
+      <p>Instagram no ofrece en la app una lista de las cuentas que dejaste de seguir. En tu descarga de datos, <code>recently_unfollowed_profiles.json</code> contiene las cuentas que <strong>tú</strong> dejaste de seguir recientemente, con las fechas registradas por Instagram.</p>
+      <p>La dirección importa: cada entrada indica que tú quitaste una cuenta de tu lista de seguidos. No indica que otra persona te haya quitado de la suya.</p>
+
+      <h2>Solicita los datos adecuados</h2>
+      <p>La <a href="/guides/download-instagram-data/">guía para descargar tus datos de Instagram</a> explica todos los pasos. Para esta lista:</p>
+      <ol>
+        <li>En Instagram, ve a tu perfil → <strong>☰</strong> → <strong>Centro de cuentas</strong>.</li>
+        <li>Abre <strong>Tu información y permisos</strong> → <strong>Descargar tu información</strong> → <strong>Descargar o transferir información</strong> y selecciona tu cuenta de Instagram.</li>
+        <li>Elige <strong>Parte de tu información</strong>, marca <strong>Seguidores y seguidos</strong> y elige <strong>Descargar en el dispositivo</strong>.</li>
+        <li>Configura <strong>Intervalo de fechas: Desde el principio</strong> y <strong>Formato: JSON</strong>. Toca <strong>Crear archivos</strong> y descarga el ZIP cuando Instagram te avise de que está listo.</li>
+      </ol>
+
+      <h2>Abre tu actividad reciente en Unwrapped</h2>
+      <ol>
+        <li>Suelta el ZIP tal como está en <a href="/instagram/">Unwrapped para Instagram</a>; no necesitas descomprimirlo.</li>
+        <li>Abre <strong>Mejores amigos y más</strong> y busca <strong>Dejaste de seguir recientemente</strong>.</li>
+        <li>Consulta las cuentas de la lista para encontrar el perfil que dejaste de seguir. Las fechas proceden de los registros de tu exportación.</li>
+      </ol>
+      <p>La descripción de la sección es <em>Cuentas que dejaste de seguir hace poco.</em> Se refiere a las acciones que realizaste tú.</p>
+
+      <h2>Actividad reciente, no todo tu historial</h2>
+      <p>El archivo recoge los registros recientes que Instagram incluye en esa descarga. No es un historial completo desde que creaste la cuenta. Elegir Desde el principio no garantiza que aparezca una acción antigua, y Unwrapped no puede reconstruir una entrada que no está en el archivo.</p>
+
+      <h2>Mantén tu actividad en privado</h2>
+      <p>La exportación contiene nombres de cuenta y actividad personal. Unwrapped la lee en tu navegador y en tu dispositivo, sin subir nada. Nunca te pide la contraseña de Instagram ni inicia sesión en tu cuenta.</p>
+
+      <div class="read-next"><h2>Sigue leyendo</h2><ul><li><a href="/guides/download-instagram-data/">Cómo descargar tus datos de Instagram, paso a paso</a></li><li><a href="/instagram/">Abrir Unwrapped para Instagram</a></li><li><a href="/blog/who-did-i-follow-first-on-instagram/">¿A quién seguí primero en Instagram?</a></li></ul></div>
+      <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>¿Dónde encuentro las cuentas que dejé de seguir recientemente?</summary><div class="answer"><p>Solicita tus datos de Instagram con Seguidores y seguidos en formato JSON. Busca recently_unfollowed_profiles.json o abre el ZIP en Unwrapped. Dentro de Mejores amigos y más encontrarás Dejaste de seguir recientemente.</p></div></details>
+      <details><summary>¿Esta lista muestra las cuentas que yo dejé de seguir?</summary><div class="answer"><p>Sí. Son cuentas que tú dejaste de seguir, con las fechas que Instagram incluyó. No describe la actividad de otras personas.</p></div></details>
+      <details><summary>¿De cuánto tiempo atrás son los registros?</summary><div class="answer"><p>Solo cubre los registros recientes que Instagram incluye en tu exportación. No la interpretes como un historial completo ni des por hecho un plazo fijo de conservación.</p></div></details>
+      <details><summary>¿Por qué no aparece la sección de cuentas que dejé de seguir?</summary><div class="answer"><p>Unwrapped muestra esta sección cuando la exportación contiene entradas correspondientes. Comprueba que elegiste la cuenta de Instagram correcta y Seguidores y seguidos. Si la lista falta o está vacía, no hay entradas que mostrar.</p></div></details>
+      <details><summary>¿Tengo que compartir mi contraseña o subir el ZIP?</summary><div class="answer"><p>No. Descarga tu propio archivo de Instagram y ábrelo en Unwrapped desde tu dispositivo. No se pide tu contraseña ni se sube la exportación.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
