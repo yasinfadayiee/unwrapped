@@ -1,0 +1,59 @@
+<!--page {
+  "route": "/blog/see-sent-friend-requests-facebook/",
+  "title": "Facebook’ta gönderdiğin arkadaşlık isteklerini görme",
+  "headline": "Facebook’ta gönderdiğin arkadaşlık isteklerini görme",
+  "description": "Gönderdiğin bekleyen istekleri incele, aldıklarından ayır ve eskilerini Facebook’ta elle iptal et.",
+  "article": "2026-10-23",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Facebook</span>
+      <h1 class="h1">Facebook’ta gönderdiğin <span class="serif grad">arkadaşlık isteklerini bul.</span></h1>
+      <p class="lead">Bir arkadaşlık isteği gönderip unuttun mu? Facebook’ta bekleyen istekleri bulmak zor olabilir. Veri indirmen, dosyadaki istekleri inceleyip hangilerini tutacağına karar vermeni sağlar.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Gönderdiğin istekleri bul</h2>
+      <p>Facebook indirmesinde, senin gönderdiğin istekler için <code>sent_friend_requests.json</code>, başkalarının sana gönderdiği istekler için <code>received_friend_requests.json</code> bulunur. Listeleri incelerken isteği kimin gönderdiğine dikkat et.</p>
+
+      <h2>Facebook bilgilerini indir</h2>
+      <p><a href="/guides/download-facebook-data/">Facebook verilerini indirme rehberini</a> izle. Facebook profilini seç ve arkadaş verilerini JSON biçiminde iste:</p>
+
+      <ol>
+        <li>Facebook'ta <strong>Ayarlar ve gizlilik</strong> → <strong>Ayarlar</strong> → <strong>Hesaplar Merkezi</strong> yolunu aç.</li>
+        <li><strong>Bilgilerin ve izinlerin</strong> → <strong>Bilgilerini indir</strong>'e dokun.</li>
+        <li><strong>Bilgileri indir veya aktar</strong>'a dokun ve Facebook profilini seç.</li>
+        <li><strong>Bilgilerinin bir kısmı</strong> seçeneğini seç ve <strong>Arkadaşlar ve takipçiler</strong> kutusunu işaretle.</li>
+        <li><strong>Cihaza indir</strong>'i seç.</li>
+        <li><strong>Tarih aralığı: Tüm zamanlar</strong>, <strong>Biçim: JSON</strong> ve <strong>Medya kalitesi: Düşük</strong> olarak ayarla.</li>
+        <li><strong>Dosya oluştur</strong>'a dokun. Dosya hazır olunca Facebook haber verir.</li>
+      </ol>
+
+      <h2>Gönderilen ve alınan istekleri Unwrapped’da gör</h2>
+      <p>Hazır olduğunda ZIP’i indir ve açmadan <a href="/facebook/">Facebook için Unwrapped</a>’a bırak. <strong>Arkadaşlık istekleri</strong> bölümünü aç: gönderdiğin ve hâlâ bekleyen istekler, aldığın isteklerden ayrı gösterilir. Dışa aktarımda tarih varsa Unwrapped isteği ne zaman gönderdiğini gösterir.</p>
+      <p>İndirme, dosyanın oluşturulduğu andaki bilgileri yansıtır; Facebook’a canlı olarak bağlanmaz. Bir istek o zamandan beri kabul edilmiş veya iptal edilmiş olabilir. İşlem yapmadan önce profili kontrol et.</p>
+
+      <h2>İsteği kişinin profilinden iptal et</h2>
+      <p>Kişiyi Facebook’ta bul ve profilini aç. Gönderdiğin isteğin hâlâ beklediğini kontrol et, ardından Facebook’un iptal seçeneğini kullan. Artık tutmak istemediğin diğer istekler için işlemi elle tekrarla. Unwrapped’da bir indirmeyi okumak Facebook hesabında değişiklik yapmaz.</p>
+
+      <h2>Arkadaş verilerin cihazında kalır</h2>
+      <p>Unwrapped ZIP’i cihazında, tarayıcında okur. Dışa aktarım bir sunucuya yüklenmez; Unwrapped’a Facebook şifreni veya hesabına erişim izni vermezsin.</p>
+
+      <div class="read-next"><h2>İlgili rehberler</h2><ul><li><a href="/guides/download-facebook-data/">Facebook verilerini adım adım indirme</a></li><li><a href="/facebook/">Facebook için Unwrapped’ı aç</a></li></ul></div>
+      <h2>Sık sorulan sorular</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Facebook’ta gönderdiğim arkadaşlık isteklerini nerede görürüm?</summary><div class="answer"><p>Facebook verilerini Arkadaşlar ve takipçiler seçili olarak JSON biçiminde iste. ZIP’i Unwrapped’da aç ve Arkadaşlık istekleri bölümünü seç. Gönderilen ve alınan istekler ayrı listelenir.</p></div></details>
+      <details><summary>Liste şimdiye kadar gönderdiğim tüm istekleri gösterir mi?</summary><div class="answer"><p>Bunu gönderdiğin tüm isteklerin eksiksiz geçmişi olarak değil, o indirmede kaydedilmiş bekleyen istekler olarak değerlendir.</p></div></details>
+      <details><summary>Başkalarının bana gönderdiği istekleri görebilir miyim?</summary><div class="answer"><p>Evet. Unwrapped received_friend_requests.json dosyasını da okur ve alınan istekleri Arkadaşlık istekleri bölümünde ayrı gösterir.</p></div></details>
+      <details><summary>Eski bir isteği nasıl iptal ederim?</summary><div class="answer"><p>Kişinin Facebook profilini aç, isteğinin hâlâ bekleyip beklemediğini kontrol et ve oradan iptal et. Unwrapped dosyayı okuduğunda istekleri iptal etmez.</p></div></details>
+      <details><summary>Liste neden boş veya güncel değil?</summary><div class="answer"><p>Doğru Facebook profilini seçtiğinden ve arkadaş verilerini eklediğinden emin ol. Boş liste, dosyada bekleyen istek bulunmadığı anlamına gelebilir. Eski bir indirme sonraki değişiklikleri göstermez; daha güncel veriler için yeni bir dışa aktarım iste.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

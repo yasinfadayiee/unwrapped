@@ -1,0 +1,59 @@
+<!--page {
+  "route": "/blog/see-sent-friend-requests-facebook/",
+  "title": "Gesendete Freundschaftsanfragen auf Facebook finden",
+  "headline": "Gesendete Freundschaftsanfragen auf Facebook finden",
+  "description": "Prüfe deine ausstehenden gesendeten Anfragen getrennt von erhaltenen und ziehe alte Anfragen manuell auf Facebook zurück.",
+  "article": "2026-10-23",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/envelope-plane-640.webp" srcset="/assets/img/art/envelope-plane-320.webp 320w, /assets/img/art/envelope-plane-640.webp 640w, /assets/img/art/envelope-plane-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Facebook</span>
+      <h1 class="h1">Finde die Freundschaftsanfragen, <span class="serif grad">die du auf Facebook gesendet hast.</span></h1>
+      <p class="lead">Du hast eine Freundschaftsanfrage gesendet und sie vergessen? Ausstehende Anfragen sind auf Facebook nicht leicht zu finden. Mit deinem Datendownload kannst du die enthaltenen Anfragen prüfen und entscheiden, welche du behalten möchtest.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Deine gesendeten Anfragen finden</h2>
+      <p>Der Facebook-Download enthält <code>sent_friend_requests.json</code> für deine gesendeten Anfragen und <code>received_friend_requests.json</code> für Anfragen anderer Personen an dich. Achte beim Prüfen darauf, wer die Anfrage gesendet hat.</p>
+
+      <h2>Deine Facebook-Informationen herunterladen</h2>
+      <p>Folge der <a href="/guides/download-facebook-data/">Anleitung zum Facebook-Datendownload</a>. Wähle dein Facebook-Profil und fordere deine Freundesdaten im JSON-Format an:</p>
+
+      <ol>
+        <li>Öffne in Facebook <strong>Einstellungen und Privatsphäre</strong> → <strong>Einstellungen</strong> → <strong>Kontenübersicht</strong>.</li>
+        <li>Tippe auf <strong>Deine Informationen und Berechtigungen</strong> → <strong>Deine Informationen herunterladen</strong>.</li>
+        <li>Tippe auf <strong>Informationen herunterladen oder übertragen</strong> und wähle dein Facebook-Profil.</li>
+        <li>Wähle <strong>Einige deiner Informationen</strong> und hake <strong>Freunde und Follower</strong> an.</li>
+        <li>Wähle <strong>Auf Gerät herunterladen</strong>.</li>
+        <li>Stelle <strong>Zeitraum: Gesamter Zeitraum</strong>, <strong>Format: JSON</strong> und <strong>Medienqualität: Niedrig</strong> ein.</li>
+        <li>Tippe auf <strong>Dateien erstellen</strong>. Facebook benachrichtigt dich, wenn die Datei fertig ist.</li>
+      </ol>
+
+      <h2>Gesendete und erhaltene Anfragen in Unwrapped ansehen</h2>
+      <p>Lade die fertige ZIP herunter und lege sie bei <a href="/facebook/">Unwrapped für Facebook</a> ab, ohne sie zu entpacken. Öffne <strong>Freundschaftsanfragen</strong>: Noch ausstehende gesendete Anfragen werden getrennt von erhaltenen Anfragen angezeigt. Wenn der Export ein Datum enthält, zeigt Unwrapped, wann du die Anfrage gesendet hast.</p>
+      <p>Der Download ist eine Momentaufnahme, keine Live-Verbindung zu Facebook. Seit seiner Erstellung kann eine Anfrage angenommen oder zurückgezogen worden sein. Prüfe deshalb das Profil, bevor du handelst.</p>
+
+      <h2>Eine Anfrage im Profil der Person zurückziehen</h2>
+      <p>Suche die Person auf Facebook und öffne ihr Profil. Prüfe, ob deine Anfrage noch aussteht, und nutze dann Facebooks Option zum Zurückziehen. Wiederhole das manuell bei weiteren Anfragen, die du nicht behalten möchtest. Das Lesen eines Downloads in Unwrapped verändert dein Facebook-Konto nicht.</p>
+
+      <h2>Deine Freundesdaten bleiben auf deinem Gerät</h2>
+      <p>Unwrapped liest die ZIP in deinem Browser auf deinem Gerät. Der Export wird nicht hochgeladen. Du gibst Unwrapped weder dein Facebook-Passwort noch Zugriff auf dein Konto.</p>
+
+      <div class="read-next"><h2>Weiterlesen</h2><ul><li><a href="/guides/download-facebook-data/">So lädst du deine Facebook-Daten herunter, Schritt für Schritt</a></li><li><a href="/facebook/">Unwrapped für Facebook öffnen</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Wo sehe ich meine gesendeten Freundschaftsanfragen auf Facebook?</summary><div class="answer"><p>Fordere deine Facebook-Daten mit Freunde und Follower im JSON-Format an. Öffne die ZIP in Unwrapped und wähle Freundschaftsanfragen. Gesendete und erhaltene Anfragen stehen getrennt voneinander.</p></div></details>
+      <details><summary>Enthält die Liste alle Anfragen, die ich jemals gesendet habe?</summary><div class="answer"><p>Betrachte sie als die ausstehenden Anfragen, die in diesem Download erfasst sind, nicht als vollständigen Verlauf aller jemals gesendeten Anfragen.</p></div></details>
+      <details><summary>Sehe ich auch Anfragen, die andere mir gesendet haben?</summary><div class="answer"><p>Ja. Unwrapped liest auch received_friend_requests.json und zeigt erhaltene Anfragen getrennt in der Ansicht Freundschaftsanfragen.</p></div></details>
+      <details><summary>Wie ziehe ich eine alte Anfrage zurück?</summary><div class="answer"><p>Öffne das Profil der Person auf Facebook, prüfe, ob deine Anfrage noch aussteht, und ziehe sie dort zurück. Unwrapped zieht durch das Lesen der Datei keine Anfragen zurück.</p></div></details>
+      <details><summary>Warum ist die Liste leer oder veraltet?</summary><div class="answer"><p>Prüfe, ob du das richtige Facebook-Profil und die Freundesdaten ausgewählt hast. Eine leere Liste kann bedeuten, dass die Datei keine ausstehenden Anfragen enthält. Ein älterer Download zeigt spätere Änderungen nicht; fordere dafür einen neuen Export an.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
