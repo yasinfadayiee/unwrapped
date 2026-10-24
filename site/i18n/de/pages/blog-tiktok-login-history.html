@@ -1,0 +1,41 @@
+<!--page {
+  "route": "/blog/tiktok-login-history/",
+  "title": "TikTok-Anmeldeverlauf und angemeldete Geräte prüfen",
+  "headline": "TikTok-Anmeldeverlauf und angemeldete Geräte prüfen",
+  "description": "Prüfe in der App, welche Geräte angemeldet sind, und sieh dir im Datenexport den von TikTok gespeicherten Anmeldeverlauf an.",
+  "article": "2026-10-24",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/padlock-check-640.webp" srcset="/assets/img/art/padlock-check-320.webp 320w, /assets/img/art/padlock-check-640.webp 640w, /assets/img/art/padlock-check-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · TikTok</span>
+      <h1 class="h1">TikTok-Anmeldeverlauf und angemeldete Geräte prüfen</h1>
+      <p class="lead">Prüfe in der App, welche Geräte angemeldet sind, und sieh dir im Datenexport den von TikTok gespeicherten Anmeldeverlauf an.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Geräte in der App prüfen</h2>
+      <p>Um die angemeldeten Geräte zu prüfen, folge dem Hinweis aus Unwrapped: <b>Einstellungen → Sicherheit → Deine Geräte — entferne alles, was du nicht kennst.</b></p>
+      <h2>Anmeldeverlauf im Datenexport ansehen</h2>
+      <p>Dein <a href="/guides/download-tiktok-data/">TikTok-Datenexport</a> enthält deinen Anmeldeverlauf. Wähle beim Anfordern <b>Alle Daten</b> und <b>JSON</b>. Die Datei enthält die für dein Konto gespeicherten Einträge und ist keine aktuelle Liste der angemeldeten Geräte.</p>
+      <h2>Was Privatsphäre-Röntgen zeigt</h2>
+      <p>Öffne die ZIP-Datei in <a href="/tiktok/">Unwrapped für TikTok</a> und gehe zu <b>Privatsphäre-Röntgen</b>. Dort siehst du erfasste Anmeldungen, die Anzahl der IP-Adressen, die häufigsten Geräte nach erfassten Anmeldungen, Aktivitäten außerhalb von TikTok und Werbeinteressenkategorien. Welche Angaben verfügbar sind, hängt vom Inhalt deines Exports ab.</p>
+      <p>Unwrapped liest die Datei auf deinem Gerät im Browser. Nichts wird hochgeladen, und du musst Unwrapped dein TikTok-Passwort nicht geben.</p>
+      <h2>Wenn du ein Gerät nicht kennst</h2>
+      <p>Entferne das unbekannte Gerät in der TikTok-App und ändere dein Passwort. Ein Geräte- oder IP-Eintrag allein verrät nicht, wer das Konto genutzt hat. Unwrapped zeigt exportierte Einträge an und kann nicht feststellen, ob ein Konto gehackt wurde.</p>
+      <div class="read-next"><h2>Weiterlesen</h2><ul><li><a href="/guides/download-tiktok-data/">Deine TikTok-Daten herunterladen</a></li><li><a href="/tiktok/">Deinen TikTok-Export analysieren</a></li><li><a href="/guides/are-unfollower-apps-safe/">Sind Unfollower-Apps sicher?</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Kann ich sehen, wer sich bei meinem TikTok-Konto angemeldet hat?</summary><div class="answer"><p>Nein. Du kannst Geräte- und IP-Einträge so prüfen, wie TikTok sie speichert. Sie identifizieren aber keine andere Person und belegen keinen genauen Standort.</p></div></details>
+      <details><summary>Braucht Unwrapped meine TikTok-Anmeldedaten?</summary><div class="answer"><p>Nein. Du forderst die Datei selbst bei TikTok an und öffnest sie in Unwrapped. Sie wird auf deinem Gerät gelesen und nicht hochgeladen.</p></div></details>
+      <details><summary>Soll ich JSON oder TXT wählen?</summary><div class="answer"><p>Wähle JSON für einen strukturierten Export, den Tools zuverlässig lesen können. Unwrapped liest auch TikToks Login History.txt, empfohlen wird aber JSON.</p></div></details>
+      <details><summary>Wie oft sollte ich meine Geräte prüfen?</summary><div class="answer"><p>Prüfe sie regelmäßig und wenn dir unbekannte Kontoaktivitäten auffallen. Die aktuell angemeldeten Geräte prüfst du in der App; eine heruntergeladene Datei gibt die Einträge dieses Exports wieder.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

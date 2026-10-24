@@ -1,0 +1,41 @@
+<!--page {
+  "route": "/blog/tiktok-login-history/",
+  "title": "Comment consulter ton historique de connexion et tes appareils TikTok",
+  "headline": "Comment consulter ton historique de connexion et tes appareils TikTok",
+  "description": "Vérifie dans l’app quels appareils sont connectés, puis consulte dans tes données téléchargées l’historique de connexion conservé par TikTok.",
+  "article": "2026-10-24",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/padlock-check-640.webp" srcset="/assets/img/art/padlock-check-320.webp 320w, /assets/img/art/padlock-check-640.webp 640w, /assets/img/art/padlock-check-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · TikTok</span>
+      <h1 class="h1">Comment consulter ton historique de connexion et tes appareils TikTok</h1>
+      <p class="lead">Vérifie dans l’app quels appareils sont connectés, puis consulte dans tes données téléchargées l’historique de connexion conservé par TikTok.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Vérifier les appareils dans l’app</h2>
+      <p>Pour vérifier les appareils connectés à ton compte, suis le conseil affiché dans Unwrapped : <b>Paramètres → Sécurité → Tes appareils — supprime tout ce que tu ne reconnais pas.</b></p>
+      <h2>Consulter l’historique dans tes données téléchargées</h2>
+      <p>Ton <a href="/guides/download-tiktok-data/">export de données TikTok</a> contient ton historique de connexion. Choisis <b>Toutes les données</b> et <b>JSON</b> lors de la demande. Le fichier rassemble les informations que TikTok a conservées pour ton compte ; ce n’est pas une liste en temps réel des appareils connectés.</p>
+      <h2>Ce que montre Radiographie de la vie privée</h2>
+      <p>Ouvre le ZIP dans <a href="/tiktok/">Unwrapped pour TikTok</a> et consulte <b>Radiographie de la vie privée</b>. Tu y verras les connexions enregistrées, le nombre d’adresses IP, les appareils classés par nombre de connexions enregistrées, les activités hors TikTok et les catégories d’intérêts publicitaires. Les informations disponibles dépendent des éléments inclus dans ton export.</p>
+      <p>Unwrapped lit le fichier sur ton appareil, dans ton navigateur. Rien n’est envoyé et tu n’as pas à donner ton mot de passe TikTok à Unwrapped.</p>
+      <h2>Si tu ne reconnais pas un appareil</h2>
+      <p>Supprime l’appareil inconnu dans l’app TikTok et change ton mot de passe. Un appareil ou une adresse IP ne suffit pas à savoir qui a utilisé le compte. Unwrapped affiche les données exportées ; il ne peut pas déterminer si un compte a été piraté.</p>
+      <div class="read-next"><h2>À lire aussi</h2><ul><li><a href="/guides/download-tiktok-data/">Télécharger tes données TikTok</a></li><li><a href="/tiktok/">Analyser ton export TikTok</a></li><li><a href="/guides/are-unfollower-apps-safe/">Les applis d’unfollowers sont-elles sûres ?</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Puis-je voir qui s’est connecté à mon TikTok ?</summary><div class="answer"><p>Non. Tu peux consulter les appareils et les adresses IP tels que TikTok les enregistre, mais ces données n’identifient pas une autre personne et ne permettent pas d’établir sa position exacte.</p></div></details>
+      <details><summary>Unwrapped a-t-il besoin de mes identifiants TikTok ?</summary><div class="answer"><p>Non. Tu demandes toi-même le fichier à TikTok et tu l’ouvres dans Unwrapped. Il est lu sur ton appareil sans être envoyé.</p></div></details>
+      <details><summary>Faut-il choisir JSON ou TXT ?</summary><div class="answer"><p>Choisis JSON pour un export structuré que les outils peuvent lire de façon fiable. Unwrapped lit aussi les entrées du fichier Login History.txt de TikTok, mais JSON reste le choix recommandé.</p></div></details>
+      <details><summary>À quelle fréquence vérifier mes appareils ?</summary><div class="answer"><p>Vérifie-les régulièrement et dès que tu remarques une activité que tu ne reconnais pas. Consulte l’app pour les appareils actuellement connectés ; un fichier téléchargé reflète les données de cet export.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
