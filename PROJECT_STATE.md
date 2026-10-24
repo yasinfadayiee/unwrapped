@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- #50 USDT pay screen: payment status + expiry timer moved under the QR; on phones (<=480px) smaller QR, label-above-value lines so the amount stays on one line and the address takes 2 lines (CSS/markup only)
 - #49 USDT pay screen shows the TRON address in 4-char groups (display only; Copy + QR keep the raw string, test/address.test.mjs)
 - #48 USDT pay screen shows what is bought ("Plus · 1 year · $29") above the amount, 6 langs
 - #46 Blog /blog/see-tiktok-liked-videos/ in 6 langs, blog tiles + watch-history and video-finder links

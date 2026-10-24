@@ -335,6 +335,8 @@ export function tronScreen(m, order, token, config, onPaid = (o) => successScree
       { class: 'pay' },
       h('div', { class: 'warn-box' }, icon('warning'), h('span', null, h('b', null, t('TRON (TRC20) network only.') + ' '), t('Sending on Ethereum, BNB Chain or any other network will lose the funds.'))),
       qr,
+      // Status + countdown sit right under the QR so they stay on a phone's first screen.
+      h('div', { class: 'pay-status' }, status, h('div', { class: 'small muted' }, t('Order expires in') + ' ', timer, ' · ', h('span', { class: 'mono' }, order.id))),
       planText(order, config) ? line(t('Plan'), planText(order, config)) : null,
       line(t('Amount'), `${order.amount} USDT`, { big: true, copy: order.amount }),
       line(t('Address'), addrView, { copy: addr.copy }),
@@ -351,8 +353,6 @@ export function tronScreen(m, order, token, config, onPaid = (o) => successScree
         t('Open in Trust Wallet'),
       ),
       h('p', { class: 'small text-2' }, t('This exact amount (a few cents under the price) is unique to your order — that’s how we match your payment instantly. Paying from an exchange? Make sure the amount that arrives is {amount} USDT (add the withdrawal fee on top).', { amount: order.amount })),
-      status,
-      h('div', { class: 'small muted' }, t('Order expires in') + ' ', timer, ' · ', h('span', { class: 'mono' }, order.id)),
       h(
         'details',
         { class: 'faq', style: { display: 'block' } },

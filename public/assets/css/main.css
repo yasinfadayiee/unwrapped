@@ -760,6 +760,22 @@ ul, ol { margin: 0; padding: 0; }
 .copy-btn:hover { color: var(--text); background: rgba(var(--fg-rgb), 0.05); }
 .copy-btn.is-done { color: var(--signal); border-color: rgba(var(--signal-rgb), 0.4); }
 .status-line { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-2); }
+.pay-status { display: grid; gap: 6px; padding: 10px 14px; border-radius: 14px; border: 1px solid var(--line-2); }
+.pay-status .status-line { font-size: 13.5px; }
+.pay-status > .small { padding-left: 26px; }
+/* Phones: smaller QR, label above value (so the amount stays on one line and the address takes 2 lines), tighter gaps. */
+@media (max-width: 480px) {
+  .pay { gap: 10px; }
+  .pay-qr { width: 148px; height: 148px; padding: 9px; border-radius: 14px; }
+  .pay-status { padding: 8px 12px; gap: 4px; }
+  .pay-status .status-line { font-size: 12.5px; gap: 8px; line-height: 1.4; }
+  .pay-status > .small { padding-left: 0; }
+  .pay .pay-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; row-gap: 2px; padding: 8px 12px; }
+  .pay .pay-line .k { width: auto; font-size: 11px; grid-column: 1; }
+  .pay .pay-line .v { grid-column: 1; }
+  .pay .pay-line .v.big { font-size: 20px; white-space: nowrap; }
+  .pay .pay-line .copy-btn { grid-column: 2; grid-row: 1 / span 2; }
+}
 .spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line-2); border-top-color: var(--signal); animation: spin 0.9s linear infinite; flex: none; }
 .success-burst { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto; background: rgba(var(--signal-rgb), 0.12); color: var(--signal); animation: pop 0.5s var(--ease-spring); }
 .success-burst svg { width: 38px; height: 38px; }
