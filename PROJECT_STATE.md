@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- #55 Stars follow-up: webhook re-registers when the secret rotates (url+secret hash in meta), secret-free stars_webhook_status in meta, unmatched Stars payments logged (stars.unmatched_payment) + buyer told to contact support.
 - #52 Blog /blog/spotify-most-played-songs-all-time/ in 6 langs, blog tiles + Spotify stats/Wrapped links; all-time hours copy corrected to describe skip frequency.
 - #53 Two more inbound links each for the Threads data download guide, recently unfollowed Instagram accounts and sent Facebook friend requests, in all 6 languages
 - #54 Internal links to the TikTok liked-videos and login-history posts

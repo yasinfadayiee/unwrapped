@@ -330,8 +330,35 @@ test('Stars webhook registration runs once per cron, only changes a different UR
   tgWebhookUrl = `${site}/api/webhook/telegram-stars`;
   await ensureStarsWebhook(env);
   assert.deepEqual(tgCalls.map((c) => c.method), ['getWebhookInfo']);
+  const status = JSON.parse((await env.DB.prepare("SELECT v FROM meta WHERE k = 'stars_webhook_status'").first()).v);
+  assert.equal(status.registered, true);
+  assert.ok(!JSON.stringify(status).includes(env.TELEGRAM_STARS_WEBHOOK_SECRET), 'status never stores the secret');
+  const sig = (await env.DB.prepare("SELECT v FROM meta WHERE k = 'stars_webhook_sig'").first()).v;
+  assert.ok(!sig.includes(env.TELEGRAM_STARS_WEBHOOK_SECRET));
+  // A rotated secret re-registers the same URL once.
+  env.TELEGRAM_STARS_WEBHOOK_SECRET = 'stars-rotated-secret';
+  tgCalls = [];
+  await ensureStarsWebhook(env);
+  assert.deepEqual(tgCalls.map((c) => c.method), ['getWebhookInfo', 'setWebhook']);
+  assert.equal(tgCalls[1].body.secret_token, 'stars-rotated-secret');
+  tgCalls = [];
+  await ensureStarsWebhook(env);
+  assert.deepEqual(tgCalls.map((c) => c.method), ['getWebhookInfo']);
   tgFailure = 'getWebhookInfo';
   await ensureStarsWebhook(env);
+});
+
+test('Stars payments that match no open order are logged and the buyer is told to contact support', async () => {
+  const co = await starsCheckout();
+  await env.DB.prepare("UPDATE orders SET status = 'failed' WHERE id = ?").bind(co.order.id).run();
+  const update = starPayment(co);
+  update.message.chat = { id: 4321 };
+  assert.equal((await starsWebhook(update)).status, 200);
+  assert.equal((await env.DB.prepare('SELECT COUNT(*) AS n FROM licenses').first()).n, 0);
+  assert.equal(tgCalls.at(-1).body.chat_id, 4321);
+  assert.match(tgCalls.at(-1).body.text, /contact support/);
+  assert.ok(tgCalls.at(-1).body.text.includes(`charge_${co.order.id}`));
+  assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM events WHERE kind = 'stars.unmatched_payment'").first()).n, 1);
 });
 
 test('TRON checkout gets unique amounts just below the price', async () => {

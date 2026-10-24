@@ -3,7 +3,7 @@ import { SETTINGS, brand, getGrowthPlan, getPlan, siteUrl } from '../config.js';
 import { getOrder, logEvent } from '../db.js';
 import { HttpError, fail, json } from '../http.js';
 import { fulfillOrder, insertOrder } from '../orders.js';
-import { timingSafeEqual } from '../util.js';
+import { sha256Hex, timingSafeEqual } from '../util.js';
 
 export function starsEnabled(env) {
   return Boolean(env.TELEGRAM_STARS_BOT_TOKEN && env.TELEGRAM_STARS_WEBHOOK_SECRET);
@@ -106,14 +106,22 @@ export async function handleStarsWebhook(request, env) {
     const message = body.message;
     const payment = message.successful_payment;
     const order = await getOrder(env, payment.invoice_payload);
-    if (!order || order.method !== 'stars' || !['pending', 'expired', 'paid'].includes(order.status)) return json({ ok: true });
-    if (order.status === 'paid') return json({ ok: true });
+    if (order && order.method === 'stars' && order.status === 'paid') return json({ ok: true });
+    if (!order || order.method !== 'stars' || !['pending', 'expired'].includes(order.status) || !payment.telegram_payment_charge_id) {
+      // Telegram took the Stars but we cannot match them to an open order: keep a trace for support.
+      await logEvent(env, 'stars.unmatched_payment', order ? order.id : null, {
+        payload: String(payment.invoice_payload || '').slice(0, 64),
+        charge_id: payment.telegram_payment_charge_id || null,
+        total_amount: payment.total_amount,
+      });
+      await sendMessage(env, message.chat?.id, `We could not match this payment to an open order. Please contact support at ${site}/help/ and quote: ${payment.telegram_payment_charge_id || payment.invoice_payload || 'no reference'}.`, order ? order.id : null);
+      return json({ ok: true });
+    }
     if (!matches(order, payment)) {
       await logEvent(env, 'stars.amount_mismatch', order.id, { currency: payment.currency, total_amount: payment.total_amount });
       await sendMessage(env, message.chat?.id, `Payment details do not match order ${order.id}. Please contact support at ${site}/help/.`, order.id);
       return json({ ok: true });
     }
-    if (!payment.telegram_payment_charge_id) return json({ ok: true });
     const result = await fulfillOrder(env, order, {
       providerRef: payment.telegram_payment_charge_id,
       paidUnits: payment.total_amount,
@@ -137,15 +145,35 @@ export async function ensureStarsWebhook(env) {
   if (!starsEnabled(env) || !env.SITE_URL) return;
   try {
     const url = `${siteUrl(env)}/api/webhook/telegram-stars`;
+    // getWebhookInfo does not return the secret, so remember a hash of url+secret: a rotated
+    // TELEGRAM_STARS_WEBHOOK_SECRET then re-registers the webhook instead of failing with 401s.
+    const sig = (await sha256Hex(`${url}
+${env.TELEGRAM_STARS_WEBHOOK_SECRET}`)).slice(0, 32);
+    const saved = await env.DB.prepare("SELECT v FROM meta WHERE k = 'stars_webhook_sig'").first();
     const info = await tg(env, 'getWebhookInfo', {});
-    if (info.url !== url) {
+    let registered = info.url === url && saved?.v === sig;
+    if (!registered) {
       await tg(env, 'setWebhook', {
         url,
         secret_token: env.TELEGRAM_STARS_WEBHOOK_SECRET,
         allowed_updates: ['message', 'pre_checkout_query'],
       });
+      await setMeta(env, 'stars_webhook_sig', sig);
+      registered = true;
     }
+    // Secret-free health line for admins/monitoring (Telegram's last delivery error, if any).
+    await setMeta(env, 'stars_webhook_status', JSON.stringify({
+      checkedAt: Date.now(),
+      registered,
+      pending: info.pending_update_count || 0,
+      lastError: info.last_error_message || null,
+      lastErrorAt: info.last_error_date ? info.last_error_date * 1000 : null,
+    }));
   } catch {
     await logEvent(env, 'stars.webhook_failed', null, null);
   }
+}
+
+function setMeta(env, k, v) {
+  return env.DB.prepare('INSERT INTO meta (k, v) VALUES (?, ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v').bind(k, v).run();
 }
