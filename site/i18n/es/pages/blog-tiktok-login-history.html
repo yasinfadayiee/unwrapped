@@ -1,0 +1,41 @@
+<!--page {
+  "route": "/blog/tiktok-login-history/",
+  "title": "Cómo revisar tu historial de inicios de sesión y dispositivos de TikTok",
+  "headline": "Cómo revisar tu historial de inicios de sesión y dispositivos de TikTok",
+  "description": "Revisa en la app qué dispositivos tienen una sesión abierta y consulta en tu descarga de datos el historial de inicios de sesión que TikTok conserva.",
+  "article": "2026-10-24",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/padlock-check-640.webp" srcset="/assets/img/art/padlock-check-320.webp 320w, /assets/img/art/padlock-check-640.webp 640w, /assets/img/art/padlock-check-800.webp 800w" sizes="(max-width: 760px) 240px, 340px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · TikTok</span>
+      <h1 class="h1">Cómo revisar tu historial de inicios de sesión y dispositivos de TikTok</h1>
+      <p class="lead">Revisa en la app qué dispositivos tienen una sesión abierta y consulta en tu descarga de datos el historial de inicios de sesión que TikTok conserva.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>Revisa los dispositivos en la app</h2>
+      <p>Para revisar los dispositivos con sesión iniciada, sigue el consejo de Unwrapped: <b>Ajustes → Seguridad → Tus dispositivos: elimina lo que no reconozcas.</b></p>
+      <h2>Consulta el historial en tu descarga de datos</h2>
+      <p>Tu <a href="/guides/download-tiktok-data/">descarga de datos de TikTok</a> contiene tu historial de inicios de sesión. Elige <b>Todos los datos</b> y <b>JSON</b> al solicitarla. El archivo recoge lo que TikTok ha guardado sobre tu cuenta; no es una lista en tiempo real de los dispositivos conectados.</p>
+      <h2>Qué muestra Rayos X de privacidad</h2>
+      <p>Abre el ZIP en <a href="/tiktok/">Unwrapped para TikTok</a> y consulta <b>Rayos X de privacidad</b>. Verás los inicios de sesión registrados, el número de direcciones IP, los dispositivos ordenados por inicios de sesión registrados, las actividades fuera de TikTok y las categorías de intereses publicitarios. La información disponible depende de los registros incluidos en tu exportación.</p>
+      <p>Unwrapped lee el archivo en tu dispositivo, dentro del navegador. No se sube nada y no necesitas darle a Unwrapped tu contraseña de TikTok.</p>
+      <h2>Si no reconoces un dispositivo</h2>
+      <p>Elimina el dispositivo desconocido en la app de TikTok y cambia tu contraseña. Un registro de dispositivo o IP por sí solo no revela quién utilizó la cuenta. Unwrapped muestra los registros exportados; no puede determinar si una cuenta ha sido hackeada.</p>
+      <div class="read-next"><h2>Sigue leyendo</h2><ul><li><a href="/guides/download-tiktok-data/">Descarga tus datos de TikTok</a></li><li><a href="/tiktok/">Analiza tu exportación de TikTok</a></li><li><a href="/guides/are-unfollower-apps-safe/">¿Son seguras las apps de unfollowers?</a></li></ul></div>
+      <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>¿Puedo ver quién inició sesión en mi TikTok?</summary><div class="answer"><p>No. Puedes revisar los registros de dispositivos e IP tal como TikTok los guarda, pero no identifican a otra persona ni permiten establecer su ubicación exacta.</p></div></details>
+      <details><summary>¿Unwrapped necesita mis credenciales de TikTok?</summary><div class="answer"><p>No. Tú solicitas el archivo a TikTok y lo abres en Unwrapped. Se lee en tu dispositivo sin subirlo.</p></div></details>
+      <details><summary>¿Elijo JSON o TXT?</summary><div class="answer"><p>Elige JSON para obtener una exportación estructurada que las herramientas puedan leer de forma fiable. Unwrapped también lee los registros de Login History.txt de TikTok, pero se recomienda JSON.</p></div></details>
+      <details><summary>¿Cada cuánto debería revisar mis dispositivos?</summary><div class="answer"><p>Revísalos periódicamente y cuando notes actividad que no reconozcas. Usa la app para consultar los dispositivos actuales; el archivo descargado refleja los registros de esa exportación.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
