@@ -2,7 +2,7 @@
 // comment-to-DM rules, see results. The session token lives in localStorage.
 import { h, clear, icon, modal, toast } from '../lib/ui.js';
 import { api, getConfig, ApiError } from '../lib/api.js';
-import { tronScreen } from '../lib/checkout.js';
+import { starsScreen, tronScreen } from '../lib/checkout.js';
 import { t, locale } from '../lib/i18n.js';
 
 const KEY = 'unw.growth.session';
@@ -86,7 +86,9 @@ function subscribeBox(a) {
       if (!plans.length || !config.methods?.length) return box.remove();
       box.append(
         h('div', { class: 'h3' }, x.mode === 'paid' ? t('Add more time') : t('Keep it running after the trial')),
-        h('p', { class: 'small text-2' }, t('Unlimited automatic DMs and rules for @{username}. Pay once with crypto — no auto-renewal, no card on file.', { username: a.username })),
+        h('p', { class: 'small text-2' }, config.methods.some((method) => method.id === 'stars')
+          ? t('Unlimited automatic DMs and rules for @{username}. Pay once — no auto-renewal, no card on file.', { username: a.username })
+          : t('Unlimited automatic DMs and rules for @{username}. Pay once with crypto — no auto-renewal, no card on file.', { username: a.username })),
         h(
           'div',
           { style: { display: 'flex', gap: '10px', flexWrap: 'wrap' } },
@@ -116,11 +118,12 @@ function pay(a, plan, config) {
           location.href = res.order.redirectUrl;
           return;
         }
-        tronScreen(m, res.order, res.token, config, (o) => {
+        const screen = res.order.method === 'stars' ? starsScreen : tronScreen;
+        screen(m, res.order, res.token, config, (o) => {
           m.close();
           toast(t('Paid — Growth is active until {date}', { date: date(o.growthUntil || Date.now()) }));
           load();
-        });
+        }, () => { m.close(); pay(a, plan, config); });
       } catch (e) {
         err.textContent = e instanceof ApiError ? t('Could not create the order. Please try again.') : t('Could not reach the server. Check your connection.');
         err.hidden = false;

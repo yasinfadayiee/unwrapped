@@ -1,7 +1,7 @@
 import { h, icon, clear, append, copyText, toast, modal } from '../lib/ui.js';
 import { proState, activateKey, clearLicense, storedKey } from '../lib/license.js';
 import { getConfig, api } from '../lib/api.js';
-import { savedOrders, forgetOrder, tronScreen, successScreen } from '../lib/checkout.js';
+import { savedOrders, forgetOrder, starsScreen, tronScreen, successScreen } from '../lib/checkout.js';
 import { countAllSnapshots, deleteAllSnapshots } from '../app/snapshots.js';
 import { inviteLink } from '../lib/referral.js';
 import { TIER_NAME, TIER_RANK } from '../lib/tiers.js';
@@ -187,6 +187,7 @@ async function render() {
                 const res = await api(`/api/order?id=${encodeURIComponent(o.id)}&t=${encodeURIComponent(o.t)}`);
                 const m = modal({ title: t('Payment') });
                 if (res.order.status === 'paid') successScreen(m, res.order);
+                else if (res.order.method === 'stars') starsScreen(m, res.order, o.t, config);
                 else if (res.order.method === 'tron') tronScreen(m, res.order, o.t, config);
                 else location.href = `/success/?order=${encodeURIComponent(o.id)}&t=${encodeURIComponent(o.t)}`;
               } catch {

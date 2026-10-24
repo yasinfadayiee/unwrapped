@@ -1,5 +1,15 @@
 // German UI strings. Keys are the English originals (see test/i18n.test.mjs).
 export default {
+  "Card · Apple Pay · Google Pay": "Karte · Apple Pay · Google Pay",
+  "Pay inside Telegram with Stars — no crypto needed": "In Telegram mit Stars bezahlen — keine Kryptowährung nötig",
+  "Pay with Telegram Stars": "Mit Telegram Stars bezahlen",
+  "Pay ⭐ {stars} Stars in Telegram": "⭐ {stars} Stars in Telegram bezahlen",
+  "Opens Telegram. Buy Stars there with card, Apple Pay or Google Pay, then confirm. Your plan unlocks here automatically and the bot also sends you your license key.": "Öffnet Telegram. Kaufe dort Stars mit Karte, Apple Pay oder Google Pay und bestätige die Zahlung. Dein Tarif wird hier automatisch freigeschaltet. Der Bot sendet dir außerdem deinen Lizenzschlüssel.",
+  "No Telegram? Install it free, or pick another method.": "Noch kein Telegram? Installiere es kostenlos oder wähle eine andere Zahlungsmethode.",
+  "Install Telegram": "Telegram installieren",
+  "Choose another payment method": "Andere Zahlungsmethode wählen",
+  "Waiting for your payment in Telegram…": "Warten auf deine Zahlung in Telegram…",
+  "Unlimited automatic DMs and rules for @{username}. Pay once — no auto-renewal, no card on file.": "Unbegrenzte automatische DMs und Regeln für @{username}. Einmal bezahlen — keine automatische Verlängerung, keine Kartendaten gespeichert.",
   "Unwrapping your export…": "Dein Export wird ausgepackt…",
   "Unwrapping…": "Wird ausgepackt…",
   "Processing on your device — nothing is uploaded.": "Verarbeitung auf deinem Gerät — nichts wird hochgeladen.",
