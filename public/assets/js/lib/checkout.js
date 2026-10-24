@@ -302,6 +302,17 @@ function line(k, v, { big = false, copy } = {}) {
   return h('div', { class: 'pay-line' }, h('span', { class: 'k' }, k), h('span', { class: `v${big ? ' big' : ''}` }, v), btn);
 }
 
+// "Plus · 1 year · $29": what this order buys, from order.plan + the plans in /api/config.
+const LEGACY_PLAN_IDS = { month: 'pro-month', year: 'pro-year', life: 'pro-life' };
+function planText(order, config) {
+  const id = LEGACY_PLAN_IDS[order.plan] || order.plan;
+  const p = [...(config.plans || []), ...(config.growthPlans || [])].find((x) => x.id === id);
+  if (!p) return null;
+  const length = p.cycle === 'life' ? t('Lifetime') : p.days === 365 ? t('1 year') : p.days === 30 ? t('30 days') : p.days === 7 ? t('7 days') : t(p.short);
+  const price = order.priceUsd ?? p.priceUsd;
+  return [p.name.split(' · ')[0], length, price != null ? `$${price}` : null].filter(Boolean).join(' · ');
+}
+
 export function tronScreen(m, order, token, config, onPaid = (o) => successScreen(m, o)) {
   m.setTitle(t('Pay with USDT (TRC20)'));
   clear(m.body);
@@ -320,6 +331,7 @@ export function tronScreen(m, order, token, config, onPaid = (o) => successScree
       { class: 'pay' },
       h('div', { class: 'warn-box' }, icon('warning'), h('span', null, h('b', null, t('TRON (TRC20) network only.') + ' '), t('Sending on Ethereum, BNB Chain or any other network will lose the funds.'))),
       qr,
+      planText(order, config) ? line(t('Plan'), planText(order, config)) : null,
       line(t('Amount'), `${order.amount} USDT`, { big: true, copy: order.amount }),
       line(t('Address'), order.address, { copy: order.address }),
       h(
