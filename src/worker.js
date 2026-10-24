@@ -8,6 +8,7 @@ import { activateLicense, getSigningKeys, lifetimeTier } from './license.js';
 import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
 import { checkNowpaymentsPayments, createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
+import { createStarsOrder, ensureStarsWebhook, handleStarsWebhook, starsEnabled } from './payments/stars.js';
 import { growthAccountForCheckout, growthMaintenance, handleGrowth } from './growth/index.js';
 import { handleBio, servePublicBio } from './bio/index.js';
 import { emailEnabled, sendRenewalReminders } from './email.js';
@@ -21,6 +22,9 @@ import { handleUsers } from './users.js';
 
 async function enabledMethods(env) {
   const methods = [];
+  if (starsEnabled(env)) {
+    methods.push({ id: 'stars', label: 'Card · Apple Pay · Google Pay', detail: 'Pay inside Telegram with Stars — no crypto needed' });
+  }
   if (await tronEnabled(env)) {
     methods.push({ id: 'tron', label: 'USDT · TRC20', detail: 'Direct to wallet · lowest fees · ~1 min' });
   }
@@ -85,7 +89,8 @@ async function checkout(request, env) {
 
   const args = { plan, priceUsd, email, renewKey, visitor, growthAccount };
   const order =
-    methodId === 'tron' ? await createTronOrder(env, args) : await createNowpaymentsOrder(env, request, args);
+    methodId === 'stars' ? await createStarsOrder(env, request, args)
+      : methodId === 'tron' ? await createTronOrder(env, args) : await createNowpaymentsOrder(env, request, args);
   if (referral) await attachReferral(env, order.id, referral.code);
   await logEvent(env, 'order.created', order.id, { plan: plan.id, method: methodId, ref: referral ? referral.code : null, growthAccount });
   const view = await publicOrder(env, order);
@@ -161,6 +166,8 @@ async function route(request, env, ctx, url) {
       return referralCheck(env, url);
     case 'POST /api/webhook/nowpayments':
       return handleNowpaymentsIpn(request, env);
+    case 'POST /api/webhook/telegram-stars':
+      return handleStarsWebhook(request, env);
     case 'POST /api/hit':
       return recordHit(request, env);
     case 'POST /api/feedback':
@@ -221,6 +228,7 @@ export default {
 
   async scheduled(controller, env, ctx) {
     await ensureSchema(env);
+    ctx.waitUntil(ensureStarsWebhook(env));
     if (controller.cron === '0 9 * * *') {
       ctx.waitUntil(sendRenewalReminders(env).catch((err) => console.error('reminders', err)));
       ctx.waitUntil(growthMaintenance(env).catch((err) => console.error('growth', err)));

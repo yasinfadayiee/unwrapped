@@ -79,6 +79,8 @@ export function getGrowthPlan(id) {
 const LEGACY_PLANS = { month: 'pro-month', year: 'pro-year', life: 'pro-life' };
 
 export const SETTINGS = {
+  // Fragment pays developers about $0.013/Star: 77 Stars ≈ $1 net.
+  starsPerUsd: 77,
   // How long a checkout stays open before it expires.
   orderTtlMinutes: 60,
   // A TRON payment that arrives this long after expiry is still accepted.

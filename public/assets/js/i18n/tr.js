@@ -1,5 +1,15 @@
 // Turkish UI strings. Keys are the English originals (see test/i18n.test.mjs).
 export default {
+  "Card · Apple Pay · Google Pay": "Kart · Apple Pay · Google Pay",
+  "Pay inside Telegram with Stars — no crypto needed": "Telegram içinde Stars ile öde — kripto para gerekmez",
+  "Pay with Telegram Stars": "Telegram Stars ile öde",
+  "Pay ⭐ {stars} Stars in Telegram": "Telegram’da ⭐ {stars} Stars öde",
+  "Opens Telegram. Buy Stars there with card, Apple Pay or Google Pay, then confirm. Your plan unlocks here automatically and the bot also sends you your license key.": "Telegram açılır. Kart, Apple Pay veya Google Pay ile Stars satın al ve ödemeyi onayla. Planın burada otomatik olarak açılır; bot da lisans anahtarını sana gönderir.",
+  "No Telegram? Install it free, or pick another method.": "Telegram’ın yok mu? Ücretsiz yükle veya başka bir ödeme yöntemi seç.",
+  "Install Telegram": "Telegram’ı yükle",
+  "Choose another payment method": "Başka bir ödeme yöntemi seç",
+  "Waiting for your payment in Telegram…": "Telegram’daki ödemen bekleniyor…",
+  "Unlimited automatic DMs and rules for @{username}. Pay once — no auto-renewal, no card on file.": "@{username} için sınırsız otomatik DM ve kural. Bir kez öde — otomatik yenileme yok, kart bilgileri saklanmaz.",
   "Unwrapping your export…": "Dışa aktarman açılıyor…",
   "Unwrapping…": "Açılıyor…",
   "Processing on your device — nothing is uploaded.": "Cihazında işleniyor — hiçbir şey yüklenmez.",

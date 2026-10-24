@@ -198,7 +198,10 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
   const methodBox = h('div', { class: 'choice-grid', role: 'radiogroup', 'aria-label': t('Payment method') });
   for (const meth of config.methods) {
     const input = h('input', { type: 'radio', name: 'method', value: meth.id, checked: meth.id === methodId });
-    input.addEventListener('change', () => (methodId = meth.id));
+    input.addEventListener('change', () => {
+      methodId = meth.id;
+      cryptoHelp.hidden = !['tron', 'nowpayments'].includes(methodId);
+    });
     methodBox.append(
       h(
         'label',
@@ -223,6 +226,22 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
     h('span', null, '💬 ', t('Human support on Telegram')),
     h('span', null, '↩ ', t('14-day refund if we can’t read your export')),
   );
+  const cryptoHelp = h(
+    'details',
+    { class: 'crypto-help', open: !state.pro && !renewKey, hidden: !['tron', 'nowpayments'].includes(methodId) },
+    h('summary', null, t('New to crypto? How to pay in a few minutes')),
+    h(
+      'ol',
+      null,
+      h('li', null, t('Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).')),
+      h('li', null, t('No card? Most exchanges have a P2P section where you buy USDT from another person by bank transfer. A friend who has USDT can also send it for you.')),
+      h('li', null, t('Buy a little more USDT than the price, to cover the network fee.')),
+      h('li', null, t('Send it to the address on the next screen and choose the TRON (TRC20) network.')),
+      h('li', null, t('Your plan unlocks automatically about a minute after the payment arrives.')),
+    ),
+    h('p', { class: 'small' }, h('a', { href: `${lang === 'en' ? '' : `/${lang}`}/guides/pay-with-usdt/`, target: '_blank', rel: 'noopener' }, t('Full step-by-step guide →'))),
+    h('p', { class: 'tiny muted' }, t('Not sure? The free version stays free — try everything first.')),
+  );
   m.body.append(
     h(
       'div',
@@ -234,24 +253,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       creditBox,
       h('div', { class: 'eyebrow' }, t('Pay with')),
       methodBox,
-      // Most buyers have never paid with crypto: a short, honest how-to.
-      h(
-        'details',
-        // Open for first-time buyers: no crypto is the most common reason to stop here.
-        { class: 'crypto-help', open: !state.pro && !renewKey },
-        h('summary', null, t('New to crypto? How to pay in a few minutes')),
-        h(
-          'ol',
-          null,
-          h('li', null, t('Use an exchange or wallet app that sells USDT with a card or bank transfer (for example Binance, OKX or Trust Wallet — availability depends on your country).')),
-          h('li', null, t('No card? Most exchanges have a P2P section where you buy USDT from another person by bank transfer. A friend who has USDT can also send it for you.')),
-          h('li', null, t('Buy a little more USDT than the price, to cover the network fee.')),
-          h('li', null, t('Send it to the address on the next screen and choose the TRON (TRC20) network.')),
-          h('li', null, t('Your plan unlocks automatically about a minute after the payment arrives.')),
-        ),
-        h('p', { class: 'small' }, h('a', { href: `${lang === 'en' ? '' : `/${lang}`}/guides/pay-with-usdt/`, target: '_blank', rel: 'noopener' }, t('Full step-by-step guide →'))),
-        h('p', { class: 'tiny muted' }, t('Not sure? The free version stays free — try everything first.')),
-      ),
+      cryptoHelp,
       config.email
         ? h('details', { class: 'small', open: true }, h('summary', null, t('Also send my key by e-mail (optional)')), h('div', { class: 'field', style: { marginTop: '8px' } }, h('label', { for: 'co-email', class: 'sr-only' }, t('E-mail for your license & renewal reminder')), email))
         : null,
@@ -274,6 +276,10 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
         body: { plan: planId, method: methodId, email: email.value.trim() || undefined, renewKey: renewKey || undefined, ref: ref || undefined },
       });
       rememberOrder(res.order, res.token);
+      if (res.order.method === 'stars') {
+        starsScreen(m, res.order, res.token, config);
+        return;
+      }
       if (res.order.method === 'nowpayments' && res.order.redirectUrl) {
         go.textContent = t('Opening the payment page…');
         location.href = res.order.redirectUrl;
@@ -312,6 +318,42 @@ function planText(order, config) {
   const length = p.cycle === 'life' ? t('Lifetime') : p.days === 365 ? t('1 year') : p.days === 30 ? t('30 days') : p.days === 7 ? t('7 days') : t(p.short);
   const price = order.priceUsd ?? p.priceUsd;
   return [p.name.split(' · ')[0], length, price != null ? `$${price}` : null].filter(Boolean).join(' · ');
+}
+
+export function starsScreen(m, order, token, config, onPaid = (o) => successScreen(m, o), onBack = () => { m.close(); openCheckout({ plan: order.plan }); }) {
+  m.setTitle(t('Pay with Telegram Stars'));
+  clear(m.body);
+  import('./stats.js').then(({ track }) => track('pay')).catch(() => {});
+  m.body.append(
+    h('div', { class: 'stack', style: { '--stack': '16px' } },
+      planText(order, config) ? line(t('Plan'), planText(order, config)) : null,
+      h('a', { class: 'btn btn--primary btn--lg btn--block', href: order.redirectUrl, target: '_blank', rel: 'noopener' }, t('Pay ⭐ {stars} Stars in Telegram', { stars: order.stars })),
+      h('p', { class: 'small text-2' }, t('Opens Telegram. Buy Stars there with card, Apple Pay or Google Pay, then confirm. Your plan unlocks here automatically and the bot also sends you your license key.')),
+      h('p', { class: 'small text-2' }, t('No Telegram? Install it free, or pick another method.')),
+      h('div', { style: { display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' } },
+        h('a', { class: 'link-btn small', href: 'https://telegram.org/apps', target: '_blank', rel: 'noopener' }, t('Install Telegram')),
+        h('button', { class: 'btn btn--ghost', type: 'button', onClick: onBack }, t('Choose another payment method')),
+      ),
+      h('div', { class: 'status-line', role: 'status' }, h('span', { class: 'spinner' }), h('span', null, t('Waiting for your payment in Telegram…'))),
+      h('p', { class: 'tiny muted mono' }, order.id),
+      config.support ? h('p', { class: 'small muted' }, t('Problem with a payment? Send us your order ID:'), ' ', ...supportLinks(config.support)) : null,
+    ),
+  );
+  // No expiry cutoff: keep checking while the modal is open, including late payments.
+  const stop = pollOrder(order.id, token, (o) => {
+    if (o.status === 'paid') {
+      stop();
+      observer.disconnect();
+      onPaid(o);
+    }
+  }, 4000, 4000);
+  const observer = new MutationObserver(() => {
+    if (!m.root.isConnected) {
+      stop();
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true });
 }
 
 export function tronScreen(m, order, token, config, onPaid = (o) => successScreen(m, o)) {
@@ -420,7 +462,7 @@ export function tronScreen(m, order, token, config, onPaid = (o) => successScree
   });
 }
 
-export function pollOrder(id, token, onUpdate, every = 5000) {
+export function pollOrder(id, token, onUpdate, every = 5000, backgroundEvery = every * 3) {
   let stopped = false;
   let timer = 0;
   const run = async () => {
@@ -432,7 +474,7 @@ export function pollOrder(id, token, onUpdate, every = 5000) {
     } catch {
       /* keep polling */
     }
-    if (!stopped) timer = setTimeout(run, document.hidden ? every * 3 : every);
+    if (!stopped) timer = setTimeout(run, document.hidden ? backgroundEvery : every);
   };
   run();
   return () => {

@@ -111,6 +111,7 @@ export async function publicOrder(env, order) {
     view.network = 'TRON (TRC20)';
     if (order.paid_units) view.paid = formatUsdt(order.paid_units);
   }
+  if (order.method === 'stars') view.stars = order.amount_units;
   if (order.redirect_url) view.redirectUrl = order.redirect_url;
   if (order.growth_account) {
     view.growthAccount = order.growth_account;
