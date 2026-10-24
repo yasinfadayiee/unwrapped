@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- #53 Two more inbound links each for the Threads data download guide, recently unfollowed Instagram accounts and sent Facebook friend requests, in all 6 languages
 - #54 Internal links to the TikTok liked-videos and login-history posts
 - Telegram Stars payments: first when configured, invoice checkout + bot license delivery, authenticated webhook, 6-language pay screen, Growth/resume/admin support; deployment and live payment test wait for owner T14.
 - #50 USDT pay screen: payment status + expiry timer moved under the QR; on phones (<=480px) smaller QR, label-above-value lines so the amount stays on one line and the address takes 2 lines (CSS/markup only)
