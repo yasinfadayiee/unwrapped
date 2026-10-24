@@ -8,6 +8,7 @@ import { storedRef, forgetRef } from './referral.js';
 import { TIER_NAME, TIER_RANK, tierFor } from './tiers.js';
 import { t, locale, lang } from './i18n.js';
 import { supportLinks } from './support.js';
+import { payAddress } from './address.js';
 
 const tr = t; // for loops where `t` is a tier
 
@@ -317,8 +318,11 @@ export function tronScreen(m, order, token, config, onPaid = (o) => successScree
   m.setTitle(t('Pay with USDT (TRC20)'));
   clear(m.body);
   import('./stats.js').then(({ track }) => track('pay')).catch(() => {});
+  const addr = payAddress(order.address);
   const qr = h('div', { class: 'pay-qr', 'aria-label': t('QR code of the wallet address') });
-  qr.innerHTML = qrSvg(order.address);
+  qr.innerHTML = qrSvg(addr.qr);
+  // Groups are separate spans spaced by margin, so even a manual text selection copies no spaces.
+  const addrView = h('span', { class: 'pay-addr', translate: 'no' }, addr.groups.map((g) => h('span', { style: { display: 'inline-block', marginRight: '0.45em' } }, g)));
   const timer = h('span', { class: 'mono' });
   const status = h('div', { class: 'status-line' }, h('span', { class: 'spinner' }), h('span', null, t('Waiting for your payment — the blockchain is checked automatically. You can close this page and resume the order later under “My account”.')));
   const claimInput = h('input', { class: 'input mono', placeholder: t('Transaction hash (TxID)'), 'aria-label': t('Transaction hash'), spellcheck: false });
@@ -333,7 +337,7 @@ export function tronScreen(m, order, token, config, onPaid = (o) => successScree
       qr,
       planText(order, config) ? line(t('Plan'), planText(order, config)) : null,
       line(t('Amount'), `${order.amount} USDT`, { big: true, copy: order.amount }),
-      line(t('Address'), order.address, { copy: order.address }),
+      line(t('Address'), addrView, { copy: addr.copy }),
       h(
         'a',
         {
