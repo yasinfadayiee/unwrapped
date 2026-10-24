@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- #48 USDT pay screen shows what is bought ("Plus · 1 year · $29") above the amount, 6 langs
 - #46 Blog /blog/see-tiktok-liked-videos/ in 6 langs, blog tiles + watch-history and video-finder links
 - #47 Blog /blog/tiktok-login-history/ in 6 langs, blog tiles + TikTok tool and data-download guide links
 - #40 Threads data download guide /guides/download-threads-data/ in 6 langs, linked from guides hub + Threads tool
