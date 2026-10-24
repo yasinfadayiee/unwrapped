@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- #N Internal links to the TikTok liked-videos and login-history posts
 - Telegram Stars payments: first when configured, invoice checkout + bot license delivery, authenticated webhook, 6-language pay screen, Growth/resume/admin support; deployment and live payment test wait for owner T14.
 - #50 USDT pay screen: payment status + expiry timer moved under the QR; on phones (<=480px) smaller QR, label-above-value lines so the amount stays on one line and the address takes 2 lines (CSS/markup only)
 - #49 USDT pay screen shows the TRON address in 4-char groups (display only; Copy + QR keep the raw string, test/address.test.mjs)
