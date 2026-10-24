@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- #52 Blog /blog/spotify-most-played-songs-all-time/ in 6 langs, blog tiles + Spotify stats/Wrapped links; all-time hours copy corrected to describe skip frequency.
 - #53 Two more inbound links each for the Threads data download guide, recently unfollowed Instagram accounts and sent Facebook friend requests, in all 6 languages
 - #54 Internal links to the TikTok liked-videos and login-history posts
 - Telegram Stars payments: first when configured, invoice checkout + bot license delivery, authenticated webhook, 6-language pay screen, Growth/resume/admin support; deployment and live payment test wait for owner T14.
