@@ -1,0 +1,49 @@
+<!--page {
+  "route": "/blog/telegram-chat-statistics/",
+  "title": "Estatísticas do Telegram: quem manda mais mensagens?",
+  "headline": "Entenda as estatísticas do seu chat no Telegram",
+  "description": "Participação nas mensagens, tempo de resposta, sequências, palavras e emojis: entenda seu JSON do Telegram com privacidade no navegador.",
+  "article": "2026-10-25",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/chat-telegram-640.webp" srcset="/assets/img/art/chat-telegram-320.webp 320w, /assets/img/art/chat-telegram-640.webp 640w, /assets/img/art/chat-telegram-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Telegram</span>
+      <h1 class="h1">Entenda as estatísticas do seu chat no Telegram</h1>
+      <p class="lead">Participação nas mensagens, tempo de resposta, sequências, palavras e emojis: entenda seu JSON do Telegram com privacidade no navegador.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>A resposta curta</h2>
+      <p>O Telegram não tem estatísticas de conversa integradas. <a href="/blog/export-telegram-chat-history/">Exporte a conversa em JSON pelo Telegram Desktop</a> e arraste <code>result.json</code> para o <a href="/telegram-chat-analyzer/">analisador de chats do Telegram</a>. Funciona com uma conversa ou uma exportação JSON da conta inteira.</p>
+      <h2>Quem manda mais mensagens?</h2>
+      <p>Em <strong>Resumo da conversa</strong>, <strong>Quem fala mais</strong> compara a participação de cada pessoa nas mensagens. Nos grupos, consulte <strong>Pessoa por pessoa</strong> para ver a quantidade e a porcentagem de cada participante; a barra do resumo mostra até cinco pessoas.</p>
+      <h2>Quem responde mais rápido e puxa assunto?</h2>
+      <p>O resumo destaca quem responde mais rápido com base no tempo de resposta típico. Também mostra quem inicia mais conversas após um intervalo de pelo menos seis horas. São hábitos de conversa, não uma medida de sentimentos.</p>
+      <h2>Quando vocês conversam?</h2>
+      <p><strong>Por hora do dia</strong> e <strong>Por dia da semana</strong> mostram os padrões diários e semanais. <strong>Mensagens por mês</strong> aparece quando a exportação abrange mais de um mês. O resumo também destaca o dia mais movimentado, o horário de pico e o dia da semana mais ativo, além da atividade noturna entre meia-noite e 5h quando presente.</p>
+      <h2>Dias de conversa e sequências</h2>
+      <p><strong>Dias em que conversaram</strong> conta os dias com mensagens; <strong>Maior sequência</strong> mostra a maior sequência de dias ativos. <strong>Mensagens</strong> é o total e <strong>Por dia</strong> é a média diária no período da conversa.</p>
+      <h2>Palavras, emojis e hábitos de cada pessoa</h2>
+      <p><strong>Palavras mais usadas</strong> e <strong>Emojis favoritos</strong> mostram o vocabulário e os emojis recorrentes. <strong>Pessoa por pessoa</strong> acrescenta palavras por mensagem, tempo de resposta típico, mídias enviadas, links compartilhados, mensagens apagadas e emojis mais usados por pessoa, conforme o conteúdo da exportação; textos apagados não são recuperados.</p>
+      <h2>Grupos, cartões e acesso</h2>
+      <p>A participação nas mensagens e <strong>Pessoa por pessoa</strong> ajudam a comparar os integrantes de um grupo; <strong>Quem se importa mais?</strong> só aparece em conversas com exatamente duas pessoas. <strong>Chat Wrapped</strong> cria um cartão para compartilhar. Se a exportação contiver várias conversas, procure <strong>Todas as conversas</strong>.</p>
+      <p>A versão grátis inclui o resumo, as 5 principais palavras e emojis e as primeiras 2 pessoas; o Plus libera até 20 palavras e 12 emojis, todas as pessoas, cartões sem marca-d’água e todas as conversas.</p>
+      <p>O arquivo é lido no seu navegador. Nada é enviado, nem mesmo os nomes, e ninguém na conversa recebe uma notificação.</p>
+      <div class="read-next"><h2>Leia também</h2><ul><li><a href="/telegram-chat-analyzer/">Analisador de chats do Telegram</a></li><li><a href="/blog/export-telegram-chat-history/">Como exportar o histórico do Telegram</a></li><li><a href="/blog/whatsapp-chat-stats/">Estatísticas de conversas do WhatsApp</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Quem manda mais mensagens em um grupo do Telegram?</summary><div class="answer"><p>Compare as porcentagens em Quem fala mais e os números individuais em Pessoa por pessoa; o Plus libera todas as pessoas.</p></div></details>
+      <details><summary>Por que minha exportação HTML foi rejeitada?</summary><div class="answer"><p>O analisador aceita apenas JSON do Telegram Desktop. Exporte novamente em JSON e escolha result.json.</p></div></details>
+      <details><summary>Posso analisar uma exportação da conta inteira?</summary><div class="answer"><p>Sim. Se o JSON contiver várias conversas, você pode navegar por elas em Todas as conversas; o acesso a todas as conversas exige Plus.</p></div></details>
+      <details><summary>A outra pessoa é avisada?</summary><div class="answer"><p>Não. A análise acontece no seu navegador e não envia notificações.</p></div></details>
+      <details><summary>É grátis?</summary><div class="answer"><p>O resumo, as 5 principais palavras e emojis e as primeiras 2 pessoas são grátis. O Plus libera os rankings completos, todas as pessoas, cartões sem marca-d’água e todas as conversas.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>

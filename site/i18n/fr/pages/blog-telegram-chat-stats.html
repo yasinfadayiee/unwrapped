@@ -1,0 +1,49 @@
+<!--page {
+  "route": "/blog/telegram-chat-statistics/",
+  "title": "Statistiques Telegram : qui écrit le plus et quand ?",
+  "headline": "Comprendre les statistiques de ton chat Telegram",
+  "description": "Parts de messages, délais de réponse, séries, mots et emojis : ce que révèle ton export JSON Telegram, en privé dans ton navigateur.",
+  "article": "2026-10-25",
+  "faqSchema": true
+}-->
+<section class="page-hero">
+  <div class="container"><div class="hero-art hero-art--side fade-in" style="--d:.25s" aria-hidden="true"><img src="/assets/img/art/chat-telegram-640.webp" srcset="/assets/img/art/chat-telegram-320.webp 320w, /assets/img/art/chat-telegram-640.webp 640w, /assets/img/art/chat-telegram-800.webp 800w" sizes="(max-width: 959px) 170px, 300px" width="800" height="800" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="stack" style="--stack:14px;max-width:760px">
+      <span class="eyebrow">Blog · Telegram</span>
+      <h1 class="h1">Comprendre les statistiques de ton chat Telegram</h1>
+      <p class="lead">Parts de messages, délais de réponse, séries, mots et emojis : ce que révèle ton export JSON Telegram, en privé dans ton navigateur.</p>
+    </div>
+  </div>
+</section>
+<section class="section--tight" style="padding-bottom:80px">
+  <div class="container">
+    <div class="prose">
+      <h2>La réponse courte</h2>
+      <p>Telegram ne propose pas de statistiques de discussion intégrées. <a href="/blog/export-telegram-chat-history/">Exporte la discussion en JSON avec Telegram Desktop</a>, puis dépose <code>result.json</code> sur l’<a href="/telegram-chat-analyzer/">analyseur de discussions Telegram</a>. Un seul chat ou un export JSON du compte entier convient.</p>
+      <h2>Qui écrit le plus ?</h2>
+      <p>Dans <strong>Aperçu de la discussion</strong>, <strong>Qui parle le plus</strong> compare la part des messages de chaque personne. Pour les groupes, consulte <strong>Personne par personne</strong> pour voir le nombre et la part de chaque membre ; la barre de l’aperçu affiche jusqu’à cinq personnes.</p>
+      <h2>Qui répond le plus vite et lance les conversations ?</h2>
+      <p>L’aperçu indique qui répond le plus vite selon le délai de réponse typique. Il montre aussi qui lance le plus de conversations après au moins six heures de silence. Ces chiffres décrivent des habitudes, pas des sentiments.</p>
+      <h2>Quand discutez-vous ?</h2>
+      <p><strong>Par heure</strong> et <strong>Par jour de la semaine</strong> montrent les habitudes quotidiennes et hebdomadaires. <strong>Messages par mois</strong> apparaît si l’export couvre plus d’un mois. L’aperçu souligne aussi la journée la plus active, l’heure de pointe et le jour de la semaine le plus actif, ainsi que l’activité nocturne entre minuit et 5 h lorsqu’il y en a.</p>
+      <h2>Jours de discussion et séries</h2>
+      <p><strong>Jours de discussion</strong> compte les jours avec des messages ; <strong>Plus longue série</strong> indique la plus longue suite de jours actifs. <strong>Messages</strong> donne le total et <strong>Par jour</strong> la moyenne quotidienne sur la période du chat.</p>
+      <h2>Mots, emojis et habitudes individuelles</h2>
+      <p><strong>Mots les plus utilisés</strong> et <strong>Emojis préférés</strong> présentent le vocabulaire et les emojis récurrents. <strong>Personne par personne</strong> ajoute les mots par message, le délai de réponse typique, les médias envoyés, les liens partagés, les messages supprimés et les emojis favoris de chaque personne, selon le contenu de l’export ; aucun texte supprimé n’est récupéré.</p>
+      <h2>Groupes, cartes et accès</h2>
+      <p>Les parts de messages et <strong>Personne par personne</strong> permettent de comparer les membres d’un groupe ; <strong>Qui tient le plus à l’autre ?</strong> est réservé aux discussions avec exactement deux personnes. <strong>Chat Wrapped</strong> crée une carte à partager. Si l’export contient plusieurs chats, consulte <strong>Toutes les conversations</strong>.</p>
+      <p>La version gratuite comprend l’aperçu, les 5 premiers mots et emojis et les 2 premières personnes ; Plus débloque jusqu’à 20 mots et 12 emojis, chaque personne, les cartes sans filigrane et toutes les conversations.</p>
+      <p>Le fichier est lu dans ton navigateur. Rien n’est envoyé, pas même les noms, et personne dans la discussion ne reçoit de notification.</p>
+      <div class="read-next"><h2>À lire aussi</h2><ul><li><a href="/telegram-chat-analyzer/">Analyseur de discussions Telegram</a></li><li><a href="/blog/export-telegram-chat-history/">Exporter un historique Telegram</a></li><li><a href="/blog/whatsapp-chat-stats/">Statistiques de discussion WhatsApp</a></li></ul></div>
+      <h2>FAQ</h2>
+    </div>
+    <div class="faq" style="margin:0;max-width:760px">
+      <details open><summary>Qui écrit le plus dans un groupe Telegram ?</summary><div class="answer"><p>Compare les parts dans Qui parle le plus, puis les nombres individuels dans Personne par personne ; Plus débloque chaque personne.</p></div></details>
+      <details><summary>Pourquoi mon export HTML est-il refusé ?</summary><div class="answer"><p>L’analyseur accepte uniquement le JSON de Telegram Desktop. Exporte à nouveau en JSON et choisis result.json.</p></div></details>
+      <details><summary>Puis-je analyser un export du compte entier ?</summary><div class="answer"><p>Oui. Si le JSON contient plusieurs chats, Toutes les conversations permet de les parcourir ; l’accès à toutes les conversations nécessite Plus.</p></div></details>
+      <details><summary>L’autre personne est-elle avertie ?</summary><div class="answer"><p>Non. L’analyse se déroule dans ton navigateur et n’envoie aucune notification.</p></div></details>
+      <details><summary>Est-ce gratuit ?</summary><div class="answer"><p>L’aperçu, les 5 premiers mots et emojis et les 2 premières personnes sont gratuits. Plus débloque les classements complets, chaque personne, les cartes sans filigrane et toutes les conversations.</p></div></details>
+    </div>
+    <div style="max-width:760px">{{> guide-cta}}</div>
+  </div>
+</section>
