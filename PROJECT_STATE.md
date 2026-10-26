@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- autopilot: lock cards say the export stays on the device (copy line under the unlock button, 6 langs)
 - #57 Blog post: who do I message most on Instagram (6 languages)
 - #56 Blog post: Telegram chat statistics (6 languages)
 - #55 Stars follow-up: webhook re-registers when the secret rotates (url+secret hash in meta), secret-free stars_webhook_status in meta, unmatched Stars payments logged (stars.unmatched_payment) + buyer told to contact support.

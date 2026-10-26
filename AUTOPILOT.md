@@ -29,7 +29,7 @@ and the site stays online with health checks only.
 - Finally write a one-line summary in simple Persian for the owner to the summary file the prompt names.
 
 ## Backlog
-- [ ] Lock-card privacy note — follow `autopilot/specs/lock-card-privacy-note.md` exactly (skip its screenshot
+- [x] (2026-10-26) Lock-card privacy note — follow `autopilot/specs/lock-card-privacy-note.md` exactly (skip its screenshot
   step: there is no browser here).
 - [ ] Blog post "Instagram accounts you like most" — follow `autopilot/specs/blog-instagram-most-liked.md`
   exactly (skip any screenshot step).

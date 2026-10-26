@@ -277,6 +277,7 @@ export default {
   "names": "isim",
   "See all {v0} names": "{v0} ismin tümünü gör",
   "Plus shows exactly who it was — and keeps your full unfollower history.": "Plus tam olarak kim olduğunu gösterir — ve takipten çıkan geçmişinin tamamını saklar.",
+  "Your export stays on this device — unlocking never uploads it.": "Dışa aktarımın bu cihazda kalır — kilidi açmak onu asla yüklemez.",
   "New followers": "Yeni takipçiler",
   "You unfollowed": "Takipten çıktıkların",
   "Accounts that were deactivated or deleted also disappear from follower lists.": "Devre dışı bırakılan veya silinen hesaplar da takipçi listelerinden kaybolur.",

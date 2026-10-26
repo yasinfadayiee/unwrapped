@@ -53,6 +53,7 @@ export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tie
       h('h4', null, title || (count ? tl('{v0} more {v1}', { v0: fmtInt(count), v1: what }) : tl('Unlock with {v0}', { v0: TIER_NAME[tier] }))),
       h('p', null, text || tl('Unlock the full list, search, CSV export and your unfollower history with {v0}.', { v0: TIER_NAME[tier] })),
       h('button', { class: 'btn btn--primary', type: 'button', onClick: onUpgrade }, icon('bolt'), tl('Unlock with {v0}', { v0: TIER_NAME[tier] })),
+      h('p', { class: 'lock-note' }, tl('Your export stays on this device — unlocking never uploads it.')),
     ),
   );
 }
