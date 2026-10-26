@@ -1,0 +1,110 @@
+name: Weekly planning
+
+# Once a week Claude Opus acts as product manager: it reviews the past week's automatic changes and the live site,
+# researches briefly, and rewrites the Backlog of AUTOPILOT.md (plus a short "Rules learned" section there).
+# It edits only AUTOPILOT.md; the daily improvement runs (Sonnet) carry the items out. Telegram gets a summary.
+# Saturday night in Iran, right after the second Claude account's weekly reset (added 2026-10-26).
+on:
+  schedule:
+    - cron: '0 21 * * 6'
+  workflow_dispatch:
+
+concurrency:
+  group: improve
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      SUMMARY: /tmp/plan-summary.txt
+    steps:
+      - id: token
+        run: echo "set=${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: steps.token.outputs.set == 'true'
+        with:
+          ref: main
+          fetch-depth: 60
+      - name: Collect results
+        if: steps.token.outputs.set == 'true'
+        run: |
+          {
+            for u in / /pricing/ /api/config; do echo "Live $u: $(curl -s -o /dev/null -w '%{http_code}' https://myunwrapped.com$u)"; done
+            echo "Sitemap URLs: $(curl -s https://myunwrapped.com/sitemap.xml | grep -c '<loc>')"
+            echo "Paid orders: none known as of 2026-10-26 (Telegram Stars + crypto checkout live). Deadline: 0 paid orders by 2026-11-15 -> automation stops."
+            echo "Earlier data: ~10k search impressions / ~200 clicks, 0 payments."
+          } > /tmp/plan-results.md || true
+      - uses: anthropics/claude-code-action@v1
+        if: steps.token.outputs.set == 'true'
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ github.token }}
+          claude_args: >-
+            --model opus --max-turns 30
+            --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(git log:*),Bash(git show:*),Bash(ls:*)"
+          prompt: |
+            You are the product manager of Unwrapped (myunwrapped.com, repository ${{ github.repository }}): a
+            privacy-first analyzer for social media data exports (parsed on the device), 6 languages, paid plans via
+            Telegram Stars and crypto. It has search traffic but 0 paid orders; deadline 2026-11-15. The owner is not
+            technical and does not review changes; a daily Sonnet run does one AUTOPILOT.md Backlog item and may not
+            touch checkout, payment, license or worker code. If the funnel needs such a change, write it as an item
+            starting "OWNER PC:" (done by Claude Opus on the owner's PC; the daily run skips those items).
+            Focus on free-to-paid clarity, trust at the moment of paying, and pages for searches with buying intent.
+            Be economical: this runs on the owner's limited Claude plan.
+            1. Read AUTOPILOT.md (goal, rules, Backlog) and /tmp/plan-results.md (this week's numbers).
+               Open other files only when a decision needs them.
+            2. Review the last week's automatic changes (`git log --since="8 days ago" --stat`, `git show` on a few)
+               like a strict editor: wrong or invented facts, weak or duplicate pages, unnatural wording, anything
+               that makes buying harder. Add a "Fix (review): ..." item at the top of the Backlog for each problem.
+            3. Research briefly (at most 4 web searches): what the target buyers search for and what competitors
+               show that we don't. Pick what is most likely to bring the FIRST paid order soon.
+            4. Rewrite the Backlog: highest expected value for an order first, 10-15 open items, each small enough
+               for one Sonnet run (about 25 turns) and specific (file/page, angle, done-criteria). Drop low-value
+               items. Keep ticked items as they are and keep "Rules for every run" unless a rule clearly needs
+               fixing (never remove a safety rule or a "Never touch" path).
+            5. Keep a "## Rules learned" section at the end of AUTOPILOT.md (create it if missing): add a rule for
+               any mistake that repeated, keep it under 15 lines.
+            Only edit AUTOPILOT.md. Do not commit. Finally write 3-5 short lines in simple Persian for the owner
+            to /tmp/plan-summary.txt: what you found and what next week will focus on.
+
+      - name: Publish the roadmap
+        id: publish
+        if: steps.token.outputs.set == 'true'
+        run: |
+          git add -A
+          changed=$(git diff --cached --name-only)
+          if [ -z "$changed" ]; then echo "result=nothing" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if echo "$changed" | grep -qvxE 'AUTOPILOT\.md'; then echo "$changed"; echo "result=forbidden" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Weekly planning: update AUTOPILOT.md roadmap"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "result=published" >> "$GITHUB_OUTPUT"
+
+      - name: Tell the owner on Telegram
+        if: always() && steps.token.outputs.set == 'true'
+        env:
+          RESULT: ${{ steps.publish.outputs.result }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ] || exit 0
+          summary=$(head -c 1200 "$SUMMARY" 2>/dev/null || true)
+          case "$RESULT" in
+            published) text="🧭 Unwrapped — برنامه‌ی هفته‌ی بعد (Opus):
+          ${summary}" ;;
+            nothing) text="🧭 Unwrapped — برنامه‌ریزی هفتگی: فهرست کارها تغییری لازم نداشت." ;;
+            *) text="⚠️ Unwrapped — برنامه‌ریزی هفتگی کامل نشد (شاید سهمیه‌ی Claude تمام شده بود). $RUN_URL" ;;
+          esac
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${text}" \
+            --data-urlencode "disable_web_page_preview=true" > /dev/null

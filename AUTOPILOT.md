@@ -23,6 +23,7 @@ and the site stays online with health checks only.
 - Every user-facing page and string ships in all 6 languages (`test/i18n.test.mjs` checks parity).
 - Never invent stats, user counts, reviews, press or platform features. Keep URLs.
 - After the change add one line to `PROJECT_STATE.md` "Recently merged" (`- autopilot: <what>`).
+- Skip items starting "OWNER PC:" (payment/checkout work done on the owner's PC); leave them unchecked.
 - When fewer than 3 items are unchecked, add 3 new specific items at the end of the Backlog that bring a
   first paid order closer (free→paid clarity, trust at the lock card, pages for searches people type), then do
   the first one.
