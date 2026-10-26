@@ -39,11 +39,11 @@ informational blog posts unless listed here. -->
   (cheapest plan, e.g. the $3 Pro week): pay → license active → locked rows open → key shown under My account.
   PROJECT_STATE.md still says the Stars live test "waits for owner T14". Fix what breaks, then update
   PROJECT_STATE.md ("Last updated", "Paid features use crypto payments" → Stars + crypto, the Stars line).
-- [ ] OWNER PC: Pricing page names only crypto ("pay with crypto" in title, "Pay with USDT or 150+ coins" in
+- [x] (2026-10-26, Claude Opus on owner PC) OWNER PC: Pricing page names only crypto ("pay with crypto" in title, "Pay with USDT or 150+ coins" in
   description, lead "paid in crypto"). Add Telegram Stars as the first, no-crypto option in title/description/lead,
   plus a FAQ "Can I pay without crypto?" (Stars, in Telegram, how it is delivered), 6 languages. Optionally a short
   /guides/pay-with-telegram-stars/ page linked next to the existing USDT guide link.
-- [ ] OWNER PC: First-purchase friction. Pricing has 4 tiers × up to 4 durations. On the Instagram unfollower lock
+- [x] (2026-10-26, Claude Opus on owner PC) OWNER PC: First-purchase friction. Pricing has 4 tiers × up to 4 durations. On the Instagram unfollower lock
   cards ("{n} more accounts"), offer the $3 7-day Pro pass as a secondary option ("or see everything for 7 days — $3")
   next to "Unlock with Plus". Checkout/plan code, so Opus only.
 - [ ] Fix (review): the shared CTA partial never mentions what is free and what is paid, and almost no blog post

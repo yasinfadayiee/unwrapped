@@ -184,6 +184,19 @@ const NEXT_UP = {
   pro: { tier: 'creator', title: tl('Grow like a pro'), text: tl('Bot detector, Best Time to Post and white-label client reports.') },
 };
 
+// The 7-day Pro pass offered next to "Unlock" on locked lists (free users only).
+function weekPass(config, { pro, demo }) {
+  const week = (config.plans || []).find((p) => p.id === 'pro-week');
+  if (pro || demo || !week) return null;
+  return {
+    price: `$${week.priceUsd}`,
+    onClick: async () => {
+      const { openCheckout } = await import('../lib/checkout.js');
+      openCheckout({ plan: 'pro-week' });
+    },
+  };
+}
+
 function mount(result, { tier, demo, config, netStart, onNewFiles }) {
   const pro = atLeast(tier, 'plus');
   const datasets = result.datasets;
@@ -231,6 +244,7 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
     can: (feature) => demo || atLeast(tier, tierFor(feature)),
     demo,
     freeLimit: config.freeListLimit || 20,
+    trial: weekPass(config, { pro, demo }),
     site: location.host,
     snapshots: [],
     upgrade: async (reason) => {

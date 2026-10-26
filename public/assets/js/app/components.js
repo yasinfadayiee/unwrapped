@@ -42,7 +42,7 @@ export function emptyState(text, iconName = 'inbox') {
   return h('div', { class: 'empty' }, art, h('div', null, text));
 }
 
-export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tier = 'plus' }) {
+export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tier = 'plus', trial = null }) {
   return h(
     'div',
     { class: 'lock-card' },
@@ -53,6 +53,8 @@ export function lockCard({ count, what = 'accounts', onUpgrade, title, text, tie
       h('h4', null, title || (count ? tl('{v0} more {v1}', { v0: fmtInt(count), v1: what }) : tl('Unlock with {v0}', { v0: TIER_NAME[tier] }))),
       h('p', null, text || tl('Unlock the full list, search, CSV export and your unfollower history with {v0}.', { v0: TIER_NAME[tier] })),
       h('button', { class: 'btn btn--primary', type: 'button', onClick: onUpgrade }, icon('bolt'), tl('Unlock with {v0}', { v0: TIER_NAME[tier] })),
+      // Smallest first purchase: a short Pro pass instead of choosing among every tier and duration.
+      trial ? h('button', { class: 'btn btn--ghost btn--sm lock-trial', type: 'button', onClick: trial.onClick }, tl('Or see everything for 7 days — {v0}', { v0: trial.price })) : null,
       h('p', { class: 'lock-note' }, tl('Your export stays on this device — unlocking never uploads it.')),
     ),
   );
@@ -182,7 +184,7 @@ export function userList({ platform, items, ctx, subFor, exportName = 'list', ke
           'div',
           { class: 'locked', style: { marginTop: '6px', minHeight: '300px' } },
           h('div', { class: 'locked-rows' }, ghost),
-          lockCard({ count: list.length - limit, onUpgrade: () => ctx.upgrade('list') }),
+          lockCard({ count: list.length - limit, onUpgrade: () => ctx.upgrade('list'), trial: ctx.trial }),
         ),
       );
     } else if (pro && list.length > shown) {

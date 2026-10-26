@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- autopilot (owner PC): pricing names Telegram Stars (card · Apple Pay · Google Pay) first + "no crypto?" FAQ, 6 langs; locked lists offer the $3 7-day Pro pass next to Unlock
 - autopilot: lock cards say the export stays on the device (copy line under the unlock button, 6 langs)
 - #57 Blog post: who do I message most on Instagram (6 languages)
 - #56 Blog post: Telegram chat statistics (6 languages)

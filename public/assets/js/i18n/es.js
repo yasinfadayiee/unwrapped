@@ -278,6 +278,7 @@ export default {
   "See all {v0} names": "Ver los {v0} nombres",
   "Plus shows exactly who it was — and keeps your full unfollower history.": "Plus muestra exactamente quién fue y guarda tu historial completo de unfollowers.",
   "Your export stays on this device — unlocking never uploads it.": "Tu exportación se queda en este dispositivo: desbloquear nunca la sube.",
+  "Or see everything for 7 days — {v0}": "O míralo todo durante 7 días — {v0}",
   "New followers": "Seguidores nuevos",
   "You unfollowed": "Dejaste de seguir",
   "Accounts that were deactivated or deleted also disappear from follower lists.": "Las cuentas desactivadas o eliminadas también desaparecen de las listas de seguidores.",

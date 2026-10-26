@@ -202,7 +202,7 @@ export function unfollowersView(ds, ctx) {
           'div',
           { class: 'locked', style: { minHeight: '260px' } },
           h('div', { class: 'locked-rows' }, items.slice(0, 5).map((i) => personRow(ds.platform, { ...i, u: i.u && 'hidden.account', name: i.name && tl('Hidden name'), id: i.id && '•••' }, { sub: tl('Locked') }))),
-          lockCard({ count: items.length, what: tl('names'), title: tl('See all {v0} names', { v0: fmtInt(items.length) }), text: tl('Plus shows exactly who it was — and keeps your full unfollower history.'), onUpgrade: () => ctx.upgrade('unfollowers') }),
+          lockCard({ count: items.length, what: tl('names'), title: tl('See all {v0} names', { v0: fmtInt(items.length) }), text: tl('Plus shows exactly who it was — and keeps your full unfollower history.'), onUpgrade: () => ctx.upgrade('unfollowers'), trial: ctx.trial }),
         ),
       );
     }

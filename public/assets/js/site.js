@@ -328,9 +328,11 @@ async function pricing() {
   const methods = (config.methods || []).map((m) => m.id);
   if (!config.offline && !methods.includes('nowpayments')) {
     for (const coins of $$('[data-coins]')) {
-      clear(coins).append(h('span', { class: 'coin' }, h('i', { style: { background: '#26a17b' } }), 'USDT · TRC20'));
+      const stars = coins.querySelector('[data-method="stars"]');
+      clear(coins).append(...(stars ? [stars] : []), h('span', { class: 'coin' }, h('i', { style: { background: '#26a17b' } }), 'USDT · TRC20'));
     }
   }
+  if (!config.offline && !methods.includes('stars')) for (const chip of $$('[data-method="stars"]')) chip.remove();
   if (!config.tiers?.length) return; // offline: keep the static fallback
   const bestSave = Math.max(
     ...config.tiers.map((t) => {
