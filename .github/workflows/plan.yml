@@ -48,7 +48,7 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ github.token }}
           claude_args: >-
-            --model opus --max-turns 30
+            --model opus --max-turns 40
             --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(git log:*),Bash(git show:*),Bash(ls:*)"
           prompt: |
             You are the product manager of Unwrapped (myunwrapped.com, repository ${{ github.repository }}): a
