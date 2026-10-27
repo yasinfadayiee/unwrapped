@@ -1735,4 +1735,12 @@ export default {
   "Account deleted": "Hesap silindi",
   "One payment": "Tek ödeme",
   "About {price} — Telegram sells Stars at roughly $1 per 50.": "Yaklaşık {price} — Telegram, 50 Stars’ı yaklaşık 1 $’a satar.",
+  "Pay in Telegram — no crypto, no Stars needed beforehand": "Telegram’da öde — kripto yok, önceden Stars gerekmez",
+  "Tap the button. Telegram opens the payment.": "Butona dokun. Telegram ödemeyi açar.",
+  "No Stars yet? That’s normal.": "Henüz Stars yok mu? Bu normal.",
+  "Tap “Confirm and Pay” and Telegram offers to buy the {stars} Stars you need with card, Google Pay or Apple Pay.": "“Onayla ve Öde”ye dokun; Telegram gereken {stars} Stars’ı kart, Google Pay veya Apple Pay ile satın almanı önerir.",
+  "Come back here: your plan unlocks automatically and the bot also sends you your license key.": "Buraya geri dön: planın otomatik olarak açılır ve bot lisans anahtarını da gönderir.",
+  "On a computer? Pay with your phone": "Bilgisayarda mısın? Telefonunla öde",
+  "Scan this code with your phone camera to open the payment in Telegram.": "Ödemeyi Telegram’da açmak için bu kodu telefon kameranla tara.",
+  "QR code of the payment link": "Ödeme bağlantısının QR kodu",
 };

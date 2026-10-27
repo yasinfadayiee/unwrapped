@@ -41,7 +41,7 @@ export async function createStarsOrder(env, request, { plan, priceUsd = plan.pri
   try {
     link = await tg(env, 'createInvoiceLink', {
       title: `${brand(env)} ${plan.name}`.slice(0, 32),
-      description: `Unlocks ${plan.name} on ${new URL(siteUrl(env, request)).hostname}. Your license key arrives here and on the site.`.slice(0, 255),
+      description: `Unlocks ${plan.name} on ${new URL(siteUrl(env, request)).hostname}. No Stars yet? Tap Pay and Telegram sells you the Stars by card, Google Pay or Apple Pay. Your license key arrives here and on the site.`.slice(0, 255),
       payload: order.id,
       currency: 'XTR',
       prices: [{ label: plan.name, amount: order.amount_units }],

@@ -1735,4 +1735,12 @@ export default {
   "Account deleted": "Cuenta eliminada",
   "One payment": "Un solo pago",
   "About {price} — Telegram sells Stars at roughly $1 per 50.": "Unos {price}: Telegram vende las Stars a aproximadamente 1 $ por cada 50.",
+  "Pay in Telegram — no crypto, no Stars needed beforehand": "Paga en Telegram: sin cripto y sin necesitar Stars antes",
+  "Tap the button. Telegram opens the payment.": "Toca el botón. Telegram abre el pago.",
+  "No Stars yet? That’s normal.": "¿Aún no tienes Stars? Es normal.",
+  "Tap “Confirm and Pay” and Telegram offers to buy the {stars} Stars you need with card, Google Pay or Apple Pay.": "Toca «Confirmar y pagar» y Telegram te ofrece comprar las {stars} Stars que necesitas con tarjeta, Google Pay o Apple Pay.",
+  "Come back here: your plan unlocks automatically and the bot also sends you your license key.": "Vuelve aquí: tu plan se desbloquea automáticamente y el bot también te envía tu clave de licencia.",
+  "On a computer? Pay with your phone": "¿Estás en un ordenador? Paga con el móvil",
+  "Scan this code with your phone camera to open the payment in Telegram.": "Escanea este código con la cámara del móvil para abrir el pago en Telegram.",
+  "QR code of the payment link": "Código QR del enlace de pago",
 };

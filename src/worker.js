@@ -23,7 +23,7 @@ import { handleUsers } from './users.js';
 async function enabledMethods(env) {
   const methods = [];
   if (starsEnabled(env)) {
-    methods.push({ id: 'stars', label: 'Card · Apple Pay · Google Pay', detail: 'Pay inside Telegram with Stars — no crypto needed' });
+    methods.push({ id: 'stars', label: 'Card · Apple Pay · Google Pay', detail: 'Pay in Telegram — no crypto, no Stars needed beforehand' });
   }
   if (await tronEnabled(env)) {
     methods.push({ id: 'tron', label: 'USDT · TRC20', detail: 'Direct to wallet · lowest fees · ~1 min' });
