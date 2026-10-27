@@ -155,15 +155,15 @@ test('Stars is first only when both credentials are present; disabled checkout a
 
 test('Stars checkout stores integer Stars and returns a Telegram invoice link', async () => {
   const co = await starsCheckout();
-  assert.equal(co.order.stars, 231);
+  assert.equal(co.order.stars, 150);
   assert.equal(co.order.redirectUrl, `https://t.me/$${co.order.id}`);
   const row = await env.DB.prepare('SELECT * FROM orders WHERE id = ?').bind(co.order.id).first();
-  assert.equal(row.amount_units, Math.ceil(row.price_usd * 77));
+  assert.equal(row.amount_units, Math.ceil(row.price_usd * 50));
   assert.equal(row.redirect_url, co.order.redirectUrl);
   const invoice = tgCalls.find((c) => c.method === 'createInvoiceLink').body;
   assert.equal(invoice.currency, 'XTR');
   assert.equal(invoice.payload, co.order.id);
-  assert.deepEqual(invoice.prices, [{ label: 'Pro · 7 days', amount: 231 }]);
+  assert.deepEqual(invoice.prices, [{ label: 'Pro · 7 days', amount: 150 }]);
   assert.ok(invoice.title.length <= 32 && invoice.description.length <= 255);
   assert.equal(invoice.provider_token, undefined);
   assert.equal(co.order.address, undefined);
@@ -174,8 +174,8 @@ test('Stars uses the discounted order price and rounds up fractional Stars', asy
   const ref = (await call('POST', '/api/referral', { key: inviter.license.key })).body;
   const co = await starsCheckout({ ref: ref.code });
   assert.equal(co.order.priceUsd, 2.7);
-  assert.equal(co.order.stars, 208);
-  assert.equal(tgCalls.find((c) => c.method === 'createInvoiceLink').body.prices[0].amount, 208);
+  assert.equal(co.order.stars, 135);
+  assert.equal(tgCalls.find((c) => c.method === 'createInvoiceLink').body.prices[0].amount, 135);
 });
 
 test('Stars invoice provider and network errors fail the order with a safe 502', async () => {
@@ -204,7 +204,7 @@ test('Stars webhook rejects wrong or missing secrets, invalid JSON and oversized
 
 test('Stars pre-checkout answers every query and only approves matching pending or expired orders', async () => {
   const co = await starsCheckout();
-  const query = { id: 'query-1', invoice_payload: co.order.id, currency: 'XTR', total_amount: 231 };
+  const query = { id: 'query-1', invoice_payload: co.order.id, currency: 'XTR', total_amount: 150 };
   const check = async (fields, expected) => {
     assert.equal((await starsWebhook({ pre_checkout_query: { ...query, ...fields } })).status, 200);
     const answer = tgCalls.at(-1);
@@ -214,8 +214,8 @@ test('Stars pre-checkout answers every query and only approves matching pending 
     assert.equal(typeof answer.body.error_message, expected ? 'undefined' : 'string');
   };
   await check({}, true);
-  await check({ total_amount: 230 }, false);
-  await check({ total_amount: '231' }, false);
+  await check({ total_amount: 149 }, false);
+  await check({ total_amount: '150' }, false);
   await check({ currency: 'USD' }, false);
   await check({ invoice_payload: 'missing-order' }, false);
   const tron = (await call('POST', '/api/checkout', { plan: 'pro-week', method: 'tron' })).body;
@@ -238,7 +238,7 @@ test('Stars successful payment fulfills once, stores the charge and sends the li
   assert.ok(first.token);
   const row = await env.DB.prepare('SELECT * FROM orders WHERE id = ?').bind(co.order.id).first();
   assert.equal(row.provider_ref, update.message.successful_payment.telegram_payment_charge_id);
-  assert.equal(row.paid_units, 231);
+  assert.equal(row.paid_units, 150);
   const sent = tgCalls.filter((c) => c.method === 'sendMessage');
   assert.equal(sent.length, 1);
   assert.equal(sent[0].body.chat_id, 1234);
@@ -252,8 +252,8 @@ test('Stars successful payment fulfills once, stores the charge and sends the li
   const admin = (await call('GET', '/api/admin/orders', undefined, { authorization: `Bearer ${env.ADMIN_TOKEN}` })).body.orders[0];
   assert.equal(admin.method, 'stars');
   assert.equal(admin.status, 'paid');
-  assert.equal(admin.amount, '⭐ 231');
-  assert.equal(admin.paid, '⭐ 231');
+  assert.equal(admin.amount, '⭐ 150');
+  assert.equal(admin.paid, '⭐ 150');
 });
 
 test('Stars accepts late payments and concurrent deliveries grant only one license', async () => {

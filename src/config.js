@@ -52,7 +52,8 @@ export const TIERS = [
 ];
 
 export const PLANS = [
-  { id: 'plus-month', tier: 'plus', cycle: 'month', name: 'Plus · 30 days', short: 'Monthly', priceUsd: 5, days: 30 },
+  // The low-commitment first purchase: one payment, 30 days, opened by default in checkout.
+  { id: 'plus-month', tier: 'plus', cycle: 'month', name: 'Plus · 30 days', short: 'One payment', priceUsd: 4.99, days: 30, badge: 'Start here' },
   { id: 'plus-year', tier: 'plus', cycle: 'year', name: 'Plus · 12 months', short: 'Yearly', priceUsd: 29, days: 365 },
   // A one-off week of Pro for people who won't subscribe: try everything once.
   { id: 'pro-week', tier: 'pro', cycle: 'week', name: 'Pro · 7 days', short: 'One week', priceUsd: 3, days: 7 },
@@ -79,8 +80,10 @@ export function getGrowthPlan(id) {
 const LEGACY_PLANS = { month: 'pro-month', year: 'pro-year', life: 'pro-life' };
 
 export const SETTINGS = {
-  // Fragment pays developers about $0.013/Star: 77 Stars ≈ $1 net.
-  starsPerUsd: 77,
+  // Buyers pay Telegram about $1 per 50 Stars, so 50 Stars per dollar keeps the
+  // Stars price equal to the listed price. Fragment pays about $0.013/Star, so we
+  // net roughly 65% on Stars orders: that is the cost of card payments.
+  starsPerUsd: 50,
   // How long a checkout stays open before it expires.
   orderTtlMinutes: 60,
   // A TRON payment that arrives this long after expiry is still accepted.

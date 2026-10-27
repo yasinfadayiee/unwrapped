@@ -83,7 +83,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
   const keeps = state.lifetimeTier || null;
   const buyable = (t) => !keeps || TIER_RANK[t.id] > TIER_RANK[keeps];
   // Start on the tier that unlocks what the user clicked, never below what they own.
-  let tierId = plans.find((p) => p.id === preselect)?.tier || wantTier || (reason ? tierFor(reason) : 'pro');
+  let tierId = plans.find((p) => p.id === preselect)?.tier || wantTier || (reason ? tierFor(reason) : 'plus');
   if (state.pro && TIER_RANK[state.tier] > TIER_RANK[tierId]) tierId = state.tier;
   if (!tiers.some((t) => t.id === tierId && buyable(t))) tierId = tiers.find(buyable)?.id;
   const m = modal({ title: state.pro ? t('Upgrade or extend') : t('Choose your plan') });
@@ -129,7 +129,9 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
     const tier = tiers.find((t) => t.id === tierId);
     const options = plans.filter((p) => p.tier === tierId && (!keeps || p.days));
     if (!options.some((p) => p.id === planId)) {
-      planId = (options.find((p) => p.id === preselect) || options.find((p) => p.badge === 'Most popular') || options.find((p) => p.cycle === 'year') || options[0])?.id;
+      // Default to the smallest commitment: the $4.99 Plus start plan, else the cheapest timed plan.
+      const cheapest = options.filter((p) => p.days).sort((a, b) => a.priceUsd - b.priceUsd)[0];
+      planId = (options.find((p) => p.id === preselect) || options.find((p) => p.badge === 'Start here') || cheapest || options[0])?.id;
     }
     clear(tierBox);
     for (const t of tiers) {
@@ -328,6 +330,7 @@ export function starsScreen(m, order, token, config, onPaid = (o) => successScre
     h('div', { class: 'stack', style: { '--stack': '16px' } },
       planText(order, config) ? line(t('Plan'), planText(order, config)) : null,
       h('a', { class: 'btn btn--primary btn--lg btn--block', href: order.redirectUrl, target: '_blank', rel: 'noopener' }, t('Pay ⭐ {stars} Stars in Telegram', { stars: order.stars })),
+      order.priceUsd ? h('p', { class: 'small' }, t('About {price} — Telegram sells Stars at roughly $1 per 50.', { price: money(order.priceUsd) })) : null,
       h('p', { class: 'small text-2' }, t('Opens Telegram. Buy Stars there with card, Apple Pay or Google Pay, then confirm. Your plan unlocks here automatically and the bot also sends you your license key.')),
       h('p', { class: 'small text-2' }, t('No Telegram? Install it free, or pick another method.')),
       h('div', { style: { display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' } },

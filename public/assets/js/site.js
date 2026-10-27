@@ -285,7 +285,7 @@ function tabs() {
 
 /* ---------- pricing ---------- */
 const money = (n) => `$${Number.isInteger(n) ? n : n.toFixed(2)}`;
-let billing = 'year';
+let billing = 'month';
 const PLAN_ICON = { plus: 'search', pro: 'ghost', creator: 'trend' };
 
 function tierCard(config, tier, cycle) {

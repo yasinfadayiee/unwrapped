@@ -1733,4 +1733,6 @@ export default {
   "Delete my account": "Hesabımı sil",
   "Delete your account? Your licenses keep working with their keys.": "Hesabın silinsin mi? Lisansların anahtarlarıyla çalışmaya devam eder.",
   "Account deleted": "Hesap silindi",
+  "One payment": "Tek ödeme",
+  "About {price} — Telegram sells Stars at roughly $1 per 50.": "Yaklaşık {price} — Telegram, 50 Stars’ı yaklaşık 1 $’a satar.",
 };

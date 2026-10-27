@@ -1745,4 +1745,6 @@ export default {
   "Delete my account": "Mein Konto löschen",
   "Delete your account? Your licenses keep working with their keys.": "Konto löschen? Deine Lizenzen funktionieren mit ihren Schlüsseln weiter.",
   "Account deleted": "Konto gelöscht",
+  "One payment": "Eine Zahlung",
+  "About {price} — Telegram sells Stars at roughly $1 per 50.": "Etwa {price} — Telegram verkauft Stars für ungefähr 1 $ pro 50.",
 };

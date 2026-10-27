@@ -22,6 +22,7 @@ Unwrapped: a privacy-first analyzer for social media data exports (Instagram, Ti
 - `npm run deploy`: build, `wrangler deploy`, then IndexNow ping
 
 ## Recently merged
+- Claude Opus on owner PC (branch fix/fair-checkout): Stars priced at 50/$ so buyers pay about the listed price (was 77/$, ~50% hidden markup; we now net ~65% on Stars) with an "About $X" line on the Stars screen; Plus 30 days is $4.99 "One payment · Start here" and checkout opens on the cheapest plan of a tier (Plus by default; Pro → $3 week); pricing cards open on Monthly; `pro-week` now counted in plan stats.
 - autopilot: guide CTA band states free vs Plus in one line and links /pricing/ (6 langs)
 - autopilot (owner PC): pricing names Telegram Stars (card · Apple Pay · Google Pay) first + "no crypto?" FAQ, 6 langs; locked lists offer the $3 7-day Pro pass next to Unlock
 - autopilot: lock cards say the export stays on the device (copy line under the unlock button, 6 langs)
