@@ -1,12 +1,13 @@
 name: Weekly planning
 
-# Once a week Claude Opus acts as product manager: it reviews the past week's automatic changes and the live site,
+# Twice a week Claude Opus acts as product manager: it reviews the past week's automatic changes and the live site,
 # researches briefly, and rewrites the Backlog of AUTOPILOT.md (plus a short "Rules learned" section there).
 # It edits only AUTOPILOT.md; the daily improvement runs (Sonnet) carry the items out. Telegram gets a summary.
 # Saturday night in Iran, right after the second Claude account's weekly reset (added 2026-10-26).
 on:
   schedule:
-    - cron: '0 21 * * 6'
+    # 2026-10-27: also Wednesday, so the Backlog stays full for two improvement runs a day.
+    - cron: '0 21 * * 3,6'
   workflow_dispatch:
 
 concurrency:

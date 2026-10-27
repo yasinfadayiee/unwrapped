@@ -1,6 +1,6 @@
 name: Daily improvement
 
-# Once a day Claude does the next item of AUTOPILOT.md (copy, guides, blog posts in 6 languages), then this
+# Twice a day Claude does the next item of AUTOPILOT.md (copy, guides, blog posts in 6 languages), then this
 # workflow checks the change itself before it goes live:
 #   - only allowed paths changed (no worker code, payments, licenses, workflows or dependencies),
 #   - npm test (incl. i18n parity) and the full build pass.
@@ -12,7 +12,9 @@ name: Daily improvement
 # Deploy needs secret CLOUDFLARE_API_TOKEN (template "Edit Cloudflare Workers") + variable CLOUDFLARE_ACCOUNT_ID.
 on:
   schedule:
+    # 2026-10-27: owner no longer uses the second Claude account itself, so this runs twice a day to use its limit.
     - cron: '30 2 * * *'
+    - cron: '30 14 * * *'
   workflow_dispatch:
 
 concurrency:
