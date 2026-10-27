@@ -53,7 +53,7 @@ informational blog posts unless listed here. -->
   <a href="/pricing/">see plans</a>." (facts from pricing.html rows "Not following back" and "Who unfollowed you";
   no prices). Natural translations using the words pricing.html already uses in each language. Done: 6 partials,
   build passes, links test passes.
-- [ ] Fix (review): `site/pages/guide-unfollowers.html` says "for screenshots-free, step-by-step help" (unnatural, and
+- [x] (2026-10-27) Fix (review): `site/pages/guide-unfollowers.html` says "for screenshots-free, step-by-step help" (unnatural, and
   sounds like a missing feature). Change to "for step-by-step help". Check the same sentence in the 5 translations and
   fix any equally awkward wording. Copy only.
 - [ ] Free-vs-paid box on the 2 highest-intent landing pages: `site/pages/instagram-follower-tracker.html` and
