@@ -46,7 +46,7 @@ informational blog posts unless listed here. -->
 - [x] (2026-10-26, Claude Opus on owner PC) OWNER PC: First-purchase friction. Pricing has 4 tiers × up to 4 durations. On the Instagram unfollower lock
   cards ("{n} more accounts"), offer the $3 7-day Pro pass as a secondary option ("or see everything for 7 days — $3")
   next to "Unlock with Plus". Checkout/plan code, so Opus only.
-- [ ] Fix (review): the shared CTA partial never mentions what is free and what is paid, and almost no blog post
+- [x] (2026-10-27) Fix (review): the shared CTA partial never mentions what is free and what is paid, and almost no blog post
   links /pricing/ (only blog-tiktok-liked-videos does). In `site/partials/guide-cta.html` and
   `site/i18n/{de,es,fr,pt,tr}/partials/guide-cta.html`, add one line under "No password, no upload…":
   "Free: every chart, the first 20 rows of each list and how many unfollowed you. Plus shows every name —
