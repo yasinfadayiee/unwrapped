@@ -27,6 +27,8 @@
       "database_id": "cfa4e657-3f8f-4bbb-a6d6-96d1c3001977"
     }
   ],
+  // Workers AI for the support help bot (src/support.js). Free daily allowance; without it the bot hands off to the contact form.
+  "ai": { "binding": "AI" },
   "triggers": {
     // Every minute: watch the TRON wallet + housekeeping. 09:00 UTC: renewal e-mails.
     "crons": ["* * * * *", "0 9 * * *"]

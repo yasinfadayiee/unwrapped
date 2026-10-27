@@ -12,6 +12,8 @@ import { statsSummary } from './stats.js';
 import { access, ensureGrowthSchema, growthEnabled } from './growth/index.js';
 import { adminFeedback, approveFeedback } from './feedback.js';
 import { adminUsers } from './users.js';
+import { adminSupport, adminSupportReply, adminSupportStatus } from './support.js';
+import { ownerLinkUrl } from './payments/stars.js';
 import { DAY, formatUsdt, isEmail, maskEmail, normalizeLicenseKey, timingSafeEqual } from './util.js';
 
 function authorized(request, env) {
@@ -43,6 +45,14 @@ export async function handleAdmin(request, env, url) {
       return markPaid(env, await readJson(request));
     case 'GET /api/admin/events':
       return listEvents(env);
+    case 'GET /api/admin/support':
+      return adminSupport(env);
+    case 'POST /api/admin/support/reply':
+      return adminSupportReply(env, await readJson(request, 16_384));
+    case 'POST /api/admin/support/status':
+      return adminSupportStatus(env, await readJson(request));
+    case 'POST /api/admin/support/telegram':
+      return json({ ok: true, url: await ownerLinkUrl(env) });
     case 'GET /api/admin/feedback':
       return adminFeedback(env);
     case 'POST /api/admin/feedback/approve':

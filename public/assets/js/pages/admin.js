@@ -205,6 +205,68 @@ async function load() {
     ),
   );
 
+  // Support inbox: contact-form messages (reply by e-mail) and what people ask the help bot
+  const sp = await api('/api/admin/support', { headers: auth() }).catch(() => null);
+  if (sp) {
+    const open = sp.tickets.filter((x) => x.status === 'open').length;
+    const tgBtn = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('send'), sp.telegram ? 'Re-link Telegram' : 'Connect Telegram');
+    tgBtn.addEventListener('click', async () => {
+      try {
+        const { url } = await api('/api/admin/support/telegram', { method: 'POST', headers: auth() });
+        window.open(url, '_blank', 'noopener');
+        toast('Press Start in Telegram, then reload this page');
+      } catch (err) {
+        toast(err instanceof ApiError ? err.code : 'Failed', { iconName: 'warning' });
+      }
+    });
+    const ticketCard = (x) => {
+      const reply = h('textarea', { class: 'input', rows: 3, placeholder: `Reply to ${x.email} by e-mail…` });
+      const sendBtn = h('button', { class: 'btn btn--primary btn--sm', type: 'button' }, 'Send reply');
+      const closeBtn = h('button', { class: 'row-btn', type: 'button' }, x.status === 'closed' ? 'Reopen' : 'Close');
+      sendBtn.addEventListener('click', async () => {
+        if (!reply.value.trim()) return;
+        sendBtn.disabled = true;
+        try {
+          await api('/api/admin/support/reply', { method: 'POST', headers: auth(), body: { id: x.id, text: reply.value } });
+          toast(`Reply sent to ${x.email}`);
+          load();
+        } catch (err) {
+          toast(err instanceof ApiError ? err.code : 'Failed', { iconName: 'warning' });
+          sendBtn.disabled = false;
+        }
+      });
+      closeBtn.addEventListener('click', async () => {
+        await api('/api/admin/support/status', { method: 'POST', headers: auth(), body: { id: x.id, status: x.status === 'closed' ? 'open' : 'closed' } });
+        load();
+      });
+      const badge = { open: 'badge--uv', answered: 'badge--muted', closed: 'badge--muted' }[x.status] || 'badge--muted';
+      return h(
+        'div',
+        { class: 'card card--pad', style: { display: 'grid', gap: '8px', opacity: x.status === 'open' ? '1' : '0.75' } },
+        h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' } }, h('b', null, `#${x.id}`), h('span', { class: `badge ${badge}` }, x.status), h('a', { href: `mailto:${x.email}` }, x.name ? `${x.name} <${x.email}>` : x.email), h('span', { class: 'small text-2' }, [new Date(x.ts).toLocaleString('en-GB'), x.lang, x.page].filter(Boolean).join(' · ')), closeBtn),
+        h('div', { style: { whiteSpace: 'pre-wrap' } }, x.message),
+        x.answer ? h('div', { class: 'small text-2', style: { whiteSpace: 'pre-wrap', borderLeft: '3px solid var(--line-2)', paddingLeft: '10px' } }, `Your reply (${new Date(x.replied_at).toLocaleString('en-GB')}): ${x.answer}`) : null,
+        sp.email ? h('div', { style: { display: 'grid', gap: '8px' } }, reply, h('div', null, sendBtn)) : null,
+      );
+    };
+    root.append(
+      h(
+        'section',
+        { class: 'panel' },
+        h(
+          'div',
+          { class: 'panel-head' },
+          h('div', null, h('h3', null, `Support inbox${open ? ` · ${open} open` : ''}`), h('p', null, `Messages are e-mailed to ${sp.inbox}${sp.telegram ? ' and sent to your Telegram (reply there to answer)' : ''}. Help bot: ${sp.botEnabled ? 'on' : 'off (needs the AI binding)'}.`)),
+          tgBtn,
+        ),
+        sp.tickets.length ? h('div', { style: { display: 'grid', gap: '10px', maxHeight: '640px', overflowY: 'auto' } }, sp.tickets.map(ticketCard)) : h('p', { class: 'text-2' }, 'No messages yet. Visitors reach you through the Help button on every page.'),
+        sp.bot.length
+          ? h('details', { style: { marginTop: '14px' } }, h('summary', null, `Last ${sp.bot.length} help-bot questions (what people struggle with)`), h('div', { class: 'table-wrap', style: { maxHeight: '420px', marginTop: '10px' } }, h('table', { class: 'data-table' }, h('thead', null, h('tr', null, ['When', 'Question', 'Bot answer', 'Where', ''].map((x) => h('th', null, x)))), h('tbody', null, sp.bot.map((b) => h('tr', null, h('td', null, new Date(b.ts).toLocaleString('en-GB')), h('td', { style: { whiteSpace: 'normal', minWidth: '200px' } }, b.message), h('td', { style: { whiteSpace: 'normal', minWidth: '260px' } }, b.answer || ''), h('td', null, [b.lang, b.page].filter(Boolean).join(' · ')), h('td', null, b.status === 'handoff' ? 'needed human' : '')))))))
+          : null,
+      ),
+    );
+  }
+
   // Feedback: ratings, and testimonials to approve for the home page
   const fb = await api('/api/admin/feedback', { headers: auth() }).catch(() => null);
   if (fb) {

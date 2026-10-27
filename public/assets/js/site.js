@@ -661,6 +661,22 @@ themePicker();
 localizedNotFound();
 inAppBrowserNotice();
 supportContact();
+// Help button (bot + message form): loaded when the browser is idle, never on the owner dashboard.
+if (!location.pathname.startsWith('/admin')) {
+  let support;
+  const startSupport = () => (support ||= import('./lib/support-widget.js').then(({ initSupport }) => initSupport()).catch(() => null));
+  const openSupport = (tab) => startSupport().then((s) => s?.open(tab));
+  document.addEventListener('click', (e) => {
+    const opener = e.target.closest?.('[data-support-open]');
+    if (!opener) return;
+    e.preventDefault();
+    openSupport(opener.dataset.supportOpen);
+  });
+  addEventListener('hashchange', () => location.hash === '#contact' && openSupport());
+  if (location.hash === '#contact') openSupport();
+  else if ('requestIdleCallback' in window) requestIdleCallback(startSupport, { timeout: 4000 });
+  else setTimeout(startSupport, 2500);
+}
 import('./lib/stats.js').then(({ trackView }) => trackView()).catch(() => {});
 reveals();
 liveCount();

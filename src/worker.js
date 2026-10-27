@@ -19,6 +19,7 @@ import { publicStats, recordHit } from './stats.js';
 import { submitFeedback, testimonials } from './feedback.js';
 import { createReminder, sendDueReminders } from './reminders.js';
 import { handleUsers } from './users.js';
+import { askBot, botEnabled, submitSupport } from './support.js';
 
 async function enabledMethods(env) {
   const methods = [];
@@ -47,6 +48,7 @@ async function getConfig(env) {
     freeListLimit: SETTINGS.freeListLimit,
     referral: { discount: SETTINGS.referralDiscount, rewardDays: SETTINGS.referralRewardDays },
     support: env.SUPPORT_CONTACT || null,
+    supportBot: botEnabled(env),
     email: emailEnabled(env),
     dev: env.DEV_MODE === '1',
   });
@@ -172,6 +174,10 @@ async function route(request, env, ctx, url) {
       return recordHit(request, env);
     case 'POST /api/feedback':
       return submitFeedback(request, env);
+    case 'POST /api/support':
+      return submitSupport(request, env, ctx);
+    case 'POST /api/support/ask':
+      return askBot(request, env, ctx);
     case 'POST /api/remind':
       return createReminder(request, env);
     case 'GET /api/testimonials':

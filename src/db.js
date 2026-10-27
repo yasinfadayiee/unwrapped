@@ -3,7 +3,6 @@
 
 import { FEEDBACK_SCHEMA } from './feedback.js';
 import { REMINDER_SCHEMA } from './reminders.js';
-
 export const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS orders (
     id TEXT PRIMARY KEY,
@@ -72,6 +71,21 @@ export const SCHEMA = [
   FEEDBACK_SCHEMA,
   // One-time "your export is ready" e-mails (src/reminders.js).
   REMINDER_SCHEMA,
+  // Contact-form messages and help-bot questions (src/support.js).
+  `CREATE TABLE IF NOT EXISTS support (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ts INTEGER NOT NULL,
+    kind TEXT NOT NULL,
+    email TEXT,
+    name TEXT,
+    message TEXT NOT NULL,
+    answer TEXT,
+    page TEXT,
+    lang TEXT,
+    status TEXT NOT NULL DEFAULT 'open',
+    replied_at INTEGER
+  )`,
+  `CREATE INDEX IF NOT EXISTS support_kind_ts ON support (kind, ts)`,
   // Password-free accounts (src/users.js).
   `CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,

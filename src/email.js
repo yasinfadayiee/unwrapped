@@ -9,12 +9,12 @@ export function emailEnabled(env) {
 }
 
 // Plain-text twin of every message: better deliverability, readable anywhere.
-export async function send(env, { to, subject, html, text }) {
+export async function send(env, { to, subject, html, text, replyTo = env.EMAIL_REPLY_TO }) {
   if (!emailEnabled(env)) return false;
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
-    body: JSON.stringify({ from: env.EMAIL_FROM, to: [to], subject, html, text, ...(env.EMAIL_REPLY_TO ? { reply_to: env.EMAIL_REPLY_TO } : {}) }),
+    body: JSON.stringify({ from: env.EMAIL_FROM, to: [to], subject, html, text, ...(replyTo ? { reply_to: replyTo } : {}) }),
     signal: AbortSignal.timeout(10000),
   });
   if (!res.ok) throw new Error(`Resend responded ${res.status}`);

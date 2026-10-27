@@ -3,7 +3,8 @@ import { SETTINGS, brand, getGrowthPlan, getPlan, siteUrl } from '../config.js';
 import { getOrder, logEvent } from '../db.js';
 import { HttpError, fail, json } from '../http.js';
 import { fulfillOrder, insertOrder } from '../orders.js';
-import { sha256Hex, timingSafeEqual } from '../util.js';
+import { randomId, sha256Hex, timingSafeEqual } from '../util.js';
+import { replyToTicket } from '../support.js';
 
 export function starsEnabled(env) {
   return Boolean(env.TELEGRAM_STARS_BOT_TOKEN && env.TELEGRAM_STARS_WEBHOOK_SECRET);
@@ -135,10 +136,68 @@ export async function handleStarsWebhook(request, env) {
       await sendMessage(env, message.chat?.id, text, order.id);
       await logEvent(env, 'stars.paid', order.id, { charge_id: payment.telegram_payment_charge_id });
     }
+  } else if (await ownerCommand(env, body.message)) {
+    // Handled: owner linking the bot or answering a support message.
   } else if (typeof body.message?.text === 'string' && /^\/start(?:@\w+)?(?:\s|$)/.test(body.message.text)) {
     await sendMessage(env, body.message.chat?.id, `${brand(env)} analyzes your social media exports privately on your device. ${site}/#pricing`);
   }
   return json({ ok: true });
+}
+
+// ---------- owner notifications (support inbox) ----------
+// The owner links their Telegram once from the admin panel (a one-time /start
+// code). New support messages then arrive in that chat, and replying to one
+// e-mails the answer to the visitor.
+
+const ownerChat = async (env) => (await env.DB.prepare("SELECT v FROM meta WHERE k = 'support_tg_chat'").first())?.v || null;
+
+export async function notifyOwner(env, text) {
+  if (!starsEnabled(env)) return false;
+  const chat = await ownerChat(env);
+  if (!chat) return false;
+  await tg(env, 'sendMessage', { chat_id: chat, text: text.slice(0, 4000), disable_web_page_preview: true });
+  return true;
+}
+
+export async function ownerLinkUrl(env) {
+  if (!starsEnabled(env)) throw new HttpError(503, 'telegram_bot_not_configured');
+  const code = randomId(20);
+  await env.DB.prepare("INSERT INTO meta (k, v) VALUES ('support_tg_code', ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v")
+    .bind(`${code}:${Date.now() + 3_600_000}`)
+    .run();
+  const me = await tg(env, 'getMe', {});
+  return `https://t.me/${me.username}?start=owner_${code}`;
+}
+
+async function ownerCommand(env, message) {
+  const text = typeof message?.text === 'string' ? message.text.trim() : '';
+  const chat = message?.chat?.id;
+  if (!text || chat == null || message.chat.type !== 'private') return false;
+  const link = text.match(/^\/start(?:@\w+)?\s+owner_([A-Za-z0-9_-]{10,64})$/);
+  if (link) {
+    const saved = String((await env.DB.prepare("SELECT v FROM meta WHERE k = 'support_tg_code'").first())?.v || '');
+    const [code, until] = saved.split(':');
+    if (!code || Number(until) < Date.now() || !timingSafeEqual(code, link[1])) {
+      await sendMessage(env, chat, 'This link has expired. Open the admin panel and press "Connect Telegram" again.');
+      return true;
+    }
+    await env.DB.batch([
+      env.DB.prepare("INSERT INTO meta (k, v) VALUES ('support_tg_chat', ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v").bind(String(chat)),
+      env.DB.prepare("DELETE FROM meta WHERE k = 'support_tg_code'"),
+    ]);
+    await sendMessage(env, chat, `Done. New support messages from ${siteUrl(env)} will arrive here. Reply to one of them to answer the visitor by e-mail.`);
+    return true;
+  }
+  if (String(chat) !== (await ownerChat(env))) return false;
+  const ticket = String(message.reply_to_message?.text || '').match(/#T(\d+)/);
+  if (!ticket) return false;
+  try {
+    const t = await replyToTicket(env, ticket[1], text);
+    await sendMessage(env, chat, `Sent to ${t.email} ✓`);
+  } catch (err) {
+    await sendMessage(env, chat, `Not sent: ${err.message || 'error'}`);
+  }
+  return true;
 }
 
 export async function ensureStarsWebhook(env) {
