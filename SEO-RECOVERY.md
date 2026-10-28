@@ -60,7 +60,7 @@ Goal: about 584 → 250 indexable URLs, keeping every page that earned clicks.
    from Sep 1 to Oct 24. The build gives them `noindex, follow` and leaves them out of the sitemap and hreflang;
    `test/seo-prune.test.mjs` checks this. The sitemap went from 584 to 348 URLs. Tool pages and all English pages stay.
    Source data: Search Console Pages report, 482 URLs with impressions.
-5. Fix the small indexing items: 1 "Blocked by robots.txt", 3 "Discovered – not indexed", 1 "Crawled – not indexed".
+5. [x] (2026-10-28) Fix the small indexing items: 1 "Blocked by robots.txt", 3 "Discovered – not indexed", 1 "Crawled – not indexed".
 6. Submit the sitemap again. Do not mass-request indexing of single URLs.
 
 ## Phase 2 — make the remaining pages clearly better (weeks 1–3)
@@ -117,3 +117,11 @@ For each page:
   - first tweet → search old tweets.
   The sitemap has 331 URLs. The per-platform "who unfollowed me" posts stay separate: each has its own search
   intent, and the TikTok post is the top earner.
+- 2026-10-28: Phase 1 step 5. The 5 not-indexed URLs and what was done:
+  - `/account/` "Blocked by robots.txt" (from Oct 17): robots.txt already allows it, and the page is
+    `noindex` on purpose. Fix validation started in Search Console.
+  - `/es/blog/linktree-alternatives/`, `/pt/guides/download-linkedin-data/` ("Discovered") and
+    `/tr/blog/instagram-mutual-followers/` ("Crawled"): all three are in `seo-prune.json` and now `noindex`,
+    so nothing more to do.
+  - `/blog/who-removed-me-on-linkedin/` ("Discovered"): it had one contextual link. It is now also linked from
+    the LinkedIn tool page and from the LinkedIn connections post's "Read next", in all 6 languages.
