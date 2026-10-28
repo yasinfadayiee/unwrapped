@@ -1995,3 +1995,10 @@ main.page { overflow-x: clip; }
 .shot img { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--line-2); box-shadow: 0 20px 60px rgba(0, 0, 0, .35); }
 .shot figcaption { margin-top: 10px; font-size: 13px; text-align: center; opacity: .7; }
 @media (max-width: 480px) { .quick-answer { padding: 18px; } }
+
+/* Small data tables inside articles. */
+.prose .data-table { width: 100%; max-width: 520px; border-collapse: collapse; margin: 16px 0 8px; font-size: 15px; }
+.prose .data-table th, .prose .data-table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line-2); }
+.prose .data-table th { font-weight: 600; opacity: .75; }
+.prose .data-table tr:last-child td { border-bottom: 0; font-weight: 600; }
+.prose .article-note { font-size: 13px; opacity: .7; }

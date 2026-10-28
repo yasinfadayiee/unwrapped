@@ -150,3 +150,13 @@ For each page:
   - What `user_data_tiktok.json` contains, checked against the parser.
   - The updated date is shown on the page.
   Also fixed the German app labels "Du bist entfolgt/gefolgt", now "Von dir entfolgt/gefolgt".
+- 2026-10-28: Phase 2, page 3 is /blog/spotify-wrapped-2026/ in 6 languages. It had about 2,300 impressions and CTR around 0.3%.
+  Its queries were all "when does Wrapped 2026 come out" and "until when does it count". Changes:
+  - The answer goes first: most likely Wed 2 December 2026. Every Wrapped from 2021 to 2025 came out on the Wednesday
+    after US Thanksgiving (Wikipedia, checked 2026-10-28). Spotify hasn't announced a date.
+  - A table of past release dates.
+  - The cutoff text is corrected. It wrongly said December listening counts for next year. Spotify said in 2023 it
+    counts past Oct 31; the usual estimate is mid-November.
+  - Titles and descriptions now include the date (pt uses "Retrospectiva").
+  No screenshot, because the demo has no Spotify data.
+  TODO: when Spotify announces the real date (likely late November), update this page the same day.
