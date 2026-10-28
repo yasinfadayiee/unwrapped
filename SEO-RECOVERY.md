@@ -167,3 +167,9 @@ For each page:
   - A new FAQ on whether cleared searches can be seen.
   - A screenshot of "Your searches" in each language.
   The demo export now includes Instagram search files, so the demo's Privacy X-ray shows "Your searches".
+- 2026-10-28: Phase 2, page 5 is /instagram-follower-tracker/ in 6 languages (45 impressions, 7 clicks, the highest CTR
+  on the site). Changes:
+  - An answer-first box.
+  - The illustrated example card (made-up names) is replaced by a real screenshot of the comparison view in each
+    language.
+  - The page's claims were checked in the code: chart, 30/90-day counts, backup and restore.
