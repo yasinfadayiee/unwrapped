@@ -21,6 +21,12 @@ function header() {
     btn.setAttribute('aria-expanded', String(open));
   });
   $$('.mobile-nav a').forEach((a) => a.addEventListener('click', () => document.body.classList.remove('menu-open')));
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || !document.body.classList.contains('menu-open')) return;
+    document.body.classList.remove('menu-open');
+    btn?.setAttribute('aria-expanded', 'false');
+    btn?.focus();
+  });
 }
 
 /* ---------- colour themes ---------- */
@@ -98,7 +104,8 @@ function reveals() {
         }
       }
     },
-    { rootMargin: '0px 0px -8% 0px' },
+    // Phones scroll fast: start a little before the section enters the screen.
+    { rootMargin: window.innerWidth < 760 ? '0px 0px 12% 0px' : '0px 0px -8% 0px' },
   );
   items.forEach((i) => io.observe(i));
 }

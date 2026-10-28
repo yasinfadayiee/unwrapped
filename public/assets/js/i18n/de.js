@@ -1785,4 +1785,9 @@ export default {
   "Please enter a valid e-mail address so we can reply.": "Bitte gib eine gültige E-Mail-Adresse an, damit wir antworten können.",
   "Too many messages — please try again in an hour.": "Zu viele Nachrichten – versuch es in einer Stunde erneut.",
   "Could not send. Please try again or use one of the contacts below.": "Senden fehlgeschlagen. Versuch es erneut oder nutze einen der Kontakte unten.",
+  "All tools": "Alle Tools",
+  "Previous": "Zurück",
+  "Next": "Weiter",
+  "Search tools…": "Tools suchen…",
+  "Nothing found": "Nichts gefunden",
 };

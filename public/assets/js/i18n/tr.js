@@ -1773,4 +1773,9 @@ export default {
   "Please enter a valid e-mail address so we can reply.": "Yanıt verebilmemiz için geçerli bir e-posta adresi gir.",
   "Too many messages — please try again in an hour.": "Çok fazla mesaj — lütfen bir saat sonra tekrar dene.",
   "Could not send. Please try again or use one of the contacts below.": "Gönderilemedi. Tekrar dene veya aşağıdaki iletişim yollarından birini kullan.",
+  "All tools": "Tüm araçlar",
+  "Previous": "Önceki",
+  "Next": "Sonraki",
+  "Search tools…": "Araç ara…",
+  "Nothing found": "Hiçbir şey bulunamadı",
 };

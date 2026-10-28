@@ -315,18 +315,90 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
       !compactMode && v.pro && !ctx.pro ? icon('lock', 'lock') : null,
       !compactMode && v.feature && !ctx.can(v.feature) ? tierPill(tierFor(v.feature)) : null,
     );
-    btn.addEventListener('click', () => {
-      // Anonymous "+1 for this tool today", once per tool per visit; never in the demo.
-      if (!demo && !trackedTools.has(v.id)) {
-        trackedTools.add(v.id);
-        track('tool', { t: v.id });
-      }
-      viewId = v.id;
-      render();
-      main.scrollTo({ top: 0 });
-      main.focus({ preventScroll: true });
-    });
+    btn.addEventListener('click', () => openView(v.id));
     return btn;
+  }
+
+  function openView(id) {
+    // Anonymous "+1 for this tool today", once per tool per visit; never in the demo.
+    if (!demo && !trackedTools.has(id)) {
+      trackedTools.add(id);
+      track('tool', { t: id });
+    }
+    viewId = id;
+    render();
+    main.scrollTo({ top: 0 });
+    main.focus({ preventScroll: true });
+  }
+
+  // The phone menu: every tool of this platform as big tiles, grouped like the sidebar.
+  function openToolSheet(views, tab) {
+    const previous = document.activeElement;
+    const search = h('input', { class: 'input tool-sheet-search', type: 'search', placeholder: tl('Search tools…'), 'aria-label': tl('Search tools…'), autocomplete: 'off', enterkeyhint: 'search' });
+    const list = h('div', { class: 'tool-sheet-list' });
+    const closeBtn = h('button', { class: 'icon-btn', type: 'button', 'aria-label': tl('Close') }, icon('close'));
+    const helpBtn = h('button', { class: 'btn btn--ghost btn--sm', type: 'button' }, icon('message'), tl('Help & contact'));
+    const panel = h(
+      'div',
+      { class: 'tool-sheet-panel', role: 'dialog', 'aria-modal': 'true', 'aria-label': tl('All tools') },
+      h('div', { class: 'tool-sheet-grip', 'aria-hidden': 'true' }),
+      h('div', { class: 'tool-sheet-head' }, h('div', null, h('b', null, tl('All tools')), h('span', null, `${tab.label} · ${views.length}`)), closeBtn),
+      h('div', { class: 'tool-sheet-find' }, icon('search'), search),
+      list,
+      h('div', { class: 'tool-sheet-foot' }, helpBtn),
+    );
+    const sheet = h('div', { class: 'tool-sheet' }, h('div', { class: 'tool-sheet-bg' }), panel);
+    const draw = () => {
+      const q = search.value.trim().toLowerCase();
+      const shown = views.filter((v) => !q || v.label.toLowerCase().includes(q));
+      clear(list);
+      if (!shown.length) list.append(h('p', { class: 'tool-sheet-empty' }, tl('Nothing found')));
+      SECTIONS.concat([undefined]).forEach((s) => {
+        const group = shown.filter((v) => v.section === s);
+        if (!group.length) return;
+        if (s) list.append(h('div', { class: `tool-sheet-group${s === 'lab' ? ' group--lab' : ''}` }, s === 'lab' ? icon('sparkles') : null, s === 'lab' ? tl('Pro Lab') : SECTION_TITLE[s]()));
+        list.append(
+          h(
+            'div',
+            { class: 'tool-sheet-grid' },
+            group.map((v) => {
+              const b = h(
+                'button',
+                { class: 'tool-tile', type: 'button', 'aria-current': String(v.id === viewId) },
+                h('span', { class: 'tool-tile-ico' }, icon(v.icon || 'dot')),
+                h('span', { class: 'tool-tile-label' }, v.label),
+                v.count !== undefined ? h('span', { class: 'tool-tile-count' }, compact(v.count)) : null,
+                v.pro && !ctx.pro ? icon('lock', 'tool-tile-lock') : null,
+                v.feature && !ctx.can(v.feature) ? tierPill(tierFor(v.feature)) : null,
+              );
+              b.addEventListener('click', () => {
+                close();
+                openView(v.id);
+              });
+              return b;
+            }),
+          ),
+        );
+      });
+    };
+    const onKey = (e) => e.key === 'Escape' && close();
+    function close() {
+      sheet.remove();
+      document.removeEventListener('keydown', onKey);
+      previous?.focus?.({ preventScroll: true });
+    }
+    search.addEventListener('input', draw);
+    closeBtn.addEventListener('click', close);
+    sheet.firstChild.addEventListener('click', close);
+    helpBtn.addEventListener('click', () => {
+      close();
+      document.querySelector('.sw-fab')?.click();
+    });
+    document.addEventListener('keydown', onKey);
+    draw();
+    root.append(sheet);
+    list.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'center' });
+    closeBtn.focus({ preventScroll: true });
   }
 
   function render() {
@@ -369,24 +441,24 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         ),
       );
     }
-    // Phones: one grouped picker instead of a long row of tabs.
-    const picker = h(
-      'select',
-      { class: 'select app-picker', 'aria-label': tl('Sections') },
-      SECTIONS.concat([undefined]).map((s) => {
-        const list = views.filter((v) => v.section === s);
-        if (!list.length) return null;
-        const opts = list.map((v) => h('option', { value: v.id, selected: v.id === viewId }, `${v.label}${v.count !== undefined ? ` (${compact(v.count)})` : ''}`));
-        return s ? h('optgroup', { label: s === 'lab' ? tl('Pro Lab') : SECTION_TITLE[s]() }, opts) : opts;
-      }),
-    );
-    picker.addEventListener('change', () => {
-      viewId = picker.value;
-      render();
-      main.scrollTo({ top: 0 });
-    });
-    append(clear(mobileTabs), [picker]);
+    // Phones and tablets: one button that opens every tool as a grouped, searchable sheet.
     const view = views.find((v) => v.id === viewId);
+    const at = views.indexOf(view);
+    const pickBtn = h(
+      'button',
+      { class: 'tool-pick', type: 'button', 'aria-haspopup': 'dialog' },
+      h('span', { class: 'tool-pick-ico' }, icon(view.icon || 'dot')),
+      h('span', { class: 'tool-pick-text' }, h('small', null, `${tl('All tools')} · ${at + 1}/${views.length}`), h('b', null, view.label)),
+      h('span', { class: 'tool-pick-all' }, icon('list')),
+    );
+    pickBtn.addEventListener('click', () => openToolSheet(views, tab));
+    const step = (d) => {
+      const b = h('button', { class: 'icon-btn tool-step', type: 'button', 'aria-label': d < 0 ? tl('Previous') : tl('Next'), disabled: !views[at + d] }, icon(d < 0 ? 'arrow-left' : 'arrow'));
+      b.addEventListener('click', () => views[at + d] && openView(views[at + d].id));
+      return b;
+    };
+    append(clear(mobileTabs), [step(-1), pickBtn, step(1)]);
+    mobileTabs.style.display = views.length < 2 ? 'none' : '';
     let content;
     try {
       content = view.render();
@@ -409,8 +481,14 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
         ),
       );
     }
+    // Phones: the next tool is one tap away at the end of every view.
+    const nextView = views[at + 1];
+    if (nextView) {
+      const nextBtn = h('button', { class: 'view-next', type: 'button' }, h('span', null, h('small', null, tl('Next')), h('b', null, nextView.label)), icon('arrow'));
+      nextBtn.addEventListener('click', () => openView(nextView.id));
+      content.append(nextBtn);
+    }
     main.append(content);
-    mobileTabs.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'nearest', inline: 'center' });
   }
 
   function close({ replacing = false } = {}) {
