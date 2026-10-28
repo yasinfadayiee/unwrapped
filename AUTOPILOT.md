@@ -8,6 +8,17 @@ Goal: the first paid licenses (Telegram Stars, crypto). Visitors come from searc
 (en de es fr pt tr). Portfolio rule (2026-10-26): 0 paid orders by 2026-11-15 → this workflow is switched off
 and the site stays online with health checks only.
 
+## SEO recovery mode (since 2026-10-28) — read first
+On 2026-10-25 Google search impressions fell from ~2,250/day to ~30/day across all pages, languages and
+countries (no manual action, no security issue, 550 pages still indexed, crawling 100% OK). Most likely cause:
+~340 blog URLs (57 posts × 6 languages) published within two weeks on a brand-new domain, which Google treats as
+scaled content. Plan and checkpoints: `SEO-RECOVERY.md`. Until the owner ends recovery mode:
+- **No new pages, posts, guides or translations.** The workflow rejects any new file under `site/pages/` or
+  `site/i18n/*/pages/`. Skip items starting "PAUSED".
+- Only improve, merge or trim existing pages. Prefer fewer, better pages over more pages.
+- When the Backlog runs low, add only items of this kind (editing existing pages for accuracy, depth and
+  natural wording, or conversion fixes) — never "pages for searches people type".
+
 ## Rules for every run
 - One small, complete item per run. Never half-finish.
 - Read `PROJECT_STATE.md` first (facts), then only the files the item names. Never read `node_modules/`,
@@ -25,7 +36,7 @@ and the site stays online with health checks only.
 - After the change add one line to `PROJECT_STATE.md` "Recently merged" (`- autopilot: <what>`).
 - Skip items starting "OWNER PC:" (payment/checkout work done on the owner's PC); leave them unchecked.
 - When fewer than 3 items are unchecked, add 3 new specific items at the end of the Backlog that bring a
-  first paid order closer (free→paid clarity, trust at the lock card, pages for searches people type), then do
+  first paid order closer (free→paid clarity, trust at the lock card; in SEO recovery mode no new pages), then do
   the first one.
 - Finally write a one-line summary in simple Persian for the owner to the summary file the prompt names.
 
@@ -70,7 +81,7 @@ informational blog posts unless listed here. -->
 - [ ] Unfollower blog posts, part 2: same as part 1 for `blog-losing-followers.html`,
   `blog-unfollow-notification.html`, `blog-instagram-recently-unfollowed.html`, `blog-compare-follower-lists.html`
   (+5 translations each). Skip a post that already links /pricing/.
-- [ ] New page /blog/free-instagram-unfollower-checker/ (6 languages) for "free unfollower checker no login":
+- [ ] PAUSED (SEO recovery, no new pages): New page /blog/free-instagram-unfollower-checker/ (6 languages) for "free unfollower checker no login":
   honest answer — what Unwrapped shows for free with your own export (pricing.html "What do I get for free?" FAQ and
   the Free column only), what Plus adds, why password apps are risky (link /guides/are-unfollower-apps-safe/), steps
   link /guides/download-instagram-data/, CTA /instagram/ and /pricing/. Copy the structure of
@@ -83,7 +94,7 @@ informational blog posts unless listed here. -->
   matching pricing.html/terms: "What happens after I pay?" (activation automatic), "Do I need an account?" and
   "Can I get a refund?" (link /pricing/ FAQ / /terms/). Add only the missing ones, using facts already on
   pricing.html, terms.html or PROJECT_STATE.md. Never describe checkout steps that you have not read in those files.
-- [ ] Blog post "Instagram accounts you like most" — follow `autopilot/specs/blog-instagram-most-liked.md`
+- [ ] PAUSED (SEO recovery, no new pages): Blog post "Instagram accounts you like most" — follow `autopilot/specs/blog-instagram-most-liked.md`
   exactly (skip any screenshot step). Where the spec conflicts with "Rules for every run" (PROJECT_STATE line format
   "- autopilot: …", committing), the rules win. Its "free vs Plus" sentence must link /pricing/.
 - [ ] (only between 2026-11-10 and 2026-11-30; otherwise skip to the next item) Spotify Wrapped season
