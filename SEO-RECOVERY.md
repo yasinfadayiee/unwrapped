@@ -160,3 +160,10 @@ For each page:
   - Titles and descriptions now include the date (pt uses "Retrospectiva").
   No screenshot, because the demo has no Spotify data.
   TODO: when Spotify announces the real date (likely late November), update this page the same day.
+- 2026-10-28: Phase 2, page 4 is /blog/instagram-search-history/ in 6 languages (1,054 impressions). Its queries were
+  "instagram search history", how to see or delete it, and seeing cleared searches. Changes:
+  - The in-app and Accounts Center → Search history steps, plus the clear steps, now follow Instagram's Help Center
+    (articles 466613274883864 and 354860134605952). Instagram itself notes that clearing is temporary.
+  - A new FAQ on whether cleared searches can be seen.
+  - A screenshot of "Your searches" in each language.
+  The demo export now includes Instagram search files, so the demo's Privacy X-ray shows "Your searches".

@@ -235,6 +235,10 @@ export function demoInstagramFiles(now, rand, { followerCount = 1284, followingC
     'preferences/your_topics/recommended_topics.json',
     JSON.stringify({ topics_your_topics: [...TOPICS, ...TOPICS.map((x) => `${x} tips`)].slice(0, 36).map((name) => ({ string_map_data: { Name: { value: name } } })) }),
   ]);
+  // Search history (Privacy X-ray → "Your searches"): accounts and keywords, as Instagram stores them.
+  const searchRow = (value) => ({ string_map_data: { Search: { value }, Time: { timestamp: sec(t(300)) } } });
+  files.push(['logged_information/recent_searches/account_searches.json', JSON.stringify({ searches_user: A.slice(0, 18).map((a, i) => searchRow(`${a}.${B[(i * 7) % B.length]}`)) })]);
+  files.push(['logged_information/recent_searches/word_or_phrase_searches.json', JSON.stringify({ searches_keyword: [...TOPICS.slice(0, 12), 'birthday cake ideas', 'cheap flights lisbon', 'apartment plants low light'].map(searchRow) })]);
   files.push(['ads_information/ads_and_topics/ads_viewed.json', JSON.stringify({ impressions_history_ads_seen: new Array(5120).fill({}) })]);
   files.push(['ads_information/ads_and_topics/posts_viewed.json', JSON.stringify({ impressions_history_posts_seen: new Array(9810).fill({}) })]);
 

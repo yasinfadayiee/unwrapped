@@ -4,6 +4,7 @@
   "headline": "Cómo ver todo tu historial de búsqueda de Instagram",
   "description": "La app solo muestra búsquedas recientes. Tu descarga de datos de Instagram guarda más: cada cuenta, palabra y hashtag que buscaste. Así puedes verlo todo en privado, y borrarlo.",
   "article": "2026-10-14",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -19,7 +20,7 @@
   <div class="container">
     <div class="prose">
       <h2>En la app: solo búsquedas recientes</h2>
-      <p>Toca la pestaña de búsqueda y la barra de búsqueda: Instagram muestra tus búsquedas recientes, con “Ver todo” para una lista más larga. Es práctico, pero limitado, y lo que borraste ya no aparece ahí.</p>
+      <p>Toca <strong>Buscar</strong> y luego la barra de búsqueda: Instagram muestra tus búsquedas recientes (cuentas, hashtags, audios, lugares). Para verlas por cuenta, ve al <strong>Centro de cuentas</strong> (Meta Account para algunas personas) → <strong>Tu información y permisos</strong> → <strong>Historial de búsqueda</strong> y elige tu cuenta de Instagram. Las dos vistas solo muestran lo que Instagram aún guarda, así que lo que borraste ya no aparece.</p>
 
       <h2>En tu descarga de datos: la lista completa</h2>
       <p>Cuando descargas <strong>Toda la información disponible</strong> de Instagram, el ZIP contiene archivos de búsqueda, por ejemplo <code>account_searches.json</code>, <code>word_or_phrase_searches.json</code> y <code>tag_searches.json</code>, con cada búsqueda y su fecha. Mira <a href="/guides/instagram-data-files-explained/">cada archivo importante explicado</a>.</p>
@@ -30,14 +31,19 @@
         <li>Suelta el ZIP en <a href="/instagram/">Unwrapped</a>. Se lee en tu navegador; no se sube nada.</li>
         <li>Abre <strong>Privacy X-ray</strong>: “Tus búsquedas” las muestra, junto a los anunciantes e intereses que Instagram vinculó contigo.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/ig-searches-es-1200.webp" srcset="/assets/img/shots/ig-searches-es-720.webp 720w, /assets/img/shots/ig-searches-es-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="295" alt="Rayos X de privacidad de Unwrapped con las búsquedas de Instagram de una descarga de datos: cuentas y palabras" loading="lazy" decoding="async">
+        <figcaption>Rayos X de privacidad en la demo: cada búsqueda de cuentas y palabras que hay en la descarga, de la más reciente a la más antigua.</figcaption>
+      </figure>
 
       <h2>Cómo borrar tu historial de búsqueda de Instagram</h2>
-      <p>En la app, abre la búsqueda, toca la barra y luego <strong>Ver todo</strong> → <strong>Borrar todo</strong>. También puedes quitar búsquedas sueltas con la ×. Borrar cambia lo que Instagram te muestra; una descarga de datos hecha antes de borrar todavía contiene las entradas antiguas, así que elimina los ZIP antiguos que ya no necesites.</p>
+      <p>Hay dos formas, ambas del servicio de ayuda de Instagram. En la app, abre <strong>Buscar</strong>, toca la barra y pulsa <strong>Borrar todo</strong> junto a Recientes, o la × junto a una búsqueda. O ve al Centro de cuentas → Tu información y permisos → <strong>Historial de búsqueda</strong>, elige la cuenta y quita las búsquedas ahí. Instagram avisa de que borrar es temporal: una búsqueda borrada puede volver si la buscas de nuevo. Una descarga de datos hecha antes de borrar sigue conteniendo las búsquedas antiguas, así que elimina los ZIP viejos que ya no necesites.</p>
       <div class="read-next"><h2>Sigue leyendo</h2><ul><li><a href="/blog/what-instagram-knows-about-you/">Lo que Instagram sabe de ti y cómo verlo</a></li><li><a href="/blog/who-viewed-my-instagram-profile/">¿Quién vio mi perfil de Instagram?</a></li><li><a href="/blog/recover-deleted-instagram-messages/">¿Se pueden recuperar mensajes borrados de Instagram?</a></li></ul></div>
       <h2>Preguntas frecuentes</h2>
     </div>
     <div class="faq" style="margin:0;max-width:760px">
-      <details open><summary>¿Otras personas pueden ver mis búsquedas de Instagram?</summary><div class="answer"><p>No. Tu historial de búsqueda solo lo ves tú, en la app y en tu propia descarga de datos.</p></div></details>
+      <details open><summary>¿Puedo ver las búsquedas de Instagram que ya borré?</summary><div class="answer"><p>En la app y en el Centro de cuentas, no. Si tienes una descarga de datos anterior al borrado, siguen en sus archivos de búsqueda. No cuentes con que una descarga pedida después de borrar las incluya.</p></div></details>
+      <details><summary>¿Otras personas pueden ver mis búsquedas de Instagram?</summary><div class="answer"><p>No. Tu historial de búsqueda solo lo ves tú, en la app y en tu propia descarga de datos.</p></div></details>
       <details><summary>¿Instagram avisa a alguien si lo busqué?</summary><div class="answer"><p>No. Buscar una cuenta no la notifica, y leer tu descarga tampoco.</p></div></details>
       <details><summary>¿Es gratis ver mi historial de búsqueda?</summary><div class="answer"><p>Sí, las primeras búsquedas son gratis; ver la lista completa forma parte de Plus.</p></div></details>
     </div>

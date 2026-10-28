@@ -4,6 +4,7 @@
   "headline": "Instagram arama geçmişinin tamamı nasıl görülür",
   "description": "Uygulama yalnızca son aramaları gösterir. Instagram veri indirmen daha fazlasını saklar: aradığın her hesap, kelime ve etiket. Hepsini gizlice nasıl göreceğin ve nasıl sileceğin burada.",
   "article": "2026-10-14",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -19,7 +20,7 @@
   <div class="container">
     <div class="prose">
       <h2>Uygulamada: yalnızca son aramalar</h2>
-      <p>Arama sekmesine ve arama çubuğuna dokun: Instagram son aramalarını listeler, daha uzun liste için “Tümünü gör” vardır. Kullanışlıdır ama sınırlıdır ve sildiklerin artık orada görünmez.</p>
+      <p><strong>Ara</strong>’ya, ardından arama çubuğuna dokun: Instagram son aramalarını listeler (hesaplar, hashtag’ler, sesler, yerler). Hesap bazında görmek için <strong>Hesaplar Merkezi</strong> (bazı kişilerde Meta Account) → <strong>Bilgilerin ve izinlerin</strong> → <strong>Arama geçmişi</strong>’ne git ve Instagram hesabını seç. İkisi de yalnızca Instagram’ın hâlâ sakladıklarını gösterir; sildiklerin orada görünmez.</p>
 
       <h2>Veri indirmende: tam liste</h2>
       <p>Instagram’dan <strong>Tüm mevcut bilgiler</strong>’i indirdiğinde ZIP’in içinde arama dosyaları bulunur — örneğin <code>account_searches.json</code>, <code>word_or_phrase_searches.json</code> ve <code>tag_searches.json</code> — her arama ve ne zaman yapıldığıyla birlikte. <a href="/guides/instagram-data-files-explained/">Önemli her dosyanın açıklamasına</a> bak.</p>
@@ -30,14 +31,19 @@
         <li>ZIP’i <a href="/instagram/">Unwrapped</a>’a bırak. Tarayıcında okunur — hiçbir şey yüklenmez.</li>
         <li><strong>Privacy X-ray</strong>’i aç: “Aramaların” bölümü onları, Instagram’ın seninle ilişkilendirdiği reklamverenler ve ilgi alanlarının yanında listeler.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/ig-searches-tr-1200.webp" srcset="/assets/img/shots/ig-searches-tr-720.webp 720w, /assets/img/shots/ig-searches-tr-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="295" alt="Unwrapped Gizlilik Röntgeni, bir veri indirmesindeki Instagram aramalarını listeliyor: hesaplar ve kelimeler" loading="lazy" decoding="async">
+        <figcaption>Demodaki Gizlilik Röntgeni: indirmede bulunan her hesap ve kelime araması, en yeniden en eskiye.</figcaption>
+      </figure>
 
       <h2>Instagram arama geçmişi nasıl silinir</h2>
-      <p>Uygulamada aramayı aç, arama çubuğuna dokun, ardından <strong>Tümünü gör</strong> → <strong>Tümünü temizle</strong>. Tek tek aramaları × ile de kaldırabilirsin. Silmek Instagram’ın sana gösterdiklerini değiştirir; silmeden önce yapılmış bir veri indirmesi eski kayıtları hâlâ içerir, bu yüzden artık ihtiyacın olmayan eski ZIP’leri sil.</p>
+      <p>İki yol var, ikisi de Instagram Yardım Merkezi’nden. Uygulamada <strong>Ara</strong>’yı aç, arama çubuğuna dokun ve Son aramalar’ın yanındaki <strong>Tümünü temizle</strong>’ye ya da tek bir aramanın yanındaki ×’e dokun. Ya da Hesaplar Merkezi → Bilgilerin ve izinlerin → <strong>Arama geçmişi</strong>’ne git, hesabı seç ve aramaları oradan kaldır. Instagram’a göre temizleme geçicidir: silinen bir arama, onu yeniden aratırsan geri gelebilir. Temizlemeden önce yaptığın bir veri indirmesi eski aramaları hâlâ içerir; artık ihtiyacın olmayan eski ZIP’leri sil.</p>
       <div class="read-next"><h2>Sıradaki okuma</h2><ul><li><a href="/blog/what-instagram-knows-about-you/">Instagram senin hakkında ne biliyor — ve nasıl görürsün</a></li><li><a href="/blog/who-viewed-my-instagram-profile/">Instagram profilime kim baktı?</a></li><li><a href="/blog/recover-deleted-instagram-messages/">Silinen Instagram mesajları geri getirilebilir mi?</a></li></ul></div>
       <h2>Sık sorulan sorular</h2>
     </div>
     <div class="faq" style="margin:0;max-width:760px">
-      <details open><summary>Başkaları Instagram aramalarımı görebilir mi?</summary><div class="answer"><p>Hayır. Arama geçmişini yalnızca sen görürsün — uygulamada ve kendi veri indirmende.</p></div></details>
+      <details open><summary>Sildiğim Instagram aramalarını görebilir miyim?</summary><div class="answer"><p>Uygulamada ve Hesaplar Merkezi’nde hayır. Silmeden önce yapılmış bir veri indirmen varsa, aramalar hâlâ onun arama dosyalarında durur. Sildikten sonra istenen bir indirmenin onları içereceğine güvenme.</p></div></details>
+      <details><summary>Başkaları Instagram aramalarımı görebilir mi?</summary><div class="answer"><p>Hayır. Arama geçmişini yalnızca sen görürsün — uygulamada ve kendi veri indirmende.</p></div></details>
       <details><summary>Instagram aradığım kişiye haber verir mi?</summary><div class="answer"><p>Hayır. Bir hesabı aramak ona bildirim göndermez, indirmeni okumak da göndermez.</p></div></details>
       <details><summary>Arama geçmişimi görmek ücretsiz mi?</summary><div class="answer"><p>Evet, ilk aramalar ücretsizdir; tam listeyi görmek Plus’ın bir parçasıdır.</p></div></details>
     </div>
