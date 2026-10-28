@@ -135,5 +135,9 @@ For each page:
   - A new "Inside the export" section, checked against the parser: the folder path, split `message_N.json` files and the
     Meta encoding repair.
   - Fixed the FAQ: the viewer reads JSON only, not HTML.
-  Note: the rest of the site still says "Download your information" (`steps-instagram` partial, guides). Meta renamed it
-  to "Export your information"; update those next.
+- 2026-10-28: The site now uses Meta's current export labels everywhere, in 6 languages (393 labels):
+  - Export your information → Create export → profile → Export to device → Customize information → Start export.
+  - In the shared step blocks and guides, "Export to device" now comes before "Customize information".
+  - The FAQ questions still use the old name, because people search for it. Their answers say Meta renamed it.
+  - Verified: the English Instagram and Facebook Help Center pages, on 2026-10-28.
+  - Not verified live: the translated labels and the "Customize information" step.

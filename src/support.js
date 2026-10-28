@@ -101,7 +101,7 @@ COMMON FIXES:
 - Upload button does nothing on a phone: you are inside the Instagram/TikTok/Facebook in-app browser. Tap the ⋯ menu, choose "Open in browser" (Safari or Chrome) and try again.
 - iPhone: the ZIP is in the Files app → Downloads.
 - "We couldn't find social media data": the download was requested as HTML/PDF, has only media, or single files were picked. Request again in JSON and drop the whole ZIP.
-- Instagram download not arrived: small ones take minutes, large ones hours or a few days. Check e-mail and Accounts Center → Download your information. The link expires after a few days.
+- Instagram download not arrived: small ones take minutes, large ones hours or a few days. Check e-mail and Accounts Center → Your information and permissions → Export your information (Meta renamed "Download your information"; the export stays under Available downloads for 4 days). To request: Export your information → Create export → profile → Export to device → choose info, format JSON → Start export.
 - "Who unfollowed you" is empty: it needs two exports from different dates. The first is saved as a snapshot; drop a newer export later, or drop an old and a new one together.
 - Numbers differ slightly from the app: exports lag a few hours and skip deactivated accounts.
 - History disappeared: snapshots live in the browser; clearing site data or a private window starts fresh. Use Download backup / Restore backup.
