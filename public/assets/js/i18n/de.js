@@ -201,6 +201,7 @@ export default {
   "Your socials,": "Deine Socials,",
   "unwrapped.": "ausgepackt.",
   "checked up.": "durchgecheckt.",
+  "My {v0},": "Mein {v0},",
   "We decoded {v0} — right here on your device.": "Wir haben {v0} entschlüsselt — direkt hier auf deinem Gerät.",
   "{v0} · your people": "{v0} · deine Leute",
   "don’t follow you back on {v0}": "folgen dir auf {v0} nicht zurück",

@@ -326,9 +326,14 @@ export function healthView(ds, ctx) {
   if (!health) return root.appendChild(panel(null, emptyState(tl('Not enough data in this export to score the account yet.'), 'pulse'))) && root;
   const [headline, line] = HEALTH[health.grade];
   const weakest = health.factors[0];
+  // Factor names sit mid-sentence, so they are lowercased, except in German,
+  // where nouns keep their capital; a button label always starts with a capital.
+  const lang = document.documentElement.lang || 'en';
+  const midSentence = (s) => (lang.startsWith('de') ? s : s.toLocaleLowerCase(lang));
+  const capFirst = (s) => s.charAt(0).toLocaleUpperCase(lang) + s.slice(1);
   const fixBtn = (f, primary = false) => {
     const locked = PAID_FIX.has(f.fix) && !ctx.can(f.fix);
-    return h('button', { class: `btn ${primary ? 'btn--primary' : 'btn--ghost'} btn--sm`, type: 'button', onClick: () => ctx.go(f.fix) }, primary ? tl('Fix {v0}', { v0: tl(f.label).toLowerCase() }) : tl('Improve'), icon('arrow'), locked ? tierPill(tierFor(f.fix)) : null);
+    return h('button', { class: `btn ${primary ? 'btn--primary' : 'btn--ghost'} btn--sm`, type: 'button', onClick: () => ctx.go(f.fix) }, primary ? capFirst(tl('Fix {v0}', { v0: midSentence(tl(f.label)) })) : tl('Improve'), icon('arrow'), locked ? tierPill(tierFor(f.fix)) : null);
   };
 
   const canvas = h('canvas', { width: 1080, height: 1920, role: 'img', 'aria-label': tl('Account health card: {v0} out of 100', { v0: health.score }) });
@@ -338,7 +343,7 @@ export function healthView(ds, ctx) {
       canvas,
       {
         kicker: tl('{v0} · health', { v0: ds.label }),
-        titleA: `My ${ds.label},`,
+        titleA: tl('My {v0},', { v0: ds.label }),
         titleB: tl('checked up.'),
         hero: String(health.score),
         heroLabel: tl('account health score · grade {v0}', { v0: health.grade }),
@@ -368,7 +373,7 @@ export function healthView(ds, ctx) {
             { class: 'health-copy' },
             h('span', { class: 'eyebrow' }, tl('Your account')),
             h('h3', null, headline),
-            h('p', null, `${line} ${tl('Your weakest area is {v0}: {v1}.', { v0: tl(weakest.label).toLowerCase(), v1: tl(weakest.detailKey, weakest.vars) })}`),
+            h('p', null, `${line} ${tl('Your weakest area is {v0}: {v1}.', { v0: midSentence(tl(weakest.label)), v1: tl(weakest.detailKey, weakest.vars) })}`),
             fixBtn(weakest, true),
           ),
         ),

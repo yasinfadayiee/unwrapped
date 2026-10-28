@@ -195,6 +195,7 @@ export default {
   "Your socials,": "Tus redes,",
   "unwrapped.": "al descubierto.",
   "checked up.": "en revisión.",
+  "My {v0},": "Mi {v0},",
   "We decoded {v0} — right here on your device.": "Desciframos {v0}, aquí mismo, en tu dispositivo.",
   "{v0} · your people": "{v0} · tu gente",
   "don’t follow you back on {v0}": "no te siguen en {v0}",

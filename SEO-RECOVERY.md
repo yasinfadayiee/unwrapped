@@ -180,3 +180,12 @@ For each page:
   - Removed unverified claims: that requests "count toward your limits", "look spammy" and "never expire".
   - New FAQs: whether requests expire (Instagram's Help Center doesn't mention it) and why a request disappears.
   - A screenshot of the Follow requests view in each language.
+- 2026-10-28/29: Phase 2, page 7 is the home page in 6 languages. Its queries are brand searches only. Changes:
+  - The hand-built HTML mock of the dashboard is replaced by a real screenshot of Account health in each language.
+  - The "login apps quietly sell what they collect" claim (unprovable) now says you can't check what they do with your
+    data.
+  - App translation bugs found while taking screenshots:
+    - The share cards' "My {platform}," was hard-coded English; it now goes through `tl()` in 5 dictionaries.
+    - French "passés au crible" is now "passé".
+    - The Account health fix button kept German nouns lowercase and started Turkish with a lowercase letter.
+  With this, the 7 pages on the Phase 2 list are done.

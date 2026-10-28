@@ -188,7 +188,7 @@ export function cardsFor(ds) {
       id: 'network',
       platform: ds.platform,
       kicker: tl('{v0} · network', { v0: ds.label }),
-      titleA: `My ${ds.label},`,
+      titleA: tl('My {v0},', { v0: ds.label }),
       titleB: tl('unwrapped.'),
       hero: pct(rel.followBackRate),
       heroLabel: tl('of the accounts I follow follow me back'),

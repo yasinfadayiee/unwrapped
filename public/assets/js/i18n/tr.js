@@ -195,6 +195,7 @@ export default {
   "Your socials,": "Sosyal hesapların,",
   "unwrapped.": "açığa çıktı.",
   "checked up.": "kontrolden geçti.",
+  "My {v0},": "{v0} hesabım,",
   "We decoded {v0} — right here on your device.": "{v0} çözdük — tam burada, cihazında.",
   "{v0} · your people": "{v0} · senin insanların",
   "don’t follow you back on {v0}": "{v0} üzerinde seni geri takip etmiyor",
