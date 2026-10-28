@@ -141,3 +141,12 @@ For each page:
   - The FAQ questions still use the old name, because people search for it. Their answers say Meta renamed it.
   - Verified: the English Instagram and Facebook Help Center pages, on 2026-10-28.
   - Not verified live: the translated labels and the "Customize information" step.
+- 2026-10-28: Phase 2, page 2 is /blog/who-unfollowed-me-on-tiktok/ in 6 languages (/es/ was the top post: 620 impressions,
+  22 clicks). Its main query was "como saber quien me dejo de seguir en tiktok". Changes:
+  - A direct answer first.
+  - Steps checked against TikTok Support: Request data, a few days to prepare, 4-day download window.
+  - A screenshot of the comparison view in each language.
+  - A "check one person" tip.
+  - What `user_data_tiktok.json` contains, checked against the parser.
+  - The updated date is shown on the page.
+  Also fixed the German app labels "Du bist entfolgt/gefolgt", now "Von dir entfolgt/gefolgt".

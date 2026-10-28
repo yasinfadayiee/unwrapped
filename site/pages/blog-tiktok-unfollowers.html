@@ -4,6 +4,7 @@
   "headline": "How to see who unfollowed you on TikTok",
   "description": "TikTok doesn’t tell you who unfollowed you. Here’s the safe way to find out — and who doesn’t follow you back — using your own TikTok data download, without giving any app your password.",
   "article": "2026-10-13",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -19,11 +20,22 @@
   <div class="container">
     <div class="prose">
       <h2>The short answer</h2>
+      <p>TikTok doesn’t notify you and has no list of who unfollowed you. The reliable way is to compare two of your own data downloads: anyone on the old follower list who is missing from the new one has unfollowed you, or deleted their account.</p>
       <ol>
-        <li>Request your TikTok data in <strong>JSON</strong> (Profile → ☰ → Settings and privacy → Account → Download your data → <strong>All data</strong>).</li>
-        <li>Drop the ZIP on <a href="/tiktok/">Unwrapped</a>. You see who doesn’t follow you back, and your follower list is saved as a private snapshot on your device.</li>
-        <li>A week or two later, download it again and drop the new ZIP. Everyone who left in between is listed by name.</li>
+        <li>In TikTok: Profile → ☰ → Settings and privacy → Account → <strong>Download your data</strong>. Choose <strong>All data</strong>, format <strong>JSON</strong>, and tap <strong>Request data</strong>.</li>
+        <li>TikTok notifies you in the app when the file is ready, which can take a few days. Download it from the <strong>Download data</strong> tab within 4 days and drop the ZIP on <a href="/tiktok/">Unwrapped</a>. You see who doesn’t follow you back, and your follower list is saved as a private snapshot on your device.</li>
+        <li>A week or two later, request a new file and drop it. Everyone who left in between is listed by name. Still have an older TikTok download? Drop both at once and you get the answer right away.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/tiktok-unfollowers-en-1200.webp" srcset="/assets/img/shots/tiktok-unfollowers-en-720.webp 720w, /assets/img/shots/tiktok-unfollowers-en-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="538" alt="Unwrapped comparing two TikTok exports: 17 unfollowers, 23 new followers and the list of names" loading="lazy" decoding="async">
+        <figcaption>Two TikTok downloads compared in the demo: who unfollowed you, new followers, and the names. People you still follow are listed first.</figcaption>
+      </figure>
+
+      <h2>To check one person right now</h2>
+      <p>Open your profile, tap <strong>Followers</strong> and type their username in the search box. If they don’t show up, they no longer follow you. This works for one name at a time, not for your whole list.</p>
+
+      <h2>What’s in TikTok’s file</h2>
+      <p>In JSON format the ZIP holds one file, <code>user_data_tiktok.json</code>. It contains your follower list and your following list, each with usernames and the date of the follow. Unwrapped reads it (or the TXT version) in your browser, and nothing is uploaded.</p>
 
       <h2>Why TikTok “unfollower apps” are risky</h2>
       <p>TikTok doesn’t give third-party apps your follower list. Apps that promise live unfollower alerts either ask you to log in — which can get your account locked and breaks TikTok’s rules — or show guesses. Your official data download has the real lists and needs no password.</p>
@@ -40,7 +52,7 @@
       <ul>
         <li>Repeat every one or two weeks — shorter gaps give a cleaner history.</li>
         <li>Deleted or banned accounts disappear from your followers too, so they can look like unfollows. Check a profile before drawing conclusions.</li>
-        <li>TikTok can take from hours to a few days to prepare the file. The download link expires after a few days.</li>
+        <li>TikTok can take a few days to prepare the file. Once it’s ready, you can download it for up to 4 days.</li>
       </ul>
       <div class="read-next"><h2>Read next</h2><ul><li><a href="/guides/tiktok-screen-time/">How much time do you really spend on TikTok?</a></li><li><a href="/blog/why-am-i-losing-followers/">Why am I losing followers on Instagram? 8 real reasons</a></li><li><a href="/blog/how-to-spot-fake-followers/">How to spot fake followers on Instagram</a></li><li><a href="/blog/tiktok-login-history/">How to check your TikTok login history and devices</a></li></ul></div>
       <h2>FAQ</h2>

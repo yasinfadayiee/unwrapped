@@ -4,6 +4,7 @@
   "headline": "Como ver quem deixou de te seguir no TikTok",
   "description": "O TikTok não diz quem deixou de te seguir. Veja o jeito seguro de descobrir — e quem não te segue de volta — usando seu próprio download de dados do TikTok, sem dar sua senha a nenhum app.",
   "article": "2026-10-13",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -19,11 +20,22 @@
   <div class="container">
     <div class="prose">
       <h2>A resposta curta</h2>
+      <p>O TikTok não avisa e não tem uma lista de quem deixou de te seguir. O jeito confiável é comparar dois downloads dos seus próprios dados: quem está na lista de seguidores antiga e sumiu da nova deixou de te seguir, ou apagou a conta.</p>
       <ol>
-        <li>Peça seus dados do TikTok em <strong>JSON</strong> (Perfil → ☰ → Configurações e privacidade → Conta → Baixar seus dados → <strong>Todos os dados</strong>).</li>
-        <li>Solte o ZIP no <a href="/tiktok/">Unwrapped</a>. Você vê quem não te segue de volta, e sua lista de seguidores fica salva como registro privado no seu dispositivo.</li>
-        <li>Uma ou duas semanas depois, baixe de novo e solte o novo ZIP. Todo mundo que saiu nesse meio-tempo aparece com o nome.</li>
+        <li>No TikTok: Perfil → ☰ → Configurações e privacidade → Conta → <strong>Baixar seus dados</strong>. Escolha <strong>Todos os dados</strong>, formato <strong>JSON</strong>, e toque em <strong>Solicitar dados</strong>.</li>
+        <li>O TikTok avisa no app quando o arquivo fica pronto, o que pode levar alguns dias. Baixe pela aba <strong>Baixar dados</strong> em até 4 dias e solte o ZIP no <a href="/tiktok/">Unwrapped</a>. Você vê quem não te segue de volta, e sua lista de seguidores fica salva como registro privado no seu aparelho.</li>
+        <li>Uma ou duas semanas depois, peça um arquivo novo e solte. Todo mundo que saiu nesse meio-tempo aparece com o nome. Ainda tem um download antigo do TikTok? Solte os dois juntos e veja a resposta na hora.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/tiktok-unfollowers-pt-1200.webp" srcset="/assets/img/shots/tiktok-unfollowers-pt-720.webp 720w, /assets/img/shots/tiktok-unfollowers-pt-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="538" alt="Unwrapped comparando duas exportações do TikTok: 17 deixaram de seguir, 23 novos seguidores e a lista de nomes" loading="lazy" decoding="async">
+        <figcaption>Dois downloads do TikTok comparados na demo: quem deixou de te seguir, novos seguidores e os nomes. Quem você ainda segue aparece primeiro.</figcaption>
+      </figure>
+
+      <h2>Para conferir uma pessoa agora</h2>
+      <p>Abra seu perfil, toque em <strong>Seguidores</strong> e digite o nome de usuário na busca. Se a pessoa não aparecer, ela não te segue mais. Funciona para um nome por vez, não para a lista inteira.</p>
+
+      <h2>O que tem no arquivo do TikTok</h2>
+      <p>No formato JSON, o ZIP traz um único arquivo, <code>user_data_tiktok.json</code>. Ele tem sua lista de seguidores e a de quem você segue, com nomes de usuário e a data de cada follow. O Unwrapped lê esse arquivo (ou a versão em TXT) no seu navegador, sem enviar nada.</p>
 
       <h2>Por que “apps de unfollow” do TikTok são arriscados</h2>
       <p>O TikTok não entrega sua lista de seguidores a apps de terceiros. Apps que prometem alertas ao vivo pedem login — o que pode bloquear sua conta e viola as regras do TikTok — ou mostram chutes. Seu download oficial de dados tem as listas reais e não precisa de senha.</p>
@@ -40,7 +52,7 @@
       <ul>
         <li>Repita a cada uma ou duas semanas — intervalos menores dão um histórico mais limpo.</li>
         <li>Contas apagadas ou banidas também somem dos seus seguidores e podem parecer unfollows. Confira o perfil antes de tirar conclusões.</li>
-        <li>O TikTok pode levar de horas a alguns dias para preparar o arquivo. O link de download expira em poucos dias.</li>
+        <li>O TikTok pode levar alguns dias para preparar o arquivo. Quando fica pronto, dá para baixar por até 4 dias.</li>
       </ul>
       <div class="read-next"><h2>Leia também</h2><ul><li><a href="/guides/tiktok-screen-time/">Quanto tempo você realmente passa no TikTok?</a></li><li><a href="/blog/why-am-i-losing-followers/">Por que estou perdendo seguidores no Instagram? 8 motivos reais</a></li><li><a href="/blog/how-to-spot-fake-followers/">Como identificar seguidores falsos no Instagram</a></li><li><a href="/blog/tiktok-login-history/">Como conferir seu histórico de login e dispositivos no TikTok</a></li></ul></div>
       <h2>Perguntas frequentes</h2>

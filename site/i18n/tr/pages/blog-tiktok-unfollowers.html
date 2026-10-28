@@ -4,6 +4,7 @@
   "headline": "TikTok’ta seni kimin takipten çıktığını görme",
   "description": "TikTok seni kimin takipten çıktığını söylemez. Bunu — ve kimin geri takip etmediğini — kendi TikTok veri indirmenle, hiçbir uygulamaya şifreni vermeden öğrenmenin güvenli yolu.",
   "article": "2026-10-13",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -19,11 +20,22 @@
   <div class="container">
     <div class="prose">
       <h2>Kısa cevap</h2>
+      <p>TikTok seni takipten çıkanları bildirmez ve bunun bir listesini de tutmaz. Güvenilir yol, kendi verilerinin iki indirmesini karşılaştırmaktır: eski takipçi listesinde olup yenisinde olmayan herkes seni takipten çıkmış ya da hesabını silmiştir.</p>
       <ol>
-        <li>TikTok verilerini <strong>JSON</strong> olarak iste (Profil → ☰ → Ayarlar ve gizlilik → Hesap → Verilerini indir → <strong>Tüm veriler</strong>).</li>
-        <li>ZIP’i <a href="/tiktok/">Unwrapped</a>’a bırak. Seni geri takip etmeyenleri görürsün ve takipçi listen cihazında özel bir anlık görüntü olarak kaydedilir.</li>
-        <li>Bir iki hafta sonra yeniden indir ve yeni ZIP’i bırak. Arada ayrılan herkes isim isim listelenir.</li>
+        <li>TikTok’ta: Profil → ☰ → Ayarlar ve gizlilik → Hesap → <strong>Verilerini indir</strong>. <strong>Tüm veriler</strong>’i ve <strong>JSON</strong> biçimini seç, sonra <strong>Veri talep et</strong>’e dokun.</li>
+        <li>Dosya hazır olunca TikTok uygulamada bildirir; bu birkaç gün sürebilir. Dosyayı 4 gün içinde <strong>Verileri indir</strong> sekmesinden indir ve ZIP’i <a href="/tiktok/">Unwrapped</a>’a bırak. Seni geri takip etmeyenleri görürsün ve takipçi listen cihazında özel bir anlık görüntü olarak kaydedilir.</li>
+        <li>Bir iki hafta sonra yeni bir dosya iste ve onu da bırak. Arada ayrılan herkes isim isim listelenir. Elinde eski bir TikTok indirmesi var mı? İkisini birlikte bırak, cevabı hemen gör.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/tiktok-unfollowers-tr-1200.webp" srcset="/assets/img/shots/tiktok-unfollowers-tr-720.webp 720w, /assets/img/shots/tiktok-unfollowers-tr-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="538" alt="Unwrapped iki TikTok dışa aktarımını karşılaştırıyor: 17 kişi takipten çıktı, 23 yeni takipçi ve isim listesi" loading="lazy" decoding="async">
+        <figcaption>Demoda karşılaştırılan iki TikTok indirmesi: seni takipten çıkanlar, yeni takipçiler ve isimler. Hâlâ takip ettiklerin en üstte.</figcaption>
+      </figure>
+
+      <h2>Tek bir kişiyi hemen kontrol etmek için</h2>
+      <p>Profilini aç, <strong>Takipçiler</strong>’e dokun ve arama kutusuna kullanıcı adını yaz. Çıkmıyorsa artık seni takip etmiyor. Bu yöntem tüm liste için değil, tek tek isimler için işe yarar.</p>
+
+      <h2>TikTok dosyasında neler var</h2>
+      <p>JSON biçiminde ZIP’te tek bir dosya bulunur: <code>user_data_tiktok.json</code>. İçinde takipçi listen ve takip ettiklerinin listesi, kullanıcı adları ve takip tarihleriyle birlikte yer alır. Unwrapped bu dosyayı (ya da TXT sürümünü) tarayıcında okur, hiçbir şey yüklenmez.</p>
 
       <h2>TikTok “takipten çıkan” uygulamaları neden riskli</h2>
       <p>TikTok takipçi listeni üçüncü taraf uygulamalara vermez. Canlı bildirim vaat eden uygulamalar ya giriş yapmanı ister — bu hesabının kilitlenmesine yol açabilir ve TikTok kurallarını ihlal eder — ya da tahmin gösterir. Resmî veri indirmen gerçek listeleri içerir ve şifre gerektirmez.</p>
@@ -40,7 +52,7 @@
       <ul>
         <li>Bir iki haftada bir tekrarla — aralık kısaldıkça geçmiş daha temiz olur.</li>
         <li>Silinen veya yasaklanan hesaplar da takipçilerinden kaybolur ve takipten çıkma gibi görünebilir. Sonuç çıkarmadan önce profili kontrol et.</li>
-        <li>TikTok’un dosyayı hazırlaması saatler ile birkaç gün arası sürebilir. İndirme bağlantısının süresi birkaç gün sonra dolar.</li>
+        <li>TikTok’un dosyayı hazırlaması birkaç gün sürebilir. Hazır olduğunda 4 gün boyunca indirebilirsin.</li>
       </ul>
       <div class="read-next"><h2>Sıradaki okuma</h2><ul><li><a href="/guides/tiktok-screen-time/">TikTok’ta gerçekte ne kadar zaman geçiriyorsun?</a></li><li><a href="/blog/why-am-i-losing-followers/">Instagram’da neden takipçi kaybediyorum? 8 gerçek neden</a></li><li><a href="/blog/how-to-spot-fake-followers/">Instagram’da sahte takipçiler nasıl anlaşılır</a></li><li><a href="/blog/tiktok-login-history/">TikTok giriş geçmişini ve cihazlarını nasıl kontrol edersin?</a></li></ul></div>
       <h2>Sık sorulan sorular</h2>

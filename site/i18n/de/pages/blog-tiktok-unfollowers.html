@@ -4,6 +4,7 @@
   "headline": "So siehst du, wer dir auf TikTok entfolgt ist",
   "description": "TikTok sagt dir nicht, wer dir entfolgt ist. Hier ist der sichere Weg, es herauszufinden — und wer dir nicht zurückfolgt — mit deinem eigenen TikTok-Datendownload, ohne einer App dein Passwort zu geben.",
   "article": "2026-10-13",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -19,11 +20,22 @@
   <div class="container">
     <div class="prose">
       <h2>Die kurze Antwort</h2>
+      <p>TikTok benachrichtigt dich nicht und hat keine Liste, wer dir entfolgt ist. Der zuverlässige Weg: Vergleiche zwei Downloads deiner eigenen Daten. Wer in der alten Follower-Liste steht und in der neuen fehlt, ist dir entfolgt oder hat sein Konto gelöscht.</p>
       <ol>
-        <li>Fordere deine TikTok-Daten in <strong>JSON</strong> an (Profil → ☰ → Einstellungen und Datenschutz → Konto → Deine Daten herunterladen → <strong>Alle Daten</strong>).</li>
-        <li>Lege die ZIP bei <a href="/tiktok/">Unwrapped</a> ab. Du siehst, wer dir nicht zurückfolgt, und deine Follower-Liste wird als privater Snapshot auf deinem Gerät gespeichert.</li>
-        <li>Ein bis zwei Wochen später lädst du sie erneut herunter und legst die neue ZIP ab. Alle, die in der Zwischenzeit gegangen sind, werden mit Namen aufgelistet.</li>
+        <li>In TikTok: Profil → ☰ → Einstellungen und Datenschutz → Konto → <strong>Deine Daten herunterladen</strong>. Wähle <strong>Alle Daten</strong>, das Format <strong>JSON</strong> und tippe auf <strong>Daten anfordern</strong>.</li>
+        <li>TikTok benachrichtigt dich in der App, sobald die Datei fertig ist. Das kann ein paar Tage dauern. Lade sie innerhalb von 4 Tagen im Tab <strong>Daten herunterladen</strong> herunter und lege die ZIP bei <a href="/tiktok/">Unwrapped</a> ab. Du siehst, wer dir nicht zurückfolgt, und deine Follower-Liste wird als privater Snapshot auf deinem Gerät gespeichert.</li>
+        <li>Ein bis zwei Wochen später forderst du eine neue Datei an und legst sie ab. Alle, die in der Zwischenzeit gegangen sind, werden mit Namen aufgelistet. Hast du noch einen älteren TikTok-Download? Lege beide zusammen ab und du hast die Antwort sofort.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/tiktok-unfollowers-de-1200.webp" srcset="/assets/img/shots/tiktok-unfollowers-de-720.webp 720w, /assets/img/shots/tiktok-unfollowers-de-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="538" alt="Unwrapped vergleicht zwei TikTok-Exporte: 17 Personen sind dir entfolgt, 23 neue Follower und die Liste der Namen" loading="lazy" decoding="async">
+        <figcaption>Zwei TikTok-Downloads im Demo-Vergleich: wer dir entfolgt ist, neue Follower und die Namen. Personen, denen du noch folgst, stehen oben.</figcaption>
+      </figure>
+
+      <h2>Eine Person sofort prüfen</h2>
+      <p>Öffne dein Profil, tippe auf <strong>Follower</strong> und gib den Nutzernamen ins Suchfeld ein. Taucht die Person nicht auf, folgt sie dir nicht mehr. Das klappt für einzelne Namen, nicht für deine ganze Liste.</p>
+
+      <h2>Was in der TikTok-Datei steckt</h2>
+      <p>Im JSON-Format enthält die ZIP eine einzige Datei, <code>user_data_tiktok.json</code>. Darin stehen deine Follower-Liste und die Liste der Konten, denen du folgst, jeweils mit Nutzernamen und Datum. Unwrapped liest sie (oder die TXT-Version) in deinem Browser, nichts wird hochgeladen.</p>
 
       <h2>Warum TikTok-„Unfollower-Apps“ riskant sind</h2>
       <p>TikTok gibt Drittanbieter-Apps deine Follower-Liste nicht heraus. Apps, die Live-Unfollower-Alarme versprechen, wollen entweder, dass du dich anmeldest — was deinen Account sperren lassen kann und gegen TikToks Regeln verstößt — oder sie zeigen Vermutungen. Dein offizieller Datendownload enthält die echten Listen und braucht kein Passwort.</p>
@@ -40,7 +52,7 @@
       <ul>
         <li>Wiederhole das alle ein bis zwei Wochen — kürzere Abstände ergeben einen saubereren Verlauf.</li>
         <li>Gelöschte oder gesperrte Accounts verschwinden ebenfalls aus deinen Followern und können daher wie Entfolgungen aussehen. Prüfe ein Profil, bevor du Schlüsse ziehst.</li>
-        <li>TikTok braucht Stunden bis einige Tage, um die Datei vorzubereiten. Der Download-Link läuft nach ein paar Tagen ab.</li>
+        <li>TikTok braucht manchmal ein paar Tage, um die Datei vorzubereiten. Sobald sie fertig ist, kannst du sie 4 Tage lang herunterladen.</li>
       </ul>
       <div class="read-next"><h2>Weiterlesen</h2><ul><li><a href="/guides/tiktok-screen-time/">Wie viel Zeit verbringst du wirklich auf TikTok?</a></li><li><a href="/blog/why-am-i-losing-followers/">Warum verliere ich Instagram-Follower? 8 echte Gründe</a></li><li><a href="/blog/how-to-spot-fake-followers/">So erkennst du Fake-Follower auf Instagram</a></li><li><a href="/blog/tiktok-login-history/">TikTok-Anmeldeverlauf und angemeldete Geräte prüfen</a></li></ul></div>
       <h2>FAQ</h2>
