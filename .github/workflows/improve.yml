@@ -87,6 +87,10 @@ jobs:
              || echo "$changed" | grep -qiE '^public/assets/js/.*(checkout|license|pay|admin|account|auth)'; then
             echo "result=forbidden" >> "$GITHUB_OUTPUT"; exit 0
           fi
+          # SEO recovery (2026-10-28, see SEO-RECOVERY.md): no new pages or posts in any language.
+          if git diff --cached --name-only --diff-filter=A | grep -qE '^site/(pages|i18n/[a-z]+/pages)/'; then
+            echo "result=forbidden" >> "$GITHUB_OUTPUT"; exit 0
+          fi
           if ! (npm test && npm run build); then echo "result=failed" >> "$GITHUB_OUTPUT"; exit 0; fi
           git add -A
           git config user.name "github-actions[bot]"

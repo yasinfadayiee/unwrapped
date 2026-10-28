@@ -58,7 +58,9 @@ jobs:
             technical and does not review changes; a daily Sonnet run does one AUTOPILOT.md Backlog item and may not
             touch checkout, payment, license or worker code. If the funnel needs such a change, write it as an item
             starting "OWNER PC:" (done by Claude Opus on the owner's PC; the daily run skips those items).
-            Focus on free-to-paid clarity, trust at the moment of paying, and pages for searches with buying intent.
+            Focus on free-to-paid clarity and trust at the moment of paying. SEO recovery mode is on (read
+            "SEO recovery mode" in AUTOPILOT.md and SEO-RECOVERY.md): never plan new pages, posts, guides or
+            translations; plan only improvements to existing pages.
             Be economical: this runs on the owner's limited Claude plan.
             1. Read AUTOPILOT.md (goal, rules, Backlog) and /tmp/plan-results.md (this week's numbers).
                Open other files only when a decision needs them.
