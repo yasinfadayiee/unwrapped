@@ -18,6 +18,8 @@ scaled content. Plan and checkpoints: `SEO-RECOVERY.md`. Until the owner ends re
 - Only improve, merge or trim existing pages. Prefer fewer, better pages over more pages.
 - When the Backlog runs low, add only items of this kind (editing existing pages for accuracy, depth and
   natural wording, or conversion fixes) — never "pages for searches people type".
+- Never edit `site/seo-prune.json` (owner/Claude Opus only). Its translated pages are `noindex`. Spend runs on
+  English pages and on translations that are still indexed, not on pruned ones.
 
 ## Rules for every run
 - One small, complete item per run. Never half-finish.

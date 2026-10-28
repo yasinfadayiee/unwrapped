@@ -88,6 +88,13 @@ const routesOf = new Map(locales.map((l) => [l.code, new Set(pages.filter((p) =>
 const urlOf = (loc, route) => `${loc.path}${route}`;
 const localesWith = (route) => locales.filter((l) => routesOf.get(l.code).has(route));
 
+// SEO recovery: translated pages listed in site/seo-prune.json stay online and
+// linked, but get "noindex, follow" and leave the sitemap and hreflang sets.
+const prune = JSON.parse(read('site/seo-prune.json'));
+const isPruned = (code, route) => Array.isArray(prune[code]) && prune[code].includes(route);
+for (const p of pages) if (isPruned(p.loc.code, p.meta.route)) p.meta.pruned = true;
+const indexedLocalesWith = (route) => localesWith(route).filter((l) => !isPruned(l.code, route));
+
 // Internal links point to the same-language page when it exists.
 function localizeLinks(html, loc) {
   if (!loc.path) return html;
@@ -226,7 +233,7 @@ for (const { loc, file, meta, body } of pages) {
   content = content.replaceAll('{{siteName}}', site.name).replaceAll('{{origin}}', origin);
   const url = urlOf(loc, meta.route);
   const canonical = `${origin}${url.replace(/index\.html$/, '')}`;
-  const translations = meta.noindex || meta.route.endsWith('.html') ? [] : localesWith(meta.route);
+  const translations = meta.noindex || meta.pruned || meta.route.endsWith('.html') ? [] : indexedLocalesWith(meta.route);
   const alternates =
     translations.length > 1
       ? [...translations.map((l) => `<link rel="alternate" hreflang="${l.hreflang}" href="${origin}${urlOf(l, meta.route)}">`), `<link rel="alternate" hreflang="x-default" href="${origin}${meta.route}">`].join('\n')
@@ -334,7 +341,7 @@ for (const { loc, file, meta, body } of pages) {
     title: esc(shortTitle(meta.title)),
     description: esc(shortDescription(meta.description)),
     canonical: esc(canonical),
-    robots: meta.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large',
+    robots: meta.noindex ? 'noindex, nofollow' : meta.pruned ? 'noindex, follow' : 'index, follow, max-image-preview:large',
     jsonld: schemas.map(ld).join('\n'),
     verification: [['google-site-verification', site.googleVerification], ['msvalidate.01', site.bingVerification]].filter(([, v]) => v).map(([n, v]) => `<meta name="${n}" content="${esc(v)}">`).join('\n'),
     bodyClass: esc(meta.bodyClass || ''),
@@ -356,7 +363,7 @@ for (const { loc, file, meta, body } of pages) {
 
   const out = url.endsWith('.html') ? `public${url}` : `public${url}index.html`;
   write(out, lazyImages(describeImages(html)));
-  if (!meta.noindex && !meta.route.endsWith('.html')) {
+  if (!meta.noindex && !meta.pruned && !meta.route.endsWith('.html')) {
     const alternates = translations.length > 1 ? [...translations.map((l) => ({ hreflang: l.hreflang, href: `${origin}${urlOf(l, meta.route)}` })), { hreflang: 'x-default', href: `${origin}${meta.route}` }] : [];
     sitemap.push({ loc: canonical, lastmod: lastModified(file, meta), priority: meta.route === '/' ? '1.0' : meta.article ? '0.6' : '0.8', alternates });
   }

@@ -54,8 +54,12 @@ Goal: about 584 → 250 indexable URLs, keeping every page that earned clicks.
    - the Instagram history posts (search history, liked posts, comments, first follower, first follow,
      account age);
    - the Spotify posts.
-4. For translated posts that got no impressions in that language, add `noindex` and drop them from the sitemap.
+4. [x] (2026-10-28) For translated posts that got no impressions in that language, add `noindex` and drop them from the sitemap.
    Keep the English version. Do this through the build (a per-page/per-language flag), not by deleting files.
+   Done: `site/seo-prune.json` lists 236 translated posts and guides with 0 clicks and fewer than 20 impressions
+   from Sep 1 to Oct 24. The build gives them `noindex, follow` and leaves them out of the sitemap and hreflang;
+   `test/seo-prune.test.mjs` checks this. The sitemap went from 584 to 348 URLs. Tool pages and all English pages stay.
+   Source data: Search Console Pages report, 482 URLs with impressions.
 5. Fix the small indexing items: 1 "Blocked by robots.txt", 3 "Discovered – not indexed", 1 "Crawled – not indexed".
 6. Submit the sitemap again. Do not mass-request indexing of single URLs.
 
@@ -102,3 +106,4 @@ For each page:
 
 ## Log
 - 2026-10-28: drop confirmed in Search Console; recovery mode on; Phase 0 done.
+- 2026-10-28: Phase 1 step 4 done (236 thin translations get noindex; the sitemap has 348 URLs).
