@@ -125,3 +125,15 @@ For each page:
     so nothing more to do.
   - `/blog/who-removed-me-on-linkedin/` ("Discovered"): it had one contextual link. It is now also linked from
     the LinkedIn tool page and from the LinkedIn connections post's "Read next", in all 6 languages.
+- 2026-10-28: Phase 2 started with /instagram-message-viewer/ (6 languages). Its queries before the drop were
+  "instagram dm viewer" (26 impressions, 9 clicks), "instagram message viewer" and "insta dm viewer"; CTR was about 35%.
+  Changes:
+  - An answer-first box with a "steps checked" date.
+  - A real screenshot of the Message viewer from the demo export (`/assets/img/shots/`).
+  - The steps now follow Instagram's current Help Center flow: Export your information → Create export → Export to device,
+    with the 4-day download window.
+  - A new "Inside the export" section, checked against the parser: the folder path, split `message_N.json` files and the
+    Meta encoding repair.
+  - Fixed the FAQ: the viewer reads JSON only, not HTML.
+  Note: the rest of the site still says "Download your information" (`steps-instagram` partial, guides). Meta renamed it
+  to "Export your information"; update those next.

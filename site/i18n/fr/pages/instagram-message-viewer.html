@@ -22,6 +22,20 @@
   </div>
 </section>
 
+<section class="section section--tight" id="answer">
+  <div class="container">
+    <div class="quick-answer reveal">
+      <h2 class="h3">Comment lire mes DM Instagram sur ordinateur ?</h2>
+      <p>Exporte tes messages Instagram au format <b>JSON</b>, dépose le ZIP ici et ouvre <b>Lecteur de messages</b>. Chaque conversation s’ouvre comme dans une messagerie, avec dates, heures, photos et recherche. La lecture est gratuite et le fichier ne quitte jamais ton appareil.</p>
+      <p class="quick-answer__note">Étapes vérifiées avec le Centre d’aide d’Instagram le 28 octobre 2026.</p>
+    </div>
+    <figure class="shot reveal">
+      <img src="/assets/img/shots/ig-message-viewer-1200.webp" srcset="/assets/img/shots/ig-message-viewer-720.webp 720w, /assets/img/shots/ig-message-viewer-1200.webp 1200w" sizes="(max-width: 860px) 100vw, 820px" width="1200" height="649" alt="Lecteur de messages d’Unwrapped : la liste des conversations Instagram à gauche et une conversation ouverte avec dates, heures et un lien à droite" loading="lazy" decoding="async">
+      <figcaption>Le Lecteur de messages avec l’export de démo : tes conversations à gauche, la conversation ouverte à droite, la recherche en haut.</figcaption>
+    </figure>
+  </div>
+</section>
+
 <section class="section section--tight">
   <div class="container">
     <div class="sec-head reveal"><span class="eyebrow">Ce que tu peux faire</span><h2 class="h2">Tout ton historique de DM, <span class="serif">de nouveau lisible.</span></h2></div>
@@ -39,10 +53,20 @@
   <div class="container">
     <div class="sec-head reveal"><span class="eyebrow">Comment ça marche</span><h2 class="h2">Trois étapes, toutes sur ton appareil.</h2></div>
     <ol class="steps3 reveal">
-      <li><b>Demande tes messages</b><span>Instagram → Espace Comptes → Vos informations et autorisations → Télécharger vos informations → choisis <b>Messages</b> (JSON). Choisis une qualité de média plus élevée si tu veux les photos dans tes conversations.</span></li>
-      <li><b>Dépose le ZIP ici</b><span>Ton navigateur ouvre l’archive localement. Tu peux activer le mode avion avant — ça marche quand même.</span></li>
-      <li><b>Ouvre « Lecteur de messages »</b><span>Lire toutes les conversations est gratuit. Rechercher dans toutes à la fois et les enregistrer fait partie de <a href="/pricing/">Plus</a>.</span></li>
+      <li><b>Exporte tes messages</b><span>Dans Instagram : Paramètres → Espace Comptes → Vos informations et autorisations → <b>Exporter vos informations</b> → Créer une exportation → ton profil → <b>Exporter vers l’appareil</b>. Choisis <b>Messages</b>, toute la période et le format <b>JSON</b>. Monte la qualité des médias si tu veux les photos dans tes conversations, puis lance l’exportation.</span></li>
+      <li><b>Télécharge le ZIP</b><span>Instagram t’envoie un e-mail quand l’export est prêt. Il reste téléchargeable pendant 4 jours.</span></li>
+      <li><b>Dépose-le ici, ouvre « Lecteur de messages »</b><span>Ton navigateur ouvre l’archive localement, donc ça marche même en mode avion. Lire toutes les conversations est gratuit. Rechercher dans toutes à la fois et les enregistrer fait partie de <a href="/pricing/">Plus</a>.</span></li>
     </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="inside">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Dans l’export</span><h2 class="h2">Où sont tes conversations dans le ZIP.</h2></div>
+    <div class="prose reveal" style="max-width:760px">
+      <p>Chaque conversation est un dossier dans <code>your_instagram_activity/messages/inbox/</code>, au nom de l’autre personne suivi d’un numéro. Dedans se trouve <code>message_1.json</code>. Les longues conversations sont découpées en <code>message_2.json</code>, <code>message_3.json</code>, etc. Les photos et les messages vocaux sont dans des sous-dossiers à côté.</p>
+      <p>Ouverts dans un éditeur de texte, les fichiers sont pénibles à lire : Meta enregistre les accents et les emojis avec un encodage cassé, et « José 😀 » devient « JosÃ© » suivi d’une suite de symboles. Le lecteur répare tout ça, regroupe les fichiers découpés en une seule conversation et trie chaque message par heure.</p>
+    </div>
   </div>
 </section>
 
@@ -50,11 +74,11 @@
   <div class="container">
     <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Les messages Instagram, ouverts.</h2></div>
     <div class="faq reveal">
-      <details open><summary>Comment lire les messages de mon téléchargement Instagram ?</summary><div class="answer"><p>Le téléchargement garde chaque conversation en fichiers JSON ou HTML, dans un dossier par conversation. Dépose le ZIP entier sur Unwrapped et ouvre « Lecteur de messages » — chaque conversation est listée et s’ouvre comme dans une messagerie.</p></div></details>
+      <details open><summary>Comment lire les messages de mon téléchargement Instagram ?</summary><div class="answer"><p>Demande l’export au format JSON, dépose le ZIP entier sur Unwrapped et ouvre « Lecteur de messages » — chaque conversation est listée et s’ouvre comme dans une messagerie. Le lecteur ne lit que les exports JSON ; si tu as choisi HTML, refais la demande en JSON.</p></div></details>
       <details><summary>Puis-je récupérer des messages Instagram supprimés ?</summary><div class="answer"><p>Ton téléchargement contient les messages qu’Instagram conserve encore pour ton compte. Les messages que tu as supprimés ou retirés n’y sont généralement pas, donc le lecteur ne peut pas les faire revenir — mais des conversations introuvables dans l’app y sont souvent. <a href="/blog/recover-deleted-instagram-messages/">En savoir plus sur les messages supprimés</a>.</p></div></details>
       <details><summary>Mes messages sont-ils envoyés quelque part ?</summary><div class="answer"><p>Non. L’archive est ouverte et affichée dans ton navigateur. Rien n’est envoyé à un serveur, et personne — nous compris — ne peut voir tes conversations.</p></div></details>
       <details><summary>Pourquoi je ne vois pas les photos ?</summary><div class="answer"><p>Les photos et vidéos ne sont dans le téléchargement que si tu as inclus les médias. Refais la demande avec les médias et une qualité plus élevée.</p></div></details>
-      <details><summary>Est-ce que ça marche avec Facebook Messenger ?</summary><div class="answer"><p>Oui. Dépose ton ZIP « Télécharger vos informations » de Facebook (avec les messages) et ouvre le Lecteur de messages dans l’onglet Facebook — tes conversations Messenger s’ouvrent de la même façon.</p></div></details>
+      <details><summary>Est-ce que ça marche avec Facebook Messenger ?</summary><div class="answer"><p>Oui. Dépose le ZIP que tu exportes depuis l’Espace Comptes de Facebook (avec les messages, en JSON) et ouvre le Lecteur de messages dans l’onglet Facebook — tes conversations Messenger s’ouvrent de la même façon.</p></div></details>
       <details><summary>Est-ce gratuit ?</summary><div class="answer"><p>Oui — lire toutes les conversations est gratuit. Plus ajoute la recherche dans toutes les conversations et l’enregistrement en fichiers texte.</p></div></details>
     </div>
   </div>

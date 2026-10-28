@@ -22,6 +22,20 @@
   </div>
 </section>
 
+<section class="section section--tight" id="answer">
+  <div class="container">
+    <div class="quick-answer reveal">
+      <h2 class="h3">How do I read my Instagram DMs on a computer?</h2>
+      <p>Export your messages from Instagram as <b>JSON</b>, then drop the ZIP here and open <b>Message viewer</b>. Every chat opens like a messenger: dates, times, photos and a search box. Reading is free, and the file never leaves your device.</p>
+      <p class="quick-answer__note">Steps checked against Instagram’s Help Center on 28 October 2026.</p>
+    </div>
+    <figure class="shot reveal">
+      <img src="/assets/img/shots/ig-message-viewer-1200.webp" srcset="/assets/img/shots/ig-message-viewer-720.webp 720w, /assets/img/shots/ig-message-viewer-1200.webp 1200w" sizes="(max-width: 860px) 100vw, 820px" width="1200" height="649" alt="Unwrapped Message viewer: a list of Instagram chats on the left and an open conversation with dates, times and a link on the right" loading="lazy" decoding="async">
+      <figcaption>The Message viewer with the demo export: your chats on the left, the open conversation on the right, search at the top.</figcaption>
+    </figure>
+  </div>
+</section>
+
 <section class="section section--tight">
   <div class="container">
     <div class="sec-head reveal"><span class="eyebrow">What you can do</span><h2 class="h2">Your whole DM history, <span class="serif">readable again.</span></h2></div>
@@ -39,10 +53,20 @@
   <div class="container">
     <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2 class="h2">Three steps, all on your device.</h2></div>
     <ol class="steps3 reveal">
-      <li><b>Request your messages</b><span>Instagram → Accounts Center → Your information and permissions → Download your information → choose <b>Messages</b> (JSON). Pick a higher media quality if you want photos in your chats.</span></li>
-      <li><b>Drop the ZIP here</b><span>Your browser opens the archive locally. You can turn on airplane mode first — it still works.</span></li>
-      <li><b>Open “Message viewer”</b><span>Reading every chat is free. Searching all chats at once and saving chats are part of <a href="/pricing/">Plus</a>.</span></li>
+      <li><b>Export your messages</b><span>In Instagram: Settings → Accounts Center → Your information and permissions → <b>Export your information</b> → Create export → your profile → <b>Export to device</b>. Choose <b>Messages</b>, date range <b>All time</b> and format <b>JSON</b>. Pick a higher media quality if you want photos in your chats, then tap Start export.</span></li>
+      <li><b>Download the ZIP</b><span>Instagram e-mails you when the export is ready. It stays under Available downloads for 4 days.</span></li>
+      <li><b>Drop it here, open “Message viewer”</b><span>Your browser opens the archive locally, so it works even in airplane mode. Reading every chat is free. Searching all chats at once and saving chats are part of <a href="/pricing/">Plus</a>.</span></li>
     </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="inside">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Inside the export</span><h2 class="h2">Where your chats are in the ZIP.</h2></div>
+    <div class="prose reveal" style="max-width:760px">
+      <p>Each conversation is a folder under <code>your_instagram_activity/messages/inbox/</code>, named after the other person plus a number. Inside is <code>message_1.json</code>. Long chats are split into <code>message_2.json</code>, <code>message_3.json</code> and so on. Photos and voice notes sit in subfolders next to them.</p>
+      <p>Opened in a text editor, the files are hard to read. Meta saves accented letters and emoji in a broken encoding, so “José 😀” shows up as “JosÃ©” followed by a string of symbols. The viewer repairs this, joins the split files back into one chat and sorts every message by time.</p>
+    </div>
   </div>
 </section>
 
@@ -50,11 +74,11 @@
   <div class="container">
     <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2 class="h2">Instagram messages, opened.</h2></div>
     <div class="faq reveal">
-      <details open><summary>How do I read the messages in my Instagram data download?</summary><div class="answer"><p>The download keeps each chat as JSON or HTML files inside a folder per conversation. Drop the whole ZIP on Unwrapped and open “Message viewer” — every chat is listed and opens like a messenger.</p></div></details>
+      <details open><summary>How do I read the messages in my Instagram data download?</summary><div class="answer"><p>Request the export in JSON format, then drop the whole ZIP on Unwrapped and open “Message viewer”. Every chat is listed and opens like a messenger. The viewer reads JSON exports only, so if you picked HTML, request the export again in JSON.</p></div></details>
       <details><summary>Can I recover deleted Instagram messages?</summary><div class="answer"><p>Your download contains the messages Instagram still has for your account. Messages you deleted or unsent are usually not included, so the viewer can’t bring those back — but chats you can no longer find in the app often are. <a href="/blog/recover-deleted-instagram-messages/">More about deleted messages</a>.</p></div></details>
       <details><summary>Are my messages uploaded anywhere?</summary><div class="answer"><p>No. The archive is opened and displayed inside your browser. Nothing is sent to a server, and nobody — including us — can see your chats.</p></div></details>
       <details><summary>Why don’t I see photos?</summary><div class="answer"><p>Photos and videos are only in the download if you included media. Request the download again with media and a higher quality setting.</p></div></details>
-      <details><summary>Does it work with Facebook Messenger?</summary><div class="answer"><p>Yes. Drop your Facebook “Download your information” ZIP (with Messages) and open Message viewer in the Facebook tab — your Messenger chats open the same way.</p></div></details>
+      <details><summary>Does it work with Facebook Messenger?</summary><div class="answer"><p>Yes. Drop the ZIP you export from Facebook’s Accounts Center (with Messages, in JSON) and open Message viewer in the Facebook tab — your Messenger chats open the same way.</p></div></details>
       <details><summary>Is it free?</summary><div class="answer"><p>Yes — reading every conversation is free. Plus adds search across all chats and saving chats as text files.</p></div></details>
     </div>
   </div>

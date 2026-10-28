@@ -22,6 +22,20 @@
   </div>
 </section>
 
+<section class="section section--tight" id="answer">
+  <div class="container">
+    <div class="quick-answer reveal">
+      <h2 class="h3">Instagram DM’lerimi bilgisayarda nasıl okurum?</h2>
+      <p>Mesajlarını Instagram’dan <b>JSON</b> formatında dışa aktar, ZIP’i buraya bırak ve <b>Mesaj görüntüleyici</b>’yi aç. Her sohbet bir mesajlaşma uygulaması gibi açılır: tarihler, saatler, fotoğraflar ve arama kutusu. Okumak ücretsizdir ve dosya cihazından hiç çıkmaz.</p>
+      <p class="quick-answer__note">Adımlar 28 Ekim 2026’da Instagram Yardım Merkezi’ne göre kontrol edildi.</p>
+    </div>
+    <figure class="shot reveal">
+      <img src="/assets/img/shots/ig-message-viewer-1200.webp" srcset="/assets/img/shots/ig-message-viewer-720.webp 720w, /assets/img/shots/ig-message-viewer-1200.webp 1200w" sizes="(max-width: 860px) 100vw, 820px" width="1200" height="649" alt="Unwrapped Mesaj görüntüleyici: solda Instagram sohbet listesi, sağda tarih, saat ve bağlantı içeren açık bir konuşma" loading="lazy" decoding="async">
+      <figcaption>Demo dışa aktarımıyla Mesaj görüntüleyici: solda sohbetlerin, sağda açık konuşma, üstte arama.</figcaption>
+    </figure>
+  </div>
+</section>
+
 <section class="section section--tight">
   <div class="container">
     <div class="sec-head reveal"><span class="eyebrow">Neler yapabilirsin</span><h2 class="h2">Tüm DM geçmişin, <span class="serif">yeniden okunabilir.</span></h2></div>
@@ -39,10 +53,20 @@
   <div class="container">
     <div class="sec-head reveal"><span class="eyebrow">Nasıl çalışır</span><h2 class="h2">Üç adım, hepsi cihazında.</h2></div>
     <ol class="steps3 reveal">
-      <li><b>Mesajlarını iste</b><span>Instagram → Hesaplar Merkezi → Bilgilerin ve izinlerin → Bilgilerini indir → <b>Mesajlar</b>’ı seç (JSON). Sohbetlerinde fotoğraf görmek istiyorsan daha yüksek medya kalitesi seç.</span></li>
-      <li><b>ZIP’i buraya bırak</b><span>Tarayıcın arşivi yerel olarak açar. Önce uçak modunu bile açabilirsin — yine çalışır.</span></li>
-      <li><b>“Mesaj görüntüleyici”yi aç</b><span>Tüm sohbetleri okumak ücretsizdir. Tüm sohbetlerde aynı anda arama ve sohbet kaydetme <a href="/pricing/">Plus</a>’a dahildir.</span></li>
+      <li><b>Mesajlarını dışa aktar</b><span>Instagram’da: Ayarlar → Hesaplar Merkezi → Bilgilerin ve izinlerin → <b>Bilgilerini dışa aktar</b> → Dışa aktarma oluştur → profilin → <b>Cihaza aktar</b>. <b>Mesajlar</b>’ı, tüm zamanları ve <b>JSON</b> formatını seç. Sohbetlerinde fotoğraf görmek istiyorsan medya kalitesini yükselt ve dışa aktarmayı başlat.</span></li>
+      <li><b>ZIP’i indir</b><span>Dışa aktarma hazır olunca Instagram sana e-posta gönderir. Dosya 4 gün boyunca indirilebilir kalır.</span></li>
+      <li><b>Buraya bırak, “Mesaj görüntüleyici”yi aç</b><span>Tarayıcın arşivi yerel olarak açar, uçak modunda bile çalışır. Tüm sohbetleri okumak ücretsizdir. Tüm sohbetlerde aynı anda arama ve sohbet kaydetme <a href="/pricing/">Plus</a>’a dahildir.</span></li>
     </ol>
+  </div>
+</section>
+
+<section class="section section--tight" id="inside">
+  <div class="container">
+    <div class="sec-head reveal"><span class="eyebrow">Dışa aktarımın içi</span><h2 class="h2">Sohbetlerin ZIP’in neresinde.</h2></div>
+    <div class="prose reveal" style="max-width:760px">
+      <p>Her konuşma <code>your_instagram_activity/messages/inbox/</code> altında, karşıdaki kişinin adı ve bir sayıyla adlandırılmış bir klasördür. İçinde <code>message_1.json</code> bulunur. Uzun sohbetler <code>message_2.json</code>, <code>message_3.json</code> gibi dosyalara bölünür. Fotoğraflar ve sesli mesajlar yanındaki alt klasörlerdedir.</p>
+      <p>Metin düzenleyicide açınca dosyaları okumak zordur: Meta Türkçe karakterleri ve emojileri bozuk bir kodlamayla kaydeder, “Şule 😀” gibi bir ad anlamsız sembollere dönüşür. Görüntüleyici bunu düzeltir, bölünmüş dosyaları tek sohbette birleştirir ve her mesajı zamana göre sıralar.</p>
+    </div>
   </div>
 </section>
 
@@ -50,11 +74,11 @@
   <div class="container">
     <div class="sec-head reveal"><span class="eyebrow">Sık sorulan sorular</span><h2 class="h2">Instagram mesajları, açıldı.</h2></div>
     <div class="faq reveal">
-      <details open><summary>Instagram veri indirmemdeki mesajları nasıl okurum?</summary><div class="answer"><p>İndirme her sohbeti, konuşma başına bir klasörde JSON veya HTML dosyaları olarak saklar. ZIP’in tamamını Unwrapped’a bırak ve “Mesaj görüntüleyici”yi aç — tüm sohbetler listelenir ve bir mesajlaşma uygulaması gibi açılır.</p></div></details>
+      <details open><summary>Instagram veri indirmemdeki mesajları nasıl okurum?</summary><div class="answer"><p>Dışa aktarmayı JSON formatında iste, ZIP’in tamamını Unwrapped’a bırak ve “Mesaj görüntüleyici”yi aç — tüm sohbetler listelenir ve bir mesajlaşma uygulaması gibi açılır. Görüntüleyici yalnızca JSON dışa aktarımlarını okur; HTML seçtiysen dışa aktarmayı JSON olarak yeniden iste.</p></div></details>
       <details><summary>Silinen Instagram mesajlarını kurtarabilir miyim?</summary><div class="answer"><p>İndirmen, Instagram’ın hesabın için hâlâ sakladığı mesajları içerir. Sildiğin veya geri aldığın mesajlar genellikle dahil değildir, bu yüzden görüntüleyici onları geri getiremez — ama uygulamada artık bulamadığın sohbetler çoğu zaman oradadır. <a href="/blog/recover-deleted-instagram-messages/">Silinen mesajlar hakkında daha fazlası</a>.</p></div></details>
       <details><summary>Mesajlarım bir yere yükleniyor mu?</summary><div class="answer"><p>Hayır. Arşiv tarayıcının içinde açılır ve gösterilir. Hiçbir şey sunucuya gönderilmez ve kimse — biz dahil — sohbetlerini göremez.</p></div></details>
       <details><summary>Neden fotoğrafları göremiyorum?</summary><div class="answer"><p>Fotoğraf ve videolar yalnızca medyayı dahil ettiysen indirmede bulunur. İndirmeyi medyayla ve daha yüksek kaliteyle yeniden iste.</p></div></details>
-      <details><summary>Facebook Messenger ile çalışır mı?</summary><div class="answer"><p>Evet. Facebook’un “Bilgilerini indir” ZIP’ini (Mesajlar dahil) bırak ve Facebook sekmesinde Mesaj görüntüleyici’yi aç — Messenger sohbetlerin aynı şekilde açılır.</p></div></details>
+      <details><summary>Facebook Messenger ile çalışır mı?</summary><div class="answer"><p>Evet. Facebook’un Hesaplar Merkezi’nden dışa aktardığın ZIP’i (Mesajlar dahil, JSON) bırak ve Facebook sekmesinde Mesaj görüntüleyici’yi aç — Messenger sohbetlerin aynı şekilde açılır.</p></div></details>
       <details><summary>Ücretsiz mi?</summary><div class="answer"><p>Evet — tüm konuşmaları okumak ücretsizdir. Plus, tüm sohbetlerde aramayı ve sohbetleri metin olarak kaydetmeyi ekler.</p></div></details>
     </div>
   </div>
