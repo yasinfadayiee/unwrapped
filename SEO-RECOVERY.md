@@ -173,3 +173,10 @@ For each page:
   - The illustrated example card (made-up names) is replaced by a real screenshot of the comparison view in each
     language.
   - The page's claims were checked in the code: chart, 30/90-day counts, backup and restore.
+- 2026-10-28: Phase 2, page 6 is /blog/see-sent-follow-requests-instagram/ in 6 languages (578 impressions, mostly
+  German queries: where to see sent requests, whether they expire, why they disappear). Changes:
+  - The lead now answers first, with the exact file path (`connections/followers_and_following/pending_follow_requests.json`,
+    checked against the parser).
+  - Removed unverified claims: that requests "count toward your limits", "look spammy" and "never expire".
+  - New FAQs: whether requests expire (Instagram's Help Center doesn't mention it) and why a request disappears.
+  - A screenshot of the Follow requests view in each language.

@@ -4,6 +4,7 @@
   "headline": "Alle gesendeten Follow-Anfragen auf Instagram sehen",
   "description": "Instagram versteckt die Anfragen, die du an private Accounts geschickt hast. Dein Datendownload listet jede noch offene — sieh sie alle und ziehe sie sicher zurück, ohne dich irgendwo anzumelden.",
   "article": "2026-10-14",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -11,18 +12,18 @@
     <div class="stack" style="--stack:14px;max-width:760px">
       <span class="eyebrow">Blog · Instagram</span>
       <h1 class="h1">Jede Follow-Anfrage, <span class="serif grad">die du gesendet hast.</span></h1>
-      <p class="lead">Anfragen an private Accounts, die nie angenommen haben, bleiben jahrelang offen. Sie zählen weiter zu deinen Limits — und der Account-Inhaber kann sie sehen.</p>
+      <p class="lead">Anfragen an private Accounts, die nie reagiert haben, können jahrelang offen bleiben, und die andere Person sieht sie weiter in ihren Anfragen. So listest du alle auf und ziehst sie zurück.</p>
     </div>
   </div>
 </section>
 <section class="section--tight" style="padding-bottom:80px">
   <div class="container">
     <div class="prose">
-<h2>Warum alte Anfragen wichtig sind</h2>
-      <p>Eine offene Anfrage läuft nie ab. Die andere Person sieht sie weiter, und eine lange Liste unbeantworteter Anfragen kann für Instagram nach Spam aussehen. Aufräumen ist ein schneller Gewinn.</p>
+<h2>Die kurze Antwort</h2>
+      <p>Der Instagram-Hilfebereich beschreibt keine Liste deiner gesendeten Follow-Anfragen, aber dein Datendownload enthält eine. Die Datei <code>connections/followers_and_following/pending_follow_requests.json</code> listet jede noch offene Anfrage mit dem Datum, an dem du sie gesendet hast. Lege die ZIP bei Unwrapped ab und du bekommst genau diese Liste, mit einem Button zum Öffnen jedes Accounts.</p>
 
       <h2>Wo du sie findest</h2>
-      <p>Instagram zeigt in der App keine Liste deiner gesendeten Anfragen. Dein Datendownload schon: Die Datei der <strong>offenen Follow-Anfragen</strong> listet jede noch wartende Anfrage mit dem Datum, an dem du sie gesendet hast.</p>
+      <p>Exportiere deine Informationen bei Instagram mit <strong>Follower und Gefolgt</strong> ausgewählt, im JSON-Format. In der ZIP enthält <code>pending_follow_requests.json</code> die Anfragen, die du gesendet hast, und <code>follow_requests_you’ve_received.json</code> die, die auf deine Bestätigung warten.</p>
 
       <h2>Sieh sie und ziehe sie in Minuten zurück</h2>
       <ol>
@@ -30,6 +31,10 @@
         <li>Lege die ZIP bei <a href="/instagram/">Unwrapped</a> ab und öffne <strong>Follow-Anfragen</strong>. Du siehst auch erhaltene Anfragen.</li>
         <li>Öffne jeden Account und tippe auf <strong>Angefragt</strong>, um zurückzuziehen — oder nutze die getaktete Rückzieh-Warteschlange, damit du nie an Instagrams Limits stößt.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/ig-requests-de-1200.webp" srcset="/assets/img/shots/ig-requests-de-720.webp 720w, /assets/img/shots/ig-requests-de-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="571" alt="Unwrapped Follow-Anfragen: 9 offene gesendete Anfragen, 6 erhaltene und die Liste der Accounts mit dem Datum jeder Anfrage" loading="lazy" decoding="async">
+        <figcaption>Follow-Anfragen in der Demo: deine gesendeten, noch offenen Anfragen, die neueste zuerst, jeweils mit einem Button zum Öffnen.</figcaption>
+      </figure>
       <p>Alles wird auf deinem Gerät gelesen. Unwrapped meldet sich nie bei deinem Account an und zieht nie etwas für dich zurück.</p>
       <div class="read-next"><h2>Weiterlesen</h2><ul><li><a href="/blog/why-am-i-losing-followers/">Warum verliere ich Instagram-Follower? 8 echte Gründe</a></li><li><a href="/blog/instagram-close-friends-list/">Enge Freunde, Blockiert &amp; verborgene Listen</a></li><li><a href="/guides/who-unfollowed-me-on-instagram/">So siehst du, wer dir auf Instagram entfolgt ist — sicher</a></li></ul></div>
 
@@ -37,6 +42,8 @@
     </div>
     <div class="faq" style="margin:0;max-width:760px">
       <details open><summary>Kann ich sehen, welche Follow-Anfragen ich auf Instagram gesendet habe?</summary><div class="answer"><p>Nicht als Liste in der App — aber dein Instagram-Datendownload enthält alle offenen Anfragen, die du gesendet hast.</p></div></details>
+      <details><summary>Laufen Instagram-Follow-Anfragen ab?</summary><div class="answer"><p>Der Instagram-Hilfebereich erwähnt kein Ablaufdatum. Eine Anfrage bleibt offen, bis die Person sie annimmt oder ablehnt oder du sie zurückziehst. Deshalb tauchen auch sehr alte Anfragen in deinem Download auf.</p></div></details>
+      <details><summary>Warum ist meine Follow-Anfrage plötzlich weg?</summary><div class="answer"><p>Meist hat die Person sie angenommen oder abgelehnt, oder du hast sie zurückgezogen. Sie verschwindet auch, wenn der Account gelöscht oder deaktiviert wurde oder dich blockiert hat.</p></div></details>
       <details><summary>Erfährt die Person, dass ich zurückgezogen habe?</summary><div class="answer"><p>Es wird keine Benachrichtigung gesendet. Die Anfrage verschwindet einfach aus ihrer Liste.</p></div></details>
       <details><summary>Ist es sicher, viele auf einmal zurückzuziehen?</summary><div class="answer"><p>Mach langsam. Hunderte in Minuten zurückzuziehen kann eine vorübergehende Sperre auslösen — deshalb verteilt die Warteschlange sie.</p></div></details>
     </div>

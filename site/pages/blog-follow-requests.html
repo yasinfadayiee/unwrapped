@@ -4,6 +4,7 @@
   "headline": "See every follow request you sent on Instagram",
   "description": "Instagram hides the follow requests you sent to private accounts. Your data download lists every one still pending — see them all and cancel them safely, without logging in anywhere.",
   "article": "2026-10-14",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -11,18 +12,18 @@
     <div class="stack" style="--stack:14px;max-width:760px">
       <span class="eyebrow">Blog · Instagram</span>
       <h1 class="h1">Every follow request <span class="serif grad">you ever sent.</span></h1>
-      <p class="lead">Requests to private accounts that never accepted stay pending for years. They still count toward your limits — and the account owner can see them.</p>
+      <p class="lead">Requests to private accounts that never answered can sit pending for years, and the other person can still see them in their requests. Here’s how to list every one and cancel them.</p>
     </div>
   </div>
 </section>
 <section class="section--tight" style="padding-bottom:80px">
   <div class="container">
     <div class="prose">
-<h2>Why old requests matter</h2>
-      <p>A pending request never expires. The other person keeps seeing it, and a long list of unanswered requests can look spammy to Instagram. Cleaning them up is a quick win.</p>
+<h2>The short answer</h2>
+      <p>Instagram’s Help Center doesn’t describe a list of the follow requests you sent, but your data download has one. The file <code>connections/followers_and_following/pending_follow_requests.json</code> lists every request that is still waiting, with the date you sent it. Drop the ZIP on Unwrapped and you get that list, with a button to open each account.</p>
 
       <h2>Where to find them</h2>
-      <p>Instagram doesn’t show a list of requests you sent in the app. Your data download does: the file <strong>pending follow requests</strong> lists every request still waiting, with the date you sent it.</p>
+      <p>Export your information from Instagram with <strong>Followers and following</strong> selected, in JSON. In the ZIP, <code>pending_follow_requests.json</code> holds the requests you sent, and <code>follow_requests_you’ve_received.json</code> holds the ones waiting for you to approve.</p>
 
       <h2>See and cancel them in minutes</h2>
       <ol>
@@ -30,12 +31,18 @@
         <li>Drop the ZIP into <a href="/instagram/">Unwrapped</a> and open <strong>Follow requests</strong>. You’ll also see requests you received.</li>
         <li>Open each account and tap <strong>Requested</strong> to cancel — or use the paced cancel queue so you never hit Instagram’s limits.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/ig-requests-en-1200.webp" srcset="/assets/img/shots/ig-requests-en-720.webp 720w, /assets/img/shots/ig-requests-en-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="571" alt="Unwrapped Follow requests view: 9 pending requests you sent, 6 received, and the list of accounts with when each was requested" loading="lazy" decoding="async">
+        <figcaption>Follow requests in the demo: the requests you sent that are still pending, newest first, each with an Open button.</figcaption>
+      </figure>
       <p>Everything is read on your device. Unwrapped never logs in to your account and never cancels anything for you.</p>
       <div class="read-next"><h2>Read next</h2><ul><li><a href="/blog/why-am-i-losing-followers/">Why am I losing followers on Instagram? 8 real reasons</a></li><li><a href="/blog/instagram-close-friends-list/">Close Friends, blocked & hidden lists</a></li><li><a href="/guides/who-unfollowed-me-on-instagram/">How to see who unfollowed you on Instagram — safely</a></li></ul></div>
       <h2>FAQ</h2>
     </div>
     <div class="faq" style="margin:0;max-width:760px">
       <details open><summary>Can I see follow requests I sent on Instagram?</summary><div class="answer"><p>Not as a list in the app — but your Instagram data download includes all pending requests you sent.</p></div></details>
+      <details><summary>Do Instagram follow requests expire?</summary><div class="answer"><p>Instagram’s Help Center doesn’t mention an expiry. A request stays pending until the person accepts or declines it, or you cancel it. That’s why very old requests still show up in your download.</p></div></details>
+      <details><summary>Why did my follow request disappear?</summary><div class="answer"><p>Usually because the person accepted it, declined it, or you cancelled it. It also disappears if the account was deleted or deactivated, or if they blocked you.</p></div></details>
       <details><summary>Does the person know when I cancel?</summary><div class="answer"><p>No notification is sent. The request simply disappears from their list.</p></div></details>
       <details><summary>Is it safe to cancel many at once?</summary><div class="answer"><p>Go slowly. Cancelling hundreds in minutes can trigger a temporary block, which is why the cancel queue spaces them out.</p></div></details>
     </div>

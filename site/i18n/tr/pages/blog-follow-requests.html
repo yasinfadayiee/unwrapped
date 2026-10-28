@@ -4,6 +4,7 @@
   "headline": "Instagram’da gönderdiğin tüm takip isteklerini gör",
   "description": "Instagram, gizli hesaplara gönderdiğin istekleri saklar. Veri indirmen hâlâ bekleyen her isteği listeler — hepsini gör ve hiçbir yere giriş yapmadan güvenle iptal et.",
   "article": "2026-10-14",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -11,18 +12,18 @@
     <div class="stack" style="--stack:14px;max-width:760px">
       <span class="eyebrow">Blog · Instagram</span>
       <h1 class="h1">Gönderdiğin <span class="serif grad">tüm takip istekleri.</span></h1>
-      <p class="lead">Kabul edilmeyen gizli hesap istekleri yıllarca bekler. Limitlerine sayılmaya devam eder — ve hesap sahibi bunları görebilir.</p>
+      <p class="lead">Hiç yanıt vermeyen gizli hesaplara gönderdiğin istekler yıllarca beklemede kalabilir ve karşı taraf onları isteklerinde görmeye devam eder. Hepsini nasıl listeleyip iptal edeceğin burada.</p>
     </div>
   </div>
 </section>
 <section class="section--tight" style="padding-bottom:80px">
   <div class="container">
     <div class="prose">
-<h2>Eski istekler neden önemli?</h2>
-      <p>Bekleyen bir isteğin süresi dolmaz. Karşı taraf görmeye devam eder ve uzun, yanıtsız bir liste Instagram’a spam gibi görünebilir. Temizlemek hızlı bir kazanç.</p>
+<h2>Kısa cevap</h2>
+      <p>Instagram Yardım Merkezi gönderdiğin takip isteklerinin bir listesinden söz etmiyor, ama veri indirmende böyle bir liste var. <code>connections/followers_and_following/pending_follow_requests.json</code> dosyası hâlâ bekleyen her isteği gönderdiğin tarihle birlikte listeler. ZIP’i Unwrapped’a bırak; bu listeyi, her hesabı açmak için bir düğmeyle birlikte görürsün.</p>
 
       <h2>Nerede bulunur?</h2>
-      <p>Instagram uygulamada gönderdiğin isteklerin listesini göstermez. Veri indirmen gösterir: <strong>bekleyen takip istekleri</strong> dosyası her isteği gönderdiğin tarihle listeler.</p>
+      <p>Instagram’dan bilgilerini <strong>Takipçiler ve takip edilenler</strong> seçili olarak, JSON biçiminde dışa aktar. ZIP’te <code>pending_follow_requests.json</code> gönderdiğin istekleri, <code>follow_requests_you’ve_received.json</code> ise onayını bekleyenleri içerir.</p>
 
       <h2>Dakikalar içinde gör ve iptal et</h2>
       <ol>
@@ -30,12 +31,18 @@
         <li>ZIP’i <a href="/instagram/">Unwrapped</a>’a bırak ve <strong>Follow requests</strong> bölümünü aç. Aldığın istekleri de görürsün.</li>
         <li>Her hesabı aç ve iptal etmek için <strong>İstek gönderildi</strong>’ye dokun — ya da Instagram limitlerine takılmamak için aralıklı iptal sırasını kullan.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/ig-requests-tr-1200.webp" srcset="/assets/img/shots/ig-requests-tr-720.webp 720w, /assets/img/shots/ig-requests-tr-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="571" alt="Unwrapped Takip istekleri ekranı: gönderdiğin 9 bekleyen istek, 6 gelen istek ve her isteğin tarihiyle hesap listesi" loading="lazy" decoding="async">
+        <figcaption>Demoda takip istekleri: gönderdiğin ve hâlâ bekleyen istekler, en yeniden en eskiye, her birinde açma düğmesiyle.</figcaption>
+      </figure>
       <p>Her şey cihazında okunur. Unwrapped hesabına asla giriş yapmaz ve senin yerine hiçbir şeyi iptal etmez.</p>
       <div class="read-next"><h2>Sıradaki okuma</h2><ul><li><a href="/blog/why-am-i-losing-followers/">Instagram’da neden takipçi kaybediyorum? 8 gerçek neden</a></li><li><a href="/blog/instagram-close-friends-list/">Yakın Arkadaşlar, engellenenler ve gizli listeler</a></li><li><a href="/guides/who-unfollowed-me-on-instagram/">Instagram’da seni kimin takipten çıktığını güvenle görme</a></li></ul></div>
       <h2>FAQ</h2>
     </div>
     <div class="faq" style="margin:0;max-width:760px">
       <details open><summary>Instagram’da gönderdiğim istekleri görebilir miyim?</summary><div class="answer"><p>Uygulamada liste olarak hayır — ama Instagram veri indirmen gönderdiğin tüm bekleyen istekleri içerir.</p></div></details>
+      <details><summary>Instagram takip isteklerinin süresi dolar mı?</summary><div class="answer"><p>Instagram Yardım Merkezi bir süre sınırından bahsetmiyor. İstek, karşı taraf kabul edene, reddedene ya da sen iptal edene kadar beklemede kalır. Bu yüzden çok eski istekler de indirmende görünür.</p></div></details>
+      <details><summary>Takip isteğim neden kayboldu?</summary><div class="answer"><p>Genelde karşı taraf kabul ettiği, reddettiği ya da sen iptal ettiğin için. Hesap silindiyse ya da devre dışı bırakıldıysa veya seni engellediyse de kaybolur.</p></div></details>
       <details><summary>İptal ettiğimi karşı taraf anlar mı?</summary><div class="answer"><p>Bildirim gönderilmez. İstek sadece onun listesinden kaybolur.</p></div></details>
       <details><summary>Çok sayıda isteği bir anda iptal etmek güvenli mi?</summary><div class="answer"><p>Yavaş git. Dakikalar içinde yüzlercesini iptal etmek geçici engele yol açabilir; iptal sırası bu yüzden araya zaman koyar.</p></div></details>
     </div>

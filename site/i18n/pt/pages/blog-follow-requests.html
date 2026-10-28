@@ -4,6 +4,7 @@
   "headline": "Veja todas as solicitações para seguir que você enviou no Instagram",
   "description": "O Instagram esconde as solicitações que você enviou para contas privadas. O download dos seus dados lista todas as que ainda estão pendentes — veja e cancele com segurança, sem fazer login em lugar nenhum.",
   "article": "2026-10-14",
+  "updated": "2026-10-28",
   "faqSchema": true
 }-->
 <section class="page-hero">
@@ -11,18 +12,18 @@
     <div class="stack" style="--stack:14px;max-width:760px">
       <span class="eyebrow">Blog · Instagram</span>
       <h1 class="h1">Todas as solicitações <span class="serif grad">que você enviou.</span></h1>
-      <p class="lead">Solicitações para contas privadas que nunca aceitaram ficam pendentes por anos. Elas ainda contam nos seus limites — e o dono da conta consegue vê-las.</p>
+      <p class="lead">Solicitações para contas privadas que nunca responderam podem ficar pendentes por anos, e a outra pessoa continua vendo em suas solicitações. Veja como listar todas e cancelá-las.</p>
     </div>
   </div>
 </section>
 <section class="section--tight" style="padding-bottom:80px">
   <div class="container">
     <div class="prose">
-<h2>Por que solicitações antigas importam</h2>
-      <p>Uma solicitação pendente nunca expira. A outra pessoa continua vendo, e uma lista longa sem resposta pode parecer spam para o Instagram. Limpar isso é uma vitória rápida.</p>
+<h2>A resposta curta</h2>
+      <p>A Central de Ajuda do Instagram não descreve uma lista das solicitações que você enviou, mas o seu download de dados tem. O arquivo <code>connections/followers_and_following/pending_follow_requests.json</code> lista cada solicitação que ainda está esperando, com a data em que você enviou. Solte o ZIP no Unwrapped e você vê essa lista, com um botão para abrir cada conta.</p>
 
       <h2>Onde encontrá-las</h2>
-      <p>O Instagram não mostra no app uma lista das solicitações que você enviou. O download dos seus dados mostra: o arquivo de <strong>solicitações para seguir pendentes</strong> traz cada uma, com a data de envio.</p>
+      <p>Exporte suas informações do Instagram com <strong>Seguidores e seguindo</strong> marcado, em JSON. No ZIP, <code>pending_follow_requests.json</code> traz as solicitações que você enviou e <code>follow_requests_you’ve_received.json</code>, as que esperam a sua aprovação.</p>
 
       <h2>Veja e cancele em minutos</h2>
       <ol>
@@ -30,12 +31,18 @@
         <li>Solte o ZIP no <a href="/instagram/">Unwrapped</a> e abra <strong>Follow requests</strong>. Você também vê as solicitações recebidas.</li>
         <li>Abra cada conta e toque em <strong>Solicitado</strong> para cancelar — ou use a fila de cancelamento com pausas para nunca bater nos limites do Instagram.</li>
       </ol>
+      <figure class="shot" style="margin:24px 0">
+        <img src="/assets/img/shots/ig-requests-pt-1200.webp" srcset="/assets/img/shots/ig-requests-pt-720.webp 720w, /assets/img/shots/ig-requests-pt-1200.webp 1200w" sizes="(max-width: 800px) 100vw, 760px" width="1200" height="571" alt="Tela de Solicitações para seguir do Unwrapped: 9 pendentes enviadas, 6 recebidas e a lista de contas com a data de cada solicitação" loading="lazy" decoding="async">
+        <figcaption>Solicitações para seguir na demo: as que você enviou e continuam pendentes, das mais recentes para as mais antigas, cada uma com um botão para abrir.</figcaption>
+      </figure>
       <p>Tudo é lido no seu aparelho. O Unwrapped nunca entra na sua conta e nunca cancela nada por você.</p>
       <div class="read-next"><h2>Leia também</h2><ul><li><a href="/blog/why-am-i-losing-followers/">Por que estou perdendo seguidores no Instagram? 8 motivos reais</a></li><li><a href="/blog/instagram-close-friends-list/">Melhores Amigos, bloqueados e listas ocultas</a></li><li><a href="/guides/who-unfollowed-me-on-instagram/">Como ver quem deixou de te seguir no Instagram — com segurança</a></li></ul></div>
       <h2>FAQ</h2>
     </div>
     <div class="faq" style="margin:0;max-width:760px">
       <details open><summary>Dá para ver as solicitações que enviei no Instagram?</summary><div class="answer"><p>Não como lista no app — mas o download dos seus dados do Instagram inclui todas as solicitações pendentes que você enviou.</p></div></details>
+      <details><summary>As solicitações para seguir do Instagram expiram?</summary><div class="answer"><p>A Central de Ajuda do Instagram não fala em prazo. Uma solicitação fica pendente até a pessoa aceitar ou recusar, ou até você cancelar. Por isso solicitações bem antigas aparecem no seu download.</p></div></details>
+      <details><summary>Por que minha solicitação para seguir sumiu?</summary><div class="answer"><p>Geralmente porque a pessoa aceitou, recusou ou você cancelou. Ela também some se a conta foi excluída ou desativada, ou se a pessoa te bloqueou.</p></div></details>
       <details><summary>A pessoa fica sabendo que cancelei?</summary><div class="answer"><p>Nenhuma notificação é enviada. A solicitação simplesmente some da lista dela.</p></div></details>
       <details><summary>É seguro cancelar muitas de uma vez?</summary><div class="answer"><p>Vá devagar. Cancelar centenas em minutos pode gerar um bloqueio temporário — por isso a fila espaça os cancelamentos.</p></div></details>
     </div>
