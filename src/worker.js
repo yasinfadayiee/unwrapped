@@ -20,6 +20,7 @@ import { submitFeedback, testimonials } from './feedback.js';
 import { createReminder, sendDueReminders } from './reminders.js';
 import { handleUsers } from './users.js';
 import { askBot, botEnabled, submitSupport } from './support.js';
+import { mergedTarget } from './redirects.js';
 
 async function enabledMethods(env) {
   const methods = [];
@@ -210,6 +211,8 @@ export default {
       const alias = url.hostname.endsWith('.workers.dev') || url.hostname === `www.${target.hostname}`;
       if (alias && target.hostname !== url.hostname) return Response.redirect(`${target.origin}${url.pathname}${url.search}`, 301);
     }
+    const merged = request.method === 'GET' || request.method === 'HEAD' ? mergedTarget(url.pathname) : null;
+    if (merged) return Response.redirect(`${url.origin}${merged}${url.search}`, 301);
     // Public "link in bio" pages: /@handle
     const bio = url.pathname.match(/^\/@([a-z0-9._]{3,30})\/?$/i);
     if (bio && (request.method === 'GET' || request.method === 'HEAD')) {
