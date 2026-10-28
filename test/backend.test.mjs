@@ -4,6 +4,7 @@ import worker from '../src/worker.js';
 import { D1Shim } from '../server/d1-shim.js';
 import { isValidTronAddress, USDT_CONTRACT } from '../src/payments/tron.js';
 import { signIpnBody } from '../src/payments/nowpayments.js';
+import { signWebhookBody } from '../src/payments/lemonsqueezy.js';
 import { b64urlDecode } from '../src/util.js';
 import { ensureStarsWebhook } from '../src/payments/stars.js';
 import { createStarsOrder } from '../src/payments/stars.js';
@@ -17,6 +18,7 @@ let npPayments; // fake NOWPayments payment records
 let tgCalls;
 let tgFailure;
 let tgWebhookUrl;
+let lsCheckouts; // Lemon Squeezy checkout requests
 const realFetch = globalThis.fetch;
 
 beforeEach(() => {
@@ -35,6 +37,7 @@ beforeEach(() => {
   tgCalls = [];
   tgFailure = null;
   tgWebhookUrl = '';
+  lsCheckouts = [];
   globalThis.fetch = async (input, init = {}) => {
     const url = new URL(typeof input === 'string' ? input : input.url);
     if (url.hostname === 'api.telegram.org') {
@@ -50,6 +53,11 @@ beforeEach(() => {
     if (url.hostname === 'api.trongrid.io') {
       const min = Number(url.searchParams.get('min_timestamp') || 0);
       return Response.json({ data: chain.filter((t) => t.block_timestamp >= min), success: true, meta: {} });
+    }
+    if (url.hostname === 'api.lemonsqueezy.com' && url.pathname === '/v1/checkouts') {
+      const body = JSON.parse(init.body);
+      lsCheckouts.push(body);
+      return Response.json({ data: { id: `co_${lsCheckouts.length}`, attributes: { url: `https://shop.lemonsqueezy.com/checkout/${lsCheckouts.length}` } } }, { status: 201 });
     }
     if (url.hostname === 'api.nowpayments.io' && url.pathname === '/v1/invoice') {
       const body = JSON.parse(init.body);
@@ -481,6 +489,32 @@ test('NOWPayments orders finish from the cron when the final IPN never arrives',
   await Promise.all(pending.splice(0));
   const status = await call('GET', `/api/order?id=${co.order.id}&t=${co.token}`);
   assert.equal(status.body.order.status, 'paid');
+});
+
+test('Lemon Squeezy card checkout activates only from a signed, paid, full-price webhook', async () => {
+  Object.assign(env, { LEMONSQUEEZY_API_KEY: 'ls-key', LEMONSQUEEZY_STORE_ID: '1', LEMONSQUEEZY_VARIANT_ID: '2', LEMONSQUEEZY_WEBHOOK_SECRET: 'ls-secret' });
+  const cfg = await call('GET', '/api/config');
+  assert.ok(cfg.body.methods.some((m) => m.id === 'lemonsqueezy'));
+  const created = await call('POST', '/api/checkout', { plan: 'pro-month', method: 'lemonsqueezy', email: 'a@b.co' });
+  assert.equal(created.status, 200);
+  assert.match(created.body.order.redirectUrl, /lemonsqueezy\.com\/checkout\//);
+  assert.equal(lsCheckouts[0].data.attributes.custom_price, 900);
+  assert.equal(lsCheckouts[0].data.attributes.checkout_data.custom.order_id, created.body.order.id);
+
+  const hook = async (attrs, secret = 'ls-secret') => {
+    const raw = JSON.stringify({ meta: { event_name: 'order_created', custom_data: { order_id: created.body.order.id } }, data: { id: '77', attributes: attrs } });
+    return call('POST', '/api/webhook/lemonsqueezy', raw, { 'x-signature': await signWebhookBody(secret, raw) });
+  };
+  const status = async () => (await call('GET', `/api/order?id=${created.body.order.id}&t=${created.body.token}`)).body.order.status;
+  assert.equal((await hook({ status: 'paid', subtotal_usd: 900 }, 'wrong')).status, 401);
+  await hook({ status: 'paid', subtotal_usd: 500 });
+  await hook({ status: 'pending', subtotal_usd: 900 });
+  await hook({ status: 'paid', subtotal_usd: 900, test_mode: true });
+  assert.notEqual(await status(), 'paid');
+  const ok = await hook({ status: 'paid', subtotal_usd: 900 });
+  assert.equal(ok.body.fulfilled, true);
+  assert.equal(await status(), 'paid');
+  assert.equal((await hook({ status: 'paid', subtotal_usd: 900 })).body.already, true);
 });
 
 test('NOWPayments price mismatches and unfinished payments do not activate', async () => {

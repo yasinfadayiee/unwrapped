@@ -8,6 +8,7 @@ import { activateLicense, getSigningKeys, lifetimeTier } from './license.js';
 import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
 import { checkNowpaymentsPayments, createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
+import { createLemonsqueezyOrder, handleLemonsqueezyWebhook, lemonsqueezyEnabled } from './payments/lemonsqueezy.js';
 import { createStarsOrder, ensureStarsWebhook, handleStarsWebhook, starsEnabled } from './payments/stars.js';
 import { growthAccountForCheckout, growthMaintenance, handleGrowth } from './growth/index.js';
 import { handleBio, servePublicBio } from './bio/index.js';
@@ -24,8 +25,14 @@ import { mergedTarget } from './redirects.js';
 
 async function enabledMethods(env) {
   const methods = [];
+  const card = lemonsqueezyEnabled(env);
+  if (card) {
+    methods.push({ id: 'lemonsqueezy', label: 'Card · PayPal', detail: 'Visa, Mastercard, Apple Pay, Google Pay, PayPal' });
+  }
   if (starsEnabled(env)) {
-    methods.push({ id: 'stars', label: 'Card · Apple Pay · Google Pay', detail: 'Pay in Telegram — no crypto, no Stars needed beforehand' });
+    // Without a card processor, Stars is the card route (Telegram sells the Stars by card).
+    const label = card ? 'Pay with Telegram Stars' : 'Card · Apple Pay · Google Pay';
+    methods.push({ id: 'stars', label, detail: 'Pay in Telegram — no crypto, no Stars needed beforehand' });
   }
   if (await tronEnabled(env)) {
     methods.push({ id: 'tron', label: 'USDT · TRC20', detail: 'Direct to wallet · lowest fees · ~1 min' });
@@ -93,6 +100,7 @@ async function checkout(request, env) {
   const args = { plan, priceUsd, email, renewKey, visitor, growthAccount };
   const order =
     methodId === 'stars' ? await createStarsOrder(env, request, args)
+      : methodId === 'lemonsqueezy' ? await createLemonsqueezyOrder(env, request, args)
       : methodId === 'tron' ? await createTronOrder(env, args) : await createNowpaymentsOrder(env, request, args);
   if (referral) await attachReferral(env, order.id, referral.code);
   await logEvent(env, 'order.created', order.id, { plan: plan.id, method: methodId, ref: referral ? referral.code : null, growthAccount });
@@ -167,6 +175,8 @@ async function route(request, env, ctx, url) {
       return referralInfo(request, env);
     case 'GET /api/referral/check':
       return referralCheck(env, url);
+    case 'POST /api/webhook/lemonsqueezy':
+      return handleLemonsqueezyWebhook(request, env);
     case 'POST /api/webhook/nowpayments':
       return handleNowpaymentsIpn(request, env);
     case 'POST /api/webhook/telegram-stars':

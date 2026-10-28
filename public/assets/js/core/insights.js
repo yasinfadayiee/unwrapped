@@ -203,13 +203,17 @@ export function diffSnapshots(previous, current) {
   const currF = new Set(current.followers);
   const prevG = new Set(previous.following);
   const currG = new Set(current.following);
+  // An empty list next to a full one means that file was missing from one export,
+  // not that everyone unfollowed: compare only lists both exports contain.
+  const hasF = previous.followers.length > 0 && current.followers.length > 0;
+  const hasG = previous.following.length > 0 && current.following.length > 0;
   return {
     from: previous.takenAt,
     to: current.takenAt,
-    unfollowedYou: previous.followers.filter((k) => !currF.has(k)),
-    newFollowers: current.followers.filter((k) => !prevF.has(k)),
-    youUnfollowed: previous.following.filter((k) => !currG.has(k)),
-    youFollowed: current.following.filter((k) => !prevG.has(k)),
+    unfollowedYou: hasF ? previous.followers.filter((k) => !currF.has(k)) : [],
+    newFollowers: hasF ? current.followers.filter((k) => !prevF.has(k)) : [],
+    youUnfollowed: hasG ? previous.following.filter((k) => !currG.has(k)) : [],
+    youFollowed: hasG ? current.following.filter((k) => !prevG.has(k)) : [],
   };
 }
 

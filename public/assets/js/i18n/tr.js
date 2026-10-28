@@ -1,6 +1,8 @@
 // Turkish UI strings. Keys are the English originals (see test/i18n.test.mjs).
 export default {
   "Card · Apple Pay · Google Pay": "Kart · Apple Pay · Google Pay",
+  "Card · PayPal": "Kart · PayPal",
+  "Visa, Mastercard, Apple Pay, Google Pay, PayPal": "Visa, Mastercard, Apple Pay, Google Pay, PayPal",
   "Pay inside Telegram with Stars — no crypto needed": "Telegram içinde Stars ile öde — kripto para gerekmez",
   "Pay with Telegram Stars": "Telegram Stars ile öde",
   "Pay ⭐ {stars} Stars in Telegram": "Telegram’da ⭐ {stars} Stars öde",
@@ -1414,7 +1416,7 @@ export default {
   "Get Pro — from $2.42/month": "Pro’yu al — ayda 2,42 $’dan",
   "+ {n} more": "+ {n} tane daha",
   "Continue · {price}": "Devam et · {price}",
-  "No account, no card details": "Hesap yok, kart bilgisi yok",
+  "No account needed": "Hesap gerekmez",
   "Key unlocks right after payment": "Anahtar ödemeden hemen sonra açılır",
   "Human support on Telegram": "Telegram’da gerçek destek",
   "14-day refund if we can’t read your export": "Dışa aktarımını okuyamazsak 14 gün içinde iade",

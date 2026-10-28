@@ -1,6 +1,8 @@
 // Brazilian Portuguese UI strings. Keys are the English originals (see test/i18n.test.mjs).
 export default {
   "Card · Apple Pay · Google Pay": "Cartão · Apple Pay · Google Pay",
+  "Card · PayPal": "Cartão · PayPal",
+  "Visa, Mastercard, Apple Pay, Google Pay, PayPal": "Visa, Mastercard, Apple Pay, Google Pay, PayPal",
   "Pay inside Telegram with Stars — no crypto needed": "Pague no Telegram com Stars — sem precisar de criptomoedas",
   "Pay with Telegram Stars": "Pagar com Telegram Stars",
   "Pay ⭐ {stars} Stars in Telegram": "Pagar ⭐ {stars} Stars no Telegram",
@@ -1414,7 +1416,7 @@ export default {
   "Get Pro — from $2.42/month": "Quero o Pro — a partir de US$ 2,42/mês",
   "+ {n} more": "+ {n} a mais",
   "Continue · {price}": "Continuar · {price}",
-  "No account, no card details": "Sem conta, sem dados de cartão",
+  "No account needed": "Sem criar conta",
   "Key unlocks right after payment": "A chave libera logo após o pagamento",
   "Human support on Telegram": "Suporte humano no Telegram",
   "14-day refund if we can’t read your export": "Reembolso em 14 dias se não conseguirmos ler seu export",

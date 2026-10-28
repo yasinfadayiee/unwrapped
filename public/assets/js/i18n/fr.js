@@ -1,6 +1,8 @@
 // French UI strings. Keys are the English originals (see test/i18n.test.mjs).
 export default {
   "Card · Apple Pay · Google Pay": "Carte · Apple Pay · Google Pay",
+  "Card · PayPal": "Carte · PayPal",
+  "Visa, Mastercard, Apple Pay, Google Pay, PayPal": "Visa, Mastercard, Apple Pay, Google Pay, PayPal",
   "Pay inside Telegram with Stars — no crypto needed": "Payez dans Telegram avec des Stars — sans cryptomonnaie",
   "Pay with Telegram Stars": "Payer avec Telegram Stars",
   "Pay ⭐ {stars} Stars in Telegram": "Payer ⭐ {stars} Stars dans Telegram",
@@ -1426,7 +1428,7 @@ export default {
   "Get Pro — from $2.42/month": "Passer à Pro — dès 2,42 $/mois",
   "+ {n} more": "+ {n} de plus",
   "Continue · {price}": "Continuer · {price}",
-  "No account, no card details": "Sans compte ni carte bancaire",
+  "No account needed": "Aucun compte à créer",
   "Key unlocks right after payment": "La clé se débloque juste après le paiement",
   "Human support on Telegram": "Support humain sur Telegram",
   "14-day refund if we can’t read your export": "Remboursement sous 14 jours si nous ne pouvons pas lire ton export",

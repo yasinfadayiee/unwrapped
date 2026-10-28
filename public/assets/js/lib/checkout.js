@@ -223,7 +223,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
   const trust = h(
     'div',
     { class: 'co-trust small text-2' },
-    h('span', null, '🔒 ', t('No account, no card details')),
+    h('span', null, '🔒 ', t('No account needed')),
     h('span', null, '⚡ ', t('Key unlocks right after payment')),
     h('span', null, '💬 ', t('Human support on Telegram')),
     h('span', null, '↩ ', t('14-day refund if we can’t read your export')),
@@ -282,7 +282,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
         starsScreen(m, res.order, res.token, config);
         return;
       }
-      if (res.order.method === 'nowpayments' && res.order.redirectUrl) {
+      if ((res.order.method === 'nowpayments' || res.order.method === 'lemonsqueezy') && res.order.redirectUrl) {
         go.textContent = t('Opening the payment page…');
         location.href = res.order.redirectUrl;
         return;
