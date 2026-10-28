@@ -108,3 +108,12 @@ For each page:
 - 2026-10-28: drop confirmed in Search Console; recovery mode on; Phase 0 done.
 - 2026-10-28: Phase 1 step 4 done (236 thin translations get noindex; the sitemap has 348 URLs). Deployed and
   sitemap resubmitted in Search Console (step 6).
+- 2026-10-28: Phase 1 step 3 (first round): 9 duplicate-intent posts 301 to the stronger page in all 6 languages
+  (`src/redirects.js`). Five posts went to the tool page with the same title and FAQ: account age, liked posts,
+  Threads unfollowers, TikTok watch history and Telegram stats. "Who do I message most" went to the DM analyzer.
+  Three blog posts were merged into stronger posts, which kept a section from each:
+  - Spotify most-played → Spotify hours;
+  - first follow → first follower;
+  - first tweet → search old tweets.
+  The sitemap has 331 URLs. The per-platform "who unfollowed me" posts stay separate: each has its own search
+  intent, and the TikTok post is the top earner.
