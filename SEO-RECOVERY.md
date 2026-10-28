@@ -106,4 +106,5 @@ For each page:
 
 ## Log
 - 2026-10-28: drop confirmed in Search Console; recovery mode on; Phase 0 done.
-- 2026-10-28: Phase 1 step 4 done (236 thin translations get noindex; the sitemap has 348 URLs).
+- 2026-10-28: Phase 1 step 4 done (236 thin translations get noindex; the sitemap has 348 URLs). Deployed and
+  sitemap resubmitted in Search Console (step 6).
