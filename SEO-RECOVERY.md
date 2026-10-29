@@ -189,3 +189,35 @@ For each page:
     - French "passés au crible" is now "passé".
     - The Account health fix button kept German nouns lowercase and started Turkish with a lowercase letter.
   With this, the 7 pages on the Phase 2 list are done.
+- 2026-10-29: independent check of the drop (in the Search Console UI and the repo):
+  - Manual actions and Security issues: "No issues detected".
+  - Crawl stats (updated Oct 27): host status shows no problems in 90 days; 100% of requests return 200. Crawling
+    stayed low and steady across Oct 22–27, with no dip on Oct 25. The only failed fetches were 7 "page could not be
+    reached" on Oct 14–19 and 1 "DNS unresponsive" on Oct 27 (`/instagram/`).
+  - Repo, Oct 23–25: the only code changes were payments (Stars) and new blog posts. Nothing touched robots.txt,
+    headers, canonical, hreflang or the build's meta tags.
+  - Live, as Googlebot smartphone: robots.txt allows everything except /admin/, /success/ and /api/. The key pages
+    return 200 with `index, follow`, a self canonical and no `X-Robots-Tag`.
+  - URL Inspection showed what actually happened. Google took most pages out of the index, and they are now
+    "Crawled - currently not indexed": `/instagram-message-viewer/` (last crawl Oct 27), `/instagram/` (Oct 15),
+    `/tiktok/` (Oct 25) and `/blog/who-viewed-my-instagram-profile/` (Oct 15). Only `/` and `/es/` are still indexed.
+    Pages that Google had not crawled since Oct 15 were dropped as well. That rules out a fetch error on Oct 25.
+    Google re-scored the site's pages at index level, which fits a site-wide quality/value judgment. The Page
+    indexing report (last updated Oct 23, 550 indexed) does not show this yet.
+  - English blog: 47 posts, about 620 words each (median). About 39% of each post is shared site text (CTA,
+    steps blocks, Read next). After the Oct 28 merges, no two posts share more than 21% of their own text
+    (5-word shingles). So exact duplicates are not the main problem now. The question is whether each page adds
+    value beyond what competitors and Meta's own help pages already say. This is Phase 3 work.
+
+### Changes to measure (compare each against Oct 22–24 once the data is final)
+| Date | Change | URLs | Goal |
+|---|---|---|---|
+| 2026-10-28 | `noindex, follow` + removed from sitemap/hreflang (`site/seo-prune.json`) | 236 translated posts/guides | Stop thin translations dragging the site down |
+| 2026-10-28 | 301 merges (`src/redirects.js`) | 9 posts × 6 langs | One strong page per search intent |
+| 2026-10-28 | Sitemap 584 → 331, resubmitted | sitemap.xml | Only pages worth indexing |
+| 2026-10-28 | More internal links | `/blog/who-removed-me-on-linkedin/` | Get it discovered |
+| 2026-10-28/29 | Phase 2 rewrites (answer first, real screenshots, checked steps) | message viewer, TikTok unfollowers, Spotify Wrapped 2026, IG search history, follower tracker, sent follow requests, home (6 langs) | Return to the index and get back past impressions |
+| 2026-10-28 | Meta's new export labels | site-wide, 6 langs | Accurate steps |
+
+  Next check: Monday 2026-11-02. Re-run URL Inspection on the 4 pages above. Watch whether "Crawled - currently
+  not indexed" grows in the Page indexing report once it updates past Oct 23.
