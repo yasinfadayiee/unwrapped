@@ -109,6 +109,17 @@ test('Instagram ZIP (JSON, 2025 layout) with followers split across files', asyn
   assert.equal(new Date(ig.exportedAt).getFullYear(), 2026);
 });
 
+test('Instagram list files renamed by re-downloads ("(1)", "- Copy") are still read', async () => {
+  const rel = (u) => ({ title: '', media_list_data: [], string_list_data: [{ href: `https://www.instagram.com/${u}`, value: u, timestamp: 1700000000 }] });
+  const vfs = await buildVfs([
+    asFile(new TextEncoder().encode(JSON.stringify([rel('alpha'), rel('beta')])), 'followers_1 (1).json'),
+    asFile(new TextEncoder().encode(JSON.stringify({ relationships_following: [rel('alpha'), rel('delta')] })), 'following - Copy.json'),
+  ]);
+  const ig = ds(await analyze(vfs), 'instagram');
+  assert.ok(ig);
+  assert.deepEqual(relationships(ig).notFollowingBack.map((f) => f.u), ['delta']);
+});
+
 test('ZIP64 archives are read correctly', async () => {
   const zip = makeZip(
     [

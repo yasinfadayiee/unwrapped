@@ -2005,3 +2005,10 @@ main.page { overflow-x: clip; }
 
 /* Home: real dashboard screenshot inside the browser frame. */
 .browser--shot > img { display: block; width: 100%; height: auto; }
+
+/* Tablets and narrow laptop windows (481-1099px): the big hero art pushed the drop zone a full screen down; skip it (as on phones) so the main action shows on the first screen. */
+@media (min-width: 481px) and (max-width: 1099px) {
+  .hero > .container > .hero-art:has(+ div .drop) { display: none; }
+  .hero > .container > .hero-art + div:has(.drop) { margin-top: 10px !important; }
+  .hero:has(> .container > .hero-art + div .drop) { padding-top: 32px; }
+}

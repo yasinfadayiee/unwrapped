@@ -109,5 +109,6 @@ export function dedupeUsers(items) {
 }
 
 export function stripExt(name) {
-  return name.replace(/\.(json|html?)$/i, '').toLowerCase().replace(/[’']/g, "'");
+  // Re-downloaded or copied files get "followers_1 (1).json" / "following - Copy.json".
+  return name.replace(/\.(json|html?)$/i, '').toLowerCase().replace(/[’']/g, "'").replace(/(\s*\(\d+\)|\s*-\s*copy(\s*\(\d+\))?)+$/, '');
 }
