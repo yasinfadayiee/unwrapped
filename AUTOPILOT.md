@@ -82,7 +82,7 @@ file that is missing. -->
 - [x] (2026-10-27) Fix (review): `site/pages/guide-unfollowers.html` says "for screenshots-free, step-by-step help" (unnatural, and
   sounds like a missing feature). Change to "for step-by-step help". Check the same sentence in the 5 translations and
   fix any equally awkward wording. Copy only.
-- [ ] Pricing FAQ "Why pay if some unfollower checkers are free?" in `site/pages/pricing.html` (+5 translations),
+- [x] (2026-10-29) Pricing FAQ "Why pay if some unfollower checkers are free?" in `site/pages/pricing.html` (+5 translations),
   placed right after "What do I get for free?". Copy only: never change the table, prices, plans or checkout
   markup. Honest answer using only facts already on pricing.html: free already gives every chart, counts and the
   first 20 rows; Plus adds every name, who unfollowed you between exports, on every platform; the file never leaves
