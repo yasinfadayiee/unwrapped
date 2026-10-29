@@ -43,15 +43,28 @@ scaled content. Plan and checkpoints: `SEO-RECOVERY.md`. Until the owner ends re
 - Finally write a one-line summary in simple Persian for the owner to the summary file the prompt names.
 
 ## Backlog
-<!-- Planner 2026-10-26: 60+ blog posts, ~200 clicks, 0 orders. Next 3 weeks: make "free vs paid" obvious on the
-pages that get unfollower traffic, and make paying easy for people without crypto (Telegram Stars). No new
-informational blog posts unless listed here. -->
+<!-- Planner 2026-10-29: 0 paid orders, deadline 2026-11-15 (~17 days). Search impressions collapsed on 2026-10-25
+(recovery mode: no new pages). Competitors that read the same export (SafeUnfollow, Follower Analyzer, Unfollow
+Checker) are free, so a buyer must see at a glance what Plus gives that a free checker does not, and must trust
+the payment. Order: copy fix, then free-vs-paid and trust copy on the pages that still get unfollower traffic.
+Posts merged on 2026-10-28 (e.g. blog-threads-unfollowers, blog-facebook-unfriended) no longer exist: skip any
+file that is missing. -->
+- [ ] Fix (review): the shared CTA line (added 2026-10-27) says free shows "how many people unfollowed you", but
+  that needs two exports (pricing.html row "Who unfollowed you (from your second export)"). In
+  `site/partials/guide-cta.html` and `site/i18n/{de,es,fr,pt,tr}/partials/guide-cta.html` change that part to
+  "how many unfollowed you (from your second export)", natural wording in each language, using the words each
+  language's pricing.html already uses. Done: 6 partials, build passes.
 - [x] (2026-10-26) Lock-card privacy note — follow `autopilot/specs/lock-card-privacy-note.md` exactly (skip its screenshot
   step: there is no browser here).
 - [ ] OWNER PC: Real end-to-end test purchase on the live site, once with Telegram Stars and once with USDT
   (cheapest plan, e.g. the $3 Pro week): pay → license active → locked rows open → key shown under My account.
-  PROJECT_STATE.md still says the Stars live test "waits for owner T14". Fix what breaks, then update
-  PROJECT_STATE.md ("Last updated", "Paid features use crypto payments" → Stars + crypto, the Stars line).
+  If the Lemon Squeezy card/PayPal checkout (commit 55a31b55, off until its 4 secrets are set) is wanted, set the
+  secrets and test it too: for most buyers, a card is the easiest way to pay. Then update PROJECT_STATE.md (payment
+  methods, "Last updated", the Stars line that still "waits for owner T14").
+- [ ] OWNER PC: Decide the free tier vs free competitors. SafeUnfollow, Follower Analyzer and Unfollow Checker show
+  the full not-following-back list from the same export for free; Unwrapped shows the first 20. Options: keep the
+  cap but say on the lock card what Plus adds that free checkers lack (names of who unfollowed across exports, every
+  platform, Pro Lab), or raise the cap and lock only unfollower names/history. Lock-card/plan code, Opus only.
 - [x] (2026-10-26, Claude Opus on owner PC) OWNER PC: Pricing page names only crypto ("pay with crypto" in title, "Pay with USDT or 150+ coins" in
   description, lead "paid in crypto"). Add Telegram Stars as the first, no-crypto option in title/description/lead,
   plus a FAQ "Can I pay without crypto?" (Stars, in Telegram, how it is delivered), 6 languages. Optionally a short
@@ -69,45 +82,56 @@ informational blog posts unless listed here. -->
 - [x] (2026-10-27) Fix (review): `site/pages/guide-unfollowers.html` says "for screenshots-free, step-by-step help" (unnatural, and
   sounds like a missing feature). Change to "for step-by-step help". Check the same sentence in the 5 translations and
   fix any equally awkward wording. Copy only.
-- [ ] Free-vs-paid box on the 2 highest-intent landing pages: `site/pages/instagram-follower-tracker.html` and
-  `site/pages/unfollower-app-alternative.html` (+5 translations each). Above the FAQ, add a small 3-row list
-  (Not following back: first 20 free / all with Plus; Who unfollowed you: count free / names with Plus; Search & CSV
-  export: Plus) copied from pricing.html rows, then a "See plans" link to /pricing/. Reuse existing classes
-  (`checklist` or the pricing table classes); no new CSS, no prices. Skip a page if it already states this.
-- [ ] Unfollower blog posts, part 1: in `site/pages/blog-threads-unfollowers.html`, `blog-tiktok-unfollowers.html`,
-  `blog-x-not-following-back.html`, `blog-facebook-unfriended.html` (+5 translations each), where the post says the
-  tool is free or mentions the result list, add one honest sentence: free shows how many people left (and the first
-  20 rows of each list); Plus shows every name — link /pricing/. Before writing, confirm in
-  `public/assets/js/app/views-*.js` (read only) that the platform has the unfollower/not-following-back lock; if not,
-  skip that post. One sentence per post, no layout change.
-- [ ] Unfollower blog posts, part 2: same as part 1 for `blog-losing-followers.html`,
-  `blog-unfollow-notification.html`, `blog-instagram-recently-unfollowed.html`, `blog-compare-follower-lists.html`
-  (+5 translations each). Skip a post that already links /pricing/.
-- [ ] PAUSED (SEO recovery, no new pages): New page /blog/free-instagram-unfollower-checker/ (6 languages) for "free unfollower checker no login":
-  honest answer — what Unwrapped shows for free with your own export (pricing.html "What do I get for free?" FAQ and
-  the Free column only), what Plus adds, why password apps are risky (link /guides/are-unfollower-apps-safe/), steps
-  link /guides/download-instagram-data/, CTA /instagram/ and /pricing/. Copy the structure of
-  site/pages/blog-instagram-recently-unfollowed.html; reuse existing art; tile in blog.html (x6); one inbound link
-  from guide-unfollowers.html (x6). No competitor names, no stats.
-- [ ] Review `site/pages/blog-best-unfollower-apps.html` (+5 translations) like an editor: remove or soften any
-  claim about another app that the page cannot back up (prices, features, bans); make sure Unwrapped's own free vs
-  paid line matches pricing.html exactly and links /pricing/. If nothing is wrong, tick it with "no change needed".
+- [ ] Pricing FAQ "Why pay if some unfollower checkers are free?" in `site/pages/pricing.html` (+5 translations),
+  placed right after "What do I get for free?". Copy only: never change the table, prices, plans or checkout
+  markup. Honest answer using only facts already on pricing.html: free already gives every chart, counts and the
+  first 20 rows; Plus adds every name, who unfollowed you between exports, on every platform; the file never leaves
+  the device; every payment is one-time with no automatic charges; refund if the export can't be read. No competitor
+  names, no prices. Done: 6 languages, i18n test passes.
+- [ ] Free-vs-paid box on `site/pages/unfollower-app-alternative.html` (+5 translations; the follower tracker page
+  already states it, so skip that one). Above the FAQ, a 3-row list copied from pricing.html rows (Not following
+  back: first 20 free / all with Plus; Who unfollowed you (second export): count free / names with Plus; Search &
+  CSV export: Plus), then a "See plans" link to /pricing/. Reuse existing classes (`checklist`), no new CSS, no prices.
+- [ ] `site/pages/guide-unfollowers.html` (+ translations not in `site/seo-prune.json`): make sure it says plainly
+  that the first export is the baseline (shows who doesn't follow you back) and that a second export, about two
+  weeks later, shows who unfollowed (pricing.html FAQ "When can I see who unfollowed me?"). Add the one free-vs-paid
+  sentence linking /pricing/ if it is missing. No other changes.
+- [ ] Unfollower posts, part 1: `site/pages/blog-tiktok-unfollowers.html`, `blog-x-not-following-back.html`,
+  `blog-losing-followers.html`, `blog-unfollow-notification.html` (+ translations not in seo-prune.json). Where the
+  post mentions the result list, add one honest sentence: free shows the first 20 rows of each list and how many
+  left (from the second export); Plus shows every name, with a link to /pricing/. First confirm in
+  `public/assets/js/app/views-*.js` (read only) that the platform has that lock; if not, skip the post. Skip a post
+  that already links /pricing/. One sentence per post, no layout change.
+- [ ] Unfollower posts, part 2: same as part 1 for `blog-instagram-recently-unfollowed.html`,
+  `blog-compare-follower-lists.html`, `blog-mutual-followers.html`, `blog-unfollow-limit.html`.
 - [ ] Help page trust FAQ: in `site/pages/help.html` (+5 translations), check that it answers, in plain words and
   matching pricing.html/terms: "What happens after I pay?" (activation automatic), "Do I need an account?" and
   "Can I get a refund?" (link /pricing/ FAQ / /terms/). Add only the missing ones, using facts already on
   pricing.html, terms.html or PROJECT_STATE.md. Never describe checkout steps that you have not read in those files.
-- [ ] PAUSED (SEO recovery, no new pages): Blog post "Instagram accounts you like most" — follow `autopilot/specs/blog-instagram-most-liked.md`
-  exactly (skip any screenshot step). Where the spec conflicts with "Rules for every run" (PROJECT_STATE line format
-  "- autopilot: …", committing), the rules win. Its "free vs Plus" sentence must link /pricing/.
+- [ ] Review `site/pages/blog-best-unfollower-apps.html` (+ translations not in seo-prune.json) like an editor:
+  remove or soften any claim about another app that the page cannot back up (prices, features, bans); make sure
+  Unwrapped's own free vs paid line matches pricing.html exactly (unfollower names need a second export) and links
+  /pricing/. If nothing is wrong, tick it with "no change needed".
+- [ ] `site/pages/export-instagram-followers.html` and `site/pages/threads-unfollowers.html` (+ indexed
+  translations): check that their existing /pricing/ sentence matches pricing.html exactly (first 20 rows; unfollower
+  names from the second export). Fix wording only; tick it with "no change needed" if it is already right.
+- [ ] Home page `site/pages/index.html` (+5 translations): check that a visitor sees, in or right under the hero,
+  one line saying what is free and that paying is one-time (no subscription), by card through Telegram Stars or in
+  crypto (facts from the pricing.html lead and "Is it a subscription?"). Add it only if missing; no prices, no new CSS.
 - [ ] (only between 2026-11-10 and 2026-11-30; otherwise skip to the next item) Spotify Wrapped season
   refresh: update /blog/spotify-wrapped-2026/ and /spotify-stats/ copy for the December Wrapped date, verified
-  facts only, all 6 languages, with an "updated" date.
+  facts only, all 6 languages, with an "updated" date. No new pages.
+- [ ] PAUSED (SEO recovery, no new pages): New page /blog/free-instagram-unfollower-checker/. Do not start.
+- [ ] PAUSED (SEO recovery, no new pages): Blog post "Instagram accounts you like most"
+  (`autopilot/specs/blog-instagram-most-liked.md`). Do not start.
 
 ## Rules learned
 - Specs in `autopilot/specs/` were written for an older workflow: where a spec conflicts with "Rules for every run"
   (PROJECT_STATE line format, commit/PR steps, screenshots), the rules win.
 - Every page or post that mentions a paid feature states free vs paid in one honest sentence and links /pricing/.
   Copy the facts from pricing.html; never quote prices outside pricing (prices change only on the owner's PC).
+- "Who unfollowed you" always needs two exports: never imply that one export shows unfollowers or their count.
 - Traffic already lands on 60+ informational posts with 0 orders: do not add new informational blog posts unless
   the Backlog lists them; improve conversion on existing pages first.
 - Read awkward machine-made phrases twice ("screenshots-free"); every language must sound native.
+- A file named in an item may have been merged away (301s, 2026-10-28): if it is missing, skip it; never recreate it.
