@@ -5,6 +5,7 @@ import { D1Shim } from '../server/d1-shim.js';
 import { isValidTronAddress, USDT_CONTRACT } from '../src/payments/tron.js';
 import { signIpnBody } from '../src/payments/nowpayments.js';
 import { signWebhookBody } from '../src/payments/lemonsqueezy.js';
+import { signCreemBody } from '../src/payments/creem.js';
 import { b64urlDecode } from '../src/util.js';
 import { ensureStarsWebhook } from '../src/payments/stars.js';
 import { createStarsOrder } from '../src/payments/stars.js';
@@ -19,6 +20,7 @@ let tgCalls;
 let tgFailure;
 let tgWebhookUrl;
 let lsCheckouts; // Lemon Squeezy checkout requests
+let creemCheckouts; // Creem checkout requests
 const realFetch = globalThis.fetch;
 
 beforeEach(() => {
@@ -38,6 +40,7 @@ beforeEach(() => {
   tgFailure = null;
   tgWebhookUrl = '';
   lsCheckouts = [];
+  creemCheckouts = [];
   globalThis.fetch = async (input, init = {}) => {
     const url = new URL(typeof input === 'string' ? input : input.url);
     if (url.hostname === 'api.telegram.org') {
@@ -58,6 +61,11 @@ beforeEach(() => {
       const body = JSON.parse(init.body);
       lsCheckouts.push(body);
       return Response.json({ data: { id: `co_${lsCheckouts.length}`, attributes: { url: `https://shop.lemonsqueezy.com/checkout/${lsCheckouts.length}` } } }, { status: 201 });
+    }
+    if (/^(test-)?api\.creem\.io$/.test(url.hostname) && url.pathname === '/v1/checkouts') {
+      const body = JSON.parse(init.body);
+      creemCheckouts.push({ url: url.href, body, key: init.headers['x-api-key'] });
+      return Response.json({ id: `ch_${creemCheckouts.length}`, checkout_url: `https://www.creem.io/checkout/prod_1/ch_${creemCheckouts.length}` });
     }
     if (url.hostname === 'api.nowpayments.io' && url.pathname === '/v1/invoice') {
       const body = JSON.parse(init.body);
@@ -515,6 +523,39 @@ test('Lemon Squeezy card checkout activates only from a signed, paid, full-price
   assert.equal(ok.body.fulfilled, true);
   assert.equal(await status(), 'paid');
   assert.equal((await hook({ status: 'paid', subtotal_usd: 900 })).body.already, true);
+});
+
+test('Creem card checkout activates only from a signed, paid, live, full-price USD webhook', async () => {
+  assert.ok(!(await call('GET', '/api/config')).body.methods.some((m) => m.id === 'creem'));
+  Object.assign(env, { CREEM_API_KEY: 'creem_live_key', CREEM_PRODUCT_ID: 'prod_1', CREEM_WEBHOOK_SECRET: 'cr-secret', MANUAL_PAY_URL: 'https://wise.com/pay/me/x' });
+  const methods = (await call('GET', '/api/config')).body.methods.map((m) => m.id);
+  assert.equal(methods[0], 'creem');
+  assert.ok(!methods.includes('manual'));
+  const created = await call('POST', '/api/checkout', { plan: 'plus-month', method: 'creem', email: 'a@b.co' });
+  assert.equal(created.status, 200);
+  assert.match(created.body.order.redirectUrl, /creem\.io\/checkout\//);
+  const sent = creemCheckouts[0];
+  assert.equal(sent.url, 'https://api.creem.io/v1/checkouts');
+  assert.equal(sent.body.custom_price, 499);
+  assert.equal(sent.body.metadata.order_id, created.body.order.id);
+  assert.equal(sent.body.customer.email, 'a@b.co');
+
+  const id = created.body.order.id;
+  const hook = async (order, { secret = 'cr-secret', mode = 'prod', event = 'checkout.completed' } = {}) => {
+    const raw = JSON.stringify({ id: 'evt_1', eventType: event, object: { id: 'ch_1', request_id: id, mode, metadata: { order_id: id }, order: { id: 'ord_1', currency: 'USD', status: 'paid', ...order } } });
+    return call('POST', '/api/webhook/creem', raw, { 'creem-signature': await signCreemBody(secret, raw) });
+  };
+  const status = async () => (await call('GET', `/api/order?id=${id}&t=${created.body.token}`)).body.order.status;
+  assert.equal((await hook({ sub_total: 499 }, { secret: 'wrong' })).status, 401);
+  await hook({ sub_total: 200 });
+  await hook({ sub_total: 499, currency: 'EUR' });
+  await hook({ sub_total: 499, status: 'pending' });
+  await hook({ sub_total: 499 }, { mode: 'test' });
+  await hook({ sub_total: 499 }, { event: 'refund.created' });
+  assert.notEqual(await status(), 'paid');
+  assert.equal((await hook({ sub_total: 499 })).body.fulfilled, true);
+  assert.equal(await status(), 'paid');
+  assert.equal((await hook({ sub_total: 499 })).body.already, true);
 });
 
 test('Manual card payment: needs an e-mail, buyer claims, owner unlocks from admin or Telegram', async () => {

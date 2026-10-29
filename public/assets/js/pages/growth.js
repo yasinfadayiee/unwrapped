@@ -115,7 +115,8 @@ function pay(a, plan, config) {
       err.hidden = true;
       try {
         const res = await api('/api/checkout', { method: 'POST', headers: auth(), body: { plan: plan.id, method: method.id, accountId: a.id } });
-        if (res.order.method === 'nowpayments' && res.order.redirectUrl) {
+        // Hosted checkouts (crypto invoice, card) come back to /growth/ on their own.
+        if (['nowpayments', 'lemonsqueezy', 'creem'].includes(res.order.method) && res.order.redirectUrl) {
           location.href = res.order.redirectUrl;
           return;
         }

@@ -306,7 +306,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
         manualScreen(m, res.order, res.token, config, email.value.trim());
         return;
       }
-      if ((res.order.method === 'nowpayments' || res.order.method === 'lemonsqueezy') && res.order.redirectUrl) {
+      if (['nowpayments', 'lemonsqueezy', 'creem'].includes(res.order.method) && res.order.redirectUrl) {
         import('./stats.js').then(({ track }) => track('pay', { m: res.order.method })).catch(() => {});
         go.textContent = t('Opening the payment page…');
         location.href = res.order.redirectUrl;

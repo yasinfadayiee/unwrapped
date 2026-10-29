@@ -9,6 +9,7 @@ import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
 import { checkNowpaymentsPayments, createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
 import { createLemonsqueezyOrder, handleLemonsqueezyWebhook, lemonsqueezyEnabled } from './payments/lemonsqueezy.js';
+import { createCreemOrder, creemEnabled, handleCreemWebhook } from './payments/creem.js';
 import { claimManualPayment, createManualOrder, manualEnabled, manualPayUrl } from './payments/manual.js';
 import { createStarsOrder, ensureStarsWebhook, handleStarsWebhook, starsEnabled } from './payments/stars.js';
 import { growthAccountForCheckout, growthMaintenance, handleGrowth } from './growth/index.js';
@@ -26,8 +27,10 @@ import { mergedTarget } from './redirects.js';
 
 async function enabledMethods(env) {
   const methods = [];
-  const card = lemonsqueezyEnabled(env);
-  if (card) {
+  const card = creemEnabled(env) || lemonsqueezyEnabled(env);
+  if (creemEnabled(env)) {
+    methods.push({ id: 'creem', label: 'Card · Apple Pay · Google Pay', detail: 'Visa, Mastercard, Apple Pay, Google Pay · key unlocks right away' });
+  } else if (card) {
     methods.push({ id: 'lemonsqueezy', label: 'Card · PayPal', detail: 'Visa, Mastercard, Apple Pay, Google Pay, PayPal' });
   } else if (manualEnabled(env)) {
     // Until a card processor is approved: the owner's Wise/PayPal link, checked by hand.
@@ -106,6 +109,7 @@ async function checkout(request, env) {
   const order =
     methodId === 'stars' ? await createStarsOrder(env, request, args)
       : methodId === 'lemonsqueezy' ? await createLemonsqueezyOrder(env, request, args)
+      : methodId === 'creem' ? await createCreemOrder(env, request, args)
       : methodId === 'manual' ? await createManualOrder(env, args)
       : methodId === 'tron' ? await createTronOrder(env, args) : await createNowpaymentsOrder(env, request, args);
   if (referral) await attachReferral(env, order.id, referral.code);
@@ -185,6 +189,8 @@ async function route(request, env, ctx, url) {
       return referralInfo(request, env);
     case 'GET /api/referral/check':
       return referralCheck(env, url);
+    case 'POST /api/webhook/creem':
+      return handleCreemWebhook(request, env);
     case 'POST /api/webhook/lemonsqueezy':
       return handleLemonsqueezyWebhook(request, env);
     case 'POST /api/webhook/nowpayments':

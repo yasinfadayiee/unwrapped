@@ -42,6 +42,9 @@
     // (wrangler secret put …): LEMONSQUEEZY_API_KEY, LEMONSQUEEZY_STORE_ID,
     // LEMONSQUEEZY_VARIANT_ID (a "pay what you want" variant), LEMONSQUEEZY_WEBHOOK_SECRET.
     // Webhook URL: https://myunwrapped.com/api/webhook/lemonsqueezy, event order_created.
+    // Card payments via Creem are on once these three secrets are set (steps: CREEM-FA.md):
+    // CREEM_API_KEY, CREEM_PRODUCT_ID (a one-time USD product), CREEM_WEBHOOK_SECRET.
+    // Webhook URL: https://myunwrapped.com/api/webhook/creem, event checkout.completed.
     // Owner's own card payment link (https://wise.com/... or paypal.me/...), confirmed by hand
     // in /admin/ or by replying "paid" in Telegram. Shown only while Lemon Squeezy is off.
     "MANUAL_PAY_URL": "",

@@ -1799,4 +1799,5 @@ export default {
   "Come back here and tap “I’ve paid”. Your key arrives by e-mail once we see the payment (usually within a few hours, at most 24).": "Vuelve aquí y toca «Ya pagué». Tu clave llega por e-mail en cuanto vemos el pago (normalmente en pocas horas, como máximo 24).",
   "Secure payment page by Wise · key by e-mail, usually within a few hours": "Página de pago segura de Wise · clave por e-mail, normalmente en pocas horas",
   "Secure payment page by PayPal · key by e-mail, usually within a few hours": "Página de pago segura de PayPal · clave por e-mail, normalmente en pocas horas",
+  "Visa, Mastercard, Apple Pay, Google Pay · key unlocks right away": "Visa, Mastercard, Apple Pay, Google Pay · la clave se activa al instante",
 };

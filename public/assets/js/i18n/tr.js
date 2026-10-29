@@ -1799,4 +1799,5 @@ export default {
   "Come back here and tap “I’ve paid”. Your key arrives by e-mail once we see the payment (usually within a few hours, at most 24).": "Buraya dön ve “Ödedim”e dokun. Ödemeyi gördüğümüzde anahtarın e-postayla gelir (genellikle birkaç saat içinde, en geç 24 saatte).",
   "Secure payment page by Wise · key by e-mail, usually within a few hours": "Wise güvenli ödeme sayfası · anahtar e-postayla, genellikle birkaç saat içinde",
   "Secure payment page by PayPal · key by e-mail, usually within a few hours": "PayPal güvenli ödeme sayfası · anahtar e-postayla, genellikle birkaç saat içinde",
+  "Visa, Mastercard, Apple Pay, Google Pay · key unlocks right away": "Visa, Mastercard, Apple Pay, Google Pay · anahtar hemen açılır",
 };
