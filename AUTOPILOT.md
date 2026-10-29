@@ -49,7 +49,7 @@ Checker) are free, so a buyer must see at a glance what Plus gives that a free c
 the payment. Order: copy fix, then free-vs-paid and trust copy on the pages that still get unfollower traffic.
 Posts merged on 2026-10-28 (e.g. blog-threads-unfollowers, blog-facebook-unfriended) no longer exist: skip any
 file that is missing. -->
-- [ ] Fix (review): the shared CTA line (added 2026-10-27) says free shows "how many people unfollowed you", but
+- [x] (2026-10-29) Fix (review): the shared CTA line (added 2026-10-27) says free shows "how many people unfollowed you", but
   that needs two exports (pricing.html row "Who unfollowed you (from your second export)"). In
   `site/partials/guide-cta.html` and `site/i18n/{de,es,fr,pt,tr}/partials/guide-cta.html` change that part to
   "how many unfollowed you (from your second export)", natural wording in each language, using the words each
