@@ -4,6 +4,7 @@ import { getOrder, getLicense, logEvent } from './db.js';
 import { grantLicense, issueToken, licenseView } from './license.js';
 import { sendLicenseEmail } from './email.js';
 import { creditReferral } from './referrals.js';
+import { manualPayUrl, manualRef } from './payments/manual.js';
 import { MINUTE, randomId, formatUsdt, timingSafeEqual } from './util.js';
 
 export async function insertOrder(env, fields) {
@@ -112,6 +113,11 @@ export async function publicOrder(env, order) {
     if (order.paid_units) view.paid = formatUsdt(order.paid_units);
   }
   if (order.method === 'stars') view.stars = order.amount_units;
+  if (order.method === 'manual') {
+    view.payUrl = manualPayUrl(env);
+    view.ref = manualRef(order);
+    view.claimed = order.provider_ref === 'claimed';
+  }
   if (order.redirect_url) view.redirectUrl = order.redirect_url;
   if (order.growth_account) {
     view.growthAccount = order.growth_account;

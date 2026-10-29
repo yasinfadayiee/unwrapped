@@ -9,6 +9,7 @@ import { fulfillOrder, getOrderForBuyer, publicOrder } from './orders.js';
 import { checkTronPayments, claimTronTx, createTronOrder, tronEnabled } from './payments/tron.js';
 import { checkNowpaymentsPayments, createNowpaymentsOrder, handleNowpaymentsIpn, nowpaymentsEnabled } from './payments/nowpayments.js';
 import { createLemonsqueezyOrder, handleLemonsqueezyWebhook, lemonsqueezyEnabled } from './payments/lemonsqueezy.js';
+import { claimManualPayment, createManualOrder, manualEnabled, manualPayUrl } from './payments/manual.js';
 import { createStarsOrder, ensureStarsWebhook, handleStarsWebhook, starsEnabled } from './payments/stars.js';
 import { growthAccountForCheckout, growthMaintenance, handleGrowth } from './growth/index.js';
 import { handleBio, servePublicBio } from './bio/index.js';
@@ -28,10 +29,14 @@ async function enabledMethods(env) {
   const card = lemonsqueezyEnabled(env);
   if (card) {
     methods.push({ id: 'lemonsqueezy', label: 'Card · PayPal', detail: 'Visa, Mastercard, Apple Pay, Google Pay, PayPal' });
+  } else if (manualEnabled(env)) {
+    // Until a card processor is approved: the owner's Wise/PayPal link, checked by hand.
+    const by = /paypal/i.test(manualPayUrl(env)) ? 'PayPal' : 'Wise';
+    methods.push({ id: 'manual', label: 'Card · Apple Pay · Google Pay', detail: `Secure payment page by ${by} · key by e-mail, usually within a few hours` });
   }
   if (starsEnabled(env)) {
     // Without a card processor, Stars is the card route (Telegram sells the Stars by card).
-    const label = card ? 'Pay with Telegram Stars' : 'Card · Apple Pay · Google Pay';
+    const label = card || manualEnabled(env) ? 'Pay with Telegram Stars' : 'Card · Apple Pay · Google Pay';
     methods.push({ id: 'stars', label, detail: 'Pay in Telegram — no crypto, no Stars needed beforehand' });
   }
   if (await tronEnabled(env)) {
@@ -92,7 +97,7 @@ async function checkout(request, env) {
 
   const methods = await enabledMethods(env);
   const methodId = body.method || (methods[0] && methods[0].id);
-  if (!methods.some((m) => m.id === methodId)) throw new HttpError(400, 'method_unavailable');
+  if (!methods.some((m) => m.id === methodId) || (growthPlan && methodId === 'manual')) throw new HttpError(400, 'method_unavailable');
 
   const referral = body.ref && !growthPlan ? await validReferral(env, body.ref, renewKey) : null;
   const priceUsd = referral ? discounted(plan.priceUsd) : plan.priceUsd;
@@ -101,6 +106,7 @@ async function checkout(request, env) {
   const order =
     methodId === 'stars' ? await createStarsOrder(env, request, args)
       : methodId === 'lemonsqueezy' ? await createLemonsqueezyOrder(env, request, args)
+      : methodId === 'manual' ? await createManualOrder(env, args)
       : methodId === 'tron' ? await createTronOrder(env, args) : await createNowpaymentsOrder(env, request, args);
   if (referral) await attachReferral(env, order.id, referral.code);
   await logEvent(env, 'order.created', order.id, { plan: plan.id, method: methodId, ref: referral ? referral.code : null, growthAccount });
@@ -138,6 +144,10 @@ async function claim(request, env) {
   const body = await readJson(request);
   const order = await getOrderForBuyer(env, body.id, body.t);
   if (!order) return fail(404, 'order_not_found');
+  if (order.method === 'manual') {
+    const result = await claimManualPayment(env, order);
+    return json({ ...result, order: await publicOrder(env, await getOrder(env, order.id)) });
+  }
   if (order.method !== 'tron') return fail(400, 'not_a_tron_order');
   const result = await claimTronTx(env, order, body.txid);
   return json({ ...result, order: await publicOrder(env, await getOrder(env, order.id)) });

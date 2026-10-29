@@ -43,6 +43,7 @@ const ERRORS = {
   method_unavailable: 'This payment method is not available right now.',
   payment_provider_unavailable: 'The payment provider did not respond. Please try again or pick another method.',
   invalid_email: 'That e-mail address doesn’t look right.',
+  email_required: 'Enter your e-mail — your key is sent there after the card payment.',
   already_lifetime: 'You already own this tier for life — pick a higher tier to upgrade.',
   busy_try_again: 'Lots of checkouts right now — try again in a minute.',
 };
@@ -203,6 +204,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
     input.addEventListener('change', () => {
       methodId = meth.id;
       cryptoHelp.hidden = !['tron', 'nowpayments'].includes(methodId);
+      syncEmail();
     });
     methodBox.append(
       h(
@@ -216,6 +218,18 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
     );
   }
   const email = h('input', { class: 'input', type: 'email', placeholder: t('you@example.com (optional)'), autocomplete: 'email', id: 'co-email' });
+  // Hand-checked card payments deliver the key by e-mail, so the address is required there.
+  const emailBox = h('details', { class: 'small', open: true });
+  const emailSummary = h('summary', null);
+  emailBox.append(emailSummary, h('div', { class: 'field', style: { marginTop: '8px' } }, h('label', { for: 'co-email', class: 'sr-only' }, t('E-mail for your license & renewal reminder')), email));
+  function syncEmail() {
+    const need = methodId === 'manual';
+    email.required = need;
+    email.placeholder = need ? t('you@example.com — your key is sent here') : t('you@example.com (optional)');
+    emailSummary.textContent = need ? t('Your e-mail (for your key)') : t('Also send my key by e-mail (optional)');
+    if (need) emailBox.open = true;
+  }
+  syncEmail();
   const errorBox = h('div', { class: 'err-box', hidden: true, role: 'alert' });
   const go = h('button', { class: 'btn btn--primary btn--lg btn--block', type: 'button' }, t('Continue to payment'));
 
@@ -256,8 +270,8 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       h('div', { class: 'eyebrow' }, t('Pay with')),
       methodBox,
       cryptoHelp,
-      config.email
-        ? h('details', { class: 'small', open: true }, h('summary', null, t('Also send my key by e-mail (optional)')), h('div', { class: 'field', style: { marginTop: '8px' } }, h('label', { for: 'co-email', class: 'sr-only' }, t('E-mail for your license & renewal reminder')), email))
+      config.email || config.methods.some((x) => x.id === 'manual')
+        ? emailBox
         : null,
       discount ? h('div', { class: 'note' }, icon('sparkles'), h('span', null, t('Friend invite applied — {n}% off.', { n: Math.round(discount * 100) }))) : null,
       errorBox,
@@ -269,6 +283,12 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
 
   go.addEventListener('click', async () => {
     import('./stats.js').then(({ track }) => track('cont', { p: planId })).catch(() => {});
+    if (methodId === 'manual' && !email.checkValidity()) {
+      errorBox.textContent = t(ERRORS.email_required);
+      errorBox.hidden = false;
+      email.focus();
+      return;
+    }
     go.disabled = true;
     errorBox.hidden = true;
     go.textContent = t('Creating your order…');
@@ -280,6 +300,10 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
       rememberOrder(res.order, res.token);
       if (res.order.method === 'stars') {
         starsScreen(m, res.order, res.token, config);
+        return;
+      }
+      if (res.order.method === 'manual') {
+        manualScreen(m, res.order, res.token, config, email.value.trim());
         return;
       }
       if ((res.order.method === 'nowpayments' || res.order.method === 'lemonsqueezy') && res.order.redirectUrl) {
@@ -360,6 +384,65 @@ export function starsScreen(m, order, token, config, onPaid = (o) => successScre
       onPaid(o);
     }
   }, 4000, 4000);
+  const observer = new MutationObserver(() => {
+    if (!m.root.isConnected) {
+      stop();
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true });
+}
+
+// Card payment on the owner's Wise/PayPal link, unlocked by hand after "I've paid".
+export function manualScreen(m, order, token, config, emailAddr = '', onPaid = (o) => successScreen(m, o)) {
+  m.setTitle(t('Pay by card'));
+  clear(m.body);
+  import('./stats.js').then(({ track }) => track('pay', { m: 'manual' })).catch(() => {});
+  const amount = money(order.priceUsd);
+  const status = h('div', { class: 'status-line', role: 'status' });
+  const paidBtn = h('button', { class: 'btn btn--ghost btn--lg btn--block', type: 'button' }, icon('check'), t('I’ve paid'));
+  const showClaimed = () => {
+    paidBtn.hidden = true;
+    status.replaceChildren(h('span', { class: 'spinner' }), h('span', null, emailAddr
+      ? t('Thanks! We’re checking your payment and will e-mail your key to {email}, usually within a few hours. You can close this page.', { email: emailAddr })
+      : t('Thanks! We’re checking your payment and will e-mail your key, usually within a few hours. You can close this page.')));
+  };
+  m.body.append(
+    h('div', { class: 'stack', style: { '--stack': '16px' } },
+      planText(order, config) ? line(t('Plan'), planText(order, config)) : null,
+      line(t('Amount'), amount, { big: true, copy: String(order.priceUsd) }),
+      line(t('Reference'), h('span', { class: 'mono' }, order.ref), { copy: order.ref }),
+      h('a', { class: 'btn btn--primary btn--lg btn--block', href: order.payUrl, target: '_blank', rel: 'noopener', onClick: () => import('./stats.js').then(({ track }) => track('wallet')).catch(() => {}) }, icon('external'), t('Open the card payment page')),
+      h('ol', { class: 'small text-2', style: { margin: '0', paddingLeft: '20px', display: 'grid', gap: '6px' } },
+        h('li', null, t('Enter {amount} (USD) and pay with your card, Apple Pay or Google Pay.', { amount })),
+        h('li', null, h('b', null, t('Put {ref} in the note or reference field', { ref: order.ref })), ' ', t('— that’s how we find your payment.')),
+        h('li', null, t('Come back here and tap “I’ve paid”. Your key arrives by e-mail once we see the payment (usually within a few hours, at most 24).')),
+      ),
+      paidBtn,
+      status,
+      h('p', { class: 'tiny muted mono' }, order.id),
+      config.support ? h('p', { class: 'small muted' }, t('Problem with a payment? Send us your order ID:'), ' ', ...supportLinks(config.support)) : null,
+    ),
+  );
+  if (order.claimed) showClaimed();
+  paidBtn.addEventListener('click', async () => {
+    paidBtn.disabled = true;
+    try {
+      const res = await api('/api/order/claim', { method: 'POST', body: { id: order.id, t: token } });
+      if (res.order?.status === 'paid') return onPaid(res.order);
+      showClaimed();
+    } catch (err) {
+      status.textContent = errText(err);
+      paidBtn.disabled = false;
+    }
+  });
+  const stop = pollOrder(order.id, token, (o) => {
+    if (o.status === 'paid') {
+      stop();
+      observer.disconnect();
+      onPaid(o);
+    }
+  }, 15000, 30000);
   const observer = new MutationObserver(() => {
     if (!m.root.isConnected) {
       stop();

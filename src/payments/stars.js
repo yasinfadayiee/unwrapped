@@ -191,6 +191,23 @@ async function ownerCommand(env, message) {
     return true;
   }
   if (String(chat) !== (await ownerChat(env))) return false;
+  // Reply "paid" to a "Card payment to check #O<id>" message: unlock that order.
+  const manual = String(message.reply_to_message?.text || '').match(/#O([A-Za-z0-9_-]{6,40})/);
+  if (manual) {
+    if (!/^(paid|ok|yes|✅|👍)\.?$/i.test(text)) {
+      await sendMessage(env, chat, 'Reply "paid" once the money is in, to unlock this order.');
+      return true;
+    }
+    const order = await getOrder(env, manual[1]);
+    if (!order || order.method !== 'manual') {
+      await sendMessage(env, chat, 'Order not found.');
+      return true;
+    }
+    const license = await fulfillOrder(env, order, { providerRef: 'manual' });
+    await logEvent(env, 'order.manual_paid', order.id, { via: 'telegram' });
+    await sendMessage(env, chat, license ? `Unlocked ✓ Key ${license.key || ''} e-mailed to ${order.email}.` : 'Already paid ✓');
+    return true;
+  }
   const ticket = String(message.reply_to_message?.text || '').match(/#T(\d+)/);
   if (!ticket) return false;
   try {

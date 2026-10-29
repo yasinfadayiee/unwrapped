@@ -107,7 +107,8 @@ function subscribeBox(a) {
 function pay(a, plan, config) {
   const m = modal({ title: t('Growth for @{username}', { username: a.username }) });
   const err = h('div', { class: 'err-box', role: 'alert', hidden: true });
-  const methods = config.methods.map((method) => {
+  // Hand-checked card payments deliver a license key by e-mail, which Growth doesn't use.
+  const methods = config.methods.filter((method) => method.id !== 'manual').map((method) => {
     const btn = h('button', { class: 'btn btn--ghost', type: 'button', style: { justifyContent: 'space-between', width: '100%' } }, h('span', null, h('b', null, t(method.label)), ' · ', h('span', { class: 'small text-2' }, t(method.detail))));
     btn.addEventListener('click', async () => {
       btn.disabled = true;

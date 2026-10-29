@@ -309,7 +309,7 @@ async function load() {
               toast('Order marked as paid');
               load();
             });
-            return h('tr', null, h('td', null, new Date(o.createdAt).toLocaleString('en-US')), h('td', { class: 'mono' }, o.id), h('td', null, o.plan), h('td', null, o.method), h('td', null, o.amount ? o.method === 'stars' ? o.amount : `${o.amount} USDT` : usd(o.priceUsd)), h('td', null, o.status), h('td', { class: 'mono' }, o.licenseKey || ''), h('td', null, mark));
+            return h('tr', null, h('td', null, new Date(o.createdAt).toLocaleString('en-US')), h('td', { class: 'mono' }, o.id, o.method === 'manual' ? ` · UW-${o.id.slice(0, 6).toUpperCase()}` : ''), h('td', null, o.plan), h('td', null, o.method === 'manual' && o.providerRef === 'claimed' && o.status !== 'paid' ? '💳 card — buyer says paid, check Wise' : o.method), h('td', null, o.amount ? o.method === 'stars' ? o.amount : `${o.amount} USDT` : usd(o.priceUsd)), h('td', null, o.status), h('td', { class: 'mono' }, o.licenseKey || ''), h('td', null, mark));
           }),
         ),
       ),

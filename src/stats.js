@@ -5,7 +5,7 @@ import { HttpError, json, rateLimit, readJson, visitorId } from './http.js';
 import { DAY } from './util.js';
 
 const EVENTS = new Set(['view', 'analyze', 'demo', 'checkout', 'nodata', 'tool', 'pay', 'wallet', 'cont', 'tgpay']);
-const METHOD = /^(stars|tron|nowpayments|lemonsqueezy)$/;
+const METHOD = /^(stars|tron|nowpayments|lemonsqueezy|manual)$/;
 const PLAN = /^[a-z]+-(week|month|year|life)$/;
 // Dashboard section ids ("notBack", "timeline"…): which tools people open.
 const TOOL = /^[a-z][a-zA-Z]{1,30}$/;

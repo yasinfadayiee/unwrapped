@@ -517,6 +517,39 @@ test('Lemon Squeezy card checkout activates only from a signed, paid, full-price
   assert.equal((await hook({ status: 'paid', subtotal_usd: 900 })).body.already, true);
 });
 
+test('Manual card payment: needs an e-mail, buyer claims, owner unlocks from admin or Telegram', async () => {
+  assert.ok(!(await call('GET', '/api/config')).body.methods.some((m) => m.id === 'manual'));
+  env.MANUAL_PAY_URL = 'https://evil.example/pay';
+  assert.ok(!(await call('GET', '/api/config')).body.methods.some((m) => m.id === 'manual'));
+  env.MANUAL_PAY_URL = 'https://wise.com/pay/me/owner';
+  const methods = (await call('GET', '/api/config')).body.methods;
+  assert.equal(methods[0].id, 'manual');
+  assert.equal((await call('POST', '/api/checkout', { plan: 'plus-month', method: 'manual' })).body.error, 'email_required');
+
+  const { body: co } = await call('POST', '/api/checkout', { plan: 'plus-month', method: 'manual', email: 'buyer@b.co' });
+  assert.equal(co.order.payUrl, 'https://wise.com/pay/me/owner');
+  assert.equal(co.order.ref, `UW-${co.order.id.slice(0, 6).toUpperCase()}`);
+  assert.equal(co.order.claimed, false);
+  const claimed = await call('POST', '/api/order/claim', { id: co.order.id, t: co.token });
+  assert.equal(claimed.body.order.claimed, true);
+  assert.notEqual(claimed.body.order.status, 'paid');
+  const auth = { authorization: `Bearer ${env.ADMIN_TOKEN}` };
+  await call('POST', '/api/admin/orders/mark-paid', { id: co.order.id }, auth);
+  const paid = await call('GET', `/api/order?id=${co.order.id}&t=${co.token}`);
+  assert.equal(paid.body.order.status, 'paid');
+  assert.ok(paid.body.order.license.key);
+
+  // Telegram: owner replies "paid" to the notification.
+  enableStars();
+  await env.DB.prepare("INSERT INTO meta (k, v) VALUES ('support_tg_chat', '555')").run();
+  const { body: co2 } = await call('POST', '/api/checkout', { plan: 'plus-month', method: 'manual', email: 'buyer@b.co' });
+  await call('POST', '/api/order/claim', { id: co2.order.id, t: co2.token });
+  const note = tgCalls.find((c) => c.method === 'sendMessage' && c.body.text.includes(`#O${co2.order.id}`));
+  assert.ok(note);
+  await starsWebhook({ message: { chat: { id: 555, type: 'private' }, text: 'paid', reply_to_message: { text: note.body.text } } });
+  assert.equal((await call('GET', `/api/order?id=${co2.order.id}&t=${co2.token}`)).body.order.status, 'paid');
+});
+
 test('NOWPayments price mismatches and unfinished payments do not activate', async () => {
   const { body: co } = await call('POST', '/api/checkout', { plan: 'month', method: 'nowpayments' });
   const base = { payment_id: 77, price_currency: 'usd', order_id: co.order.id };
