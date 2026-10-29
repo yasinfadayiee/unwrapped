@@ -44,7 +44,7 @@
     // Webhook URL: https://myunwrapped.com/api/webhook/lemonsqueezy, event order_created.
     // Owner's own card payment link (https://wise.com/... or paypal.me/...), confirmed by hand
     // in /admin/ or by replying "paid" in Telegram. Shown only while Lemon Squeezy is off.
-    "MANUAL_PAY_URL": "",
+    "MANUAL_PAY_URL": "https://wise.com/pay/me/yaasirb1",
     "SUPPORT_CONTACT": "Email: support@myunwrapped.com · Telegram: @socialstore_support · WhatsApp: +447352488046 · Discord: Socialstore_pro",
     // Optional e-mail sender for license + renewal e-mails (needs RESEND_API_KEY secret).
     "EMAIL_FROM": "Unwrapped <license@myunwrapped.com>"
