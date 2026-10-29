@@ -3,7 +3,7 @@
 > Unwrapped reads the data export you download from Instagram, TikTok, X, Facebook and LinkedIn and turns it into insights such as who unfollowed you and who doesn't follow back. Everything is analysed in the browser; the export file is never uploaded.
 
 ## Tools and pricing
-- [About Unwrapped — Privacy-First Social Media Insights](https://myunwrapped.com/about/): Why Unwrapped exists, how it works without your password, how it makes money and how to reach us.
+- [About Unwrapped — Privacy-First Social Media Insights](https://myunwrapped.com/about/): Who runs Unwrapped, why it exists, how it reads your official data export on your own device without your password, how to check that yourself.
 - [Best time to post on Instagram, TikTok & X — from your own data](https://myunwrapped.com/best-time-to-post/): Stop guessing from generic charts. Find your personal best time to post on Instagram, TikTok and X from your own data: real engagement of your posts.
 - [Free Link in Bio Page — Linktree Alternative with Click Analytics](https://myunwrapped.com/bio/): Create a free link-in-bio page for Instagram, TikTok and YouTube in one minute: all your links, socials and contact in one beautiful page at myunwrapped.
 - [Blog — Instagram growth, fake followers & social media privacy](https://myunwrapped.com/blog/): Practical articles on losing followers, spotting fake followers, posting times and what social platforms know about you — backed by your own data.

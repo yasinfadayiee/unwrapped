@@ -260,7 +260,16 @@ for (const { loc, file, meta, body } of pages) {
       description: meta.description,
       offers: { '@type': 'AggregateOffer', priceCurrency: 'USD', lowPrice: '0', highPrice: '119' },
     });
-    schemas.push({ '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: `${origin}/`, logo: `${origin}/assets/img/icon-512.png` });
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: site.name,
+      url: `${origin}/`,
+      logo: `${origin}/assets/img/icon-512.png`,
+      email: 'support@myunwrapped.com',
+      address: { '@type': 'PostalAddress', addressCountry: 'GB' },
+      contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: 'support@myunwrapped.com', availableLanguage: ['en', 'es', 'pt', 'tr', 'fr', 'de'] },
+    });
     schemas.push({ '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: `${origin}${url}`, inLanguage: loc.hreflang });
   } else if (TOOL_ROUTES.has(meta.route)) {
     schemas.push({
