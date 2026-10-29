@@ -15,7 +15,7 @@
 **قلاب (روی صفحه):** POV: you find out who quietly unfollowed you 👀
 **صحنه‌ها:**
 1. (۰–۲ ثانیه) صورت متعجب یا اسکرین‌شات تعداد فالوئر که کم شده. متن: “Lost 17 followers and no idea who?”
-2. (۲–۸) ضبط صفحه: کشیدن فایل ZIP روی سایت، باز شدن داشبورد. متن: “Instagram lets you download your own data. This site reads it.”
+2. (۲–۸) ضبط صفحه: کشیدن **دو** فایل ZIP (یک خروجی قدیمی و یک خروجی جدید) روی سایت، باز شدن داشبورد. متن: “Download your Instagram data twice. This site compares them.” (اسم آنفالوکننده‌ها فقط از مقایسهٔ دو خروجی درمی‌آید؛ هرگز نگو یک خروجی کافی است.)
 3. (۸–۱۵) بخش Who unfollowed you و لیست اسم‌ها (از دمو). متن: “Every name. No password. Nothing uploaded.”
 4. (۱۵–۲۰) پایان: “Free → link in bio”
 **کپشن:** Instagram won’t tell you. Your own data will. No password, no login, nothing uploaded.
@@ -43,6 +43,61 @@
 **قلاب:** Do you know who your FIRST follower was?
 **صحنه‌ها:** تایم‌لاین Your digital life در دمو، بعد کارت اشتراک‌گذاری. متن: “The day you joined, your oldest follower, your biggest year.”
 **کپشن:** Your Instagram, unwrapped. Share your card 👇
+
+---
+
+# سری دوم (۲۰۲۶-۱۰-۲۹): ۵ ویدیوی تازه
+
+همه را با گوشی و صورت خودت (یا فقط صدا) بگیر؛ ضبط صفحه فقط از دمو (`myunwrapped.com/#demo`). هر ویدیو ۲۰ تا ۳۰ ثانیه. متن داخل گیومه همان چیزی است که می‌گویی یا روی صفحه می‌نویسی.
+
+## ۶. «Wrapped برای اینستاگرام» (فصلی — از حالا تا اوایل دسامبر)
+**چرا:** حدود ۲ دسامبر Spotify Wrapped منتشر می‌شود و همه دنبال «Wrapped» برای بقیهٔ اپ‌ها هستند.
+**قلاب:** “Spotify Wrapped is coming. Here’s your INSTAGRAM Wrapped.”
+**صحنه‌ها:**
+1. (۰–۳) صورت تو، گوشی دستت: “Spotify does Wrapped. Instagram never will. So I made mine.”
+2. (۳–۱۲) ضبط صفحه از دمو: بخش Wrapped / Your year — عددها یکی‌یکی. متن روی صفحه: “Your year in numbers — from Instagram’s own data.”
+3. (۱۲–۲۰) کارت اشتراک‌گذاری را نشان بده: “And you get a card to post.”
+4. (۲۰–۲۵) “Free. No password. Link in bio.”
+**کپشن:** Instagram Wrapped 2026 before Spotify drops theirs 🎁 Works for TikTok and X too.
+**هشتگ:** #instagramwrapped #spotifywrapped #wrapped2026
+
+## ۷. سری «۳۰ روز: چه کسی آنفالوم می‌کند؟» (سریالی — بیننده برمی‌گردد)
+**چرا:** حقیقت محصول (اسم آنفالوکننده‌ها از مقایسهٔ دو خروجی) را تبدیل به سریال می‌کند؛ قسمت دوم را همه می‌خواهند ببینند.
+**قسمت ۱ — قلاب:** “Day 1. I’m finding out who unfollows me this month.”
+1. “Step one: download your Instagram data.” (ضبط صفحه از منوی Accounts Center → Export your information، فقط منو، بدون اطلاعات شخصی)
+2. “Today it shows who doesn’t follow me back.” (لیست Not following back از دمو)
+3. “In 30 days I download it again — and it shows exactly who left. Follow so you see part 2.”
+**قسمت ۲ (بعد از ۳۰ روز) — قلاب:** “30 days later. These people unfollowed me.” (از دمو، نه اسم واقعی کسی)
+**کپشن قسمت ۱:** Part 2 in 30 days 👀 Do it with me — link in bio.
+
+## ۸. «با چه کسی بیشتر از همه چت می‌کنی؟» (تگ کردن دوست)
+**چرا:** مردم دوستشان را تگ می‌کنند = پخش رایگان.
+**قلاب:** “Tag the person who texts you first. Every. Time.”
+1. (۰–۳) صحنهٔ نمایشی: گوشی را به دوستت نشان می‌دهی، او جا می‌خورد.
+2. (۳–۱۵) ضبط صفحه از دمو: «Who texts first» و درصدها، بعد Friendship Wrapped (کارت دوستی). متن: “WhatsApp & Instagram chats → who starts, who replies fast, who ghosts.”
+3. (۱۵–۲۲) “It reads the chat export on your phone. Nothing is uploaded.”
+**کپشن:** Send this to your best friend and compare 😭
+
+## ۹. «قبل از مصاحبهٔ کاری، توییت‌های قدیمی‌ات را پاک کن»
+**چرا:** مخاطب بزرگسال‌تر و جدی‌تر، که بیشتر پول می‌دهد.
+**قلاب:** “Recruiters WILL read your old tweets. Find the bad ones in 30 seconds.”
+1. (۰–۴) “I tweeted for 9 years. I wasn’t scrolling through all of that.”
+2. (۴–۱۵) ضبط صفحه از دمو: X → Search & clean up، فهرست پست‌های پرریسک. متن: “It flags the risky ones: swearing, party posts, your phone number or e-mail.”
+3. (۱۵–۲۲) “Then you delete just those. Works for Instagram comments too.”
+**کپشن:** Clean up your socials before job hunting. Free check, link in bio.
+**هشتگ:** #jobsearch #careertips #linkedin
+
+## ۱۰. «اینستاگرام چه چیزهایی درباره‌ات می‌داند»
+**چرا:** کنجکاوی + نگرانی حریم خصوصی؛ با برند «هیچ چیز آپلود نمی‌شود» جور است.
+**قلاب:** “Instagram gave me a list of every advertiser that has my data. It’s… long.”
+1. (۰–۴) صورت جاخورده.
+2. (۴–۱۵) ضبط صفحه از دمو: لیست advertisers و interests. متن: “Brands you’ve never heard of. Interests you never picked.”
+3. (۱۵–۲۲) “It’s your legal right to download this. This site turns it into something readable — on your phone, nothing uploaded.”
+**کپشن:** Download yours and comment your weirdest one 👇
+
+---
+
+**اندازه‌گیری:** در پنل ادمین (`/admin/`)، ستون «Where visitors come from» نشان می‌دهد چند نفر از tiktok.com یا instagram.com آمده‌اند. چون این ستون ویدیوها را از هم جدا نمی‌کند، روزی یک ویدیو منتشر کن تا بفهمی کدام اثر داشته. به لینک بیو `?ref=` اضافه نکن: این پارامتر مال کد دعوت دوستان است و در صفحهٔ پرداخت تخفیف اشتباه نشان می‌دهد.
 
 ---
 
