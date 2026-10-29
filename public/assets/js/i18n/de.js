@@ -1,5 +1,8 @@
 // German UI strings. Keys are the English originals (see test/i18n.test.mjs).
 export default {
+  "Your export has no followers list.": "Dein Export enthält keine Follower-Liste.",
+  "That’s why everyone you follow shows up here. Don’t unfollow anyone yet: request a new export with “Followers and following” selected.": "Deshalb erscheint hier jeder, dem du folgst. Entfolge noch niemandem: Fordere einen neuen Export an und wähle „Follower und gefolgte Konten“ aus.",
+  "How to fix it": "So behebst du das",
   "Card · Apple Pay · Google Pay": "Karte · Apple Pay · Google Pay",
   "Card · PayPal": "Karte · PayPal",
   "Visa, Mastercard, Apple Pay, Google Pay, PayPal": "Visa, Mastercard, Apple Pay, Google Pay, PayPal",

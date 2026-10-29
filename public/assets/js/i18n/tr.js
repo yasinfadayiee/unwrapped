@@ -1,5 +1,8 @@
 // Turkish UI strings. Keys are the English originals (see test/i18n.test.mjs).
 export default {
+  "Your export has no followers list.": "Dışa aktarımında takipçi listesi yok.",
+  "That’s why everyone you follow shows up here. Don’t unfollow anyone yet: request a new export with “Followers and following” selected.": "Bu yüzden takip ettiğin herkes burada görünüyor. Henüz kimseyi takipten çıkarma: “Takipçiler ve takip edilenler” seçili olarak yeni bir dışa aktarım iste.",
+  "How to fix it": "Nasıl düzeltilir",
   "Card · Apple Pay · Google Pay": "Kart · Apple Pay · Google Pay",
   "Card · PayPal": "Kart · PayPal",
   "Visa, Mastercard, Apple Pay, Google Pay, PayPal": "Visa, Mastercard, Apple Pay, Google Pay, PayPal",

@@ -94,6 +94,8 @@ export async function handleStarsWebhook(request, env) {
     } catch {
       // Still answer the query if the order lookup fails.
     }
+    // Shows how many buyers reach Telegram's payment sheet (the step before paying).
+    await logEvent(env, 'stars.pre_checkout', String(query.invoice_payload || '').slice(0, 32), { ok }).catch(() => {});
     try {
       await tg(env, 'answerPreCheckoutQuery', {
         pre_checkout_query_id: query.id,

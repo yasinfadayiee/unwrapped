@@ -1,5 +1,8 @@
 // French UI strings. Keys are the English originals (see test/i18n.test.mjs).
 export default {
+  "Your export has no followers list.": "Ton export ne contient pas la liste des abonnés.",
+  "That’s why everyone you follow shows up here. Don’t unfollow anyone yet: request a new export with “Followers and following” selected.": "C’est pour ça que tous tes abonnements apparaissent ici. Ne te désabonne de personne pour l’instant : demande un nouvel export en cochant « Abonnés et abonnements ».",
+  "How to fix it": "Comment corriger",
   "Card · Apple Pay · Google Pay": "Carte · Apple Pay · Google Pay",
   "Card · PayPal": "Carte · PayPal",
   "Visa, Mastercard, Apple Pay, Google Pay, PayPal": "Visa, Mastercard, Apple Pay, Google Pay, PayPal",

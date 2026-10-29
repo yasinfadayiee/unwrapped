@@ -1,5 +1,8 @@
 // Brazilian Portuguese UI strings. Keys are the English originals (see test/i18n.test.mjs).
 export default {
+  "Your export has no followers list.": "Sua exportação não tem a lista de seguidores.",
+  "That’s why everyone you follow shows up here. Don’t unfollow anyone yet: request a new export with “Followers and following” selected.": "Por isso todo mundo que você segue aparece aqui. Não deixe de seguir ninguém ainda: peça uma nova exportação com “Seguidores e seguindo” selecionado.",
+  "How to fix it": "Como resolver",
   "Card · Apple Pay · Google Pay": "Cartão · Apple Pay · Google Pay",
   "Card · PayPal": "Cartão · PayPal",
   "Visa, Mastercard, Apple Pay, Google Pay, PayPal": "Visa, Mastercard, Apple Pay, Google Pay, PayPal",

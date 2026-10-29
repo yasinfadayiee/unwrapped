@@ -4,7 +4,8 @@
 import { HttpError, json, rateLimit, readJson, visitorId } from './http.js';
 import { DAY } from './util.js';
 
-const EVENTS = new Set(['view', 'analyze', 'demo', 'checkout', 'nodata', 'tool', 'pay', 'wallet', 'cont']);
+const EVENTS = new Set(['view', 'analyze', 'demo', 'checkout', 'nodata', 'tool', 'pay', 'wallet', 'cont', 'tgpay']);
+const METHOD = /^(stars|tron|nowpayments|lemonsqueezy)$/;
 const PLAN = /^[a-z]+-(week|month|year|life)$/;
 // Dashboard section ids ("notBack", "timeline"…): which tools people open.
 const TOOL = /^[a-z][a-zA-Z]{1,30}$/;
@@ -39,6 +40,8 @@ export async function recordHit(request, env) {
   }
   // Which plan people continue with from the checkout's first screen.
   if (kind === 'cont' && PLAN.test(String(body.p || ''))) rows.push(['plan', String(body.p)]);
+  // Which payment screen people reached ("pay" fires when it opens).
+  if (kind === 'pay' && METHOD.test(String(body.m || ''))) rows.push(['paymethod', String(body.m)]);
   // Why a dropped file had no usable data ("media", "parts", "meta-partial"…).
   if (kind === 'nodata') {
     const reason = String(body.r || 'unknown');
@@ -62,7 +65,7 @@ export async function publicStats(env, min = 100) {
 export async function statsSummary(env) {
   const from = Math.floor(Date.now() / DAY) - 29;
   const db = env.DB;
-  const [daily, pages, refs, langs, events, tools, nodata, plans] = await db.batch([
+  const [daily, pages, refs, langs, events, tools, nodata, plans, methods] = await db.batch([
     db.prepare("SELECT day, n FROM stats WHERE kind = 'event' AND key = 'view' AND day >= ? ORDER BY day").bind(from),
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'page' AND day >= ? GROUP BY key ORDER BY n DESC LIMIT 20").bind(from),
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'ref' AND day >= ? GROUP BY key ORDER BY n DESC LIMIT 15").bind(from),
@@ -71,6 +74,7 @@ export async function statsSummary(env) {
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'tool' AND day >= ? GROUP BY key ORDER BY n DESC LIMIT 30").bind(from),
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'nodata' AND day >= ? GROUP BY key ORDER BY n DESC LIMIT 20").bind(from),
     db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'plan' AND day >= ? GROUP BY key ORDER BY n DESC LIMIT 20").bind(from),
+    db.prepare("SELECT key, SUM(n) AS n FROM stats WHERE kind = 'paymethod' AND day >= ? GROUP BY key ORDER BY n DESC").bind(from),
   ]);
   return json({
     ok: true,
@@ -82,5 +86,6 @@ export async function statsSummary(env) {
     tools: tools.results,
     nodata: nodata.results,
     plans: plans.results,
+    methods: methods.results,
   });
 }

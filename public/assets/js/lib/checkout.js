@@ -283,6 +283,7 @@ export async function openCheckout({ plan: preselect, tier: wantTier, reason } =
         return;
       }
       if ((res.order.method === 'nowpayments' || res.order.method === 'lemonsqueezy') && res.order.redirectUrl) {
+        import('./stats.js').then(({ track }) => track('pay', { m: res.order.method })).catch(() => {});
         go.textContent = t('Opening the payment page…');
         location.href = res.order.redirectUrl;
         return;
@@ -325,11 +326,11 @@ function planText(order, config) {
 export function starsScreen(m, order, token, config, onPaid = (o) => successScreen(m, o), onBack = () => { m.close(); openCheckout({ plan: order.plan }); }) {
   m.setTitle(t('Pay with Telegram Stars'));
   clear(m.body);
-  import('./stats.js').then(({ track }) => track('pay')).catch(() => {});
+  import('./stats.js').then(({ track }) => track('pay', { m: 'stars' })).catch(() => {});
   m.body.append(
     h('div', { class: 'stack', style: { '--stack': '16px' } },
       planText(order, config) ? line(t('Plan'), planText(order, config)) : null,
-      h('a', { class: 'btn btn--primary btn--lg btn--block', href: order.redirectUrl, target: '_blank', rel: 'noopener' }, t('Pay ⭐ {stars} Stars in Telegram', { stars: order.stars })),
+      h('a', { class: 'btn btn--primary btn--lg btn--block', href: order.redirectUrl, target: '_blank', rel: 'noopener', onClick: () => import('./stats.js').then(({ track }) => track('tgpay')).catch(() => {}) }, t('Pay ⭐ {stars} Stars in Telegram', { stars: order.stars })),
       order.priceUsd ? h('p', { class: 'small' }, t('About {price} — Telegram sells Stars at roughly $1 per 50.', { price: money(order.priceUsd) })) : null,
       h('ol', { class: 'small text-2', style: { margin: '0', paddingLeft: '20px', display: 'grid', gap: '6px' } },
         h('li', null, t('Tap the button. Telegram opens the payment.')),
@@ -371,7 +372,7 @@ export function starsScreen(m, order, token, config, onPaid = (o) => successScre
 export function tronScreen(m, order, token, config, onPaid = (o) => successScreen(m, o)) {
   m.setTitle(t('Pay with USDT (TRC20)'));
   clear(m.body);
-  import('./stats.js').then(({ track }) => track('pay')).catch(() => {});
+  import('./stats.js').then(({ track }) => track('pay', { m: 'tron' })).catch(() => {});
   const addr = payAddress(order.address);
   const qr = h('div', { class: 'pay-qr', 'aria-label': t('QR code of the wallet address') });
   qr.innerHTML = qrSvg(addr.qr);

@@ -75,6 +75,19 @@ export function relationshipInsights(ds, rel) {
   ]);
 }
 
+// No followers file next to a following file: every account you follow lands in
+// "not following back". Say so instead of letting people unfollow friends.
+function missingFollowers(ds, rel) {
+  if (rel.followers > 0 || !rel.following) return null;
+  const lang = (document.documentElement.lang || 'en').slice(0, 2);
+  const href = `${lang === 'en' ? '' : `/${lang}`}/blog/instagram-followers-file-missing/`;
+  return h('div', { class: 'warn-box', role: 'alert', style: { marginBottom: '14px' } }, icon('warning'), h('div', null,
+    h('b', null, tl('Your export has no followers list.')), ' ',
+    tl('That’s why everyone you follow shows up here. Don’t unfollow anyone yet: request a new export with “Followers and following” selected.'), ' ',
+    ds.platform === 'instagram' ? h('a', { href }, tl('How to fix it')) : null,
+  ));
+}
+
 export function relationshipViews(ds, ctx, { keepKey }) {
   const rel = relationships(ds);
   const sub = (verb) => (i) => (i.ts ? `${verb} ${relTime(i.ts)}` : '');
@@ -91,6 +104,7 @@ export function relationshipViews(ds, ctx, { keepKey }) {
           'div',
           { class: 'app-content' },
           viewHead(tl('Not following you back'), tl('{v0} accounts you follow don’t follow you. Tap “Keep” on the ones you want to keep (creators, brands, friends).', { v0: fmtInt(rel.notFollowingBack.length) }), queueBtn),
+          missingFollowers(ds, rel),
           panel(null, userList({ platform: ds.platform, items: rel.notFollowingBack, ctx, subFor: sub(tl('You followed')), exportName: `${ds.platform}-not-following-back`, keepKey })),
           dataNote(ds),
         );

@@ -145,11 +145,11 @@ async function load() {
           h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Demos opened'), h('span', { class: 'value' }, fmtInt(ev.demo || 0)), h('span', { class: 'sub' }, `${pctOf(ev.demo || 0, ev.view || 0)} of views`)),
           h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Exports analyzed'), h('span', { class: 'value' }, fmtInt(ev.analyze || 0)), h('span', { class: 'sub' }, `${pctOf(ev.analyze || 0, ev.view || 0)} of views · ${fmtInt(ev.nodata || 0)} failed uploads`)),
           h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Checkouts opened'), h('span', { class: 'value' }, fmtInt(ev.checkout || 0)), h('span', { class: 'sub' }, `${pctOf(ev.checkout || 0, ev.analyze || 0)} of analyses`)),
-          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Reached payment screen'), h('span', { class: 'value' }, fmtInt(ev.pay || 0)), h('span', { class: 'sub' }, `${pctOf(ev.pay || 0, ev.checkout || 0)} of checkouts · ${fmtInt(ev.wallet || 0)} opened a wallet`)),
+          h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Reached payment screen'), h('span', { class: 'value' }, fmtInt(ev.pay || 0)), h('span', { class: 'sub' }, `${pctOf(ev.pay || 0, ev.checkout || 0)} of checkouts · ${fmtInt(ev.wallet || 0)} opened a wallet · ${fmtInt(ev.tgpay || 0)} tapped Pay in Telegram`)),
           h('div', { class: 'stat' }, h('span', { class: 'label' }, 'Orders paid'), h('span', { class: 'value' }, fmtInt(s.funnel30d.paid)), h('span', { class: 'sub' }, `${pctOf(s.funnel30d.paid, ev.checkout || 0)} of checkouts`)),
         ),
         barChart(vdays, { title: 'Page views', ariaLabel: 'Page views per day' }),
-        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginTop: '18px' } }, list('Top pages', st.pages), list('Where visitors come from', st.refs), list('Languages', st.langs), list('Dashboard tools opened', st.tools || []), list('Why files had no data', st.nodata || []), list('Plans chosen at checkout', st.plans || [])),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginTop: '18px' } }, list('Top pages', st.pages), list('Where visitors come from', st.refs), list('Languages', st.langs), list('Dashboard tools opened', st.tools || []), list('Why files had no data', st.nodata || []), list('Plans chosen at checkout', st.plans || []), list('Payment screens opened', st.methods || [])),
       ),
     );
   }
