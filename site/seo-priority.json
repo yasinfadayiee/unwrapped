@@ -1,0 +1,10 @@
+{
+  "description": "Recovery targets: retain these URLs in the sitemap and inspect them separately from intentionally pruned pages.",
+  "urls": [
+    "/instagram-message-viewer/",
+    "/instagram-follower-tracker/",
+    "/instagram/",
+    "/es/blog/who-unfollowed-me-on-tiktok/",
+    "/blog/instagram-search-history/"
+  ]
+}

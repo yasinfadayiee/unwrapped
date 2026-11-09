@@ -8,6 +8,7 @@ const CORE = [
   `/assets/js/site.js?v=${VERSION}`,
   '/assets/js/lib/ui.js',
   '/assets/js/lib/api.js',
+  '/assets/js/lib/entry.js',
   '/assets/js/lib/license.js',
   '/assets/js/lib/format.js',
   '/assets/js/lib/i18n.js',

@@ -62,6 +62,9 @@ export function getConfig() {
         return cfg;
       })
       .catch(() => {
+        // Keep analysis working offline, but retry config on the next action.
+        // A single timeout must not disable payments until the page is reloaded.
+        configPromise = null;
         let publicKey = null;
         try {
           publicKey = JSON.parse(localStorage.getItem('unw.pubkey') || 'null');
