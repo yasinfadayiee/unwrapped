@@ -7,6 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { PLANS, TIERS } from '../src/config.js';
+import { robotsText } from '../src/seo.js';
 
 const root = path.resolve(import.meta.dirname, '..');
 const read = (p) => readFileSync(path.join(root, p), 'utf8');
@@ -386,8 +387,7 @@ write(
 );
 // Account pages stay crawlable: they carry `noindex`, which crawlers can only
 // see if robots.txt lets them in (and Bing reports blocked linked pages).
-const privatePaths = ['/admin/', '/success/', '/api/'];
-write('public/robots.txt', `User-agent: *\nAllow: /\n${[...new Set(privatePaths)].map((p) => `Disallow: ${p}`).join('\n')}\n\nSitemap: ${origin}/sitemap.xml\n`);
+write('public/robots.txt', robotsText(origin));
 
 // llms.txt: a plain-text map of the English site for AI search and assistants.
 const llmsPages = pages.filter((p) => p.loc.code === 'en' && !p.meta.noindex && !p.meta.route.endsWith('.html') && p.meta.route !== '/');

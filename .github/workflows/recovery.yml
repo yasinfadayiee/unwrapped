@@ -1,0 +1,57 @@
+name: Recovery checks and release
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+    paths:
+      - src/seo.js
+      - scripts/seo-audit.mjs
+      - public/assets/js/lib/entry.js
+      - .github/workflows/recovery.yml
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy the checked main commit to the existing Cloudflare Worker
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: recovery-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - run: npm test
+      - run: npm run seo:audit -- --write
+      - uses: actions/upload-artifact@v4
+        with:
+          name: seo-inventory
+          path: seo-inventory.json
+      - name: Deploy existing Worker
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy))
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" || { echo 'Existing Cloudflare deployment credential is missing'; exit 1; }
+          npx wrangler deploy
+      - name: Check public release
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy))
+        run: npm run seo:live

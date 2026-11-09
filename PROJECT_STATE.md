@@ -1,5 +1,16 @@
 # Project state
 
+## Recovery implementation — 2026-11-09
+
+- Search Console checked through Nov 6: 148 indexed, 408 not indexed; the latter includes intentional pruning. Current prune list: 199 routes; sitemap: 331 URLs. Do not use the earlier 550-indexed snapshot as current status.
+- Message viewer and Spanish Spotify Wrapped were inspected: successful crawl, indexing allowed, self canonical, but currently not indexed. Message viewer live test passed. Quality reassessment remains a hypothesis, not a confirmed manual penalty.
+- Robots fetch failures peaked on Oct 30, after the Oct 25 traffic collapse. Runtime robots now shares the build policy and does not depend on D1 or ASSETS. The historical incident still requires Cloudflare logs; this change does not prove its cause.
+- A transient /api/config failure no longer caches offline payment availability for the entire visit. The next action retries, while analysis retains its offline fallback.
+- Five priority landing routes open their matching platform/tool when that view exists; other exports fall back to the overview. Focused results skip the general intro. Message viewer states JSON and free-versus-Plus near the upload area in six languages.
+- `npm run seo:audit -- --write` classifies index targets, intentional noindex, private pages and merged routes; checks canonical, sitemap, hreflang and five recovery targets. `npm run seo:live` checks public availability only, not Google's indexing decision.
+- Recovery workflow validates pull requests and releases these recovery changes after they reach main, using the existing Cloudflare credential. A manual main-only release is also available; it sends no messages and schedules no tasks.
+- Real buyer payment and license activation still need a live purchase. Local mocked payment tests are not proof of a real provider transaction.
+
 Short handoff note for anyone picking up work. Read this first instead of scanning the repo. Update it when a PR merges.
 
 _Last updated: 2026-10-20, after the #33 deploy._

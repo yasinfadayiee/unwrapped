@@ -4,6 +4,7 @@ import { h, icon, clear, prefersReducedMotion } from './lib/ui.js';
 import { getConfig } from './lib/api.js';
 import { proState } from './lib/license.js';
 import { t } from './lib/i18n.js';
+import { entryForPath } from './lib/entry.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -194,12 +195,12 @@ async function filesFromDataTransfer(dt) {
 async function launch(files) {
   if (!files || !files.length) return;
   const { openApp } = await import('./app/app.js');
-  openApp({ files });
+  openApp({ files, entry: entryForPath(location.pathname) });
 }
 
 async function launchDemo() {
   const { openApp } = await import('./app/app.js');
-  openApp({ demo: true });
+  openApp({ demo: true, entry: entryForPath(location.pathname) });
 }
 
 function dropZones() {

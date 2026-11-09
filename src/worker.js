@@ -24,6 +24,7 @@ import { createReminder, sendDueReminders } from './reminders.js';
 import { handleUsers } from './users.js';
 import { askBot, botEnabled, submitSupport } from './support.js';
 import { mergedTarget } from './redirects.js';
+import { robotsResponse } from './seo.js';
 
 async function enabledMethods(env) {
   const methods = [];
@@ -236,6 +237,9 @@ export default {
       const target = new URL(canonical);
       const alias = url.hostname.endsWith('.workers.dev') || url.hostname === `www.${target.hostname}`;
       if (alias && target.hostname !== url.hostname) return Response.redirect(`${target.origin}${url.pathname}${url.search}`, 301);
+    }
+    if (url.pathname === '/robots.txt' && ['GET', 'HEAD'].includes(request.method)) {
+      return robotsResponse(request, canonical || url.origin);
     }
     const merged = request.method === 'GET' || request.method === 'HEAD' ? mergedTarget(url.pathname) : null;
     if (merged) return Response.redirect(`${url.origin}${merged}${url.search}`, 301);

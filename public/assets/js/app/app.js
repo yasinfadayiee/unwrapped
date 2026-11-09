@@ -26,6 +26,7 @@ import { timelineView } from './views-timeline.js';
 
 const ICONS_3D = new Set(['instagram', 'tiktok', 'x', 'facebook', 'linkedin', 'threads', 'whatsapp', 'telegram', 'spotify', 'orbit']);
 import { playStory } from './story.js';
+import { entrySelection } from '../lib/entry.js';
 import { t as tl, lang } from '../lib/i18n.js';
 import { track } from '../lib/stats.js';
 
@@ -197,15 +198,16 @@ function weekPass(config, { pro, demo }) {
   };
 }
 
-function mount(result, { tier, demo, config, netStart, onNewFiles }) {
+function mount(result, { tier, demo, config, netStart, onNewFiles, entry }) {
   const pro = atLeast(tier, 'plus');
   const datasets = result.datasets;
   const cross = crossPlatform(datasets);
   const tabs = datasets.map((ds, i) => ({ key: `ds${i}`, label: ds.label, icon: ds.platform, ds }));
   if (cross) tabs.push({ key: 'cross', label: tl('Cross-platform'), icon: 'orbit', cross });
   const keeps = keepStore();
-  let tabIndex = 0;
-  let viewId = 'overview';
+  const selection = entrySelection(datasets, entry);
+  let tabIndex = selection.index;
+  let viewId = selection.view;
   const viewCache = new Map();
 
   const root = h('div', { class: 'app', role: 'dialog', 'aria-modal': 'true', 'aria-label': tl('Your results') });
@@ -512,9 +514,10 @@ function mount(result, { tier, demo, config, netStart, onNewFiles }) {
   window.addEventListener('popstate', onPop);
   document.body.classList.add('app-open');
   document.body.append(root);
+  const focused = viewId !== 'overview' && viewsFor(tabs[tabIndex]).some((v) => v.id === viewId);
   render();
   main.focus({ preventScroll: true });
-  return { close, root };
+  return { close, root, focused };
 }
 
 let lastInput = null;
@@ -526,9 +529,9 @@ window.addEventListener('unw:license', async () => {
   if (active && lastInput && !lastInput.demo && TIER_RANK[state.tier] > TIER_RANK[activeTier]) openApp(lastInput);
 });
 
-export async function openApp({ files = [], demo = false } = {}) {
+export async function openApp({ files = [], demo = false, entry = null } = {}) {
   if (active) active.close({ replacing: true });
-  lastInput = { files, demo };
+  lastInput = { files, demo, entry };
   const [state, config] = await Promise.all([proState().catch(() => ({ pro: false, tier: 'free' })), getConfig()]);
   const load = loader();
   const netStart = performance.now();
@@ -571,10 +574,10 @@ export async function openApp({ files = [], demo = false } = {}) {
     }
     load.close();
     track(demo ? 'demo' : 'analyze');
-    if (!openApp.skipStory && result.datasets.some((d) => !CHAT_PLATFORMS.has(d.platform))) {
+    active = mount(result, { tier: activeTier, demo, config, netStart, entry, onNewFiles: (f) => openApp({ files: f, entry }) });
+    if (!openApp.skipStory && !active.focused && result.datasets.some((d) => !CHAT_PLATFORMS.has(d.platform))) {
       playStory(result.datasets, { onDone: () => active?.root?.querySelector('.app-main')?.focus() });
     }
-    active = mount(result, { tier: activeTier, demo, config, netStart, onNewFiles: (f) => openApp({ files: f }) });
     // Ask for a rating once people have had time to look around (never in the demo).
     if (!demo) setTimeout(() => import('../lib/feedback.js').then((m) => m.maybeAskFeedback({ platform: result.datasets[0]?.platform })).catch(() => {}), 45_000);
     for (const { ds, from } of compared) {

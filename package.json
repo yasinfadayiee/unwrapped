@@ -14,7 +14,9 @@
     "db:create": "wrangler d1 create unwrapped",
     "start:node": "node server/node-server.js",
     "test": "node --test --test-reporter=spec test/*.test.mjs",
-    "vendor": "node scripts/vendor.js"
+    "vendor": "node scripts/vendor.js",
+    "seo:audit": "node scripts/seo-audit.mjs",
+    "seo:live": "node scripts/seo-live.mjs"
   },
   "engines": {
     "node": ">=22.13"
